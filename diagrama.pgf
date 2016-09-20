@@ -1,0 +1,139 @@
+\usetikzlibrary{calc,positioning,shapes.geometric,shapes.symbols,shapes.misc}
+
+\tikzset{
+    start-end/.style={
+        draw,
+        rectangle,
+        rounded corners,
+    },
+    input/.style={ % requires library shapes.geometric
+        draw,
+        trapezium,
+        trapezium left angle=60,
+        trapezium right angle=120,
+    },
+    operation/.style={
+        draw,
+        rectangle
+    },
+    loop/.style={ % requires library shapes.misc
+        draw,
+        chamfered rectangle,
+        chamfered rectangle xsep=2cm,
+    },
+    print/.style={ % requires library shapes.symbols
+        draw,
+        tape,
+        tape bend top=none
+    },
+    connection/.style={
+        draw,
+        circle,
+        radius=5pt,
+    },
+    process rectangle outer width/.initial=0.15cm,
+    man op/.style={ % requires library shapes.geometric
+        draw,
+        trapezium,
+        shape border rotate=180,
+        text width=2cm,
+        align=center,
+    },
+    file/.style={
+        draw,
+		inner ysep = 2em,
+		inner xsep = 1ex,
+        chamfered rectangle,
+        chamfered rectangle xsep=.6ex,
+        chamfered rectangle corners = south east,
+        append after command={ \pgfextra{
+		\coordinate [] (A) at ($(\tikzlastnode.before south east)+(0,0.5\pgflinewidth)$);
+		\coordinate [] (C) at ($(\tikzlastnode.after south east)+(-0.5\pgflinewidth,0)$);
+ 		\draw let \p1 = ($ (A) $), \p2 = ($ (C) $) in (A) -- ($(\x1,\y2)$) -- (C);
+		}},
+        text width=#1,
+        align=center,
+    },
+    file/.default=4em,
+    tag/.style={
+        draw,
+		inner xsep = 1em,
+        chamfered rectangle,
+        chamfered rectangle xsep=6pt,
+        chamfered rectangle corners = {north west, south west},
+        append after command={ \pgfextra{
+		\coordinate [] (A) at ($(\tikzlastnode.west)+(0.5\pgflinewidth,0)$);
+		\coordinate [] (C) at ($(\tikzlastnode.before north west)+(0,-0.5\pgflinewidth)$);
+ 		\draw let \p1 = ($ (A) $), \p2 = ($ (C) $) in ($(\x2,\y1)$) circle (.5ex);
+		}},
+        text width=#1,
+        align=center,
+    },
+    tag/.default=3em,
+    matriz/.style={
+        draw,
+		rectangle,
+        append after command={ \pgfextra{
+		\coordinate [] (A) at ($(\tikzlastnode.north west)$);
+		\coordinate [] (C) at ($(\tikzlastnode.south east)$);
+ 		\draw[black!20] (A) grid[step=.2em] (C);
+ 		%\draw[black] (A) rectangle (C);
+		}},
+		inner xsep=1em,
+        text width=#1,
+        text height=2*#1,
+        align=center,
+    },
+    matriz/.default=3em,
+    man op/.style={ % requires library shapes.geometric
+        draw,
+        trapezium,
+        shape border rotate=180,
+        text width=2cm,
+        align=center,
+    },
+    extract/.style={
+        draw,
+        isosceles triangle,
+        isosceles triangle apex angle=60,
+        shape border rotate=90
+    },
+    merge/.style={
+        draw,
+        isosceles triangle,
+        isosceles triangle apex angle=60,
+        shape border rotate=-90
+    },
+}
+
+\begin{tikzpicture}[
+	node distance = 2cm,
+]
+%\draw [help lines] (-5,-5) grid (5,5);
+% \node[start-end] (start) {Start/End};
+% \node[below of=start,input](inp){Input};
+% \node[below of=inp,operation] (op) {Operation};
+% \node[below of=op,loop] (lp) {Loop};
+% \node[right= 10pt of lp,loop=1.6] (lp2) {Preparation};
+% \node[below= 5pt of lp,decision] (dec) {Decision};
+% \node[right= 10pt of dec,decision=1.6] (dec2) {Decision};
+% \node[right= 10pt of dec2,decision=2.5] (dec3) {Decision};
+% \node[below= 5pt of dec,print] (pr) {Print};
+% \node[below= 10pt of pr,predefined process] (prproc) {Predefined process};
+% \node[below= 10pt of prproc,man op] (manop) {Manual Operation};
+% \node[below of=manop,connection, label=below:Connection] (con) {};
+% \node[below of=con,extract, label=below:Extract] (extr) {};
+% \node[below of=extr,merge, label=below:Merge] (mrg)= {};
+\node [file] at (0,0) (file1) { Archivo FASTA };
+\node [file] at (3,0) (file2) { Archivo RNAFold };
+\node [file] at (6,0) (file3) { Archivo FASTA };
+\node [tag] at (0,2) (tag1) { Clase };
+\node [tag] at (3,2) (tag1) { Clase };
+\node [tag] at (6,2) (tag1) { Clase };
+\draw (-2,-2) rectangle (10,3);
+
+\node [matriz] at (0,-5) (tag1) { Matriz de \\ caracts. };
+\draw (-2,-8) rectangle (10,-3);
+
+\draw (-2,-8) rectangle (10,-3);
+\end{tikzpicture}

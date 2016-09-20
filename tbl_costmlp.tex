@@ -1,0 +1,58 @@
+\begin{table}
+  \tableStyle
+  \smaller
+  \sisetup{
+    table-format = 2.0
+  }
+  \begin{tabular}{ccSSSSSScSSScSSS}
+    \toprule
+    && \mcol{6}{c}{\tripletsvm}
+    && \mcol{3}{c}{\mipred}
+    && \mcol{3}{c}{\micropred}\\
+    \cmidrule(lr){3-8}\cmidrule(lr){10-12}\cmidrule(lr){14-16} &&
+    {S} & {E} &{S-E}& {T} & {X} &{T-X}&& {S} & {E} &{S-E}&& {S} & {E} &{S-E}\\
+    \midrule
+    \mrow{2}{5em}{Búsq. exhaustiva} & {$t$} &
+    15  & 10  & 11  & 12  & 10  & 12  &&  22 & 18  & 18  && 44  & 21  & 29  \\\rowSKIP
+    %\cmidrule(lr){2-16}
+    & {$N$} &
+    20  & 20  & 20  & 20  & 20  & 20  && 20  & 20  & 20  && 20  & 20  & 20  \\
+    %\mcol{14}{c}{20}                                                        \\
+    \bottomrule
+    \\
+    \end{tabular}
+  %% \begin{tabular}{ccrSS}
+  %% \toprule
+  %% \mrow{2}{*}{Problema} & \mrow{2}{*}{Caracts.} & &
+  %% \mcol{2}{c}{mlp:mlp}
+  %% \\
+  %% \cmidrule(lr){4-5}
+  %% &&& \ti{$t$} & \ti{$N$}
+  %% \\
+  %% \midrule
+  %% \mrow{12}{*}{xue}
+  %% \rowMEAN{  S} &    15 &    20 \\
+  %% \rowMEAN{  E} &    10 &    20 \\
+  %% \rowMEAN{S-E} &    11 &    20 \\
+  %% \rowMEAN{  T} &    12 &    20 \\
+  %% \rowMEAN{  X} &    10 &    20 \\
+  %% \rowMEAN{T-X} &    12 &    20 \\
+  %% \midrule
+  %% \mrow{6}{*}{ng}
+  %% \rowMEAN{  S} &    22 &    20 \\
+  %% \rowMEAN{  E} &    18 &    20 \\
+  %% \rowMEAN{S-E} &    18 &    20 \\
+  %% \end{tabular}
+  %% \midrule
+  %% \mrow{6}{*}{batuwita}
+  %% \rowMEAN{  S} &    44 &    20 \\
+  %% \rowMEAN{  E} &    21 &    20 \\
+  %% \rowMEAN{S-E} &    29 &    20 \\
+  %% \end{tabular}
+  \caption{\captionStyle Tiempo $t\,[\si{\second}]$ y número de
+    entrenamientos del clasificador $N$ requeridos por la estrategia
+    de búsqueda exhaustiva para la optimización del número de neuronas
+    en la capa oculta del clasificador MLP.}
+  \label{tbl:cost-mlp}
+
+\end{table}

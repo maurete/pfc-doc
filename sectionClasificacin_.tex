@@ -1,0 +1,56 @@
+\section{Clasificación de pre-miRNAs}
+Los métodos computacionales para clasificación de pre-miRNAs se basan
+en técnicas Aprendizaje Automático, una de las principales disciplinas
+de la Inteligencia Computacional.  En general, estas técnicas de
+\e{aprendizaje supervisado} permiten generar un modelo o
+representación interna que caracteriza los pre-miRNAs extrayendo
+información a partir de un conjunto de datos de ejemplo denominado
+\e{conjunto de entrenamiento}.  El modelo generado en la etapa de
+entrenamiento puede ser aplicado a nuevos conjuntos de datos,
+generando de esta manera un \emph{clasificador} con capacidad de
+\e{generalización}, que es capaz de discriminar nuevos ejemplos en dos
+clases: \e{positiva}, asociada a pre-miRNAs ``reales'', y
+\e{negativa}, asociada a los ejemplos que no se corresponden con
+pre-miRNAs.
+
+En el presente trabajo se utilizan dos técnicas de aprendizaje
+supervisado para la generación de un clasificador de pre-miRNAs: el
+\e{Perceptrón Multicapa} \cite{mlp1}\cite{mlp2} y la \e{Máquina de
+  Vectores de Soporte} \cite{svm}.
+
+El Preceptrón Multicapa (\e{MLP}, del inglés \eng{Multilayer
+  Perceptron}) es un tipo de red neuronal artificial con propagación
+hacia adelante, en la que se disponen las neuronas (nodos
+computadores) en \e{capas}. La salida de cada neurona se determina al
+aplicar una \e{función de activación}, de tipo sigmoidea, a la suma
+ponderada de las salidas en la capa anterior. Durante el entrenamiento
+del MLP, se ajustan progresivamente los pesos (ponderaciones) de cada
+entrada de cada neurona mediante un algoritmo de aprendizaje basado en
+la \e{propagación hacia atrás} del error de clasificación, hasta
+obtener una tasa de clasificación satisfactoria \cite{jain}.
+
+La Máquina de Vectores de Soporte (\emph{SVM}, de su nombre en inglés
+\eng{Support Vector Machine}) es un algoritmo de clasificación que se
+basa en transformar, mediante una función llamada \e{núcleo}, el
+espacio $N$-dimensional de los datos de entrada en otro espacio de
+dimensión $M: M\gg N$, donde se espera que los datos sean linealmente
+separables mediante un hiperplano. El entrenamiento consiste en
+encontrar el hiperplano óptimo de separación para el conjunto de datos
+presentado \cite{bottou}.
+
+El objetivo del presente trabajo es desarrollar un método de
+clasificación de pre-miRNAs completo, que permita la utilización de
+clasificadores MLP y SVM, y que abarque desde el procesamiento de los
+datos de entrada hasta la obtención de las predicciones de clase para
+los elementos que se desean clasificar. Adicionalmente, se pretende
+que el método desarrollado tenga un alto grado de automatización de
+los aspectos que no sean especialidad del usuario final, brindando
+facilidad de uso con buenos resultados de clasificación.
+
+\chapter{Fundamentos teóricos}
+El presente trabajo se enmarca en el campo del aprendizaje
+supervisado, una disciplina de la Inteligencia Computacional.  En el
+presente capítulo se introducen las nociones fundamentales de la
+disciplina, así como de las técnicas específicas utilizadas: el
+Perceptrón Multicapa y la Máquina de Vectores de Soporte, a fin de
+adentrar al lector en los conceptos a desarrollar más adelante.

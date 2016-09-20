@@ -1,0 +1,58 @@
+\section{Pruebas adicionales}
+Se efecuaron una serie de pruebas adicionales con el objetivo de
+evaluar el comportamiento del método propuesto al clasificar conjuntos
+de prueba de naturaleza diferente al conjunto utilizado para
+entrenamiento.
+
+En primer lugar, se probaron los conjuntos de prueba suplementarios
+presentados en los trabajos \cite{xue,ng}.  Por otra parte, se
+clasificaron los elementos de la especie humana de la última versión
+disponible de miRBase (21.0, FECHA), entrenando con los conjuntos de
+entrenamiento de \tripletsvm{}, \mipred{} y \micropred{}.
+Finalmente, se generó el problema \deltamirbase{}, el cual entrena con
+la versión 20 de miRBase y en su conjunto de prueba contiene
+únicamente aquellos pre-miRNAs incorporados en la versión 21.
+
+En todos los casos, se utilizó el conjunto de características S-E,
+aplicando las siguientes combinaciones de clasificador/estrategia de
+selección de hiperparámetros
+
+\begin{itemize}
+\item \sbs{MLP-B}: Clasificador MLP, estrategia de búsqueda
+  exhaustiva,
+\item \sbs{SVM-LE}: Clasificador SVM, núcleo lineal, estrategia de
+  selección de hiperparámetros mediante el criterio del error
+  empírico,
+\item \sbs{SVM-RE}: Clasificador SVM, núcleo RBF, selección de
+  hiperparámetros mediante error empírico,
+\item \sbs{SVM-RR}: Clasificador SVM con núcleo RBF y estrategia de
+  selección de hiperparámetros RMB.
+\end{itemize}
+
+En adelante, se describe cada uno de esos experimentos de
+clasificación y se presentan los resultados obtenidos.
+
+\subsection{Conjuntos de prueba de Triplet-SVM}
+En el trabajo de \citeauthor{xue} \cite{xue} los autores definen tres
+conjuntos de prueba suplementarios para el método Triplet-SVM
+denominados \ssf{UPDATED}, \ssf{CONSERVED-HAIRPIN} y
+\ssf{CROSS-SPECIES}.
+\paragraph{UPDATED}
+Consiste en 39 pre-miRNAs experimentalmente validados pertenecientes a
+la especie humana, que fueron publicados durante el desarrollo del
+método Triplet-SVM.
+\paragraph{CONSERVED-HAIRPIN}
+Este conjunto de prueba consta de 2444 secuencias conservadas con
+estructura secundaria de horquilla, extraídas del cromosoma humano
+19. En su mayoría, estas secuencias son pseudo pre-miRNAs (clase
+negativa), aunque se conoce que algunas de ellas se corresponden con
+pre-miRNAs verdaderos.
+\paragraph{Cross-species}
+Contiene 581 secuencias de pre-miRNAs experimentalmente validadas
+pertenecientes a diversas especies no humanas, tales como animales,
+plantas y virus, extraídas de la versión 5.0 de miRBase.
+
+En las pruebas efectuadas, se entrenó con el mismo conjunto de
+entrenamiento del problema \tripletsvm{}, y con el modelo obtenido se
+clasificaron los tres conjuntos de prueba. Los resultados de
+clasificación de presentan en la \autoref{tbl:suppl-xue}.

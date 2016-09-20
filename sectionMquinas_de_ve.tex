@@ -1,0 +1,486 @@
+\section{Máquinas de vectores de soporte}
+La máquina de vectores de soporte (\eng{Support Vector Machine, SVM})
+es una máquina de aprendizaje propuesta por Boser et al. \cite{boser}
+y Cortes y Vapnik \cite{svm}, basada en el clasificador lineal.
+Debido a la simplicidad de su formulación y al cálculo eficiente de su
+solución, se ha convertido en una técnica muy popular para
+clasificación.
+
+Un \emph{clasificador lineal} \cite{nilsson} es una máquina de
+aprendizaje en la que, dado un patrón de entrada $\xx\in{}X$ a
+clasificar, calcula primero un \e{vector imagen} $\zz=\BPhi(\xx)\in{}Z$,
+para luego asignarle una clase de salida $y=\pm{}1$ según sea el signo
+de la función discriminante lineal $\hat{y}=\ww^T\zz+b$. La función
+$\BPhi:X\rightarrow{}Z$ se elige a partir del conocimiento previo del
+problema, mientras que los valores de $\ww$ y $b$ se determinan
+durante el entrenamiento.  Con esta formulación del clasificador
+lineal, se puede ver que la función $\BPhi$ transforma el espacio
+vectorial de entrada $X$ en otro espacio vectorial inducido $Z$,
+llamado \e{espacio imagen}. En este espacio, el hiperplano $\ww^T\zz+b=0$
+define una frontera de decisión entre las clases $y=+1$ e $y=-1$.
+
+\begin{quote}
+  {\bfseries Notación.}\quad{}En la literatura, resulta común encontrar que
+  el vector $\zz$ se denomina \e{vector de características}
+  (\e{feature vector}) y el espacio vectorial $Z$ como \e{espacio de
+    las características} (\e{feature space}).  En este trabajo se
+  prefiere denominarlos con los nombres alternativos \e{vector imagen}
+  y \e{espacio vectorial imagen} para evitar confusión con el proceso
+  de extracción de características a partir de los datos de entrada,
+  que es un proceso externo a la máquina de aprendizaje.
+\end{quote}
+
+Una máquina de vectores de soporte es un clasificador lineal que
+incorpora tres ideas adicionales. En primer lugar, el proceso de
+entrenamiento de la SVM consiste en buscar el hiperplano de separación
+óptimo, que maximice la distancia a los ejemplos más cercanos. Esta
+búsqueda se plantea como la solución a un problema de optimización
+convexo que, como se verá en adelante, resulta central al proceso
+de entrenamiento.
+
+Otra importante propiedad de la SVM es que, mediante la utilización de
+familias especiales de funciones denominadas núcleos, el problema de
+optimización se plantea de un modo tal que no es necesario calcular la
+transformación $\BPhi$ de manera explícita. Esto se traduce en una
+ventaja en términos computacionales, ya que se evita realizar cálculos
+con vectores imagen $z\in{}Z$ de dimensionalidad elevada.
+Incluso, el caso $|Z|=\infty$ resulta computacionalmente tratable.
+
+Por último, la SVM incorpora (en su variante más común) un término de
+regularización que repercute de dos formas a la solución del problema
+de optimización. Por un lado, permite su aplicación a conjuntos de
+datos no separables, y por otro, regula la complejidad
+de la solución a través de un parámetro $C$, de modo de evitar el
+sobreajuste.
+
+\subsection{Hiperplano óptimo}
+Dado un conjunto de entrenamiento
+$D=\left((x_1,y_1),\ldots,(x_\ell,y_\ell)\right)$, se dice que éste es
+linealmente separable cuando existe una función discriminante lineal
+tal que su signo coincide con la clase de todos los elementos del
+conjunto. Cuando $D$ es linealmente separable, se sabe que existe una
+infinidad de funciones discriminantes lineales
+$\hat{y}(\xx)=\ww^T\BPhi(\xx)+b$ tal que el hiperplano $\hat{y}=0$
+cumple con esta condición.
+
+El hiperplano óptimo de separación es aquel que maximiza la distancia
+a los ejemplos $(\xx_i,y_i)$ más cercanos. Esto se expresa a través
+del problema de optimización
+
+\begin{align}
+  \begin{split}
+    \min\quad & \C{P}(\ww,b)=\frac{1}{2}\|\ww\|^2\\ \T{sujeto a}\quad
+    & y_i\hat{y}_i\geq1,\,i=1,\ldots,\ell\,, 
+  \end{split}
+  \label{prob1}
+\end{align}
+donde $\hat{y}_i=\hat{y}(x_i)=\ww^T\BPhi(\xx_i)+b$ es la función
+discriminante lineal aplicada al vector $\xx_i$. En términos
+coloquiales, el problema puede leerse
+
+\begin{align*}
+  \begin{split}
+    \min \frac{1}{2}\|\ww\|^2 \quad & \T{encontrar el $\ww$ más
+      pequeño según la norma euclídea $\|\cdot\|$}\ldots\\
+    |\hat{y}_i|\geq1 \quad & \T{estableciendo en $1$ la distancia del
+      hiperplano a los puntos más cercanos},\\
+    y_i\hat{y}_i>0\quad & \T{y tal que la clase $y_i$ coincida con el
+      signo del discriminante $\hat{y}_i$}.
+  \end{split}
+\end{align*}
+La distancia del vector $\BPhi(\xx_i)$ al hiperplano $\ww^T\BPhi+b=0$
+viene dada por $d_i=\frac{\ww}{\|w\|}\cdot\xx_i+b$, por ello,
+minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.  El
+problema \autoref{prob1} es un problema de optimización cuadrático convexo
+con restricciones lineales.
+
+\subsection{Formulación dual}
+El problema de optimización \autoref{prob1} resulta complejo de resolver
+directamente debido a las restricciones
+$\hat{y}_i{y}_i={y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$.  Mediante la
+técnica de los multiplicadores de Lagrange \cite{LAGRANGE}
+\cite{bottou} resulta posible obtener una fomulación denominada
+\emph{dual} con restricciones más sencillas.
+
+En primer lugar, se define el funcional lagrangiano
+
+\begin{align}
+  \C{L}(\ww,b,\Balpha) = \frac{1}{2} \|\ww\|^2
+  + \sum_{i=1}^{\ell} \alpha_i (1-y_i(\langle\ww,\BPhi(\xx)\rangle+b))
+  \label{LP}
+\end{align}
+que es la función a optimizar, a la que se le suman las restricciones
+(en forma normalizada $g(\xx)\leq0$) multiplicadas por coeficientes
+$\alpha_i$ denominados multiplicadores de Lagrange.
+A partir del lagrangiano se plantea la formulación \emph{dual}
+del problema
+
+\begin{align}
+  \begin{split}
+    \max_\alpha &\quad f(\Balpha) = \min_{\ww,b} \C{L}(\ww,b,\Balpha)\\
+    \T{sujeto a} &\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}
+  \end{split}
+\end{align}
+En el mínimo, se tiene que
+
+\begin{align}
+  \dpar{\C{L}(\ww,b,\Balpha)}{\ww}{}
+    &=\ww-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
+    &\Rightarrow \ww = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i)
+  \label{dobleve}\\
+  \dpar{\C{L}(\ww,b,\Balpha)}{b}{}
+    &=-\sum_{i=1}^\ell y_i\alpha_i = 0
+      &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0,
+\end{align}
+y el lagrangiano puede escribirse
+
+\begin{align*}
+  \C{L}(\ww,b,\Balpha)
+  & = 
+    \frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle \\
+    &\qquad\qquad +
+    \sum_{i=1}^{\ell} \alpha_i \left(1-y_i\left(\left\langle
+    \sum_{j=1}^\ell y_j\alpha_j\BPhi(\xx_j) ,\BPhi(\xx_i)\right\rangle
+    +b\right)\right)\\
+  & = 
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
+    \sum_{i=1}^{\ell} \alpha_i  - b \sum_{i=1}^\ell y_i\alpha_i \\
+ & = 
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
+    \sum_{i=1}^{\ell} \alpha_i  .
+\end{align*}
+De este modo, el problema dual resulta en el problema de optimización
+cuadrático convexo
+
+\begin{align}
+  \begin{split}
+    \max_\alpha &\quad f(\Balpha) =
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle \BPhi(\xx_i),\BPhi(\xx_j) \rangle +
+    \sum_{i=1}^{\ell} \alpha_i \\
+    \T{sujeto a} &\quad \yy^T\Balpha = 0, \\
+    &\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}.
+  \end{split}
+  \label{prob2}
+\end{align}
+Una vez encontrado $\Balpha^*$ que maximice el problema dual, se puede
+calcular la solución $(\ww^*,b^*)$ al problema primal.  El vector
+$\ww^*$ viene dado por (\autoref{dobleve}):
+
+\begin{align*}
+  \ww^* = \sum_{i=1}^\ell y_i\alpha^*_i\BPhi(\xx_i).
+\end{align*}
+El cálculo de $b^*$ deriva de las condiciones de complementariedad de
+Karush-Kuhn-Tucker\footnote{Para una explicación detallada de las
+  condiciones KKT, se refiere al lector a \hl{este libro}}: para todo
+$i\in\{1,\ldots,\ell\}$ se cumple que
+$\alpha^*_i(1-y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*))=0$. Entonces,
+para algún $\alpha^*_i\neq0$ se tiene
+
+\begin{align}
+%  y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*) = 1 \iff
+  b^* = y_i - \langle\ww^*,\BPhi(\xx_i)\rangle .
+\end{align}
+La existencia de $\alpha^*_i\neq0$ está garantizada siempre que el
+conjunto de entrenamiento tenga elementos de ambas clases.
+
+\subsection{Núcleos}
+Un núcleo, denominado también por su nombre en inglés \eng{kernel}, es
+una función $k:X\times{}X\rightarrow{}\RR$ \cite{stewart} que
+generaliza el concepto de métrica. En términos intuitivos, el núcleo
+permite comparar la similaridad entre dos elementos
+$\xx_1,\xx_2\in{}X$ en un espacio vectorial inducido $F$, denominado
+\e{espacio imagen}, que usualmente tiene una dimensionalidad elevada.
+
+\begin{definicion}
+[Núcleo]
+  Una función $k:X\times{}X\rightarrow{}\R{R}$ se dice un núcleo (de
+  Mercer) en el conjunto $X$ si cumple con las siguientes propiedades:
+  \begin{enumerate}
+  \item $k(\xx_1,\xx_2)=k(\xx_2,\xx_1)$ para todo $\xx_1,\xx_2\in{}X$
+  \item Para cada $n\in\R{N}$ y para todos los puntos
+    $(x_1,\ldots,x_n)\in{}X^n$ la matriz de Gram
+    $K\in\R{R}^{n\times{}n}$ definida como
+    $K_{ij}=k(\xx_i,\xx_j),\,i,j\in\{1,\ldots,n\}$ es semidefinida
+    positiva.
+  \end{enumerate}
+\end{definicion}
+Para un núcleo $k$, el teorema de Mercer \cite{mercer} asegura la
+existencia de un espacio de Hilbert $F$ y una transformación
+$\BPhi:X\rightarrow{}F$ tal que, para cualquier par de vectores
+$\xx_1,\xx_2\in{}X$, el núcleo calcula el producto interno de los
+mismos en el espacio imagen:
+$k(\xx_1,\xx_2)=\langle\BPhi(\xx_1),\BPhi(\xx_2)\rangle$. Es
+importante tener en cuenta que ni el espacio $F$ ni la transformación
+$\BPhi$ son únicos.
+
+El siguiente procedimiento se llama el \emph{truco del kernel} o
+\emph{kernelización} de un algoritmo lineal: dado un método lineal
+formulado en términos de productos internos de los datos y un núcleo
+$k$, reemplazar todos los productos internos por la función $k$.  El
+teorema de Mercer asegura que esto es equivalente a la aplicación de
+la transformación $\BPhi$ primero y el algoritmo
+lineal después.
+
+Cuando se tienen dos vectores $\vv,\ww\in{}F$ definidos en términos
+de combinaciones lineales de vectores transformados al espacio imagen
+
+\begin{align*}
+  \vv=\sum_{i=1}^{n}\alpha_i\BPhi(\xx_i) \quad\T{ y }\quad
+  \ww=\sum_{j=1}^{m}\beta_j\BPhi(\xx_j'),
+\end{align*}
+el producto interno $\langle\vv,\ww\rangle$ se puede calcular en
+términos del núcleo según
+
+\begin{align}
+  \langle \vv,\ww\rangle&=\big\langle\sum_{i=1}^{n}\alpha_i\BPhi(\xx_i),
+      \sum_{j=1}^{m}\beta_j\BPhi(\xx_j')\big\rangle \notag\\
+    &=\sum_{i=1}^{n}\sum_{j=1}^{m}
+      \alpha_i\beta_j\big\langle\BPhi(\xx_i),\Phi(\xx_j')\big\rangle\notag\\
+    &=\sum_{i=1}^{n}\sum_{j=1}^{m} \alpha_i\beta_jk(\xx_i,\xx_j').
+\end{align}
+De este resultado se derivan las siguientes propiedades
+
+\begin{align}
+  \langle{}v,\Phi(x)\rangle &= \sum_{i=1}^{n}\alpha_ik(x_i,x) \\
+  \|v\|^2 &= \langle{}v\rangle=\sum_{i,j=1}^n\alpha_i\alpha_jk(x_i,x_j)\\
+  \|\Phi(x)\|^2 &=k(x,x).
+\end{align}
+De este modo, las operaciones de producto interno en el espacio imagen
+$F$ se pueden efectuar a través de la función núcleo $k$, sin necesidad
+de calcular la transformación $\BPhi$ en forma explícita.
+
+Desde un punto de vista puramente matemático, la utilización del truco
+del kernel no aporta ninguna ventaja ya que los algoritmos son
+equivalentes. Desde un punto de vista computacional, sin embargo, la
+diferencia es decisiva: mediante el truco del kernel se pueden
+calcular productos internos en espacios vectoriales de alta
+dimensionalidad --incluso infinita--, sin necesidad de aplicar la
+transformación $\BPhi$, cuyo cálculo directo muchas veces resulta
+prohibitivo o incluso imposible en un ordenador.
+
+Es intuitivamente claro que la elección de un núcleo que represente
+una métrica específica al problema puede mejorar el rendimiento de las
+máquinas de aprendizaje. Por ejemplo, en una tarea de clasificación es
+conveniente elegir una métrica que agrupa las diferentes clases.
+
+El núcleo lineal $k(x,x')=\langle{}x,x'\rangle=x^Tx'$ simplemente
+calcula el producto interno en el espacio de entrada, correspondiente
+a la transformación identidad $\BPhi(\xx)=\xx$.
+
+Como primer ejemplo no trivial se considera el núcleo polinómico
+$k(x,x')=\left(\langle{}x,x'\rangle+\theta\right)^d$ con grado
+$d\in\R{N}$ y desvío $\theta\in\RR$. Este núcleo es una generalización
+del núcleo lineal, el cual se obtiene para $d=1$ y $\theta=0$. Su
+espacio imagen es el espacio de los polinomios de grado
+$d$ sobre el espacio $X$, con la notable propiedad de que
+el cálculo del núcleo toma sólo $\C{O}(\dim{}X)$ operaciones,
+mientras que el cálculo explícito de la transformación
+lleva 
+$\C{O}\left((\dim{}X)^d\right)$ operaciones.
+
+El núcleo más utilizado es la función de base radial
+(\eng{Radial basis function, RBF})
+
+\begin{align}
+  k(x,x')=\exp\left(-\frac{\|x-x'\|^2}{2\sigma^2}\right)
+  =\exp\left(-\gamma\|x-x'\|^2\right)
+\end{align}
+con el parámetro de amplitud $\sigma$ en la primera forma, o con el
+parámetro de concentración $\gamma$ en la segunda forma. Corresponde
+a un espacio imagen de dimensión infinita, que no permite
+una representación directa de la transformación $\BPhi$.
+El kernel RBF se puede calcular
+en $\C{O}(\dim{}X)$ operaciones.
+
+\subsection{SVM de margen rígido}
+El tipo más simple de máquina de vectores de soporte es la SVM de
+margen rígido, y consiste en un clasificador lineal de máximo margen
+en el espacio imagen, que incorpora el ``truco del kernel''.
+
+Sea $k:X\times{}X\rightarrow\RR$ una función núcleo, y sea
+$\BPhi:X\rightarrow\C{H}$ la transformación al espacio imagen que
+satisface
+$\left\langle\BPhi(\xx_1),\BPhi(\xx_2)\right\rangle=k(\xx_1,\xx_2)$.
+Se asume que el conjunto de datos transformado
+$\left((\BPhi(\xx_1),y_1)),\ldots,(\BPhi(\xx_\ell),y_\ell)\right)
+\in\left(\C{H}\times\{\pm1\}\right)^\ell$ es linealemente separable en
+$\C{H}$.  Se puede entonces obtener el clasificador de margen amplio
+
+\begin{align}
+  h(\xx)=\T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right)
+\end{align}
+en donde $\ww^*$, $b^*$ son solución al problema
+
+\begin{align}
+\label{svm-hardmargin}
+  \begin{split}
+    \min_{\ww,b} \quad & \frac{1}{2}\|\ww\|^2\\
+    \T{sujeto a}\quad & y_n\left(\langle\ww,\Phi(\xx_n)\rangle+b\right)
+    \geq 1 \T{ para todo } n\in\{1,\ldots,\ell\}.
+  \end{split}
+\end{align}
+Este problema es el mismo que \autoref{prob1}, y su solución puede
+calcularse a través de la formulación dual \autoref{prob2}. Mediante el
+truco del kernel, se obtiene
+
+\begin{align}
+  f(\Balpha)
+  & = -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell
+    y_iy_j\alpha_i\alpha_j \langle \BPhi(\xx_i),\BPhi(\xx_j) \rangle +
+    \sum_{i=1}^{\ell} \alpha_i \notag\\
+  & = -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell
+    y_iy_j\alpha_i\alpha_j k(\xx_i,\xx_j) + \sum_{i=1}^{\ell} \alpha_i
+    \notag \\
+  & = -\frac{1}{2}\Balpha^T\,\YY\,\KK\,\YY\,\Balpha
+    + \B{1}^T\Balpha  
+\end{align}
+donde $\B{1}^T=(1,\ldots,1)$, $\KK$ es la matriz de Gram con elementos
+$K_{ij}=k(\xx_i,\xx_j)$ y $\YY$ es la matriz diagonal de
+$\ell\times\ell$ elementos tal que $Y_{ii}=y_i$.
+Definiendo la matriz semidefinida positiva $\QQ=\YY\KK\YY$ con elementos
+$Q_{ij}=y_iy_jk(\xx_i,\xx_j)$, el problema dual se plantea como
+el problema de optimización cuadrático
+
+\begin{align}
+\begin{split}
+    \max_{\Balpha} \quad
+    & f(\Balpha) = \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
+    \T{sujeto a}\quad & \yy^T\Balpha = 0, \\
+                      & \alpha_i\geq 0, \T{ para todo } i\in {1,\ldots,\ell }.
+\end{split}\end{align}
+Éste es el problema de optimización que se resuelve durante el
+entrenamiento de una SVM de ``margen rígido'' cuando los datos son
+separables en $F$. Una vez que se tiene $\Balpha^*$ que maximiza el problema,
+el modelo $h(\xx)$ puede calcularse mediante el truco del kernel según
+
+\begin{align}
+  \begin{split}
+    h(\xx) &= \T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right)\\
+    &= \T{signo}\left(\sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx)+b^*\right).
+  \end{split}
+\label{eq:svm-model-hard}
+\end{align}
+Si $j$ es el índice para el cual $\alpha^*_j\neq0$, el valor de $b^*$
+puede calcularse con
+
+\begin{align}
+    b^* &= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j).
+\end{align}
+
+\subsection{SVM de margen blando}
+La SVM de margen blando (con regularización ``L1'' o ``de norma 1'')
+es el tipo de clasificador SVM más utilizado.  Consiste en un
+clasificador de margen máximo con el truco del kernel, tal como la SVM
+de margen duro. A diferencia de ésta, sin embargo, la SVM de margen
+blando contiene un término de regularización que controla la
+``cantidad de error'' permitido al modelo, obteniendo un balance entre
+el error de entrenamiento y la complejidad del modelo obtenido.  La
+introducción del término de regularización a la SVM de margen rígido
+permite su aplicación a problemas no separables en el espacio imagen,
+ya que se permiten errores de clasificación en el entrenamiento.
+
+Como medida de complejidad del modelo
+$h(\xx)=\T{signo}(\langle{}\ww,\BPhi(\xx)\rangle{}+b)$
+se utiliza el valor $\frac{1}{2}\|\ww\|^2$, que es la misma función optimizada en
+la SVM de margen rígido. Dado que el margen funcional
+de la SVM se fija a uno, una gran norma de $w$ corresponde a un
+pequeño margen geométrico $\rho=1/\|w\|$, y consecuentemente a un modelo más complejo.
+Otra forma de ver este concepto es que para valores pequeños de
+$\|w\|$, la función $\langle{}\ww,\BPhi(\xx)\rangle+b$ es suave en el
+espacio de entrada, y para valores mayores de $\|w\|$ se vuelve más
+``abrupta'' (en el sentido que posee derivadas más grandes).
+
+Como medida del error de entrenamiento, se utiliza una función de
+pérdida $L:X\times\RR\times\RR\rightarrow\RR^{\geq0}$.  Para cada
+elemento $(x_n,y_n)$ del conjunto de entrenamiento se introduce la
+variable de holgura no negativa $\xi_n$, que es la función de pérdida
+``bisagra''
+
+\begin{align}
+\xi_n = 
+  L(x,y,\langle{}w,\Phi(x)\rangle+b) =
+  \max\{0,1-y_n(\langle{}w,\Phi(x_n)\rangle+b)\},
+\end{align}
+la cual mide la violación funcional del margen para cada instancia
+$(\xx_n,y_n)\in{}D$.
+
+Con lo anterior se tienen entonces dos objetivos a minimizar,
+$\frac{1}2{}\|w\|^2$ y $\sum_{n=1}^{\ell}\xi_n$, que cuantifican
+complejidad de la hipótesis y error de entrenamiento respectivamente.
+Se introduce entonces un parámetro de regularización $C>0$ que
+ajusta el balance entre la minimización del riesgo empírico y
+el control complejidad, y se formula el problema
+de optimización \emph{primal}
+
+\begin{align}
+\label{svm-primal-blando}
+  \begin{split}
+    \min_{(w,b,\xi)} \quad & \frac{1}{2}\|w\|^2+C\sum_{n=1}^{\ell}\xi_n\\
+    \T{sujeto a} \quad &
+    y_n\left(\langle{}w,\Phi(x_n)\rangle+b\right) \geq 1-\xi_n \T{ para todo }
+    n\in\{1,\ldots,\ell\}, \\
+    & \xi_n \geq 0 \T{ para todo } n\in\{1,\ldots,\ell\}.
+  \end{split}
+\end{align}
+El lagrangiano para este problema es
+
+\begin{align}
+  \begin{split}    
+  \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta) &= \frac{1}{2} \|\ww\|^2 + C \sum_{i=1}^{\ell} \xi_i \\
+  &+ \sum_{i=1}^{\ell} \alpha_i (1-\xi_i-y_i(\langle\ww,\BPhi(\xx_i)\rangle+b)) - \sum_{i=1}^{\ell} \beta_i\xi_i
+  \end{split}
+\end{align}
+En el mínimo, se establecen las derivadas respecto de las variables
+$\ww$, $b$, $\Bxi$ a cero y se obtiene
+
+\begin{align}
+  \dpar{ \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta)}{\ww}{}
+    &=\ww-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
+    &\Rightarrow \ww = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i)
+  \label{dobleve}\\
+  \dpar{ \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta)}{b}{}
+    &=-\sum_{i=1}^\ell y_i\alpha_i = 0
+    &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0,\\  
+  \dpar{ \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta)}{\Bxi_i}{}
+    &=C-\alpha_i-\beta_i = 0
+    &\Rightarrow \alpha_i \leq C,\\
+\end{align}
+Reescribiendo estos resultados en el problema dual, se tiene
+
+\begin{align}
+\begin{split}\label{svmprob-dual-soft}
+    \max_{\Balpha} \quad
+    & f(\Balpha) = \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
+    \T{sujeto a}\quad & \yy^T\Balpha = 0, \\
+                      & 0\leq\alpha_i\leq C, \T{ para todo } i\in {1,\ldots,\ell }.
+\end{split}\end{align}
+Este problema es el mismo que aquel de la SVM de magen duro, salvo por la restricción
+$\alpha_i\leq C$.
+
+Una variante de la SVM de margen suave utiliza la norma dos del
+vector holgura $\B{\xi}=(\xi_1,\ldots,\xi_\ell)^T$, correspondiente
+a la pérdida de bisagra al cuadrado, para medir el error empírico.
+En este caso, el objetivo primal se define como
+
+\begin{align}
+  \label{svm-l2}
+  \frac{1}{2}\|w\|^2+\frac{C}{2}\sum_{n=1}^{\ell}\xi_n^2
+\end{align}
+con las mismas restricciones que el problema anterior.
+Esta formulación se denomina ``SVM de margen blando con regularización L2''.
+
+\chapter{Método propuesto}
+El método propuesto en el presente Trabajo abarca un sistema de
+reconocimiento de pre-miRNAs completo, desde la interpretación de los
+datos de entrada en formato estándar hasta la obtención de
+predicciones de clase para nuevos ejemplos aplicando un modelo
+previamente entrenado.  Este método requiere poco conocimiento experto
+para su utilización, ya que no se requiere que el usuario final posea
+conocimientos específicos del campo de la Inteligencia
+Computacional. Para lograr facilidad de uso, se incorporan diversas
+estrategias automáticas para selección de hiperparámetros del
+clasificador.

@@ -1,0 +1,33 @@
+Los resultados obtenidos indican que a mayor número de ejemplos de
+entrenamiento y mayor versión de la base de datos utilizada en el
+problema de entrenamiento, mayor es la tasa obtenida al clasificar los
+pre-miRNAs humanos presentes en la versión 21 de miRBase.  Asimismo,
+se observa un bajo desempeño de la estrategia RMB, lo que coincide con
+los resultados anteriores, en los que se obtuvo una baja sensibilidad
+para esta estrategia.
+
+\subsection{Problema $\mathbf{\mathsf{\Delta}}$miRBase}
+La base de datos miRBase se publica periódicamente, con números de
+versión incrementales, incorporando en cada nueva versión nuevos
+pre-miRNAs experimentalmente validados.  Si se contara con un
+clasificador de secuencias de pre-miRNAs ideal, al entrenarlo con la
+versión $X$ de miRBase, éste sería capaz de predecir con una
+sensibilidad del 100\% todas las nuevas secuencias incorporadas en la
+versión $Y>X$.
+
+El razonamiento anterior no es del todo válido, ya que se sabe por
+ejemplo, que dentro de miRBase existen secuencias consideradas
+erróneamente como pre-miRNAs.  Sin embargo, la propuesta de clasificar
+las nuevas secuencias entre dos versiones sucesivas de miRBase resulta
+interesante en el sentido que brinda una idea del comportamiento del
+método en problemas ``del mundo real''.
+
+Para esta prueba se generó un problema \deltamirbase{} en el cual el conjunto de entrenamiento
+contiene como ejemplos positivos \e{todas} las entradas correspondientes
+a la especie humana presentes en la versión 20 de miRBase,
+y el conjunto de prueba contiene únicamente las nuevas incorporaciones
+en la versión 21 de miRBase, también de la especie humana.
+Como ejemplos negativos, se utilizaron elementos de la base de datos CODING \cite{xue},
+así como de \ssf{human other ncRNAs} presentada en \cite{batuwita}.
+La composición de los conjuntos de entrenamiento y prueba se detalla en
+la \autoref{tbl:problem-deltamirbase}.

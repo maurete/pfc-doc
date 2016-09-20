@@ -1,0 +1,77 @@
+\section{Partición de datos}
+Una vez aplicada la extracción de características y normalización, los
+datos de entrada antes expresados como archivos de texto han sido
+convertidos en conjuntos de vectores de características
+$D_1,D_2,\ldots,D_n$.  La partición de los datos se trata de la
+implementación del \hyperref[retención]{método de retención}, y
+genera, a partir de la especificación del usuario, el conjunto de
+datos de entrenamiento $D^E$ y el de prueba $D^P$ a ser utilizados por
+la máquina de aprendizaje para generar el modelo (entrenamiento) o
+para clasificar nuevos datos (prueba).
+
+El primer paso a efectuar es permutar aleatoriamente el orden de los
+elementos de los conjuntos de entrada $D_k,\,k=1,\ldots,n$:
+
+\begin{align*}
+  D^*_k = ((\xx_j,y_j)), \quad j = \sigma(i,\ell_k,s), \quad i=1,\ldots,\ell_k,
+\end{align*}
+en donde $\sigma$ es una función de permutación pseudoaleatoria que
+requiere la especificación de una \e{semilla} $s$. Seguidamente se
+particiona cada conjunto $D_k$ en sub-conjuntos de entrenamiento
+y prueba
+
+\begin{align*}
+  D^E_k &= ((\xx_u,y_u)\in D^*_k),& u&=1,\ldots,\ell^E_k, \\
+  D^P_k &= ((\xx_v,y_v)\in D^*_k),& v&=1,\ldots,\ell^P_k,
+\end{align*}
+donde
+
+\begin{align*}
+  \begin{split}
+    \ell^E_k &= \left\lfloor\ell_k\cdot p_k^E \right\rceil, \\
+    \ell^P_k &= \lfloor\ell_k\cdot p_k^P\rceil,
+  \end{split}
+  &&
+  0\ \leq\ p_k^E, p_k^P\ \leq\  p_k^E + p_k^P\ \leq\ 1.
+\end{align*}
+Aquí, los valores (especificados por el usuario) $p^E_k$ y $p^E_k$ son
+la proporción de elementos del conjunto $D_k$ a ser utilizada para
+entrenamiento y prueba, respectivamente.
+
+Los conjuntos de entrenamiento y prueba se componen finalmente según
+
+\begin{align*}
+  D^E &= \left( (\xx_u,y_u) \in \bigcup_k {D}^E_k \right), &
+  u &= \sigma(i,\ell^E,s), &
+  i &= 1,\ldots,\ell^E, &
+  \ell^E &= \left| D^E \right| = \sum_k \ell^E_k ,\\
+  D^P &= \left( (\xx_v,y_v) \in \bigcup_k {D}^P_k \right), &
+  v &= \sigma(j,\ell^P,s), &
+  j &= 1,\ldots,\ell^P, &
+  \ell^P &= \left| D^P \right| = \sum_k \ell^P_k .
+\end{align*}
+Nuevamente, aparece la función de permutación pseudoaleatoria $\sigma$
+la cual recibe como parámetro una ``semilla'' $s$.
+En términos coloquiales, los conjuntos de entrenamiento $D^E$ y prueba $D^P$
+se arman concatenando los respectivos $D^E_k$ y $D^P_k$ y luego permutando
+aleatoriamente el orden de los conjuntos resultantes.
+
+\subsection{Generación de particiones para validación cruzada}
+Dados $k$, el número de particiones a generar, y opcionalmente $p$, la
+proporción de elementos a utilizar para validación, las particiones de
+validación cruzada son generadas a partir del conjunto de
+entrenamiento $D^E$ según
+
+\begin{align*}
+  D^V_j &= \left( (\xx_u,y_u) \in {D}^E \right), &
+  u &= \left\lfloor\ell^E\frac{j-1}{k}+1\right\rceil,\ldots,
+  \left\lfloor\ell^E\frac{j-1}{k}+\ell^E p\right\rceil\T{mod}{\ell^E}, &
+  j &= 1,\ldots,k,
+\end{align*}
+en donde $T{mod}$ representa el operador módulo.
+Con las particiones de validación $D^V_j$ así definidas, los respectivos
+conjuntos de estimación a utilizar se determinan según
+
+\begin{align*}
+  D^T_k &= D^E \setminus D^V_j, \quad j=1,\ldots,k.  
+\end{align*}

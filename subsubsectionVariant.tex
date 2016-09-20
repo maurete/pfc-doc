@@ -1,0 +1,16 @@
+\subsubsection{Variante RNAFold}
+Una variante del formato FASTA es aquella generada por RNAFold
+\cite{vienna}, un software utilizado para el cálcuo de la estructura
+secundaria de ácidos ribonucleicos.  En este formato, cada
+ejemplo se describe exactamente en tres líneas:
+
+\begin{enumerate}
+\item Línea de descripción: tal como en el formato FASTA original.
+\item Línea de secuencia: como en FASTA, aunque sin caracteres de
+  salto de línea.
+\item Línea de estructura secundaria: compuesta por caracteres
+  \mono{(}, \mono{)}, y \mono{.}, opcionalmente terminada por un
+  número entre paréntesis que indica la mínima energía libre.
+\end{enumerate}
+En la \autoref{rnafoldfmt} se muestra la estructura del formato
+RNAFold para las mismas secuencias de la \autoref{fastafmt}.

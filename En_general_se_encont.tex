@@ -1,0 +1,25 @@
+En general, se encontró que el método propuesto obtuvo mehores tasas
+de clasificación que el método \tripletsvm{}, a excepción del caso
+\ssf{SVM-RR} para el conjunto de prueba \ssf{CROSS-SPECIES}.
+
+\subsection{Conjuntos de prueba de miPred}
+En el trabajo de \citeauthor{ng} \cite{ng} se prueba el método
+\mipred{} con dos conjuntos de prueba suplementarios denominados
+\ssf{IE-NH} e \ssf{IE-NC}.
+\paragraph{IE-NH}
+Comparable al conjunto \ssf{cross-species} de \cite{xue}, incluye
+1918 pre-miRNAs de especies no humanas publicadas en la versión 8.2 de
+miRBase.
+\paragraph{IE-NC}
+Contiene 12.387 ejemplos de ncRNAs funcionales obtenidos de la versión
+7.0 de la base de datos Rfam \cite{rfam}, eliminando los ejemplos
+correspondientes a pre-miRNAs. En un clasificador ideal este conjunto
+de datos debería ser clasificado como de clase negativa.
+
+Las pruebas efectuadas consistieron en entrenar el clasificador con el
+conjunto de entrenamiento definido en el problema \mipred{},
+clasificando luego los conjuntos de prueba enumerados.  Se debe
+destacar que, a diferencia del caso \tripletsvm{}, los resultados no
+son directamente comparables, ya que no existe forma de garantizar que
+los conjuntos de entrenamiento y prueba contengan los mismos elementos
+que aquellos utilizados por los autores en el trabajo original.

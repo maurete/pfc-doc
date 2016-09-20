@@ -1,0 +1,26 @@
+\section{Perceptrón multicapa}
+
+El perceptrón multicapa (\eng{MultiLayer Perceptron}, MLP)
+\cite{mlp1,mlp2} es una red neuronal \feedforward{}
+(\eng{feedforward}), consistente en una serie de {unidades} o
+neuronas organizadas en \e{capas} y conectadas por ``enlaces''
+denominados o \e{pesos sinápticos}.  Las capas se diferencian en
+una capa \e{de entrada}, una o más capas \e{ocultas} y una capa
+\e{de salida}.
+
+La capa de entrada contiene en nodos sensores que ``leen'' un vector
+de entrada externo, y lo transmiten a través de los enlaces sinápticos
+a la primer capa oculta. Las capas ocultas reciben como entrada la
+salida de la capa anterior, determinan su valor de salida aplicando
+una \e{función de activación} a la suma ponderada sus entradas, y
+transmiten su valor de salida a la capa siguiente. Este proceso
+continúa capa por capa hasta alcanzar la capa de salida.
+
+Desde un punto de vista global, un vector arbitrario es propagado
+\e{hacia adelante} a través de la red, para finalmente obtener un
+vector de activación en la capa de salida.  La función generada por la
+red, que transforma un vector de entrada en uno de salida, se
+determina completamente por los pesos sinápticos de todos los enlaces
+la red.  En la \autoref{fig:mlp} se puede observar una representación
+esquemática de un perceptrón multicapa con 3 entradas, 4 neuronas en
+la capa oculta y 2 valores de salida.

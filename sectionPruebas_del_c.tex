@@ -1,0 +1,16 @@
+\section{Pruebas del clasificador MLP}
+Se probó el clasificador con los conjuntos de datos de enrenamiento y
+prueba definidos en los problemas de clasificación detallados
+previamente. En la implementación del método propuesto, el
+hiperparámetro a optimizar es el número de neuronas en la capa oculta
+del MLP, adoptando valores en el rango de los números naturales, o
+bien 0 para el caso especial de un MLP sin capa oculta (o perceptrón
+simple). La búsqueda exhausiva determina el número óptimo de neuronas
+en la capa oculta probando 20 valores ``razonables'' tal como se
+explica en \autoref{doc:mlpsearch}.
+
+Los resultados obtenidos de las pruebas efectuadas con el clasificador
+MLP se detallan en la \autoref{tbl:mlp-results}. Se debe remarcar que,
+debido a la naturaleza aleatoria en la inicialización de un perceptrón
+multicapa, los resultados obtenidos al intentar replicar estas pruebas
+pueden variar ligeramente.

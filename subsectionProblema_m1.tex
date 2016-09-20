@@ -1,0 +1,35 @@
+\subsection{Problema microPred}
+Este problema se basa en los datos utilizados en \cite{batuwita} para
+entrenamiento y prueba del método \e{microPred}.  Los ejemplos de
+clase positiva se obtienen de la versión 12.0 de la base de datos
+\e{miRBase}. Para los ejemplos de clase negativa se utilizan dos fuentes,
+la base de datos \e{CODING} y una base de datos curada por los
+autores, denominada \e{other human ncRNAs}, que contiene en total 754
+ejemplos de ncRNAs (excluyendo pre-miRNAs) de la especie humana.
+
+En el trabajo original, los autores no especifican una separación
+en conjuntos de entrenamiento y prueba, sino que utilizan todos los
+ejemplos contenidos en las bases de datos positivas y negativas para
+entrenamiento, y reportan las medidas de rendimiento del método
+a partir de los valores obtenidos en la validación cruzada.
+Adicionalmente, aplican sobremuestreo de la clase minoritaria (positiva)
+mediante la técnica SMOTE \cite{smote}.
+Este esquema contrasta con la forma de efectuar las pruebas en el
+presente trabajo, en donde los resultados se obtienen de clasificar un
+conjunto de prueba especificado y separado de los datos de entrenamiento.
+
+El problema \micropred{} define conjuntos de entrenamiento y prueba
+a partir de los datos originales del siguiente modo:
+se utiliza el 85\% (587/691) de los ejemplos
+positivos para entrenamiento, reservando el 15\% restante (104
+ejemplos) para el conjunto de prueba.
+Tal como en el problema \sbs{miPred}, se mantiene una proporcionalidad
+de 1:2 entre ejemplos positivos y negativos, utilizando 1174 ejemplos
+negativos en el conjunto de entrenamiento. De ellos, 1078 provienen de
+la base de datos \e{CODING} y 96 de \e{other human ncrnas}, manteniendo la
+proporcionalidad entre las mismas.
+El conjunto de prueba incorpora todos los ejemplos
+de las bases de datos positivas y negativas no utilizadas
+para entrenamiento: 104 ejemplos de
+\e{miRBase} (clase positiva), 7416 ejemplos de \e{CODING} (clase
+negativa), y 658 ejemplos de \e{other human ncRNAs} (clase negativa).

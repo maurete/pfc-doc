@@ -1,0 +1,19 @@
+\section{Pruebas del clasificador SVM con núcleo RBF}
+Los resultados de aplicar el clasificador SVM-RBF para los problemas
+definidos se detallan en la \autoref{tbl:rbf-results}.
+
+En líneas generales, la utilización del clasificador SVM-RBF se
+traduce en una mejora en las tasas de clasificación respecto de los
+otros clasificadores.
+El uso de este clasificador con el conjunto de características S-E
+resulta en las mejores tasas de clasificación para los tres problemas
+definidos, utilizando la estrategia RMB para los problemas
+\tripletsvm{} y \micropred{}, así como el criterio del error empírico
+para el problema \mipred{}.
+
+Se destaca sin embargo que la estrategia de selección trivial obtiene
+resultados en general inferiores a aquellos obtenidos con la
+estrategia trivial para el clasificador SVM-lineal. Asimismo, se
+observa que la estrategia RMB diverge en algunos casos para el
+problema \mipred{} al utilizar únicamente las características de
+secuencia.

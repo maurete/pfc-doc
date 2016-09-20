@@ -1,0 +1,139 @@
+
+\iflatexml
+% \documentclass[12pt,bibliography=oldstyle,DIV=12,parskip=half-]{scrreprt} % Not (yet) supported by LaTeXML.
+\fi
+
+\include{conf/preconfig}
+\include{conf/packages}
+\include{conf/config}
+\include{conf/comandos}
+\include{conf/fuentes}
+% First macro on next line not (yet) supported by LaTeXML: 
+% \addbibresource{res/bibliografia.bib}
+\hyphenation{micro-RNA}
+\hyphenation{micro-RNAs}
+\hyphenation{mi-RNA}
+\hyphenation{mi-RNAs}
+% First macro on next line not (yet) supported by LaTeXML: 
+% \addtokomafont{descriptionlabel}{\small}
+% First macro on next line not (yet) supported by LaTeXML: 
+% \setkomafont{subject}{\LARGE\usekomafont{disposition}}
+% First macro on next line not (yet) supported by LaTeXML: 
+% \setkomafont{title}{\normalfont\slshape}
+% First macro on next line not (yet) supported by LaTeXML: 
+% \setkomafont{subtitle}{\LARGE\usekomafont{disposition}}
+\setlength{\abovecaptionskip}{-10pt plus 3pt minus 2pt}
+\setlength{\belowcaptionskip}{10pt plus 3pt minus 2pt}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+% First macro on next line not (yet) supported by LaTeXML: 
+% \sisetup{
+%  table-number-alignment = right,
+%  group-separator = ,
+%  output-decimal-marker = {,},
+%  retain-explicit-plus = true
+%}
+\newcommand{\e}[][]{\emph}
+
+\newcommand{\fr}[1][]{(\autoref{#1})}
+
+\newcommand{\iid}[][]{independiente e idénticamente distribuido}
+
+\newtheorem{definicion}{Definición}[chapter]
+\newtheorem{lema}[definicion]{Lema}
+\newcommand{\ntA}[][]{\textrm{\mono{A}}{ }}
+
+\newcommand{\ntC}[][]{\textrm{\mono{C}}{ }}
+
+\newcommand{\ntG}[][]{\textrm{\mono{G}}{ }}
+
+\newcommand{\ntU}[][]{\textrm{\mono{U}}{ }}
+
+\newcommand{\pairL}[][]{\textrm{\mono{(}}{ }}
+
+\newcommand{\pairR}[][]{\textrm{\mono{)}}{ }}
+
+\newcommand{\noPair}[][]{\textrm{\mono{.}}{ }}
+
+\newcommand{\dn}[1][]{\textrm{\mono{#1}}{ }}
+
+\newcommand{\bp}[2][]{\textrm{\mono{#1-#2}}{ }}
+
+\newcommand{\grad}[1][]{\nabla{#1}}
+
+\newcommand{\tableStyle}[][]{\relsize{-0.5}\center\sffamily}
+
+\newcommand{\captionStyle}[][]{\relsize{-0.5}}
+
+\newcommand{\tE}[][]{&{\smaller $\bar{x}$}&}
+
+\newcommand{\tF}[1][]{\multirow{2}{*}{#1}\tE}
+
+\newcommand{\tZ}[][]{&{\smaller $\sigma$}&}
+
+\newcommand{\tA}[][]{\addlinespace[4pt]}
+
+\newcommand{\rowMEAN}[1][]{&\multirow{2}{*}{#1}&{\smaller $\bar{x}$}}
+
+\newcommand{\rowSTD}[][]{&&{\smaller $\sigma$}}
+
+\newcommand{\rowSKIP}[][]{\addlinespace[2pt]}
+
+\newcommand{\ti}[][]{\textsmaller}
+
+\newcommand{\func}[1][]{\emph{#1}}
+
+\newcommand{\Gm}[][]{\scriptsize $G_m$}
+
+\newcommand{\Ft}[1][]{\mrow{2}{*}{#1}}
+
+\newcommand{\tbmean}[][]{\smaller{2} $\bar{x}$}
+
+\newcommand{\tbstd}[][]{\smaller $\sigma$}
+
+\newcommand{\tripletsvm}[][]{\sbsf{Triplet-SVM}}
+
+\newcommand{\mipred}[][]{\sbsf{miPred}}
+
+\newcommand{\micropred}[][]{\sbsf{microPred}}
+
+\newcommand{\deltamirbase}[][]{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
+
+\newcommand{\rowMEANN}[2][]{&
+  \multirow{2}{*}{\tablenum[table-format=1.0,table-number-alignment=right]{#1}}&
+  \multirow{2}{*}{\tablenum[table-format=3.0,table-number-alignment=right]{#2}}&
+           {\smaller $\bar{x}$}}
+
+\newcommand{\rowSTDN}[][]{&&&{\smaller $\sigma$}}
+
+% First macro on next line not (yet) supported by LaTeXML: 
+% \DeclareSIUnit\nt{nt}
+\newcommand{\VP}[][]{\T{\textsl{VP}}}
+\newcommand{\VN}[][]{\T{\textsl{VN}}}
+\newcommand{\FP}[][]{\T{\textsl{FP}}}
+\newcommand{\FN}[][]{\T{\textsl{FN}}}
+\newcommand{\SE}[][]{\T{\textsl{SE}}}
+\newcommand{\SP}[][]{\T{\textsl{SP}}}
+\newcommand{\GM}[][]{\T{\textsl{Gm}}}
+\newcommand{\PR}[][]{\T{\textsl{Pr}}}
+\newcommand{\AC}[][]{\T{\textsl{Ac}}}
+\newcommand{\feedforward}[][]{con propagación hacia adelante}
+\newcommand{\headRow}[][]{  \sfbf{\footnotesize Pos.} &
+  \sfbf{\footnotesize Característica} &
+  \sfbf{\footnotesize Descripción}
+}
+\newcommand{\tripletRow}[1][]{
+  \stepcounter{FeatureCounter}\theFeatureCounter & $N_{\T{\mono{#1}}}$
+  & Ocurrencias del triplete \mono{#1} en la región del tallo.}
+\newcommand{\dnRow}[1][]{
+  \stepcounter{FeatureCounter}\theFeatureCounter & $N_{\T{\mono{#1}}}$
+  & Número de dinucleótidos \mono{#1} en la secuencia.}
+\newcommand{\funcheader}[3][]{\begin{description}%
+  \item[Función]{#1}\item[Entradas]{#2}\item[Salidas]{#3}%
+\end{description}}
+\renewcommand{\bibfont}[][]{\normalfont\footnotesize}

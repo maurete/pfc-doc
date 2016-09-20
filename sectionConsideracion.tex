@@ -1,0 +1,39 @@
+\section{Consideraciones generales}
+Al analizar los resultados, se encontró que la elección del conjunto
+de características resultó determinante para el desempeño del
+clasificador. La utilización del conjunto de características S-E
+resultó en las mayores tasas de clasificación, mientras que el
+conjunto de características E, compuesto únicamente por 7
+características, obtuvo el menor tiempo de ejecución con tasas de
+clasificación satisfactorias.  Por el contrario, la utilización del
+conjunto de características S resultó en las tasas de clasificación
+más bajas, además de un incremento considerable en el tiempo de
+entrenamiento para todos los métodos, incluso provocando la
+divergencia del método RMB en el problema \micropred{}.
+
+La recomendación al considerar los conjuntos de características es
+utilizar el conjunto S-E, que obtiene los mejores valores de $G_m$ y
+como segunda opción el conjunto E, que resulta en tiempos reducidos de
+entrenamiento.  La utilización de estos conjuntos de características
+resulta además en clasificadores más generales, sin restricciones en
+el número de bucles en la estructura secundaria, restricciones que sí
+se presentan al considerar las características T y X.  Se recomienda
+asimismo descartar de plano el conjunto de características S.
+
+Considerando los diferentes clasificadores, se obtuvieron resultados
+comparables tanto para MLP como para SVM con kernel RBF y lineal.  Se
+destacaron en particular los resultados obtenidos al utilizar los
+métodos de selección de parámetros de error empírico y RMB: la
+estrategia de error empírico obtuvo los mejores resultados para los
+problemas \mipred{} y \micropred{} (núcleo RBF), para el problema
+\tripletsvm{} los mejores resultados se obtuvieron con la estrategia
+RMB.
+
+Respecto a los tiempos de ejecución de las diferentes estrategias no
+triviales, se pudo observar que la a estrategia RMB resultó la más
+rápida por un amplio margen.  Para la estrategia del criterio del
+error empírico se obtuvo un buen compromiso entre la velocidad de
+ejecución y los resultados obtenidos: aunque en varias ocasiones
+redunda en más entrenamientos que la búsqueda exhaustiva, el
+entrenamiento resulta más rápido dado que se entrena ``con valores más
+correctos'' que en una búsqueda exhaustiva.

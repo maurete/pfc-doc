@@ -1,0 +1,60 @@
+Para el problema \tripletsvm{} se obtienen las mejores tasas de
+clasificación.  En particular, para los conjuntos de caracteríesticas
+E y S-E ambas estrategias de selección de hiperparámetros obtienen
+resultados superiores al 96\% en sensibilidad y especificidad.  Para
+el conjunto de características de tripletes (T), utilizado en el
+trabajo original, los resultados obtenidos con ambas estrategias son
+menores a las tasas reportadas por los autores de \tripletsvm{}.
+
+Para los problemas \mipred{} y \micropred{}, se observa una diferencia
+notable entre la sensibilidad (SE) y espeficificad (SP). Este
+resultado es consecuencia del desbalance de clases en el conjunto de
+entrenamiento, ya que el MLP es más sensible a un desbalance que el
+clasificador SVM.
+
+La desviación estándar obtenida en el problema \tripletsvm{} es
+mínima, ya que las particiones entrenamiento/prueba son fijas tal como
+especificadas por los autores.  El origen de la variación en los
+resultados en cada prueba puede atribuirse a la inicialización
+aleatoria de los pesos en el MLP y las variaciones en las particiones
+de validación cruzada para las diferentes semillas aleatorias,
+modificando el curso del algoritmo de entrenamiento.
+
+Asimismo, se tiene que para \tripletsvm{} ambas estrategias de
+delección automática de hiperparámetros obtienen prácticamente las
+mismas tasas de clasificación.  Una interpretación de este resultado
+es que, para este problema, la separación máxima alcanzable por un MLP
+con una capa oculta es equivalente a un hiperplano en el espacio
+inducido, tal como aquel generado por un perceptrón simple (estrategia
+trivial).  Para los problemas \mipred{} y \micropred{}, en cambio, se
+ve que la estrategia de búsqueda exhaustiva resulta en mejores tasas
+$G_m$ y una reducción de la diferencia SP-SE respecto de la estrategia
+trivial.
+
+El problema \micropred{} resultó el más difícil de clasificar, con
+tasa Gm de 88\%. El problema \mipred{} en cambio se obtuvo una Gm
+máxima de 92\%.
+
+Respecto de los conjuntos de características, se observa que se
+obtienen resultados levemente mejores con el conjunto de
+características E que el S-E.
+
+\subsection{Costo computacional}
+El ``costo computacional'' se define de manera \hl{vaga} a partir el
+número de entrenamientos del clasificador requeridos para la selección
+automática de hiperparámetros, así como el tiempo total requerido para
+llevar a cabo estos entrenamientos en un ordenador personal
+(procesador Intel Core i5, 8\si{\giga b} de memoria RAM).  En la
+\autoref{tbl:cost-mlp} se presentan los valores obtenidos para la
+estrategia de búsqueda exhaustiva para el clasificador MLP, que
+corresponden a la media de las 5 ejecuciones de cada prueba con
+semillas pseudoaleatorias diferentes.
+
+En la implementación de la búsqueda exhaustiva para el clasificador
+MLP se efectúan 20 entrenamientos en todos los casos, sin embargo,
+e la tabla se puede ver que el tiempo de entrenamiento
+depende tanto del conjunto de características como de la
+cantidad de elementos en el conjunto de entrenamiento de cada
+problema, lo que es esperable dada la naturaleza del algoritmo
+de entrenamiento en modo \e{batch} \hl{chequear si es batch o que (haykin)}
+de un clasificador MLP.

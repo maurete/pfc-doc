@@ -1,0 +1,672 @@
+\section{Selección automática de hiperparámetros}
+La selección automática de hiperparámetros hace referencia a la
+implementación de la optimización de los hiperparámetros $\Btheta$ del
+clasificador para el problema dado.  Las diferentes ``estrategias''
+descritas a continuación abarcan tanto una
+\hyperref[funcobjetivo]{función objetivo} que representa la
+\e{aptitud} del modelo obtenido, así como un algoritmo de optimización
+de dicha función.
+
+\subsection{Selección trivial}
+La selección trivial consiste en seleccionar valores preestablecidos
+``razonables'' para los hiperparámetros del clasificador, que resulten
+apropiados para la mayoría de los problemas.
+
+Para el caso del Perceptrón Multicapa, la estrategia de selección
+trivial consiste en seleccionar $0$ neuronas en la capa oculta, de
+modo que el MLP resultante es equivalente a un perceptrón simple.
+
+Para una Máquina de Vectores de Soporte, la estrategia selecciona el
+valor $1$ para el hiperparámetro de regularización $C$ \cite{libsvm}, y
+un valor $\gamma=\frac{1}{2F}$ para el hiperparámetro de amplitud del
+kernel RBF, en donde $F$ es el número de características consideradas
+\cite{glasmachersigel}.
+
+Los hiperparámetros encontrados por esta estrategia no dependen del
+problema de clasificación, sino que son genéricos. Por ello, no se
+requiere entrenar el clasificador, y en general los valores
+encontrados deben considerarse subóptimos frente a las demás
+estrategias.  Así y todo, resulta conveniente su utilización para el
+análisis del comportamiento de los clasificadores frente a un problema
+dado.
+
+\subsection{Búsqueda exhaustiva}
+La estrategia de búsqueda exhaustiva define como función objetivo el
+valor $G_m$ promedio de validación cruzada, y selecciona
+hiperparámetros óptimos probando distintos valores posibles de cada
+hiperparámetro en un rango preestablecido.  Dado que la naturaleza de
+los hiperparámetros es diferente según el clasificador, el algoritmo
+de búsqueda también difiere en cada caso.
+
+\subsubsection{Perceptrón multicapa}
+El hiperparámetro a optimizar en el caso MLP es el número de neuronas
+en la capa oculta, una variable discreta no negativa.  La búsqueda
+consiste en entrenar 20 clasificadores con $h$ capas ocultas, variando
+$h$ entre los valores
+
+\begin{align}
+  \label{mlp-hidden-tries}
+  h=(0,1,2,3,4,5,7,9,11,14,19,24,32,41,54,70,91,118,154,200).
+\end{align}
+Estos valores representan una escala aproximadamente logarítmica entre
+0 y 200. Una vez probados todos los clasificadores con los conjuntos
+de validación cruzada, se selecciona el $h$ para el cual se obtuvo el
+mayor valor de $G_m$ en promedio.
+
+\subsubsection{Máquina de vectores de soporte}
+En el caso SVM, los hiperparámetros a optimizar son las variables
+reales no negativas $C$ y $\gamma$--sólo en caso de utilizar un núcleo
+RBF. En la práctica, la búsqueda se efectúa en el espacio logarítmico
+$\log{}C$, $\log\gamma$, eliminando el requerimiento de no negatividad
+de las variables.
+
+El algoritmo de búsqueda se basa en la técnica de \e{búsqueda en la
+  grilla} propuesta por \citeauthor{hsu} en \cite{hsu}.  La idea
+básica es considerar la combinación de hiperparámetros $(\log
+C,\log\gamma)$ como puntos en el plano.  Seleccionando una serie de
+puntos espaciados regularmente en el plano $\log-C\gamma$ (la
+``grilla''), se entrena y evalúa el clasificador sobre cada punto,
+interpolando la grilla en las cercanías de los puntos donde se obtiene
+el mayor rendimiento para continuar la búsqueda.
+
+En primer lugar, se definen los puntos de muestreo para los
+hiperparámetros
+
+\begin{align*}
+  \log_2 C &= -5, -3, -1, 1, \ldots, 15, & \log_2\gamma &= -15,-13,
+  -11, \ldots,3,
+\end{align*}
+que definen la grilla inicial. Para cada punto $(C_i,\gamma_j)$, se
+entrena y prueba un clasificador SVM, obteniendo un ${G_m}_{ij}$
+promedio de validación cruzada.
+
+En etapas sucesivas, se interpola la grilla alrededor de los puntos
+donde se obtuvieron los mayores valores $G_m$. Se definen tres algoritmos
+heurísticos que determinan cuáles puntos interpolar:
+
+\begin{itemize}
+  %
+\item \e{Zoom}: En un primer paso, se convoluciona la grilla con una
+  ventana cuadrada uniforme de valor unitario, obteniendo una versión
+  ``suavizada'' de la grilla. Se interpolan puntos en una región
+  cuadrada centrada en el punto con mayor valor $G_m$ ``suavizado'',
+  con precisión (refinamiento) y amplitud especificados por el
+  usuario, por defecto, se utiliza una precisión de $0.5$ la precisión
+  actual, y una amplitud de $0.5$ la amplitud actual en cada
+  dimensión.
+\item \e{Umbral}: A partir de un umbral $G_m$ definido por el usuario,
+  por defecto el percentil 90, se interpola en cada dimensión al $0.5$
+  de la precisión actual alrededor de los puntos por encima del
+  umbral.
+\item \e{$n$-mejores}: Similar al umbral, se seleccionan $n$ puntos
+  con los mayores valores de $G_m$. Se interpola la grilla en ambas
+  dimensiones al $0.5$ de la precisión actual alrededor de estos
+  puntos.
+\end{itemize}
+Una vez interpolada la grilla, se calcula el valor $G_m$ promedio de
+validación cruzada para los nuevos puntos. El procedimiento de
+refinamiento se repite hasta un máximo de $N$ iteraciones o hasta
+satisfacer un criterio de corte.
+
+La búsqueda en la grilla tiene la ventaja de ser conceptualmente
+simple, sin embargo, se torna inviable cuando el vector de parámetros
+$\B{\theta}$ contiene más de 2 elementos. Dado que se trata de un
+método de búsqueda exhaustiva, resulta generalmente lento.  Cuando se
+trabaja con un clasificador SVM con núcleo lineal, la grilla en
+cuestión tiene una única dimensión: la del hiperparámetro $\log C$.
+
+\subsection{Minimización del error empírico}
+La estrategia de minimización del error empírico es aplicable al
+clasificador SVM, y optimiza mediante descenso de gradiente una
+función objetivo denominada \e{error empírico} que se define a partir
+de una interpretación probabilística del modelo SVM.
+
+La función error empírico fue propuesta por \citeauthor{ayat} en
+\cite{ayat} como una función objetivo continua y derivable respecto a
+los hiperparámetros del núcleo.  La estrategia aquí presentada
+incorpora además el cálculo del gradiente respecto del hiperparámetro
+$C$ \cite{keerthi, glasmachers}, implementado en \cite{shark}, lo que
+permite optimizar todos los hiperparámetros de la Máquina de Vectores
+de Soporte, incluyendo la regularización $C$, siempre que el núcleo
+sea derivable respecto de sus propios hiperparámetros.
+
+\begin{quote}
+  \sbs{Notación.}
+  El lector experto encontrará que la denominación ``error empírico''
+  resulta confusa, ya que en la disciplina este nombre se utiliza como
+  equivalente de ``error de entrenamiento''. En el presente trabajo se
+  ha decidido mantener esta denominación de los autores \cite{ayat},
+  efectuando el mayor esfuerzo por distinguir entre ``error de
+  entrenamiento'' y la función objetivo ``error empírico'', que se
+  trata más precisamente de una interpretación probabilística del
+  error de validación cruzada.
+  %% Se advierte al lector experto en la materia que, en toda la
+  %% extensión del presente trabajo, la denominación ``error empírico''
+  %% hace referencia únicamente a la función objetivo aquí definida,
+  %% utilizándose el término ``error de entrenamiento'' para referir al
+  %% concepto de otro modo conocido como ``riesgo empírico'' en la
+  %% especialidad.
+\end{quote}
+La función objetivo del error empírico se basa en la definición del
+error del clasificador sobre un conjunto de prueba $T$, el cual es
+un estimador
+no sesgado del error de generalización.  Considérese la definición del
+error de prueba sobre un conjunto $T=((\xx_k,y_k)),\,n=1,\ldots,N$ de
+clase conocida (\autoref{eq:error-prueba}).  Este error puede
+escribirse en la forma equivalente
+
+\begin{align*}
+\label{E^V}
+  E^T = \frac{1}{N}\sum_{k=1}^{N} H(-{y}_k {c}_k))
+\end{align*}
+donde $c_k=h(\xx_k)$ es la predicción de clase del modelo SVM
+entrenado, y $H(\cdot)$ es la función escalón de Heaviside.  Fijando
+el tipo de núcleo utilizado y los conjuntos de datos de entrenamiento
+y validación, se puede considerar
+
+\begin{align*}
+  E^T = E^T(\theta),
+\end{align*}
+y consecuentemente, minimizar $E^T(\Btheta)$ equivale a seleccionar
+los hiperparámetros óptimos $\Btheta$. La función $E^T$ así definida
+es una función objetivo válida para la comparación de modelos, sin
+embargo, por definición es una función discontinua, lo que
+imposibilita la optimización eficiente mediante descenso de gradiente.
+
+Una interpretación alternativa del concepto de error, basada en la
+teoría bayesiana, permite desarrollar una función objetivo con
+características deseables de continuidad y derivabilidad.  Si $p_k$ es
+la \e{probabilidad a posteriori} de que el ejemplo $\xx_k$ pertenezca
+a la clase positiva
+
+\begin{align}
+  p_k = p(x_k) = P(c_k=+1|x_k), % = z_k
+\end{align}
+se puede caracterizar la \e{probabilidad de error} $E_k$ cometido al
+clasificar el ejemplo $\xx_k$ según
+
+\begin{align}
+\label{Ek}
+  E_k = P(c_k\neq y_k) = |t_k-{p}_k| =
+  \begin{cases}
+    {p}_k, & t_k=0\\ 1-{p}_k, & t_k = 1,
+  \end{cases}
+\end{align}
+donde $t_k=\frac{y_k+1}{2}$ es un ``valor deseado'' calculado a partir
+de la clase conocida $y_k$.  Entonces, la probabilidad de error para
+el conjunto $T$ puede escribirse
+
+\begin{align}
+\label{Err1}
+  E = \sum_{k=1}^{N} E_k.
+\end{align}
+La función $E$ especifica el denominado \e{error empírico} y es la
+función objetivo a minimizar.  Para su cálculo, sin embargo, se
+requiere el conocimiento de la probabilidad $p_k$, información que el
+modelo SVM no brinda, al tratarse de una salida binaria.  Sin embargo,
+resulta posible calcular una probabilidad estimada $\hat{p}_k$, que
+permite su utilización en la práctica.
+
+\subsubsection{Estimación de la probabilidad ${p}_k$}
+El modelo $h$ de una máquina de vectores de soporte
+(\autoref{eq:svm-model-hard}) puede escribirse
+
+\begin{align*}
+  h(\xx_k) = \T{signo}(f_k), \qquad\qquad
+  f_k=\langle\ww,\BPhi(\xx_k)\rangle+b.
+\end{align*}
+Utilizando el valor de $f_k$, la salida del modelo
+previa a aplicar la función signo, se puede calcular una probabilidad
+estimada $\hat{p}_k$ según
+
+\begin{align}
+  \hat{p}_k=\frac{1}{1+e^{Af_k+B}} \qquad \approx p_k.
+\end{align}
+Los parámetros $A$ y $B$ se determinan optimizando el problema
+
+\begin{align}
+  \arg\min_{A,B} \quad & -\sum_{k=1}^{N} \log(E_k)
+  \label{abproblem}
+\end{align}
+sobre el conjunto de prueba $T$. La optimización de este sub-problema
+se realiza mediante una técnica de descenso de gradiente, ya que las
+derivadas de $\hat{p}_k$ respecto de sus parámetros $A$ y $B$ son
+fácilmente calculables:
+
+\begin{align*}
+  \dpar{\hat{p}_k}{A}{}&=-f_k e^{Af_k+B}\frac{1}{(1+e^{Af_k+B})^2}
+  =-f_k\hat{p}_k(1-\hat{p}_k),&\\
+  \dpar{\hat{p}_k}{B}{}&=    -e^{Af_k+B}\frac{1}{(1+e^{Af_k+B})^2}
+  =-   \hat{p}_k(1-\hat{p}_k).
+\end{align*}
+Esta técnica para obtener un estimador $p_k$ de la probabiidad a
+posteriori real fue presentada por \citeauthor{platt} en \cite{platt}.
+La elección de una función logística como $\hat{p}_k$ se basa en la
+presunción de que las salidas $f_k$ para las entradas $\{\xx_k\}$ de
+clase positiva tienen una distribución gaussiana en $f$.
+
+Una interpretación intuitiva de $\hat{p}_k$ es que, para una salida
+$f_k$ de gran magnitud que se ubica lejos del hiperplano de separación
+en el espacio inducido por el núcleo, el clasificador SVM tiene amplia
+certeza de su decisión.  Asimismo, se tendrá que cuando el valor de
+$f_k=0$, $x_k$ recae exactamente en el plano de separación y se
+obtiene la peor predicción posible $\hat{p}_k=0.5$\footnote{La
+  condición $\hat{p}_k=0.5$ cuando $x_k$ se ubica sobre el plano de
+  separación implica $B=0$, sin embargo, se considera igualmente $B$
+  como un valor a optimizar, respetando el método original
+  \cite{platt}.} y, similarmente, cuanto más ancho sea el margen de
+separación, más suave deberá ser la pendiente de $\hat{p}_k$.
+
+\subsubsection{Cálculo del gradiente $\grad{E}$}
+Sustituyendo la probabilidad real $p_k$ por el estimador
+$\hat{p}_k$, y calculando el gradiente, se tiene
+
+\begin{align}
+\label{gradE}
+  \grad{E} = \sum_{k=1}^{N} \grad{E_k} =
+  \sum_{ i:t_i=0  } \grad{\hat{p}_i}
+  - \sum_{ j:t_j=1  } \grad{\hat{p}_j}
+  = \sum_{k=1}^{N} y_k \grad{\hat{p}_k}
+\end{align}
+Por la regla de composición de las derivadas, la derivada
+$\grad{\hat{p}_k}=\dpar{\hat{p}_k}{\theta_j}{}$ respecto de un
+hiperparámetro ${\theta_j}$ es
+
+\begin{align}
+  \dpar{\hat{p}_k}{\theta_j}{} =
+  \dpar{\hat{p}_k}{f_k}{}\dpar{f_k}{\theta_j}{} =
+  -A\hat{p}_k(1-\hat{p}_k)\dpar{f_k}{\theta_j}{}.
+  \label{eq:deriv-pk-thetak}
+\end{align}
+Para la determinación de $\dpar{f_k}{\theta_j}{}$ se sigue el
+procedimiento propuesto en \cite{keerthi, glasmachers} e implementado
+en \cite{shark}.
+En primer lugar, se observa que $f_k$ puede calcularse según
+
+\begin{align}
+  f_k = \langle w,\Phi(x_k)\rangle+b = \sum_{i=1}^l \alpha_i y_i k(x_i,x_k) + b
+  \label{fk}
+\end{align}
+donde $k(\cdot,\cdot)$ es la función núcleo, y $\alpha_i, b$ son los
+parámetros del modelo SVM entrenado $h$.
+
+Según sea el valor de $\alpha_i$ correspondiente al vector de
+entrenamiento $\xx_i$, se definen los conjuntos de índices
+
+\begin{align}
+  \label{unbounded-sv-set}
+  u &= \left\{i\in\{1,\ldots,l\}:0<y_i\alpha_i<C \right\}\\
+  \label{bounded-sv-set}
+  g &= \left\{i\in\{1,\ldots,l\}: y_i\alpha_i=C \right\}\\
+  n &= \left\{i\in\{1,\ldots,l\}: \alpha_i=0 \right\}.
+\end{align}
+Mediante interpretación geométrica de la solución al problema de la
+SVM, se sabe que para aquellos vectores $\xx_i$ que no son de soporte,
+se cumple que $\alpha_i=0$, luego las derivadas $\alpha_n$ respecto de los
+hiperparámetros son nulas. Para el caso $\alpha_i=\pm{}C$, se tiene
+
+\begin{align}
+  \dpar{\alpha_g}{C}{} = y_g, && \dpar{\alpha_g}{{\theta}^K_j}{} = 0,
+\end{align}
+ya que el valor de $\alpha_g$ viene limitado (en valor absoluto) por el
+parámetro $C$. Para simplificar el cálculo de las derivadas de
+$\alpha_u$ y $b$ se plantea un problema en forma matricial. Sea la
+\emph{matriz del núcleo} $K$
+
+\begin{align}
+  K = \begin{pmatrix} k(x_1,x_1) & k(x_1,x_2) & \cdots & k(x_1,x_l)
+    \\ k(x_2,x_1) & k(x_2,x_2) & \cdots & k(x_2,x_l) \\ \vdots &
+    \vdots & \ddots & \vdots \\ k(x_l,x_1) & k(x_l,x_2) & \cdots &
+    k(x_l,x_l)
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    (K_{\uu\uu}) & (K_{\uu\Bg}) & (K_{\uu\nn}) \\
+    (K_{\Bg\uu}) & (K_{\Bg\Bg}) & (K_{\Bg\nn}) \\
+    (K_{\nn\uu}) & (K_{\nn\Bg}) & (K_{\nn\nn})
+  \end{pmatrix}
+\end{align}
+donde en la matriz de la derecha los elementos de $K$ han sido
+reordenados en submatrices $K_{uu},K_{ug},\ldots$ según los conjuntos
+de índices $u, g, n$ definidos anteriormente.  Sea la matriz
+
+\begin{align}
+  H=\begin{pmatrix} K_{uu} & \B{1}_u \\ \B{1}_u^T & 0
+  \end{pmatrix}
+\end{align}
+con $\B{1}_u$ un vector columna de $|u|$ elementos iguales a 1,
+entonces la derivada de $(\B{\alpha}_u,b)^T$ respecto del
+hiperparámetro $j$ del núcleo $\theta^K_j$ viene dada por
+
+\begin{align}
+  \dpar{}{\theta^K_j}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=
+    -H^{-1} \left[
+      \dpar{H}{\theta^K_j}{}
+      \begin{pmatrix}\alpha_{u}\\b\end{pmatrix}
+        +C \begin{pmatrix}\dpar{K_{gu}}{\theta^K_j}{}\\0\end{pmatrix}
+          y_g
+          \right], \\
+  \dpar{}{C}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=
+    -H^{-1} \left[
+      \begin{pmatrix}{K_{gu}}\\\B{1_g^T}\end{pmatrix} y_g
+      \right],
+\end{align}
+donde $\B{1}_g$ un vector columna de $|g|$ elementos iguales a 1 y
+$\B{y}_g$ el vector de clases correspondientes a los elementos en
+$g$. Para los detalles de este resultado se refiere al lector a
+\cite{glasmachers} y \cite{keerthi}.
+
+Una vez obtenidas las derivadas de $({\B{\alpha},b})^T$ respecto de
+los hiperparámetros $\B{\theta}$, la derivada de $f_k$  respecto
+de los mismos viene dada por
+
+\begin{align}
+  \dpar{f_k}{C}{} &=  \sum_{i=1}^l y_i\left[
+    \dpar{\alpha_i}{C}{} k(x_i,x_k) \right]
+  + \dpar{b}{C}{} ,\\
+  \dpar{f_k}{\theta^K_j}{} &=  \sum_{i=1}^l y_i \left[
+    \dpar{\alpha_i}{\theta^K_j}{} k(x_i,x_k) +
+    \dpar{k(x_i,x_k)}{\theta^K_j}{} \alpha_i \right]
+  + \dpar{b}{\theta^K_j}{}. 
+\end{align}
+Con este resultado, resulta posible el cálculo de la derivada de la
+probabilidad estimada $\dpar{\hat{p}_k}{\theta_j}{}$
+(\autoref{eq:deriv-px-thetak}), y con ella la del gradiente
+$\nabla{}E$ (\autoref{gradE}).
+
+\subsubsection{Algoritmo de optimización}
+Dado el conjunto de entrenamiento $D$, en cada punto de evaluación
+$\Btheta$ el error empírico $E(\Btheta)$ se calcula del siguiente modo
+
+\begin{enumerate}
+\item Aplicando validación cruzada, entrenar un modelo SVM para cada
+  conjunto de estimación.
+\item Calcular las salidas $f_k$ (\autoref{fk}) de los
+  modelos para todos los ejemplos $\xx_k$ en las respectivas
+  particiones de validación.
+\item Encontrar valores óptimos de los parámetros $A$ y $B$, partiendo
+  de valores iniciales $A_0=1$, $B_0=0$ (\autoref{abproblem}).
+\item Calcular las probabilidades estimadas $\hat{p}_k$ y con ellas,
+  el error empírico de cada ejemplo $E_k$ y global $E$.
+\item Calcular el gradiente $\nabla{}E$.
+\end{enumerate}
+Partiendo de un punto inicial $\Btheta^0$, la búsqueda procede en cada
+punto $\Btheta^i$ evaluando la función objetivo y determinando un
+nuevo punto $\Btheta^{i+1}$ a partir del valor $E^i=E(\Btheta^i)$ y la
+información disponible en el gradiente $\nabla{}E^i$ hasta satisfacer
+algún criterio de corte, por ejemplo
+
+\begin{align*}
+  |E^i-E^{i-1}|&<\eta, & \|\nabla E^i\| < \nu,
+\end{align*}
+donde $\eta$ y $\nu$ son números pequeños.  Este esquema es
+implementado en la estrategia de minimización del error empírico
+mediante el algoritmo de optimización BFGS \cite{bfgs}.
+
+\subsection{Minimización de la cota radio-margen}
+La cota ``radio-margen'' es una función con la propiedad de ser un
+límite superior al error de validación cruzada dejando uno fuera, y se
+calcula directamente a partir de la información disponible en el
+modelo de una máquina de vectores de soporte.  La función
+``radio-margen'' propuesta originalmente por \citeauthor{vapnik}
+\cite{vapnik} para un modelo SVM  con término de regularización $L2$
+(\autoref{svm-l2}), viene dada por % vapnik sec. 10.7, pag 441
+
+\begin{align}
+  \T{RM} = 4R^2 \|w\|^2.
+\end{align}
+Aquí, $R$ es el radio de la hiperesfera que, en el espacio inducido
+por el núcleo, engloba todos los vectores de soporte, y $\|\ww\|$ es
+la norma del vector normal al hiperplano de separación, que define el
+margen del modelo $h$ de la SVM.  Para esta cota, se cumple
+desigualdad
+
+\begin{align}
+  E_{\T{LOO}} \leq \T{RM},
+\end{align}
+donde $E_{\T{LOO}}$ es el error de validación cruzada dejando uno
+fuera.
+
+El error de validación cruzada dejando uno fuera $E_{\T{LOO}}$ es uno
+de los mejores estimadores del error de generalización disponibles.
+Por ello, la idea de minimizar una cota de este error, que es a la vez
+es continua, derivable y fácilmente calculable, resulta muy atractiva.
+De hecho, en \cite{chapelle} se presenta un algoritmo de minimización
+de la cota $\T{RM}$ mediante descenso por gradiente en el espacio de
+los hiperparámetros.  Sin embargo, dado que la mayoría de SVMs
+utilizadas en la práctica incorporan regularización $L1$ en lugar de
+$L2$, la utilidad real de minimizar la cota $\T{RM}$ es limitada.
+
+En \cite{chung} se proponen varias funciones ``alternativas'',
+inspiradas en la cota radio-margen $\T{RM}$, y aplicables al caso
+específico del núcleo gaussiano (RBF) y formulación $L1$. La
+estrategia aquí propuesta utiliza una de estas cotas
+alternativas, denotada $\rho$ y definida según
+
+\begin{align}
+  \rho = \rho_R \cdot \rho_M,
+\end{align}
+donde $\rho_R$, $\rho_M$ son los factores ``radio'' y ``margen''
+
+\begin{align}
+  \rho_R &= R^2+\frac{1}{C}, \\
+  \rho_M &= \|\ww\|^2+2C\sum\xi_i.
+\end{align}
+A diferencia de $\T{RM}$, la función $\rho$ ajusta el valor
+real de $E_{\T{LOO}}$ con demasiada holgura, con lo que su valor
+pierde el significado original de representar una tasa de error. Sin
+embargo, tiene la importante propiedad de poseer un mínimo global en
+las cercanías de los hiperparámetros óptimos $(C,\gamma)$ que
+minimizan la tasa de error $E_{\T{LOO}}$.
+
+\subsubsection{Cálculo de $\rho$}
+El valor $R^2$, necesario para el cálculo de $\rho_R$, viene dado por
+
+\begin{align}
+  R^2 = 1 - \Bbeta_*^T \KK \Bbeta_*,
+\end{align}
+donde $\Bbeta_*$ es la solución al problema de optimización conocido
+como ``SVM de una clase'' \cite{scholkopf}
+
+\begin{align}
+\begin{split}
+  \arg\min_{\Bbeta}\quad&\Bbeta^T \KK \Bbeta,\\
+  \T{sujeto a}    \quad&0\leq\beta_i\leq{}1,\quad{}i=1,\ldots,\ell,\\
+                       &\B{1}^T_\ell\,\Bbeta=1.
+  \end{split}
+  \label{svm-oneclass}
+\end{align}
+Aquí, $\B{1}_{\ell}$ es un vector columna con $\ell$ elementos iguales
+a 1, y $\KK$ es la matriz del núcleo con elementos
+$k_{ij}=k(\xx_i,\xx_j)$. La matriz $\KK$ es definida positiva siempre
+que se cumpla la condición
+
+\begin{align}
+\label{cond-kmatrix-defpos}
+  i\neq j \iff \xx_i\neq\xx_j,\quad \forall\,i,j\in{1,\ldots,\ell},
+\end{align}
+esto es, siempre que no haya ejemplos repetidos en el conjunto de
+entrenamiento. Sin perder mucha generalidad, se considera que tal es
+el caso, y con ello, se asegura que el problema \cite{svm-oneclass}
+tiene solución única \cite{SOL-UNICA-DEFINIDA-POSITIVA}.
+
+El valor ``margen'' $\rho_M$ es dos veces la solución al problema de
+optimización de la SVM (\autoref{svm-primal-blando}).  Dada la
+equivalencia primal-dual de la solución, si $\Balpha$ es solución a
+la forma dual (\autoref{svmprob-dual-soft}), se tiene simplemente
+
+\begin{align}
+\label{prieqdual}
+  \rho_M &= 2\left(\frac{1}{2}\|\ww\|^2+C\sum\xi_i \right)
+  =2\left(\B{e}^T\Balpha-\frac{1}{2}\Balpha^T\B{Q}\Balpha\right),
+\end{align}
+donde $\QQ$ es la matriz con elementos $Q_{ij}=y_iy_jk(\xx_i,\xx_j)$.
+
+\subsubsection{Cáclulo del gradiente $\nabla\rho$}
+El cálculo de las derivadas de $\rho$ se basa en resultados de
+análisis de perturbación de problemas de optimización, ya que tanto
+$\rho_R$ como $\rho_M$ son soluciones a problemas de este tipo.  La
+discusión en este apartado se basa en aquella presentada por
+\citeauthor{chung} en \cite{chung}.
+
+El Teorema 4.1 de \cite{bonnans-shapiro} establece:
+
+\begin{quote}
+  Considérese un problema de optimización en la forma
+  $f_*(\vv)=\min_{\uu\in{}U}f(\uu,\vv)$ con vector $\uu$ de variables a
+  optimizar, vector de parámetros $\vv$, y $U$ independiente de
+  $\vv$. Entonces, si para cada $\vv$ existe un $\uu_*(\vv)\in{}U$
+  tal que $f_*(\vv)=f(\uu_*(\vv),\vv)$, la derivada
+  $\dpar{f_*}{\vv}{}(\vv)$ existe y $\dpar{f_*}{v_i}{}$ viene dado por
+  $\dpar{f_*}{v_i}{}(\uu_*,\vv)$ para cualquier parámetro $v_i$.
+\end{quote}
+
+Como se ha visto anteriormente, exigiendo la no-repetición de ejemplos
+en el conjunto de entrenamiento (\ref{cond-kmatrix-defpos}) se
+garantiza la existencia de la solución $\uu_*$.
+El problema (\ref{svm-oneclass}) cumple con los requisitos del teorema,
+luego las derivadas de $R^2$ respecto de los hiperparámetros vienen
+dadas por
+
+\begin{align}
+  \dpar{R^2}{C}{} &= \dpar{(1-\Bbeta^T\KK\Bbeta)}{C}{}
+  = -\Bbeta^T \dpar{\KK}{C}{}\Bbeta = 0, \\
+  \dpar{R^2}{\gamma}{} &= \dpar{(1-\Bbeta^T\KK\Bbeta)}{\gamma}{}
+  = -\Bbeta^T \dpar{\KK}{\gamma}{}\Bbeta.
+\end{align}
+En el caso $\rho_M$ el teorema anterior no aplica, ya que
+
+\begin{enumerate}
+\item La restricción $\alpha_i\leq{}C$ depende de $C$, violando la condición
+  necesaria ``$U$ independiente de $\vv$''.
+\item El vector $\Bxi$ óptimo puede no ser único ya que el parámetro $b$ óptimo
+  puede no ser único cuando el modelo no contiene vectores de soporte
+  ``libres'' (esto es, cuando $u=\emptyset$ (\ref{unbounded-sv-set})).
+\end{enumerate}
+Para salvar estos inconvenientes, se aprovecha la dualidad del
+problema en el punto óptimo $\Balpha_*$, y se efectúa el cambio de
+variable $\bar{\Balpha}=\Balpha/C$ en el problema dual
+(\ref{svmprob-dual-soft}) de modo que las restricciones sean
+independientes del hiperparámetro $C$
+
+\begin{align}
+\begin{split}
+    \max_{\bar{\Balpha}}\quad&
+    f(\bar{\Balpha}) = C^2 \left( \frac{\B{1}^T\bar{\Balpha}}{C}
+    -\frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right)\\
+    \T{sujeto a}\quad & \yy^T\bar{\Balpha} = 0, \\
+    & 0\leq\bar{\alpha}_i\leq 1,
+    \T{ para todo } i\in {1,\ldots,\ell }.
+\end{split}\end{align}
+Este problema cumple con las condiciones del teorema ya que
+no depende de $\Bxi$ y cuenta con solución única
+ya que $Q$ es definida positiva (\ref{cond-kmatrix-defpos}). Entonces,
+
+\begin{align}
+\label{eq:rmb-alpha-equiv}
+  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha
+  &= C^2\left(\frac{\B{1}^T\bar{\Balpha}}{C} -
+  \frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right).
+\end{align}
+Con estos resultados se está en condiciones de calcular las derivadas de
+$\rho$ respecto de los hiperparámetros $C$ y $\gamma$:
+Las derivadas respecto a $C$ vienen dadas por
+
+\begin{align}
+  \begin{aligned}
+    \dpar{\rho_M}{C}{}
+    &= \dpar{}{C}{}2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right) \\
+    &= \dpar{}{C}{}\left( 2C^2\left(\frac{\B{1}^T\bar{\Balpha}}{C} -
+    \frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right)
+    \right) \\
+    &= 4C \left(\frac{\B{1}^T\bar{\Balpha}}{C} -
+    \frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right) - 2C^2 \left(\frac{\B{1}^T\bar{\Balpha}}{C^2} \right) \\
+    &= 2\left(\B{1}^T\bar{\Balpha} - C \bar{\Balpha}^T\QQ\bar{\Balpha}\right) \\
+    &= \frac{2}{C} \left(\B{1}^T\Balpha - \Balpha^T\QQ\Balpha\right)
+  \end{aligned}
+  \\
+  \begin{aligned}
+    \dpar{\rho_M}{C}{}
+    &= \dpar{}{C}{} \left( R^2 + \frac{1}{C} \right) \\
+    &= -\frac{1}{C^2}.
+  \end{aligned}
+\end{align}
+
+Las derivadas respecto del hiperparámetro $\gamma$ vienen dadas por
+
+\begin{align}
+  \begin{aligned}
+    \dpar{\rho_M}{\gamma}{}
+    &= \dpar{}{\gamma}{} 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right) \\
+    &= - \Balpha^T \dpar{\QQ}{\gamma}{}\Balpha \\
+    & = - \Balpha^T \left(\yy^T \dpar{\KK}{\gamma}{}\yy\right) \Balpha
+    %% \\
+    %% & = \sum_{i,j=1}^\ell \alpha_i\alpha_j y_i y_j \dpar{k(\xx_i,\xx_j)}{\gamma}{}, \\[0.2em]
+  \end{aligned}
+  \begin{aligned}
+    \dpar{\rho_R}{\gamma}{} &= \dpar{R^2}{\gamma}{} \\
+    = - \Bbeta^T \dpar{\KK}{\gamma}{} \Bbeta. % \\
+%    &= \sum_{i,j=1}^\ell \beta_i\beta_j \dpar{k(\xx_i,\xx_j)}{\gamma}{}.
+  \end{aligned}
+\end{align}
+Los elementos $\dpar{k_{ij}}{\gamma}{}$ de la matriz $\dpar{\KK}{\gamma}{}$ 
+vienen ddados por
+
+\begin{align}
+  \dpar{k_{ij}}{\gamma}{}
+  = \dpar{}{\gamma}{}k(\xx_i,\xx_j)
+  = \dpar{}{\gamma}{} \left(e^{-\gamma\|\xx_i-\xx_j\|}\right)
+  = -k_{ij}\|\xx_i-\xx_j\|
+\end{align}
+Con todo esto, las derivadas de la función $\rho$ respecto de los
+hiperparámetros vienen dadas por
+
+\begin{align*}
+    \dpar{\rho}{C}{} &= \dpar{\rho_M}{C}{} \rho_R + \rho_M \dpar{\rho_R}{C}{} \\
+    &= \frac{2}{C} \left(\B{1}^T\Balpha - \Balpha^T\QQ\Balpha\right) \left( R^2 + \frac{1}{C} \right)
+    - 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right)
+    \left( \frac{1}{C^2} \right)\\
+    &=
+  \\[2em]
+    \dpar{\rho}{\gamma}{} &= \dpar{\rho_M}{\gamma}{} \rho_R + \rho_M \dpar{\rho_R}{\gamma}{}\\
+    &= \left( - \Balpha^T \left(\yy^T \dpar{\KK}{\gamma}{}\yy\right) \Balpha \right)
+    \left( R^2 + \frac{1}{C} \right)
+    - 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right)
+    \left( \Bbeta^T \dpar{\KK}{\gamma}{} \Bbeta \right)
+\end{align*}
+donde
+
+\begin{align}
+  k_{ij}&=k(x_i,x_j)=e^{-\gamma||x_i-x_j||},\,\, \T{y} \\
+  \dpar{k_{ij}}{\gamma}{}&=-k_{ij}||x_i-x_j||
+\end{align}
+son la función kernel RBF y su derivada respecto del hiperparámetro $\gamma$,
+respectivamente.
+
+\subsubsection{Algoritmo de optimización}
+Partiendo de un punto inicial $(C^0,\gamma^0)$ la búsqueda procede
+en cada punto $(C^k,\gamma^k)$ evaluando $\rho^k$ y determinando
+un nuevo punto $(C^{k+1},\gamma^{k+1})$ en la dirección del
+negativo del gradiente $\nabla\rho^k$ tal que $\rho^{k+1}<\rho^k$
+La optimización de la función $\rho$ se efectúa mediante el algoritmo
+BFGS \cite{bfgs} en el espacio logarítmico de los hiperparámetros
+$(\ln(C),\ln(\gamma))$. Este cambio de coordenadas se traduce en un
+incremento de la estabilidad numérica y evita tener que verificar en
+cada iteración la no-negatividad de $C$ y $\gamma$.
+
+\begin{align}
+  \dpar{\rho}{\ln C}{}= C \dpar{\rho}{C}{}, &&
+  \dpar{\rho}{\ln \gamma}{}= \gamma \dpar{\rho}{\gamma}{}
+\end{align}
+Para un conjunto de entrenamiento $D=((\xx_i,y_i),i=1,\ldots,\ell)$
+cada evaluación de $\rho(\Btheta_k)$ consta de los siguientes pasos
+
+\begin{enumerate}
+\item Entrenar una máquina de vectores de soporte con núcleo RBF
+  con hiperparámetros $\Btheta_k=(C_k,\gamma_k)$ sobre el conjunto
+  de entrenamiento completo $D$
+\item Calcular $\Bbeta_*$ óptimo para el problema (\ref{svm-oneclass})
+\item Calcular el valor de $\rho$ como el producto de
+  $\rho_M$ (\ref{rho_m}) y $\rho_r$ según (\ref{rho_r})
+\item Calcular el gradiente $\nabla\rho$.
+\end{enumerate}
