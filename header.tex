@@ -1,3 +1,174 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ../pfc/doc/conf/preconfig.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% define  \ifpdf {...} \fi to test for compilation with pdflatex.
+%% \newif\ifpdf
+%% \ifnum\pdfoutput<0
+%% \pdffalse\fi
+%% \ifnum\pdfoutput=0
+%% \pdffalse\fi
+%% \ifnum\pdfoutput>0
+%% \pdftrue\fi
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ../pfc/doc/conf/fuentes.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\usepackage[scale=0.96]{tgheros}
+\usepackage[scaled=0.9]{zi4}
+% \renewcommand{\tt}{\mathtt} % evitar clash de euler con koma-script
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ../pfc/doc/conf/packages.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ===
+% === I18n / L10n
+% ===
+%
+% babel me da separación de sílabas para palabras en el idioma que le paso como
+%       argumento opcional.
+\usepackage[spanish,es-tabla,english]{babel}
+%
+% inputenc define la codificación de caracteres del código fuente, acá utf8.
+\usepackage[utf8]{inputenc}
+%
+% ===
+% === Layout
+% ===
+% 
+% relsize provee comandos para utilizar tamaños de fuente relativos
+\usepackage{relsize}
+%
+% ===
+% === Gráficos
+% ===
+% 
+% pst-pdf me permite usar PSTricks con pdflatex. Necesito cargarlo sólo si está
+%         definida la variable pdf, por eso está entre \ifpdf ... \fi
+%\ifpdf\usepackage{pst-pdf}\fi
+%
+% color me permite usar colores en el documento.
+\usepackage{color}
+%
+% graphicx me da el comando \includegraphics para insertar imágenes (?)
+\usepackage{graphicx}
+%
+% pstricks es un conjunto de macros basadas en PostScript para TeX, en
+%          castellano: me da un entorno pstricks y comandos que uso dentro de
+%          éste, que me sirven para dibujar figuras/diagramas/etc de manera
+%          relativamente simple.
+%\usepackage{pstricks}
+%
+% pst-circ me da macros para pstricks que me dibujan elementos de circuitos
+%\usepackage{pst-circ}
+%
+% pst-plot me provee de funciones de ploteo para pstricks
+%\usepackage{pst-plot}
+%
+% pst-2dplot me sirve para plotear en pstricks, entorno pstaxes
+%\usepackage{pst-2dplot}
+%
+% ===
+% === Verbatims
+% ===
+%
+% verbatim es una reimplementación de los entornos verbatim[*]
+%          provee el comando \verbatiminput{archivo} y el entorno comment, que
+%          hace que LaTeX ignore directamente todo lo que está adentro
+%\usepackage{verbatim}
+%
+% fancyvrb es verbatim con coloreado, implementa entorno Verbatim
+\usepackage{fancyvrb}
+\fvset{fontsize=\footnotesize,commandchars=\\\{\}}
+%
+% moreverb implementa el entorno verbatimtab indentando los tabs que encuentre,
+%          y también el entorno listing, que pone números de línea al verbatim.
+%          Para cambiar el ancho de la tabulacion, uso
+%          \renewcommand\verbatimtabsize{<ancho del tab>\relax}
+%          También define el entorno boxedverbatim.
+%\usepackage{moreverb}
+%
+% listings me da el entorno lstlisting con resaltado de sintaxis.
+%          Para setear el lenguaje del código, hago \lstset{language=<lang>}
+%\usepackage{listings}
+%
+% url es un verbatim para escribir URL's que permite linebreaks dentro de ésta.
+%     para usarlo, \url{<URL>}
+\usepackage{url}
+%
+% ===
+% === Más packages
+% ===
+%
+\usepackage{bbold}		%Fuente bb para modo math: \mathbb{R} = reales
+\usepackage{dsfont}		%Fuente ds para modo math: \mathds{R} = reales
+\usepackage{multirow}		%Para "combinar" celdas en tablas
+\usepackage{float}		%Para mejorar cuadros, figuras, etc
+\usepackage{amsmath}		%Para enornos matemáticos mas flexibles
+%
+%
+%
+\usepackage[backend=biber,sorting=none,style=ieee,eprint=false,url=false]{biblatex} %% style=ieee
+%% requiere texlive-bibtex-extra en debian
+
+\usepackage{enumitem}
+\setlist{noitemsep}
+%% \setlist[description]{noitemsep}
+%% \setlist[enumerate]{noitemsep}
+%% \setlist[itemize]{noitemsep}
+
+\usepackage{tikz}
+\usepackage{pgfkeys}
+\usepackage{pgfgantt}
+\usetikzlibrary{babel}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes.multipart}
+
+% typearea: uso con koma-script para ajustar márgenes de página.
+% vars globales a setear en la clase koma-script: DIV=12, BCOR=margen de ``binding'' para double side
+\usepackage{typearea}
+
+% para poder usar footnotes p.ej, adentro de un tabular
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+
+% para tabulars mas lindos/legibles
+\usepackage{booktabs}
+% tablas que se extienden por varias págs.
+\usepackage{longtable}
+
+% para tabulars mas lindos/legibles
+\usepackage{tabu}
+
+% para alinear numeros en el punto decimal (dentro de un tabular)
+\usepackage[detect-all,alsoload=abbr]{siunitx}
+
+%\usepackage{glossaries}
+
+\usepackage[spanish]{algorithm2e}
+
+% para highlight (comando \hl{})
+\usepackage{soulutf8}
+
+% para teoremans etc
+\usepackage{amsthm}
+
+% para tunear citations
+%\usepackage[square,comma,numbers,sort&compress]{natbib}
+
+\usepackage{hyperref}
+% lo siguiente hace que los enlaces generados por hyperref apunten a
+% /la figura/, en lugar de /la caption/ de la figura
+\usepackage[hypcap]{caption}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% header.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \hyphenation{micro-RNA}
 \hyphenation{micro-RNAs}
 \hyphenation{mi-RNA}
@@ -116,3 +287,227 @@
   \item[Función]{#1}\item[Entradas]{#2}\item[Salidas]{#3}%
 \end{description}}
 \renewcommand{\bibfont}[][]{\normalfont\footnotesize}
+
+
+% ../pfc/doc/conf/comandos.tex
+% comandos.tex
+% en este archivo defino todos los comandos/environment que quiera usar en mi documento.
+%
+% ===
+% === Comandos
+% ===
+% 
+% T: para escribir texto común cuando en modo math
+%    uso: \T{texto que aparecerá en letra normal}
+\newcommand{\T}{\textrm}
+%
+% aclaracion: dibuja un recuadrito aclaratorio, como <quote> en HTML.
+%             uso: \aclaracion{Texto...}
+\newcommand{\aclaracion}[1]{%
+\smallpencil\-\begin{minipage}{0.9\textwidth}
+%\vspace*{6pt}
+{#1}\smallskip\end{minipage}}
+%
+% consigna: parecido a aclaración, pero con texto _slanted_
+%           uso: \consigna{Consigna...}
+\newcommand{\consigna}[1]{%
+\leftpointright\ \parbox[t]{0.9\textwidth}{\textsl{#1}\vspace{8pt}}}
+%
+% pinterno: para representar el producto interno entre los dos argumentos
+%           uso: \pinterno{X}{Y}
+\newcommand{\pinterno}[2]{%
+\left\langle #1 , #2 \right\rangle}
+%
+% === Estilos de texto
+%
+% resalt: resaltado con fondo verde
+%         uso: \resalt{texto resaltado}
+\newcommand{\resalt}{\colorbox{yellow}}
+%
+% sfbf: texto en negrita + slanted
+%       uso:
+\newcommand{\sfbf}[1]{\textsf{\bfseries #1}}
+%
+% small bold sans-serif
+\newcommand{\sbs}[1]{\textsf{\relscale{0.9}\bfseries #1}}
+%
+% eng: itálica (para palabras en inglés)
+%      uso: \eng{some English text}
+\newcommand{\eng}{\textit}
+%
+% mean: significado de una sigla - slanted
+%       uso: (...) SNCF: \mean{Société Nationale des Chemins de Fer Francais} ...
+\newcommand{\mean}{\textsl}
+\newcommand{\desc}{\textsl}
+%
+% defin: pone en negrita el texto, útil para definiciones
+%        uso: \defin{asshole}: vulgar slang for anus
+\newcommand{\defin}{\textbf}
+%
+% R, N: cambia la tipografía en modo math, probar para ver cómo quedan
+%       uso: \R{R} , \N{N}
+\newcommand{\R}{\mathds}
+\newcommand{\N}{\mathbf}
+\newcommand{\C}{\mathcal}
+\newcommand{\B}{\boldsymbol}
+%
+% dx: para escribir d2y/dx2, etc
+\newcommand{\dx}[2]{\frac{d^{#2}\!#1}{d\!x^{#2}}}
+%
+% dp: para escribir derivadas parciales d2y/dx2, etc
+\newcommand{\dpar}[3]{\frac{\partial^{#3}#1}{\partial{#2}^{#3}}}
+%
+% dvar: para escribir derivadas totales d2y/d(VAR)2, etc
+\newcommand{\dvar}[3]{\frac{d^{#3}#1}{d{#2}^{#3}}}
+%
+% evalen: para escribir (loquesea)|_{evaluado_en}
+\newcommand{\evalen}[2]{\left.{#2}\right|_{#1}}
+%
+% lil: para escribir texto pequeño. más cómodo que { \footnotesize texto pequeño... }
+%      uso: \lil{texto pequeño... }
+\newcommand{\lil}[1]{\footnotesize #1}  %Para texto pequeñooo
+%
+% mono: escribe el texto que le paso como parámetro con letra de ancho fijo
+%       uso: \mono{texto monoespaciado}
+\newcommand{\mono}[1]{{\texttt{#1}}}
+
+
+%
+% === Símbolos
+%
+\newcommand{\y}{\wedge}			%Y (Lógica)
+\newcommand{\ve}{\vee}			%O (Lógica)
+\newcommand{\ent}{\supset}		%Entonces (Lógica)
+\newcommand{\dimp}{\leftrightarrow}	%Doble implicativo, equivalencia (Lógica)
+\newcommand{\sii}{\leftrightarrow}	%Si y sólo si (Lógica)
+\newcommand{\equi}{\equiv}		%Equivalencia (Lógica)
+\newcommand{\portanto}{\vdash}		%Por lo tanto (Lógica)
+\newcommand{\por}{\cdot}		%Producto punto
+\newcommand{\RR}[1][1]{\mathds{R}}	%R de reales
+\newcommand{\hfi}{\hat{\phi}}           %fi con gorrito arriba
+\newcommand{\bfi}{\bar{\phi}}           %fi con raya arriba
+\newcommand{\hpsi}{\hat{\psi}}          %Letra griega psi con gorrito arriba
+\newcommand{\II}{\B{I}}                 %w negrita
+\newcommand{\KK}{\B{K}}                 %w negrita
+\newcommand{\QQ}{\B{Q}}                 %w negrita
+\newcommand{\YY}{\B{Y}}                 %w negrita
+\newcommand{\Bg}{\B{g}}                 %w negrita
+\newcommand{\nn}{\B{n}}                 %w negrita
+\newcommand{\uu}{\B{u}}                 %w negrita
+\newcommand{\vv}{\B{v}}                 %w negrita
+\newcommand{\ww}{\B{w}}                 %w negrita
+\newcommand{\xx}{\B{x}}                 %x negrita
+\newcommand{\yy}{\B{y}}                 %y negrita
+\newcommand{\zz}{\B{z}}                 %z negrita
+\newcommand{\BPhi}{\B{\Phi}}            %\Phi negrita
+\newcommand{\Balpha}{\B{\alpha}}        %\alpha negrita
+\newcommand{\Bbeta}{\B{\beta}}          %\beta negrita
+\newcommand{\Btheta}{\B{\theta}}        %\theta negrita
+\newcommand{\Bxi}{\B{\xi}}              %\xi negrita
+%
+%
+% ===
+% === Environments
+% ===
+% 
+% enunciado: un environment que básicamente tiene el mismo efecto que el
+%            comando consigna.
+%            uso: \begin{enunciado} ... contenido ... \end{enunciado}
+\newenvironment{enunciado}
+{\leftpointright\ \begin{varwidth}[t]{0.9\textwidth}\textsl}
+{\end{varwidth}\vspace{8pt}}
+%
+% pvi: para tipear la definición de un problema de valor inicial/funciones
+%      definidas de a trozos/etc directamente en el texto (sin necesidad de
+%      cambiar a un modo matemático.
+%      uso: \begin{pvi} linea1 \\ linea 2 \\ ... \end{pvi}
+\newenvironment{pvi}{\begin{equation}\begin{cases}}
+{\end{cases}\end{equation}}
+%
+% pvi*: comp pvi, pero sin número de ecuación
+\newenvironment{pvi*}{\begin{equation*}\begin{cases}}
+{\end{cases}\end{equation*}}
+%
+% verbatimsmall: un verbatim con letra más chica. usualmente queda bastante
+%                mejor que el verbatim pelado.
+%                uso: \begin{verbatimsmall} ........ \end{verbatimsmall}
+\newenvironment{verbatimsmall}{\small\begin{verbatim*}}
+{\end{verbatim*}}
+%
+% nota: escribe una aclaracion dentro del texto
+\newenvironment{nota}{$$\left[\;\begin{minipage}{0.95\textwidth}\slshape}
+{\end{minipage}\;\right]$$}
+%
+%
+
+% multicolumn y multirow
+\newcommand{\mcol}[3]{\multicolumn{#1}{#2}{#3}}
+\newcommand{\mrow}[3]{\multirow{#1}{#2}{#3}}
+
+% http://tex.stackexchange.com/questions/14377/how-can-i-test-for-the-current-font
+\makeatletter
+\newcommand{\showfont}{encoding: \f@encoding{},
+  family: \f@family{},
+  series: \f@series{},
+  shape: \f@shape{},
+  size: \f@size{}
+}
+\newcommand{\iffont}[3]{\ifthenelse{\equal{\f@family}{#1}}{#2}{#3}}
+\newcommand{\ifseri}[3]{\ifthenelse{\equal{\f@series}{#1}}{#2}{#3}}
+\makeatother
+%
+% sbsf: texto small, bold, sans-serif. Si ya es sans, no aplica small.
+%       uso:
+\newcommand{\sbsf}[1]{\iffont{qhv}{\textbf{#1}}{\textscale{0.9}{\textsf{\textbf{#1}}}}}
+%
+% ssf: texto small, sans-serif. Si ya es sans, no aplica small.
+%       uso:
+\newcommand{\ssf}[1]{\iffont{qhv}{#1}{\textscale{0.9}{\textsf{#1}}}}
+% ../pfc/doc/conf/config.tex
+% config.tex: configuraciones del documento
+%\selectlanguage{spanish}		%Elijo idioma español
+
+%Permitir que los entornos equation, align, etc permitan saltos de página
+%\allowdisplaybreaks[1]
+
+%Tweaks
+%% \setlength{\parindent}{0mm}		%Sangría de 1a. línea
+%% \setlength{\hoffset}{2.6mm}		%
+%% \setlength{\voffset}{-5.4mm}		%
+%% \setlength{\topmargin}{0mm}		%
+%% \setlength{\oddsidemargin}{5mm}	%
+%% \setlength{\evensidemargin}{5mm}	%
+%% \setlength{\marginparsep}{5mm}	%
+%% \setlength{\headheight}{12.5mm}	%
+%% \setlength{\headsep}{2.5mm}		%
+%% \setlength{\footskip}{10mm}		%
+%% \setlength{\textwidth}{14.1cm}		%
+%% \setlength{\textheight}{232mm}	%
+%% \setlength{\fboxrule}{.1pt}
+%% \setlength{\parskip}{.5\baselineskip}
+
+%Colores
+\definecolor{negro}	{cmyk}{0,0,0,1}
+\definecolor{marron}	{cmyk}{0,.5,1,.41}
+\definecolor{rojo}	{cmyk}{0,1,1,0}
+\definecolor{naranja}	{cmyk}{0,.35,1,0}
+\definecolor{amarillo}	{cmyk}{0,0,1,0}
+\definecolor{verde}	{cmyk}{1,0,1,0}
+\definecolor{azul}	{cmyk}{1,1,0,0}
+\definecolor{violeta}	{cmyk}{.45,1,0,0}
+\definecolor{gris}	{cmyk}{0,0,0,.5}
+\definecolor{blanco}	{cmyk}{0,0,0,0}
+\definecolor{dorado}	{cmyk}{0,.16,1,0}
+\definecolor{plateado}	{cmyk}{0,0,0,.25}
+
+%% \title{\titulo}
+%% \author{\autor}
+%% \date{\fecha}
+% si uso pdflatex, me setea las propiedades del pdf de salida
+%% \ifpdf\pdfinfo{/Title    (\tituloPDF)
+%%                /Author   (\autorPDF)
+%%                /Subject  (\asuntoPDF)
+%%                /Keywords (\clavesPDF)}\fi
+
+\addbibresource{res/bibliografia.bib}
+
