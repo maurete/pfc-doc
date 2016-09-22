@@ -125,7 +125,11 @@
 %% \usepackage[spanish]{algorithm2e}
 
 % para highlight (comando \hl{})
+\iflatexml
+\newcommand{\hl}[1]{\textcolor{purple}{\bfseries #1}}
+\else
 \usepackage{soulutf8}
+\fi
 
 % para teoremas etc
 \usepackage{amsthm}
