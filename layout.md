@@ -2,7 +2,6 @@ abstract.tex
 titlepage.tex
 chapter_Introducci_n_setcounter_page__.tex
 sectionAcerca_de_los.tex
-figures/0.dna/0.dna.svg
 figures/hsa-mir-299_ss/hsa-mir-299_ss.png
 La_identificacin_de_.tex
 sectionClasificacin_.tex
