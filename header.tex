@@ -130,8 +130,12 @@
 % para teoremas etc
 \usepackage{amsthm}
 
-% para tunear citations
+% better citation handling
+\iflatexml
+\newcommand{\citeauthor}[1][]{(\emph{cita al autor #1})}
+\else
 \usepackage[square,comma,numbers,sort&compress]{natbib}
+\fi
 
 \iflatexml
 \else
