@@ -138,6 +138,7 @@
 \fi
 
 \iflatexml
+\newcommand{\autoref}[1]{Fig/Ecuación/etc. \ref{#1}}
 \else
 \usepackage{hyperref}
 % lo siguiente hace que los enlaces generados por hyperref apunten a
@@ -181,7 +182,6 @@
 
 \newcommand{\e}[][]{\emph}
 \newcommand{\fr}[1][]{(\iflatexml{Ecuacion \ref{#1}}\else\autoref{#1}\fi)}
-\newcommand{\fer}[1][]{(\iflatexml{Referencia \ref{#1}}\else\autoref{#1}\fi)}
 \newcommand{\iid}[][]{independiente e idénticamente distribuido}
 \newtheorem{definicion}{Definición}[chapter]
 \newtheorem{lema}[definicion]{Lema}
