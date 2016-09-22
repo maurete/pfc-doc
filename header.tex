@@ -434,5 +434,13 @@
 %       uso:
 \newcommand{\ssf}[1]{\iffont{qhv}{#1}{\textscale{0.9}{\textsf{#1}}}}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% authorea/latexml workarounds
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+\newcommand{\nt}{\iflatexml\textrm{nt}\else\si{nt}\fi}
 
-
+%\iflatexml
+% \documentclass[12pt,bibliography=oldstyle,DIV=12,parskip=half-]{scrreprt} % Not (yet) supported by LaTeXML.
+%\fi
