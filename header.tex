@@ -15,10 +15,10 @@
 % ../pfc/doc/conf/fuentes.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-\usepackage[T1]{fontenc}
-\usepackage{libertine}
-\usepackage[scale=0.96]{tgheros}
-\usepackage[scaled=0.9]{zi4}
+%% \usepackage[T1]{fontenc}
+%% \usepackage{libertine}
+%% \usepackage[scale=0.96]{tgheros}
+%% \usepackage[scaled=0.9]{zi4}
 % \renewcommand{\tt}{\mathtt} % evitar clash de euler con koma-script
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -81,8 +81,8 @@
 %\usepackage{verbatim}
 %
 % fancyvrb es verbatim con coloreado, implementa entorno Verbatim
-\usepackage{fancyvrb}
-\fvset{fontsize=\footnotesize,commandchars=\\\{\}}
+%% \usepackage{fancyvrb}
+%% \fvset{fontsize=\footnotesize,commandchars=\\\{\}}
 %
 % moreverb implementa el entorno verbatimtab indentando los tabs que encuentre,
 %          y también el entorno listing, que pone números de línea al verbatim.
@@ -120,40 +120,37 @@
 %% \setlist[enumerate]{noitemsep}
 %% \setlist[itemize]{noitemsep}
 
-\usepackage{tikz}
-\usepackage{pgfkeys}
-\usepackage{pgfgantt}
-\usetikzlibrary{babel}
-\usetikzlibrary{arrows}
-\usetikzlibrary{shapes.multipart}
+%% \usepackage{tikz}
+%% \usepackage{pgfkeys}
+%% \usepackage{pgfgantt}
+%% \usetikzlibrary{babel}
+%% \usetikzlibrary{arrows}
+%% \usetikzlibrary{shapes.multipart}
 
 % typearea: uso con koma-script para ajustar márgenes de página.
 % vars globales a setear en la clase koma-script: DIV=12, BCOR=margen de ``binding'' para double side
-\usepackage{typearea}
+%% \usepackage{typearea}
 
 % para poder usar footnotes p.ej, adentro de un tabular
-\usepackage{footnote}
-\makesavenoteenv{tabular}
+%% \usepackage{footnote}
+%% \makesavenoteenv{tabular}
 
 % para tabulars mas lindos/legibles
-\usepackage{booktabs}
+%% \usepackage{booktabs}
 % tablas que se extienden por varias págs.
 \usepackage{longtable}
 
-% para tabulars mas lindos/legibles
-\usepackage{tabu}
-
 % para alinear numeros en el punto decimal (dentro de un tabular)
-\usepackage[detect-all,alsoload=abbr]{siunitx}
+%% \usepackage[detect-all,alsoload=abbr]{siunitx}
 
 %\usepackage{glossaries}
 
-\usepackage[spanish]{algorithm2e}
+%% \usepackage[spanish]{algorithm2e}
 
 % para highlight (comando \hl{})
 \usepackage{soulutf8}
 
-% para teoremans etc
+% para teoremas etc
 \usepackage{amsthm}
 
 % para tunear citations
@@ -164,6 +161,30 @@
 % /la figura/, en lugar de /la caption/ de la figura
 \usepackage[hypcap]{caption}
 
+%Permitir que los entornos equation, align, etc permitan saltos de página
+%\allowdisplaybreaks[1]
+
+%Colores
+\definecolor{negro}	{cmyk}{0,0,0,1}
+\definecolor{marron}	{cmyk}{0,.5,1,.41}
+\definecolor{rojo}	{cmyk}{0,1,1,0}
+\definecolor{naranja}	{cmyk}{0,.35,1,0}
+\definecolor{amarillo}	{cmyk}{0,0,1,0}
+\definecolor{verde}	{cmyk}{1,0,1,0}
+\definecolor{azul}	{cmyk}{1,1,0,0}
+\definecolor{violeta}	{cmyk}{.45,1,0,0}
+\definecolor{gris}	{cmyk}{0,0,0,.5}
+\definecolor{blanco}	{cmyk}{0,0,0,0}
+\definecolor{dorado}	{cmyk}{0,.16,1,0}
+\definecolor{plateado}	{cmyk}{0,0,0,.25}
+
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % header.tex
@@ -173,32 +194,6 @@
 \hyphenation{micro-RNAs}
 \hyphenation{mi-RNA}
 \hyphenation{mi-RNAs}
-
-% First macro on next line not (yet) supported by LaTeXML: 
-% \addtokomafont{descriptionlabel}{\small}
-% First macro on next line not (yet) supported by LaTeXML: 
-% \setkomafont{subject}{\LARGE\usekomafont{disposition}}
-% First macro on next line not (yet) supported by LaTeXML: 
-% \setkomafont{title}{\normalfont\slshape}
-% First macro on next line not (yet) supported by LaTeXML: 
-% \setkomafont{subtitle}{\LARGE\usekomafont{disposition}}
-
-% \setlength{\abovecaptionskip}{-10pt plus 3pt minus 2pt}
-% \setlength{\belowcaptionskip}{10pt plus 3pt minus 2pt}
-\hypersetup{
-  colorlinks,
-  citecolor=black,
-  filecolor=black,
-  linkcolor=black,
-  urlcolor=black
-}
-% First macro on next line not (yet) supported by LaTeXML: 
-% \sisetup{
-%  table-number-alignment = right,
-%  group-separator = ,
-%  output-decimal-marker = {,},
-%  retain-explicit-plus = true
-%}
 
 \newcommand{\e}[][]{\emph}
 \newcommand{\fr}[1][]{(\autoref{#1})}
@@ -215,50 +210,29 @@
 \newcommand{\dn}[1][]{\textrm{\mono{#1}}{ }}
 \newcommand{\bp}[2][]{\textrm{\mono{#1-#2}}{ }}
 \newcommand{\grad}[1][]{\nabla{#1}}
-
 \newcommand{\tableStyle}[][]{\relsize{-0.5}\center\sffamily}
-
 \newcommand{\captionStyle}[][]{\relsize{-0.5}}
-
 \newcommand{\tE}[][]{&{\smaller $\bar{x}$}&}
-
 \newcommand{\tF}[1][]{\multirow{2}{*}{#1}\tE}
-
 \newcommand{\tZ}[][]{&{\smaller $\sigma$}&}
-
 \newcommand{\tA}[][]{\addlinespace[4pt]}
-
 \newcommand{\rowMEAN}[1][]{&\multirow{2}{*}{#1}&{\smaller $\bar{x}$}}
-
 \newcommand{\rowSTD}[][]{&&{\smaller $\sigma$}}
-
 \newcommand{\rowSKIP}[][]{\addlinespace[2pt]}
-
 \newcommand{\ti}[][]{\textsmaller}
-
 \newcommand{\func}[1][]{\emph{#1}}
-
 \newcommand{\Gm}[][]{\scriptsize $G_m$}
-
 \newcommand{\Ft}[1][]{\mrow{2}{*}{#1}}
-
 \newcommand{\tbmean}[][]{\smaller{2} $\bar{x}$}
-
 \newcommand{\tbstd}[][]{\smaller $\sigma$}
-
 \newcommand{\tripletsvm}[][]{\sbsf{Triplet-SVM}}
-
 \newcommand{\mipred}[][]{\sbsf{miPred}}
-
 \newcommand{\micropred}[][]{\sbsf{microPred}}
-
 \newcommand{\deltamirbase}[][]{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
-
 \newcommand{\rowMEANN}[2][]{&
   \multirow{2}{*}{\tablenum[table-format=1.0,table-number-alignment=right]{#1}}&
   \multirow{2}{*}{\tablenum[table-format=3.0,table-number-alignment=right]{#2}}&
            {\smaller $\bar{x}$}}
-
 \newcommand{\rowSTDN}[][]{&&&{\smaller $\sigma$}}
 
 % First macro on next line not (yet) supported by LaTeXML: 
@@ -287,11 +261,6 @@
   \item[Función]{#1}\item[Entradas]{#2}\item[Salidas]{#3}%
 \end{description}}
 \renewcommand{\bibfont}[][]{\normalfont\footnotesize}
-
-
-% ../pfc/doc/conf/comandos.tex
-% comandos.tex
-% en este archivo defino todos los comandos/environment que quiera usar en mi documento.
 %
 % ===
 % === Comandos
@@ -463,51 +432,6 @@
 % ssf: texto small, sans-serif. Si ya es sans, no aplica small.
 %       uso:
 \newcommand{\ssf}[1]{\iffont{qhv}{#1}{\textscale{0.9}{\textsf{#1}}}}
-% ../pfc/doc/conf/config.tex
-% config.tex: configuraciones del documento
-%\selectlanguage{spanish}		%Elijo idioma español
 
-%Permitir que los entornos equation, align, etc permitan saltos de página
-%\allowdisplaybreaks[1]
 
-%Tweaks
-%% \setlength{\parindent}{0mm}		%Sangría de 1a. línea
-%% \setlength{\hoffset}{2.6mm}		%
-%% \setlength{\voffset}{-5.4mm}		%
-%% \setlength{\topmargin}{0mm}		%
-%% \setlength{\oddsidemargin}{5mm}	%
-%% \setlength{\evensidemargin}{5mm}	%
-%% \setlength{\marginparsep}{5mm}	%
-%% \setlength{\headheight}{12.5mm}	%
-%% \setlength{\headsep}{2.5mm}		%
-%% \setlength{\footskip}{10mm}		%
-%% \setlength{\textwidth}{14.1cm}		%
-%% \setlength{\textheight}{232mm}	%
-%% \setlength{\fboxrule}{.1pt}
-%% \setlength{\parskip}{.5\baselineskip}
-
-%Colores
-\definecolor{negro}	{cmyk}{0,0,0,1}
-\definecolor{marron}	{cmyk}{0,.5,1,.41}
-\definecolor{rojo}	{cmyk}{0,1,1,0}
-\definecolor{naranja}	{cmyk}{0,.35,1,0}
-\definecolor{amarillo}	{cmyk}{0,0,1,0}
-\definecolor{verde}	{cmyk}{1,0,1,0}
-\definecolor{azul}	{cmyk}{1,1,0,0}
-\definecolor{violeta}	{cmyk}{.45,1,0,0}
-\definecolor{gris}	{cmyk}{0,0,0,.5}
-\definecolor{blanco}	{cmyk}{0,0,0,0}
-\definecolor{dorado}	{cmyk}{0,.16,1,0}
-\definecolor{plateado}	{cmyk}{0,0,0,.25}
-
-%% \title{\titulo}
-%% \author{\autor}
-%% \date{\fecha}
-% si uso pdflatex, me setea las propiedades del pdf de salida
-%% \ifpdf\pdfinfo{/Title    (\tituloPDF)
-%%                /Author   (\autorPDF)
-%%                /Subject  (\asuntoPDF)
-%%                /Keywords (\clavesPDF)}\fi
-
-\addbibresource{res/bibliografia.bib}
 
