@@ -5,6 +5,7 @@ sectionAcerca_de_los.tex
 figures/hsa-mir-299_ss/hsa-mir-299_ss.png
 La_identificacin_de_.tex
 sectionClasificacin_.tex
+chapter_Fundamentos_te_ricos_El__.tex
 sectionLa_clasificac.tex
 sectionHiperparmetro.tex
 sectionPerceptrn_mul.tex
