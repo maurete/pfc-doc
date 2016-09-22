@@ -133,10 +133,10 @@
 % para tunear citations
 %\usepackage[square,comma,numbers,sort&compress]{natbib}
 
-\usepackage{hyperref}
-% lo siguiente hace que los enlaces generados por hyperref apunten a
-% /la figura/, en lugar de /la caption/ de la figura
-\usepackage[hypcap]{caption}
+%% \usepackage{hyperref}
+%% % lo siguiente hace que los enlaces generados por hyperref apunten a
+%% % /la figura/, en lugar de /la caption/ de la figura
+%% \usepackage[hypcap]{caption}
 
 %Permitir que los entornos equation, align, etc permitan saltos de página
 %\allowdisplaybreaks[1]
@@ -173,7 +173,8 @@
 \hyphenation{mi-RNAs}
 
 \newcommand{\e}[][]{\emph}
-\newcommand{\fr}[1][]{(\autoref{#1})}
+\newcommand{\fr}[1][]{(\iflatexml{Ecuacion \ref{#1}}\else\autoref{#1}\fi)}
+\newcommand{\fer}[1][]{(\iflatexml{Referencia \ref{#1}}\else\autoref{#1}\fi)}
 \newcommand{\iid}[][]{independiente e idénticamente distribuido}
 \newtheorem{definicion}{Definición}[chapter]
 \newtheorem{lema}[definicion]{Lema}
