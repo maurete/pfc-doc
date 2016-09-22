@@ -191,8 +191,12 @@
 \newcommand{\dn}[1][]{\textrm{\mono{#1}}{ }}
 \newcommand{\bp}[2][]{\textrm{\mono{#1-#2}}{ }}
 \newcommand{\grad}[1][]{\nabla{#1}}
-\newcommand{\tableStyle}[][]{\relsize{-0.5}\center\sffamily}
-\newcommand{\captionStyle}[][]{\iflatexml{}\else\relsize{-0.5}\fi}
+\newcommand{\tableStyle}[][]{
+\ifpdf\relsize{-0.5}\center\sffamily\fi
+}
+\newcommand{\captionStyle}[][]{
+\ifpdf\relsize{-0.5}\fi
+}
 \newcommand{\tE}[][]{&{\smaller $\bar{x}$}&}
 \newcommand{\tF}[1][]{\multirow{2}{*}{#1}\tE}
 \newcommand{\tZ}[][]{&{\smaller $\sigma$}&}
