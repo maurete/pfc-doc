@@ -3,13 +3,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % define  \ifpdf {...} \fi to test for compilation with pdflatex.
-%% \newif\ifpdf
-%% \ifnum\pdfoutput<0
-%% \pdffalse\fi
-%% \ifnum\pdfoutput=0
-%% \pdffalse\fi
-%% \ifnum\pdfoutput>0
-%% \pdftrue\fi
+\newif\ifpdf
+\ifnum\pdfoutput<0
+\pdffalse\fi
+\ifnum\pdfoutput=0
+\pdffalse\fi
+\ifnum\pdfoutput>0
+\pdftrue\fi
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ../pfc/doc/conf/fuentes.tex
@@ -133,10 +133,20 @@
 % para tunear citations
 %\usepackage[square,comma,numbers,sort&compress]{natbib}
 
-%% \usepackage{hyperref}
-%% % lo siguiente hace que los enlaces generados por hyperref apunten a
-%% % /la figura/, en lugar de /la caption/ de la figura
-%% \usepackage[hypcap]{caption}
+\iflatexml
+\else
+\usepackage{hyperref}
+% lo siguiente hace que los enlaces generados por hyperref apunten a
+% /la figura/, en lugar de /la caption/ de la figura
+\usepackage[hypcap]{caption}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+\fi
 
 %Permitir que los entornos equation, align, etc permitan saltos de página
 %\allowdisplaybreaks[1]
@@ -155,13 +165,6 @@
 \definecolor{dorado}	{cmyk}{0,.16,1,0}
 \definecolor{plateado}	{cmyk}{0,0,0,.25}
 
-\hypersetup{
-  colorlinks,
-  citecolor=black,
-  filecolor=black,
-  linkcolor=black,
-  urlcolor=black
-}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % header.tex
