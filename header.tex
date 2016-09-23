@@ -234,17 +234,16 @@
            {\smaller $\bar{x}$}}
 \newcommand{\rowSTDN}{&&&{\smaller $\sigma$}}
 
-% First macro on next line not (yet) supported by LaTeXML: 
-% \DeclareSIUnit\nt{nt}
-\newcommand{\VP}{\T{\textsl{VP}}}
-\newcommand{\VN}{\T{\textsl{VN}}}
-\newcommand{\FP}{\T{\textsl{FP}}}
-\newcommand{\FN}{\T{\textsl{FN}}}
-\newcommand{\SE}{\T{\textsl{SE}}}
-\newcommand{\SP}{\T{\textsl{SP}}}
-\newcommand{\GM}{\T{\textsl{Gm}}}
-\newcommand{\PR}{\T{\textsl{Pr}}}
-\newcommand{\AC}{\T{\textsl{Ac}}}
+\newcommand{\VP}{\T{\slshape VP}}
+\newcommand{\VN}{\T{\slshape VN}}
+\newcommand{\FP}{\T{\slshape FP}}
+\newcommand{\FN}{\T{\slshape FN}}
+\newcommand{\SE}{\T{\slshape SE}}
+\newcommand{\SP}{\T{\slshape SP}}
+\newcommand{\GM}{\T{\slshape Gm}}
+\newcommand{\PR}{\T{\slshape Pr}}
+\newcommand{\AC}{\T{\slshape Ac}}
+
 \newcommand{\feedforward}{con propagación hacia adelante}
 \newcommand{\headRow}{  \sfbf{\footnotesize Pos.} &
   \sfbf{\footnotesize Característica} &
@@ -437,7 +436,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
-\newcommand{\nt}{\iflatexml\textrm{nt}\else\si{nt}\fi}
+\iflatexml
+\newcommand{\nt}{\textrm{nt}}
+\else
+\DeclareSIUnit\nt{nt}
+\newcommand{\nt}{\si{nt}}
+\fi
 
 %\iflatexml
 % \documentclass[12pt,bibliography=oldstyle,DIV=12,parskip=half-]{scrreprt} % Not (yet) supported by LaTeXML.
