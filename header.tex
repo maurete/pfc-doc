@@ -51,7 +51,7 @@
 %\ifpdf\usepackage{pst-pdf}\fi
 %
 % color me permite usar colores en el documento.
-\usepackage{color}
+\usepackage[dvipsnames,tables]{xcolor}
 %
 % graphicx me da el comando \includegraphics para insertar imágenes (?)
 \usepackage{graphicx}
@@ -424,20 +424,20 @@
 
 % para highlight (comando \hl{})
 \iflatexml
-\newcommand*{\hl}[1]{\textcolor{purple}{\bfseries #1}}
+\newcommand*{\hl}[1]{\textcolor{BurntOrange}{\bfseries #1}}
 \else
 \usepackage{soulutf8}
 \fi
 
 % better citation handling
 \iflatexml
-\newcommand*{\citeauthor}[1]{\textcolor{green}{(autor de \cite{#1})}}
+\newcommand*{\citeauthor}[1]{\textcolor{RoyalBlue}{(autor de \cite{#1})}}
 \else
 \usepackage[square,comma,numbers,sort&compress]{natbib}
 \fi
 
 \iflatexml
-\newcommand{\refer}[1]{\textcolor{green}{(Figura/Ecuación/etc. \ref{#1})}}
+\newcommand{\refer}[1]{\textcolor{OliveGreen}{(Fig./Ec./etc. \ref{#1})}}
 \else
 \usepackage{hyperref}
 \newcommand{\refer}{\autoref}
