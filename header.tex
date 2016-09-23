@@ -130,38 +130,8 @@
 
 %% \usepackage[spanish]{algorithm2e}
 
-% para highlight (comando \hl{})
-\iflatexml
-\newcommand{\hl}[1]{\textcolor{purple}{\bfseries #1}}
-\else
-\usepackage{soulutf8}
-\fi
-
 % para teoremas etc
 \usepackage{amsthm}
-
-% better citation handling
-\iflatexml
-\newcommand{\citeauthor}[1]{(\emph{cita al autor {#1}})}
-\else
-\usepackage[square,comma,numbers,sort&compress]{natbib}
-\fi
-
-\iflatexml
-\newcommand{\autoref}[1]{Fig/Ecuación/etc. \ref{#1}}
-\else
-\usepackage{hyperref}
-% lo siguiente hace que los enlaces generados por hyperref apunten a
-% /la figura/, en lugar de /la caption/ de la figura
-\usepackage[hypcap]{caption}
-\hypersetup{
-  colorlinks,
-  citecolor=black,
-  filecolor=black,
-  linkcolor=black,
-  urlcolor=black
-}
-\fi
 
 %Permitir que los entornos equation, align, etc permitan saltos de página
 %\allowdisplaybreaks[1]
@@ -450,6 +420,37 @@
 \else
 \newcommand{\tab}{&}
 \newcommand{\tabs}{&}
+\fi
+
+% para highlight (comando \hl{})
+\iflatexml
+\newcommand*{\hl}[1]{\textcolor{purple}{\bfseries #1}}
+\else
+\usepackage{soulutf8}
+\fi
+
+% better citation handling
+\iflatexml
+\newcommand*{\citeauthor}[1]{\textcolor{green}{(autor de \cite{#1})}}
+\else
+\usepackage[square,comma,numbers,sort&compress]{natbib}
+\fi
+
+\iflatexml
+\newcommand{\refer}[1]{\textcolor{green}{(Figura/Ecuación/etc. \ref{#1})}}
+\else
+\usepackage{hyperref}
+\newcommand{\refer}{\autoref}
+% lo siguiente hace que los enlaces generados por hyperref apunten a
+% /la figura/, en lugar de /la caption/ de la figura
+\usepackage[hypcap]{caption}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
 \fi
 
 %\iflatexml
