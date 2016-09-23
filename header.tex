@@ -190,49 +190,49 @@
 \hyphenation{mi-RNA}
 \hyphenation{mi-RNAs}
 
-\newcommand{\e}[][]{\emph}
-\newcommand{\fr}[1][]{(\iflatexml{Ecuacion \ref{#1}}\else\autoref{#1}\fi)}
-\newcommand{\iid}[][]{independiente e idénticamente distribuido}
+\newcommand{\e}{\emph}
+\newcommand{\fr}[1]{(\iflatexml{Ecuacion \ref{#1}}\else\autoref{#1}\fi)}
+\newcommand{\iid}{independiente e idénticamente distribuido}
 \newtheorem{definicion}{Definición}[chapter]
 \newtheorem{lema}[definicion]{Lema}
-\newcommand{\ntA}[][]{\textrm{\mono{A}}{ }}
-\newcommand{\ntC}[][]{\textrm{\mono{C}}{ }}
-\newcommand{\ntG}[][]{\textrm{\mono{G}}{ }}
-\newcommand{\ntU}[][]{\textrm{\mono{U}}{ }}
-\newcommand{\pairL}[][]{\textrm{\mono{(}}{ }}
-\newcommand{\pairR}[][]{\textrm{\mono{)}}{ }}
-\newcommand{\noPair}[][]{\textrm{\mono{.}}{ }}
-\newcommand{\dn}[1][]{\textrm{\mono{#1}}{ }}
-\newcommand{\bp}[2][]{\textrm{\mono{#1-#2}}{ }}
-\newcommand{\grad}[1][]{\nabla{#1}}
-\newcommand{\tableStyle}[][]{
+\newcommand{\ntA}{\textrm{\mono{A}}{ }}
+\newcommand{\ntC}{\textrm{\mono{C}}{ }}
+\newcommand{\ntG}{\textrm{\mono{G}}{ }}
+\newcommand{\ntU}{\textrm{\mono{U}}{ }}
+\newcommand{\pairL}{\textrm{\mono{(}}{ }}
+\newcommand{\pairR}{\textrm{\mono{)}}{ }}
+\newcommand{\noPair}{\textrm{\mono{.}}{ }}
+\newcommand{\dn}[1]{\textrm{\mono{#1}}{ }}
+\newcommand{\bp}[2]{\textrm{\mono{#1-#2}}{ }}
+\newcommand{\grad}[1]{\nabla{#1}}
+\newcommand{\tableStyle}{
 \ifpdf\relsize{-0.5}\center\sffamily\fi
 }
-\newcommand{\captionStyle}[][]{
+\newcommand{\captionStyle}{
 \ifpdf\relsize{-0.5}\fi
 }
-\newcommand{\tE}[][]{&{\smaller $\bar{x}$}&}
-\newcommand{\tF}[1][]{\multirow{2}{*}{#1}\tE}
-\newcommand{\tZ}[][]{&{\smaller $\sigma$}&}
-\newcommand{\tA}[][]{\addlinespace[4pt]}
-\newcommand{\rowMEAN}[1][]{&\multirow{2}{*}{#1}&{\smaller $\bar{x}$}}
-\newcommand{\rowSTD}[][]{&&{\smaller $\sigma$}}
-\newcommand{\rowSKIP}[][]{\addlinespace[2pt]}
-\newcommand{\ti}[][]{\textsmaller}
-\newcommand{\func}[1][]{\emph{#1}}
-\newcommand{\Gm}[][]{\scriptsize $G_m$}
-\newcommand{\Ft}[1][]{\mrow{2}{*}{#1}}
-\newcommand{\tbmean}[][]{\smaller{2} $\bar{x}$}
-\newcommand{\tbstd}[][]{\smaller $\sigma$}
-\newcommand{\tripletsvm}[][]{\sbsf{Triplet-SVM}}
-\newcommand{\mipred}[][]{\sbsf{miPred}}
-\newcommand{\micropred}[][]{\sbsf{microPred}}
-\newcommand{\deltamirbase}[][]{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
-\newcommand{\rowMEANN}[2][]{&
+\newcommand{\tE}{&{\smaller $\bar{x}$}&}
+\newcommand{\tF}[1]{\multirow{2}{*}{#1}\tE}
+\newcommand{\tZ}{&{\smaller $\sigma$}&}
+\newcommand{\tA}{\addlinespace[4pt]}
+\newcommand{\rowMEAN}[1]{&\multirow{2}{*}{#1}&{\smaller $\bar{x}$}}
+\newcommand{\rowSTD}{&&{\smaller $\sigma$}}
+\newcommand{\rowSKIP}{\addlinespace[2pt]}
+\newcommand{\ti}{\textsmaller}
+\newcommand{\func}[1]{\emph{#1}}
+\newcommand{\Gm}{\scriptsize $G_m$}
+\newcommand{\Ft}[1]{\mrow{2}{*}{#1}}
+\newcommand{\tbmean}{\smaller{2} $\bar{x}$}
+\newcommand{\tbstd}{\smaller $\sigma$}
+\newcommand{\tripletsvm}{\sbsf{Triplet-SVM}}
+\newcommand{\mipred}{\sbsf{miPred}}
+\newcommand{\micropred}{\sbsf{microPred}}
+\newcommand{\deltamirbase}{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
+\newcommand{\rowMEANN}[2]{&
   \multirow{2}{*}{\tablenum[table-format=1.0,table-number-alignment=right]{#1}}&
   \multirow{2}{*}{\tablenum[table-format=3.0,table-number-alignment=right]{#2}}&
            {\smaller $\bar{x}$}}
-\newcommand{\rowSTDN}[][]{&&&{\smaller $\sigma$}}
+\newcommand{\rowSTDN}{&&&{\smaller $\sigma$}}
 
 % First macro on next line not (yet) supported by LaTeXML: 
 % \DeclareSIUnit\nt{nt}
