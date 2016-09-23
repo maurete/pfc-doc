@@ -352,7 +352,7 @@ A partir de los valores de la matriz de confusión se definen las
 medidas de \e{sensibilidad ($\SE$)} y \e{especificidad ($\SP$)}:
 %
 \begin{align}
-  \SE \tab = \frac{\VP}{\VP+\FN}, \tab \SP \tab = \frac{\VN}{\VN+\FP}.
+  \SE \tab = \frac{\VP}{\VP+\FN}, \tabs \SP \tab = \frac{\VN}{\VN+\FP}.
 \end{align}
 %
 La sensibilidad, también llamada a veces \e{razón de veraderos
@@ -386,10 +386,11 @@ Otras medidas comúnmente utilizadas para evaluación de un clasificador
 binario son
 %
 \begin{align}
-    \T{Precisión} \tab\tab \PR \tab=\frac{\VP}{\VP+\FP},\\
-    \T{Exactitud} \tab\tab \AC \tab=\frac{\VP+\VN}{\VP+\FP+\VN+\FN},\\
-    \T{Valor-F}   \tab\tab \T{\textsl{F}} \tab=\frac{\PR\cdot{}\SE}{\PR+\SE}, \\
-    \parbox{4cm}{Coeficiente de correlación de Matthews} \tab\tab
+    \T{Precisión} \tab\tabs \PR \tab=\frac{\VP}{\VP+\FP},\\
+    \T{Exactitud} \tab\tabs \AC \tab=\frac{\VP+\VN}{\VP+\FP+\VN+\FN},\\
+    \T{Valor-F}   \tab\tabs \T{\textsl{F}} \tab=\frac{\PR\cdot{}\SE}{\PR+\SE}, \\
+    \iflatexml\T{Coeficiente de correlación de Matthews}\else
+    \parbox{4cm}{Coeficiente de correlación de Matthews}\fi \tab\tabs
     \T{\textsl{MCC}} \tab = \frac{\VP\cdot{}\VN-\FP\cdot\FN
     }{\sqrt{(\VP+\FP)(\VP+\FN)(\VN+\FP)(\VN+\FN)}}.
 \end{align}
