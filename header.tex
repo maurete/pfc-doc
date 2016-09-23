@@ -76,14 +76,20 @@
 \usepackage{url}
 %
 % ===
-% === Más packages
+% === Matemáticas
 % ===
 %
+\usepackage{amsmath}		%Para enornos matemáticos mas flexibles
 \usepackage{bbold}		%Fuente bb para modo math: \mathbb{R} = reales
+\iflatexml
+\newcommand*{\mathds}[1]{\mathbb{#1}}
+\else
 \usepackage{dsfont}		%Fuente ds para modo math: \mathds{R} = reales
+\fi
+%
+%
 \usepackage{multirow}		%Para "combinar" celdas en tablas
 \usepackage{float}		%Para mejorar cuadros, figuras, etc
-\usepackage{amsmath}		%Para enornos matemáticos mas flexibles
 %
 %
 %
@@ -230,30 +236,30 @@
 
 % First macro on next line not (yet) supported by LaTeXML: 
 % \DeclareSIUnit\nt{nt}
-\newcommand{\VP}[][]{\T{\textsl{VP}}}
-\newcommand{\VN}[][]{\T{\textsl{VN}}}
-\newcommand{\FP}[][]{\T{\textsl{FP}}}
-\newcommand{\FN}[][]{\T{\textsl{FN}}}
-\newcommand{\SE}[][]{\T{\textsl{SE}}}
-\newcommand{\SP}[][]{\T{\textsl{SP}}}
-\newcommand{\GM}[][]{\T{\textsl{Gm}}}
-\newcommand{\PR}[][]{\T{\textsl{Pr}}}
-\newcommand{\AC}[][]{\T{\textsl{Ac}}}
-\newcommand{\feedforward}[][]{con propagación hacia adelante}
-\newcommand{\headRow}[][]{  \sfbf{\footnotesize Pos.} &
+\newcommand{\VP}{\T{\textsl{VP}}}
+\newcommand{\VN}{\T{\textsl{VN}}}
+\newcommand{\FP}{\T{\textsl{FP}}}
+\newcommand{\FN}{\T{\textsl{FN}}}
+\newcommand{\SE}{\T{\textsl{SE}}}
+\newcommand{\SP}{\T{\textsl{SP}}}
+\newcommand{\GM}{\T{\textsl{Gm}}}
+\newcommand{\PR}{\T{\textsl{Pr}}}
+\newcommand{\AC}{\T{\textsl{Ac}}}
+\newcommand{\feedforward}{con propagación hacia adelante}
+\newcommand{\headRow}{  \sfbf{\footnotesize Pos.} &
   \sfbf{\footnotesize Característica} &
   \sfbf{\footnotesize Descripción}
 }
-\newcommand{\tripletRow}[1][]{
+\newcommand{\tripletRow}[1]{
   \stepcounter{FeatureCounter}\theFeatureCounter & $N_{\T{\mono{#1}}}$
   & Ocurrencias del triplete \mono{#1} en la región del tallo.}
-\newcommand{\dnRow}[1][]{
+\newcommand{\dnRow}[1]{
   \stepcounter{FeatureCounter}\theFeatureCounter & $N_{\T{\mono{#1}}}$
   & Número de dinucleótidos \mono{#1} en la secuencia.}
-\newcommand{\funcheader}[3][]{\begin{description}%
+\newcommand{\funcheader}[3]{\begin{description}%
   \item[Función]{#1}\item[Entradas]{#2}\item[Salidas]{#3}%
 \end{description}}
-\renewcommand{\bibfont}[][]{\normalfont\footnotesize}
+\renewcommand{\bibfont}{\normalfont\footnotesize}
 %
 % ===
 % === Comandos
