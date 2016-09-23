@@ -1,6 +1,10 @@
+%
+%
+%
 \section{Hiperparámetros}
-Hasta el momento, se ha definido una máquina de aprendizaje
-(\autoref{eq:maqaprendizaje}) como un algoritmo que, dado un conjunto
+%
+Hasta el momento se ha definido una máquina de aprendizaje
+(\refer{eq:maqaprendizaje}) como un algoritmo que, dado un conjunto
 de entrenamiento $D$, genera un modelo $h$ que relaciona valores de
 entrada y de salida de una distribución desconocida $\nu$. En la
 práctica, se encuentra que la mayoría de las técnicas de aprendizaje
@@ -12,7 +16,7 @@ Los parámetros que regulan la generación del modelo se denominan
 del modelo $h$ --que se ajustan a partir del conjunto de datos
 $D$. Dependiendo de la máquina de aprendizaje a utilizar, los
 hiperparámetros pueden determinar, entre otros,
-
+%
 \begin{itemize}
 \item la familia de modelos $H\subset\C{H}$ a utilizar,
 \item los parámteros propios de la familia de modelos $H$,
@@ -23,6 +27,7 @@ hiperparámetros pueden determinar, entre otros,
 \item la precisión requerida de la solución,
 \item la \e{regularización} a aplicar al modelo.
 \end{itemize}
+%
 Como se puede advertir, los elementos del conjunto de hiperparámetros
 son de naturaleza variada: familias de funciones, vectores numéricos,
 números reales son algunos de los tipos posibles.
@@ -33,59 +38,53 @@ problema de clasificación; otros, en cambio, deberán ajustarse para
 cada problema en particular. En adelante, se hace hincapié en aquellos
 hiperparámetros numéricos dependientes del problema, expresados en
 forma genérica como un vector
-$\Btheta=(\theta_1,\theta_2,\ldots)$.  Entonces, la máquina de
+$\Btheta=(\theta_1,\theta_2,\ldots)$. La máquina de
 aprendizaje puede escribirse como una transformación
-
+%
 \begin{align}
   A:\C{D}\times\C{P}\rightarrow\C{H},
 \end{align}
+%
 esto es, un algoritmo que recibe como entrada los datos en $D\in\C{D}$
-y un vector de hiperparámetros
-$\Btheta\in\C{P}$, para obtener mediante
-entrenamiento un modelo óptimo $h\in\C{H}$.
+y un vector de hiperparámetros $\Btheta\in\C{P}$, para obtener
+mediante entrenamiento un modelo óptimo $h\in\C{H}$.
+%
+%
+\subsection{Selección automática de hiperparámetros}
+%
+Dado el conjunto de entrenamiento $D$, el objetivo de la selección
+automática de hiperparámetros es encontrar los hiperparámetros óptimos
+$\Btheta_*$ tal que el modelo resultante ajuste a los datos en $D$ con
+mínimo error (de generalización).
 
-\subsection{Optimización de hiperparámetros}
-La optimización de hiperparámetros hace referencia a la selección de
-un vector de hiperparámetros $\Btheta^*$ óptimo tal que se obtenga el
-mejor modelo posible que ajuste a los datos en $D$ con bajo error de
-generalización.
-Este problema es similar al proceso de entrenamiento, pero el objetivo
-es determinar hiperparámetros óptimos, y en general, es un algoritmo
-que tiene la forma
+En general, un algoritmo que implementa selección automática de
+hiperparámetros sigue un esquema iterativo en el cual, partiendo de un
+vector de hiperparámetros iniciales $\Btheta_0$, entrena en cada
+iteración $i$ la máquina de aprendizaje sobre el conjunto $D$ con
+hiperparámetros $\Btheta_i$, ajustando sucesivamente el valor de
+$\Btheta_{i+1}$ mediante la información disponible del modelo
+$h_i$. Este proceso se repite hasta satisfacer algún criterio de
+corte.
 
-\begin{enumerate}
-\item Elegir parámetros $\Btheta$
-\item Entrenar la máquina de aprendizaje
-\item Medir el error del modelo obtenido
-\item Repetir el proceso 1--3 hasta satisfacer un criterio de corte
-\item Seleccionar el $\Btheta$ resultante a partir de los resultados
-  obtenidos
-\end{enumerate}
-En muchos casos, este procedimiento se reduce simplemente a utilizar
-el conocimiento experto sobre el problema a resolver y elegir valores
-adecuados. Sin embargo, en problemas generales resulta común aplicar
-alguna heurística més o menos automática para la elección de valores
-óptimos de hiperparámetros.
-
-Un algoritmo de selección de hiperparámetros puede definirse entonces
-como una transformación
-
+Más formalmente, un algoritmo de selección automática de
+hiperparámetros puede definirse como una transformación
+%
 \begin{align}
-  % S:\C{D}\times\C{P} %\times\T{\hl{Fobjetivo}}
-  S:\C{P} %\times\T{\hl{Fobjetivo}}
-  \rightarrow\C{P}
+  S:\C{D}\rightarrow\C{P}
 \end{align}
-que, dado un conjunto de entrenamiento $\C{D}$, invoca la máquina de aprendizaje en
-sucesivas iteraciones hasta encontrar un vector de parámetros
-$\Btheta^*$ que surge de optimizar una función objetivo, relacionada
-al error de clasificación sobre un conjunto de validación.
-
+%
+que, dado un conjunto de entrenamiento ${D}\in\C{D}$, invoca la máquina de
+aprendizaje $A$ en sucesivas iteraciones hasta encontrar un vector de
+parámetros $\Btheta_*\in\C{P}$ que surge de optimizar una \e{función
+  objetivo}, típicamente relacionada al error de generalización del
+modelo obtenido en cada iteración.
+%
 \subsubsection{Función objetivo}
+%
 Una función objetivo sirve de criterio para determinar la mejor
 solución a un problema de optimización, asignando a cada caso de
 prueba un valor numérico que refleja la idoneidad del modelo obtenido
 con determinados hiperparámetros $\Btheta$.
-
 Intuitivamente, se puede decir que una función objetivo estima el
 error de generalización del clasificador, y sus variables de entrada
 son, directa o indirectamente, el conjunto de datos de entrenamiento y
@@ -93,15 +92,10 @@ los hiperparámetros del clasificador.
 
 Una función objetivo ideal es una función continua, derivable, y con
 un mínimo global coincidente con el mínimo de la función del error de
-generalización.  Las funciones objetivo más comunes son el error de
-clasificación sobre una partición de validación, sobre el conjunto de
-prueba, e incluso el error de validación cruzada dejando uno fuera.
-Al tratarse de funciones discretas construidas a partir de la
-experiencia de clasificación de un conjunto de datos finito, ninguna
-de estas funciones cumple con las propiedades de derivabilidad y
-continuidad.
-
-Un objetivo principal al desarrollar un método de optimización de
-hiperparámetros será, entonces, generar una función objetivo continua
-y derivable que permita su optimización mediante algún método
-estándar.
+generalización. La función objetivo más utilizada es el error
+de clasificación sobre algún conjunto de validación, la cual es una
+función discontinua y no derivable, ya que se construye a partir de la
+experiencia de clasificación de un conjunto de datos finito.
+Sin embargo, como se verá más adelante, resulta posible derivar
+funciones objetivo derivables que permiten una solución eficiente al
+problema de la búsqueda de hiperparámetros óptimos.
