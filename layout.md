@@ -3,7 +3,7 @@ titlepage.tex
 C1-Introduccion.tex
 S1.1-miRNAs.tex
 figures/hsa-mir-299_ss/hsa-mir-299_ss.png
-La_identificacin_de_.tex
+S1.1-miRNAs2.tex
 sectionClasificacin_.tex
 c2-teoria.tex
 s2.1-aprendizaje.tex
