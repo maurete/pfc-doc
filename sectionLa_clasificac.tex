@@ -102,14 +102,14 @@ $\xx$, sino sólo de la predicción $\hat{\yy}$ y la clase $\yy$.
 Algunas de las funciones de pérdida más comunes son:
 %
 \begin{align}
-  \T{{Pérdida 0-1}:} &\qquad
+  \T{{Pérdida 0-1}:} \tab\qquad
     L(\yy,\hat{\yy})=\begin{cases}0,\quad{}\yy=\hat{\yy}\\
       1,\quad\T{en otro caso}\end{cases} \\
-  \T{{Pérdida ``bisagra''}:} &\qquad
+  \T{{Pérdida ``bisagra''}:} \tab\qquad
     L(\yy,\hat{\yy})=\max\{0,\yy-\hat{\yy}\}\\
-  \T{{Error absoluto}:} &\qquad
+  \T{{Error absoluto}:} \tab\qquad
     L(\yy,\hat{\yy})=|\yy-\hat{\yy}|\\
-  \T{{Error cuadrático}:} &\qquad
+  \T{{Error cuadrático}:} \tab\qquad
     L(\yy,\hat{\yy})=(\yy-\hat{\yy})^2.
 \end{align}
 %
@@ -351,9 +351,9 @@ prueba.
 A partir de los valores de la matriz de confusión se definen las
 medidas de \e{sensibilidad ($\SE$)} y \e{especificidad ($\SP$)}:
 %
-\begin{align*}
-  \SE & = \frac{\VP}{\VP+\FN}, & \SP & = \frac{\VN}{\VN+\FP}.
-\end{align*}
+\begin{align}
+  \SE \tab = \frac{\VP}{\VP+\FN}, \tab \SP \tab = \frac{\VN}{\VN+\FP}.
+\end{align}
 %
 La sensibilidad, también llamada a veces \e{razón de veraderos
   positivos} (\e{TPR}), indica la \e{tasa de acierto} al clasificar
@@ -375,7 +375,7 @@ en general. En estos casos, resulta común utilizar la media geométrica
 entre la sensibilidad y la especificidad
 %
 \begin{align}
-  \GM & = \sqrt{\SE\cdot\SP}.
+  \GM \tab = \sqrt{\SE\cdot\SP}.
 \end{align}
 %
 %% %
@@ -386,11 +386,11 @@ Otras medidas comúnmente utilizadas para evaluación de un clasificador
 binario son
 %
 \begin{align}
-    \T{Precisión} && \PR &=\frac{\VP}{\VP+\FP},\\
-    \T{Exactitud} && \AC &=\frac{\VP+\VN}{\VP+\FP+\VN+\FN},\\
-    \T{Valor-F}   && \T{\textsl{F}} &=\frac{\PR\cdot{}\SE}{\PR+\SE}, \\
-    \parbox{4cm}{Coeficiente de correlación de Matthews} &&
-    \T{\textsl{MCC}} &= \frac{\VP\cdot{}\VN-\FP\cdot\FN
+    \T{Precisión} \tab\tab \PR \tab=\frac{\VP}{\VP+\FP},\\
+    \T{Exactitud} \tab\tab \AC \tab=\frac{\VP+\VN}{\VP+\FP+\VN+\FN},\\
+    \T{Valor-F}   \tab\tab \T{\textsl{F}} \tab=\frac{\PR\cdot{}\SE}{\PR+\SE}, \\
+    \parbox{4cm}{Coeficiente de correlación de Matthews} \tab\tab
+    \T{\textsl{MCC}} \tab = \frac{\VP\cdot{}\VN-\FP\cdot\FN
     }{\sqrt{(\VP+\FP)(\VP+\FN)(\VN+\FP)(\VN+\FN)}}.
 \end{align}
 %

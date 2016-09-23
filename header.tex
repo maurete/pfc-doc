@@ -436,11 +436,18 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
+
 \iflatexml
 \newcommand{\nt}{\textrm{nt}}
 \else
 \DeclareSIUnit\nt{nt}
 \newcommand{\nt}{\si{nt}}
+\fi
+
+\iflatexml
+\newcommand{\tab}{}
+\else
+\newcommand{\tab}{&}
 \fi
 
 %\iflatexml
