@@ -173,15 +173,13 @@ palabras, el negativo del gradiente se multiplica por una constante
 pequeña $\epsilon$, la velocidad de aprendizaje. Esta técnica de
 minimización se conoce comúnmente como el ``descenso del gradiente'':
 %
-\begin{align}
-\label{mlp6}
+\begin{align}\label{mlp6}
   \Delta w(t) = - \epsilon \nabla E(t),
 \end{align}
 %
 o, para cada peso,
 %
-\begin{align}
-\label{mlp6}
+\begin{align}\label{mlp6}
   \Delta w_{ij}(t) = - \epsilon \dpar{E}{w_{ij}}{}(t).
 \end{align}
 %
@@ -211,8 +209,7 @@ del espacio de los pesos.
 Una idea para hacer el entrenamiento más estable es la adición de un
 \e{término de momento}
 %
-\begin{align}
-\label{mlp8}
+\begin{align}\label{mlp8}
   \Delta w_{ij}(t) = - \epsilon \dpar{E}{w_{ij}}{}(t)
     + \mu \Delta w_{ij}(t-1).
 \end{align}
@@ -333,8 +330,7 @@ Se puede demostrar que la condición \refer{mlp10} se satisface si existe
 una matriz hessiana $H$ con las derivadas segundas de los pesos tal
 que
 %
-\begin{align}
-\label{mlp11}
+\begin{align}\label{mlp11}
   d(t) H d(t+1) =0.
 \end{align}
 %
