@@ -10,7 +10,7 @@ S2.1-aprendizaje.tex
 S2.2-Hiperparams.tex
 S2.3-mlp.tex
 figures/fig_mlp/mlp.png
-Cada_neurona_i_en.tex
+S2.3-mlp2.tex
 figures/fig_neurona/neurona.png
 La_salida_s_i_de.tex
 sectionMquinas_de_ve.tex
