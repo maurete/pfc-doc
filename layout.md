@@ -8,7 +8,7 @@ S1.2-Clasificacion.tex
 C2-teoria.tex
 S2.1-aprendizaje.tex
 S2.2-Hiperparams.tex
-sectionPerceptrn_mul.tex
+S2.3-mlp.tex
 figures/fig_mlp/mlp.png
 Cada_neurona_i_en.tex
 figures/fig_neurona/neurona.png
