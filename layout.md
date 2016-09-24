@@ -7,7 +7,7 @@ S1.1-miRNAs2.tex
 S1.2-Clasificacion.tex
 c2-teoria.tex
 s2.1-aprendizaje.tex
-sectionHiperparmetro.tex
+S2.2-Hiperparams.tex
 sectionPerceptrn_mul.tex
 figures/fig_mlp/default_figure.png
 Cada_neurona_i_en.tex
