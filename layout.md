@@ -12,7 +12,7 @@ S2.3-mlp.tex
 figures/fig_mlp/mlp.png
 S2.3-mlp2.tex
 figures/fig_neurona/neurona.png
-La_salida_s_i_de.tex
+S2.3-mlp3.tex
 sectionMquinas_de_ve.tex
 sectionDescripcin_ge.tex
 figures/metodopropio/metodopropio.png
