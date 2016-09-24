@@ -9,9 +9,9 @@ C2-teoria.tex
 S2.1-aprendizaje.tex
 S2.2-Hiperparams.tex
 sectionPerceptrn_mul.tex
-figures/fig_mlp/default_figure.png
+figures/fig_mlp/mlp.png
 Cada_neurona_i_en.tex
-figures/fig_neurona/default_figure.png
+figures/fig_neurona/neurona.png
 La_salida_s_i_de.tex
 sectionMquinas_de_ve.tex
 sectionDescripcin_ge.tex
