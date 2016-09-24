@@ -6,7 +6,7 @@ figures/hsa-mir-299_ss/hsa-mir-299_ss.png
 S1.1-miRNAs2.tex
 S1.2-Clasificacion.tex
 c2-teoria.tex
-s2.1-aprendizaje.tex
+S2.1-aprendizaje.tex
 S2.2-Hiperparams.tex
 sectionPerceptrn_mul.tex
 figures/fig_mlp/default_figure.png
