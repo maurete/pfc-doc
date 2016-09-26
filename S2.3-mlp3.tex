@@ -1,22 +1,23 @@
-La salida $s_i$ de la neurona se calcula aplicando
-una \e{función de activación} no lineal al campo local
-inducido $v_i$. Comúnmente se utiliza la función logística
+La \e{función de activación} es una función no lineal que ``aplasta''
+el campo local inducido, acotando el rango de la salida $s_i$ de la
+neurona a un intervalo conocido.  Un ejemplo de función de activación
+es la función logística
 %
-\begin{align*}
-  s_i=f(v_i)=\frac{1}{1+e^{-v_j}}.
-\end{align*}
+\begin{align}
+  s_i=f(v_i)=\frac{1}{1+e^{-v_j}},
+\end{align}
 %
-Esta función monótona creciente y continuamente derivable presenta un
-``equilibrio'' entre un comportamiento lineal (cerca del origen) y no
-lineal para magnitudes mayores de $v$. Comúnmente se utiliza una
-versión simétrica (en el dominio) de esta función
+con un rango de salida $(0,1)$. Comúnmente se utiliza una versión
+simétrica de esta función, dada por
 %
-\begin{align*}
-  s_i=f(v_i) = \frac{2}{1+e^{-v_j}}-1
-\end{align*}
+\begin{align}
+  s_i=f(v_i) = \frac{2}{1+e^{-v_j}}-1,
+\end{align}
 %
-que ``aplasta'' el campo local inducido al rango de salida (-1,1).
-En la \refer{fig:neurona} se muestra el modelo de una neurona.
+cuyo rango de salida es $(-1,1)$. Esta función monótona creciente y
+continuamente derivable presenta un ``equilibrio'' entre un
+comportamiento lineal cerca del origen y no lineal para magnitudes
+mayores de $v_i$.
 %
 %
 \subsection{Entrenamiento del perceptrón multicapa}
@@ -25,48 +26,49 @@ El objetivo del entrenamiento en el perceptrón multicapa es ajustar
 los pesos de la red de forma que la misma efectúe una transformación
 de las entradas a la salida deseada. Esta transformación viene dada
 por el conjunto de entrenamiento $D$.
-Cada ejemplo $(\xx_i,\yy_i)$ en $D$ consta de un vector de activación
-$\xx_i$ y una salida deseada $\yy_i$. Una vez entrenada la red, cuando
-la red recibe una activación $\xx_i$, el vector de salida de la red
-debería ser $\yy_i$. La distancia entre la salida deseada y la salida
+Cada ejemplo $(\xx_j,\yy_j)$ en $D$ consta de un vector de activación
+$\xx_j$ y una salida deseada $\yy_j$.
+%% Una vez entrenada la red, cuando
+%% ésta recibe una activación $\xx_i$, el vector de salida
+%% debería ser $\yy_i$.
+La distancia entre la salida deseada y la salida
 efectiva de la red se mide con la función de costo (o de energía) $E$:
-$
+%
 \begin{align}
-  E = \frac{1}{2}\sum_{i=1}^{\ell}\|\yy_i-\B{s}_i\|,
+  E = \frac{1}{2}\sum_{j=1}^{\ell}\|\yy_j-\B{s}_j\|,
 \end{align}
-$
-en donde el vector $\B{s}_i$ es el vector compuesto por las salidas de
-las neurona de la capa de salida en su conjunto.  La función $E$ puede
+%
+en donde el vector $\B{s}_j$ es el vector compuesto por las salidas de
+cada neurona en la capa de salida. La función $E$ puede
 interpretarse como una medida de \e{aptitud} de los pesos de la red al
 conjunto $D$, de modo que satisfacer el objetivo del aprendizaje es
 equivalente a encontrar un mínimo global de $E$.
 
-En cada iteración $t=0,1,2,ldots$, los pesos de la red
+En cada iteración $t=0,1,2,\ldots$, los pesos de la red
 se modifican a lo largo de una dirección de búsqueda
-$d(t)$, llevando los pesos en la dirección del mínimo estimado:
+$d(t)$ %, llevando los pesos en la dirección del mínimo estimado:
 %
-\begin{align*}
-  \Delta w(t) \tab= \epsilon * d(t), \tabs w(t+1) \tab= w(t)+\Delta w(t)
-\end{align*}
+\begin{align}
+  \Delta w(t)\tab=\epsilon * d(t), \tabs w(t+1) \tab= w(t)+\Delta w(t).
+\end{align}
 %
-en donde el parámetro $\epsilon$, que escala el paso de modificación
-de los pesos, representa la \e{velocidad de aprendizaje}. Para
-encontrar la dirección de búsqueda $d(t)$ se utiliza comúnmente el
-gradiente $\nabla E = \dpar{E}{w}{}$, calculado mediante el algoritmo de
-retropropagación descripto más adelante.
+El parámetro $\epsilon$ es un número pequeño que escala la magnitud de
+la modificación de los pesos y se denomina \e{velocidad de
+aprendizaje}.  Para encontrar la dirección de búsqueda $d(t)$ se
+utiliza el gradiente $\nabla{}E=\dpar{E}{w}{}$, calculado mediante el
+algoritmo de retropropagación.
 
 Considerando una neurona $i$ en la capa de salida, sea $s_i(t)$ la
-salida de la misma en respuesta al estímulo $\xx_j(t)$ aplicado en la
+salida de la misma en respuesta al estímulo $\xx(t)$ aplicado en la
 capa de entrada. La \e{señal de error} producida en la salida de esta
 neurona se define según
 %
-\begin{align}
-\label{4.2}
-  e_i(t)=s_{i}(t)-y_{ji}(t)
+\begin{align}\label{4.2}
+  e_i(t)=s_{i}(t)-y_{i}
 \end{align}
 %
-en donde $y_{ji}(t)$ es el $i$-ésimo elemento del vector de respuesta
-deseada $\B{y}_j(t)$. La \e{energía de error instantáneo} de la neurona
+en donde $y_{i}$ es el $i$-ésimo elemento del vector de respuesta
+deseada $\B{y}$. La \e{energía de error instantáneo} de la neurona
 $i$ se define según
 %
 \begin{align}
