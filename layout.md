@@ -21,7 +21,7 @@ S3.2-Entrada.tex
 figures/fastafmt/default_figure.png
 subsubsectionVariant.tex
 figures/rnafoldfmt/default_figure.png
-sectionExtraccin_de_.tex
+S3.3-Caracts.tex
 longtable_p008textwidth_hspace.tex
 subsectionCaracterst.tex
 longtable_p008textwidth_hspace.tex
