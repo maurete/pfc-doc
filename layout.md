@@ -14,6 +14,7 @@ S2.3-mlp2.tex
 figures/fig_neurona/neurona.png
 S2.3-mlp3.tex
 sectionMquinas_de_ve.tex
+C3-Metodo.tex
 sectionDescripcin_ge.tex
 figures/metodopropio/metodopropio.png
 sectionFormato_de_en.tex
