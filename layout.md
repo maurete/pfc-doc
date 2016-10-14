@@ -29,7 +29,7 @@ subsectionCaracterst1.tex
 longtable_p008textwidth_hspace.tex
 subsectionCaracterst2.tex
 longtable_p008textwidth_hspace.tex
-sectionNormalizacin_.tex
+S3.4-Normalizacion.tex
 sectionParticin_de_d.tex
 sectionSeleccin_auto.tex
 sectionEntrenamiento.tex
