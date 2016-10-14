@@ -20,10 +20,3 @@ sectionParticin_de_d.tex
 sectionSeleccin_auto.tex
 sectionEntrenamiento.tex
 sectionClasificacin_1.tex
-sectionLectura_de_da.tex
-sectionPreparacin_de.tex
-sectionSeleccin_auto1.tex
-sectionEntrenamiento1.tex
-sectionClasificacin_2.tex
-sectionInterfaz_de_u.tex
-sectionDocumentacin_.tex
