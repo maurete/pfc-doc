@@ -17,7 +17,7 @@ sectionMquinas_de_ve.tex
 C3-Metodo.tex
 S3.1-Descripcion.tex
 figures/metodopropio/metodopropio.png
-sectionFormato_de_en.tex
+S3.2-Entrada.tex
 figures/fastafmt/default_figure.png
 subsubsectionVariant.tex
 figures/rnafoldfmt/default_figure.png
