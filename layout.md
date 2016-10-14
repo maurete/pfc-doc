@@ -23,7 +23,7 @@ subsubsectionVariant.tex
 figures/rnafoldfmt/default_figure.png
 S3.3-Caracts.tex
 longtable_p008textwidth_hspace.tex
-subsectionCaracterst.tex
+S3.3.2-Aux.tex
 longtable_p008textwidth_hspace.tex
 subsectionCaracterst1.tex
 longtable_p008textwidth_hspace.tex
