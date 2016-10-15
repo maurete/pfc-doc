@@ -108,10 +108,10 @@ eléctricos) provenientes de otras neuronas a través de sus dendritas
 (receptores), y transmite señales generadas por su cuerpo celular a
 través del axón, que se ramifica en ``hebras''.
 
-Entre la terminal de una hebra proveniente de una neurona y la
+Entre la terminal de la hebra proveniente de una neurona y la
 dendrita de otra, se encuentra una estructura elemental denominada
-sinapsis.  Cuando un impulso eléctrico alcanza la terminal de una
-hebra, se liberan sustancias denominadas neurotransmisores. Estos
+sinapsis.  Cuando un impulso eléctrico alcanza la terminal, 
+se liberan sustancias denominadas neurotransmisores. Estos
 neurotransmisores se dispersan a través de la sinapsis, aumentando o
 disminuyendo, dependiendo del tipo de sinapsis, la tendencia de la
 neurona receptora de emitir un impulso eléctrico propio.
@@ -121,12 +121,13 @@ señales que han pasado por ella, de modo que la propia sinapsis
 \e{aprende} de las actividades en las que participa. Esta dependencia
 de las señales históricas actúa como una \e{memoria}, y es
 posiblemente la dimensión física de la memoria humana, relacionada
-asimismo a la \e{capacidad de generalización} del cerebro humano.
+asimismo a la \e{capacidad de aprendizaje} del cerebro humano.
 %
 %
 \subsection{Modelo computacional de una neurona}
 %
-El modelo computacional básico de una neurona consiste en una
+El modelo computacional básico de una neurona 
+\cite{mcculloch-pitts} consiste en una
 \e{función de activación} binaria cuyo valor de salida depende del
 valor de una suma ponderada de las entradas: si el valor de la suma
 alcanza un valor mínimo (umbral) $U$, entonces el valor de salida se
@@ -137,7 +138,7 @@ se escribe
   y \tab = H\left( \sum_{j=1}{N} w_j x_j - U\right),
 \end{align}
 %
-en donde $H$ es la función escalón unitario \cite{mcculloch-pitts}.
+en donde $H$ es la función escalón unitario.
 Imaginando que esta neurona es parte de una red (un nodo en un grafo),
 en donde cada peso $w_j$ multiplica la señal proveniente de otra
 neurona a través de una arista del grafo (conexión), resulta posible
@@ -157,22 +158,23 @@ es
 en donde $v_i$ se denomina el \e{campo local inducido} de la neurona
 $i$, y $f$ es una función de activación no lineal que acota el rango
 de la salida $s_i$ a un intervalo conocido. Algunas funciones de
-activación típicas son el escalón de Heaviside, la función
-arcotangente, o alguna variante de la función sigmoidea
+activación típicas son la función
+arcotangente o alguna variante de la función sigmoidea
 tal como
 %
 \begin{align}\label{e2:sigmoid-symmetric}
   f(v_i) = \frac{2}{1+e^{-v_j}}-1,
 \end{align}
 %
-la cual posee un rango de salida simétrico en $(-1,1)$.  Esta función
-monótona creciente y continuamente derivable presenta un equilibrio
+la cual posee un rango de salida simétrico en $(-1,1)$. Estas funciones
+monótonas crecientes y continuamente derivable presentan un equilibrio
 entre un comportamiento lineal cerca del origen y no lineal para
-magnitudes mayores de $v_i$.  El umbral $b_i$ de la neurona,
+magnitudes mayores de $v_i$, con un comportamiento asintótico a la
+función escalón. El umbral $b_i$ de la neurona,
 equivalente al valor $U$ en la
 \iflatexml{}Ecuación~\ref{e2:neuron-basic}\else\autoref{e2:neuron-basic}\fi
-se representa en este modelo como la ponderación de una entrada
-constante $s_0=1$ a la neurona, de modo que
+se representa en este modelo como el peso de una entrada
+constante (ficticia) $s_0=1$, de modo que
 %
 \begin{align}
   b_i\tab=-w_{i0}.
