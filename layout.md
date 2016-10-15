@@ -12,7 +12,6 @@ S3.1.1-Tripletes.tex
 T3.3.1-TripletFeats.tex
 S3.3.2-Aux.tex
 T3.3.2-FeatsAux.tex
-longtable_p008textwidth_hspace.tex
 S3.3.3-Secuencia.tex
 longtable_p008textwidth_hspace.tex
 S3.3.4-EstructuraSec.tex
