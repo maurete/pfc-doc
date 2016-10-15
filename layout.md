@@ -11,7 +11,7 @@ S3.3-Caracts.tex
 longtable_p008textwidth_hspace.tex
 S3.3.2-Aux.tex
 longtable_p008textwidth_hspace.tex
-subsectionCaracterst1.tex
+S3.3.3-Secuencia.tex
 longtable_p008textwidth_hspace.tex
 subsectionCaracterst2.tex
 longtable_p008textwidth_hspace.tex
