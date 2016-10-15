@@ -19,5 +19,5 @@ S3.4-Normalizacion.tex
 S3.5-Particion.tex
 sectionSeleccin_auto.tex
 S3.6-Entrenamiento.tex
-sectionClasificacin_1.tex
+S3.7-Clasificacion.tex
 C4-Implementacion.tex
