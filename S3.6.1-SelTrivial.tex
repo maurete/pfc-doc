@@ -1,0 +1,22 @@
+\subsection{Selección trivial}
+La selección trivial consiste en seleccionar valores preestablecidos
+``razonables'' para los hiperparámetros del clasificador, que resulten
+apropiados para la mayoría de los problemas.
+
+Para el caso del Perceptrón Multicapa, la estrategia de selección
+trivial consiste en seleccionar $0$ neuronas en la capa oculta, de
+modo que el MLP resultante es equivalente a un perceptrón simple.
+
+Para una Máquina de Vectores de Soporte, la estrategia selecciona el
+valor $1$ para el hiperparámetro de regularización $C$ \cite{libsvm}, y
+un valor $\gamma=\frac{1}{2F}$ para el hiperparámetro de amplitud del
+kernel RBF, en donde $F$ es el número de características consideradas
+\cite{glasmachersigel}.
+
+Los hiperparámetros encontrados por esta estrategia no dependen del
+problema de clasificación, sino que son genéricos. Por ello, no se
+requiere entrenar el clasificador, y en general los valores
+encontrados deben considerarse subóptimos frente a las demás
+estrategias.  Así y todo, resulta conveniente su utilización para el
+análisis del comportamiento de los clasificadores frente a un problema
+dado.

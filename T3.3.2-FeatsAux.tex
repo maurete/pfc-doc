@@ -1,0 +1,21 @@
+\begin{longtable}{@{}p{0.08\textwidth}%
+@{\hspace{0.01\textwidth}}p{0.22\textwidth}%
+@{\hspace{0.01\textwidth}}p{0.68\textwidth}@{}}
+  \sfbf{\footnotesize Pos.} &
+  \sfbf{\footnotesize Característica} &
+  \sfbf{\footnotesize Descripción}
+  \endhead
+  33 & $L_3$ &
+  Longitud del tallo: número de nucleótidos que conforman el tallo de
+  la estructura de horquilla. \\
+  34 & $P$ &
+  Número de pares de bases en el pre-miRNA. \\
+  35 & $L_3/P$ &
+  Grado de complementariedad entre los dos brazos de la estructura de
+  horquilla: para una complementariedad perfecta, se da el valor
+  mínimo 2. El valor numérico aumenta conforme aumenta el número de
+  bases ``sueltas'' (no apareadas) en el tallo. \\
+  36 & $GC=\frac{N_\ntC+N_\ntG}{L_3}$ &
+  Proporción de bases \ntG y \ntC en el tallo.  Se calcula contando el
+  número de bases \ntC y \ntG en el tallo y dividiendo por $L_3$.
+\end{longtable}
