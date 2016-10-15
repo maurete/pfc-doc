@@ -4,7 +4,7 @@ C4-Implementacion.tex
 sectionLectura_de_da.tex
 sectionPreparacin_de.tex
 sectionSeleccin_auto1.tex
-sectionEntrenamiento1.tex
+S4.4-Entrenamiento.tex
 S4.5-Clasificacion.tex
 S1.6-InterfazUsuario.tex
 S4.7-Documentacion.tex
