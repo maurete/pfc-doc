@@ -8,6 +8,7 @@ figures/fastafmt/default_figure.png
 subsubsectionVariant.tex
 figures/rnafoldfmt/default_figure.png
 S3.3-Caracts.tex
+S3.1.1-Tripletes.tex
 longtable_p008textwidth_hspace.tex
 S3.3.2-Aux.tex
 longtable_p008textwidth_hspace.tex
