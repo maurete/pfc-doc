@@ -9,6 +9,7 @@ subsubsectionVariant.tex
 figures/rnafoldfmt/default_figure.png
 S3.3-Caracts.tex
 S3.1.1-Tripletes.tex
+T3.3.1-TripletFeats.tex
 longtable_p008textwidth_hspace.tex
 S3.3.2-Aux.tex
 longtable_p008textwidth_hspace.tex
