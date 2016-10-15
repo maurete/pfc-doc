@@ -39,4 +39,3 @@ tbl_problemdeltamirb.tex
 Los_resultados_de_cl.tex
 tbl_suppldeltamirbas.tex
 S5.6.4-DmirBase2.tex
-Como_se_puede_observ.tex
