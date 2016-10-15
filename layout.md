@@ -16,7 +16,7 @@ longtable_p008textwidth_hspace.tex
 S3.3.4-EstructuraSec.tex
 longtable_p008textwidth_hspace.tex
 S3.4-Normalizacion.tex
-sectionParticin_de_d.tex
+S3.5-Particion.tex
 sectionSeleccin_auto.tex
 sectionEntrenamiento.tex
 sectionClasificacin_1.tex
