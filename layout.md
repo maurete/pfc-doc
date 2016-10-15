@@ -43,4 +43,3 @@ testresults.tex
 Como_se_puede_observ.tex
 sectionIntroduccin_E1.tex
 sectionImplementacin.tex
-sectionObjetivo_gene.tex
