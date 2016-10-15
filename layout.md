@@ -7,7 +7,7 @@ sectionSeleccin_auto1.tex
 sectionEntrenamiento1.tex
 sectionClasificacin_2.tex
 sectionInterfaz_de_u.tex
-sectionDocumentacin_.tex
+C5-Pruebas.tex
 sectionDescripcin_de.tex
 tbl_mainxue.tex
 subsectionProblema_m.tex
