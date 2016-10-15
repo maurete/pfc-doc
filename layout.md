@@ -2,7 +2,7 @@ abstract.tex
 titlepage.tex
 C4-Implementacion.tex
 sectionLectura_de_da.tex
-sectionPreparacin_de.tex
+S4.2-PrepDatos.tex
 S4.3-SelAutoHiper.tex
 S4.4-Entrenamiento.tex
 S4.5-Clasificacion.tex
