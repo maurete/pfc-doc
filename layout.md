@@ -20,6 +20,7 @@ S3.5-Particion.tex
 S3.6-SelAutoHiperp.tex
 S3.6.1-SelTrivial.tex
 S3.6.2-BusqExhaust.tex
+S3.6.3-ErrEmpirico.tex
 S3.6-Entrenamiento.tex
 S3.7-Clasificacion.tex
 C4-Implementacion.tex
