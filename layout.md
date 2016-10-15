@@ -1,7 +1,7 @@
 abstract.tex
 titlepage.tex
 C4-Implementacion.tex
-sectionLectura_de_da.tex
+S4.1-Entrada.tex
 S4.2-PrepDatos.tex
 S4.3-SelAutoHiper.tex
 S4.4-Entrenamiento.tex
