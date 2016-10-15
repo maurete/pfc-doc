@@ -44,5 +44,4 @@ Como_se_puede_observ.tex
 sectionIntroduccin_E1.tex
 sectionImplementacin.tex
 sectionObjetivo_gene.tex
-sectionAlcances__beg.tex
 sectionMetodologa_a_.tex
