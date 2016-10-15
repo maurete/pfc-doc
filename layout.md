@@ -6,7 +6,7 @@ sectionPreparacin_de.tex
 sectionSeleccin_auto1.tex
 sectionEntrenamiento1.tex
 sectionClasificacin_2.tex
-sectionInterfaz_de_u.tex
+S1.6-InterfazUsuario.tex
 S4.7-Documentacion.tex
 C5-Pruebas.tex
 sectionDescripcin_de.tex
