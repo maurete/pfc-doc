@@ -18,6 +18,6 @@ longtable_p008textwidth_hspace.tex
 S3.4-Normalizacion.tex
 S3.5-Particion.tex
 sectionSeleccin_auto.tex
-sectionEntrenamiento.tex
+S3.6-Entrenamiento.tex
 sectionClasificacin_1.tex
 C4-Implementacion.tex
