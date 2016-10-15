@@ -5,3 +5,12 @@ S1.1-miRNAs.tex
 figures/hsa-mir-299_ss/hsa-mir-299_ss.png
 S1.1-miRNAs2.tex
 S1.2-Clasificacion.tex
+C2-teoria.tex
+S2.1-aprendizaje.tex
+S2.2-Hiperparams.tex
+S2.3-mlp.tex
+figures/fig_mlp/mlp.png
+S2.3-mlp2.tex
+figures/fig_neurona/neurona.png
+S2.3-mlp3.tex
+sectionMquinas_de_ve.tex
