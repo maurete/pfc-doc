@@ -15,7 +15,7 @@ T3.3.2-FeatsAux.tex
 S3.3.3-Secuencia.tex
 T3.3.3-FeatsSequence.tex
 S3.3.4-EstructuraSec.tex
-longtable_p008textwidth_hspace.tex
+T3.3.4-FeatsStructure.tex
 S3.4-Normalizacion.tex
 S3.5-Particion.tex
 S3.6-SelAutoHiperp.tex
