@@ -42,7 +42,6 @@ S5.6.4-DmirBase2.tex
 testresults.tex
 Como_se_puede_observ.tex
 sectionIntroduccin_E1.tex
-sectionClasificadore.tex
 sectionImplementacin.tex
 sectionObjetivo_gene.tex
 sectionObjetivos_esp.tex
