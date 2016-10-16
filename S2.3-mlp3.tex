@@ -1,38 +1,42 @@
-La \e{función de activación} es una función no lineal que ``aplasta''
-el campo local inducido, acotando el rango de la salida $s_i$ de la
-neurona a un intervalo conocido.  Un ejemplo de función de activación
-es la función logística
-%
-\begin{align}
-  s_i=f(v_i)=\frac{1}{1+e^{-v_j}},
-\end{align}
-%
-con un rango de salida $(0,1)$. Comúnmente se utiliza una versión
-simétrica de esta función, dada por
-%
-\begin{align}
-  s_i=f(v_i) = \frac{2}{1+e^{-v_j}}-1,
-\end{align}
-%
-cuyo rango de salida es $(-1,1)$. Esta función monótona creciente y
-continuamente derivable presenta un ``equilibrio'' entre un
-comportamiento lineal cerca del origen y no lineal para magnitudes
-mayores de $v_i$.
 %
 %
-\subsection{Entrenamiento del perceptrón multicapa}
+\subsection{Aprendizaje}
 %
+%% En el contexto de las redes neuronales artificiales, el aprendizaje
+%% puede ser visto como el problema de efectuar actualizaciones de los
+%% pesos en las conexiones de la red de modo que ésta efectúe una tarea
+%% deseada.
+
+%% La red debe ``aprender'' los pesos en sus conexiones a partir de los
+%% patrones de entrenamiento. El rendimiento en la clasificación mejora
+%% progresivamente a medida que se van actualizando los pesos.
+
+%% La habilidad de las redes neuronales de aprender de manera autoomática
+%% a partir de ejemplos es quizá la caracteríßtica que hace a su
+%% éxito. En lugar de seguir un conjunto de reglas especificadas por
+%% expertos humanos, las redes neuronales artificiales ...
+
+%% El algoritmo de aprendizaje utilizado por una red neuronal artificial
+%% viene determinado por la arquitectura de la red.
+
+%% El algoritmo de entrenamiento supervisado
+
+%% %
+%% %
+%% \subsection{Entrenamiento del perceptrón multicapa}
+%% %
+
 El objetivo del entrenamiento en el perceptrón multicapa es ajustar
-los pesos de la red de forma que la misma efectúe una transformación
-de las entradas a la salida deseada. Esta transformación viene dada
-por el conjunto de entrenamiento $D$.
-Cada ejemplo $(\xx_j,\yy_j)$ en $D$ consta de un vector de activación
-$\xx_j$ y una salida deseada $\yy_j$.
+los pesos de la red de forma que ésta efectúe una transformación
+de las entradas a las salidas deseadas. Esta transformación viene dada
+por el conjunto de entrenamiento $D$: cada ejemplo $(\xx_j,\yy_j)$ en
+$D$ consta de un vector de activación $\xx_j$ y una salida deseada
+$\yy_j$.
 %% Una vez entrenada la red, cuando
 %% ésta recibe una activación $\xx_i$, el vector de salida
 %% debería ser $\yy_i$.
-La distancia entre la salida deseada y la salida
-efectiva de la red se mide con la función de costo (o de energía) $E$:
+La distancia entre la salida deseada y la salida efectiva de la red se
+mide con la función de costo (o de energía) $E$:
 %
 \begin{align}
   E = \frac{1}{2}\sum_{j=1}^{\ell}\|\yy_j-\B{s}_j\|,
@@ -102,23 +106,28 @@ perceptrón multicapa. Esta dependencia funcional no fue incluida de
 forma explícita en la definición de $\C{E}(n)$ y $\C{E}_{\T{av}}(N)$
 en pos de simplificar la notación.
 %
-\subsubsection{El algoritmo de retropropagación}
 %
-El entrenamiento del perceptrón multicapa se efectúa mediante el denominado
-algoritmo de retropropagación.
-Este algoritmo resuelve el problema del cálculo del gradiente
-$\nabla E$, \e{propagando} el error $E$ desde la capa de salida hacia la
-capa de entrada. La idea básica para el cálculo de las derivadas
-parciales $\dpar{E}{w_{ij}}{}$ para cada peso en la red consiste en
-aplicar repetidamente la regla de la cadena
+\subsection{El algoritmo de retropropagación}
 %
-\begin{align}
+El algoritmo de retropropagación es un algoritmo específico para el
+perceptrón multicapa que efectúa el cálculo del gradiente $\nabla E$
+necesario para el ajuste de los pesos de la red en el entrenamiento.
+Aprovechando la arquitectura del MLP, el algoritmo de retropropagación
+calcula el gradiente de la función de error comenzando por la capa de
+salida y \e{propagando} el error $E$ en dirección inversa hasta la
+primer capa oculta.
+
+La idea básica para el cálculo de las derivadas parciales
+$\dpar{E}{w_{ij}}{}$ para cada peso en la red consiste en aplicar
+repetidamente la regla de la cadena
+%
+\begin{align}\label{e2:deriv-E-wrt-w}
   \dpar{E}{w_{ij}}{} = \dpar{E}{s_{i}}{}\dpar{s_i}{w_{ij}}{},
 \end{align}
 %
 donde
 %
-\begin{align}
+\begin{align}\label{e2:deriv-s-wrt-w}
   \dpar{s_i}{w_{ij}}{} = \dpar{s_i}{v_{i}}{}\dpar{v_i}{w_{ij}}{} =
   f'(v_i) s_j .
 \end{align}
@@ -130,7 +139,7 @@ se distinguen los casos siguientes:
 \begin{itemize}
 \item Si la neurona $i$ está en la capa de salida:
   %
-  \begin{align}\label{mlp4}
+  \begin{align}\label{e2:deriv-E-wrt-s-out} %mlp4
     \dpar{E}{s_i}{}=\frac{1}{2}\dpar{(t_i-s_i)^2}{s_i}{}=-(t_i-s_i)
   \end{align}
   %
@@ -138,7 +147,7 @@ se distinguen los casos siguientes:
   $\dpar{E}{s_i}{}$ resulta más complejo. Aplicando nuevamente la
   regla de la cadena, se tiene:
   %
-  \begin{align}\label{mlp5}
+  \begin{align}\label{e2:deriv-E-wrt-s-hid} %mlp5
     \dpar{E}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
       \dpar{E}{s_k}{}\dpar{s_k}{s_i}{} \notag\\
     \tab= \sum_{k\in\C{S}(i)}
@@ -151,14 +160,21 @@ donde $\C{S}(i)$ denota el conjunto de todas las unidades $k$ en las
 sucesivas capas para la cual la unidad $i$ tiene una conexión
 pesada distinta de cero $w_{ki}$.
 
-En la \refer{mlp5} se asume que los valores $\dpar{E}{s_k}{}$ para todas
-las capas sucesivas a la neurona $k$ es conocido. Este requerimiento
-se satisface simplemente comenzando el cálculo de $\dpar{E}{s_k}{}$ a
-partir de la capa de salida (\refer{mlp4}) y luego continuar el cálculo
-para las unidades en la capas pecedentes según la \refer{mlp5}.  Dicho de
-otro modo, la información del gradiente se propaga a partir de la capa
-de salida hacia atrás hasta la primer capa oculta. De allí el nombre
-``algoritmo de retropropagación''.
+En la
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-s-hid}\else\autoref{e2:deriv-E-wrt-s-hid}\endif
+se asume que los valores $\dpar{E}{s_k}{}$ para todas las capas
+sucesivas a la neurona $k$ es conocido. Ésta es la razón por la cual
+el agoritmo comienza el cálculo de $\dpar{E}{s_k}{}$ en la capa de
+salida
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-s-hid}\else\autoref{e2:deriv-E-wrt-s-hid}\endif,
+continuando con las capas ocultas en orden inverso.
+%% Este requerimiento
+%% se satisface simplemente comenzando el cálculo de $\dpar{E}{s_k}{}$ a
+%% partir de la capa de salida (\refer{mlp4}) y luego continuar el cálculo
+%% para las unidades en la capas pecedentes según la \refer{mlp5}.
+Por ello se dice que la información del gradiente de error se propaga hacia atrás
+a partir de la capa de salida hasta la primer capa
+oculta. De allí el nombre `` retropropagación''.
 
 El desarrollo del algoritmo de retropropagación a mediados de los años
 80 representó un hito en el campo de las redes neuronales, ya
