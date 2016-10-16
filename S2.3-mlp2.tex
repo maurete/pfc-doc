@@ -1,24 +1,67 @@
-Cada neurona $i$ en la red es una unidad de procesamiento simple que
-calcula su salida $s_i$ aplicando una \e{función de activación} al
-llamado \e{campo local inducido} $v_i$, el cual es la suma ponderada de
-las entradas
 %
-\begin{align}
-  v_i \tab= \sum_{j\in\C{P}(i)} s_j w_{ij} - b_i .
-\end{align}
 %
-Aquí, $\C{P}(i)$ denota los índices de las unidades en la capa
-anterior a la de la $i$-ésima unidad, $w_{ij}$ es el peso
-(ponderación) correspondiente al enlace que conecta la unidad $j$ a la
-unidad $i$, y $b_i$ es el \e{umbral}, que representa el ``grado de
-inhibición'' de la neurona. El umbral se representa comúnmente
-como una señal de entrada constante $s_0=1$, y escribiendo
-el campo local inducido como
+\subsection{Arquitectura de una red neuronal artificial}
 %
-\begin{align}
-  v_i \tab= \sum_{j\in\{0,\C{P}(i)\}} s_j w_{ij}, \tabs b_i\tab=-w_{i0}.
-\end{align}
+Tanto el perceptrón multicapa así como las redes neuronales en general
+son arquitecturas de cómputo paralelo en las que la unidad de cómputo
+básica es la neurona. Desde un punto de vista matemático, la
+arquitectura puede interpretarse como un grafo dirigido, donde los
+nodos son neuronas artificiales, con las aristas que tienen un peso
+asociado, y conectan las salidas de una neurona con la entrada de
+otra.
+
+Según la topología del grafo (y por tanto de la red), las redes
+neuronales pueden discriminarse en
 %
-En la
-\iflatexml{}Figura~\ref{fig:neurona}\else\autoref{fig:neurona}\fi
-se muestra una representación esquemática de una neurona.
+\begin{itemize}
+\item redes \e{acíclicas} (también \e{con propagación hacia
+  adelante}), aquellas que no contienen bucles, y
+\item redes \e{recurrentes}, que presentan bucles de
+  \e{retroalimentación}.
+\end{itemize}
+%
+En otras palabras, en las redes recurrentes para al menos una neurona,
+resulta posible seguir las conexiones volviendo al punto de partida.
+
+La consecuencia de que no haya buecles es que el MLP no tiene memoria,
+en el sentido que la salida en el tiempo $t$ no depende del estado
+previo de la red en $t-1$.
+
+%% y conectadas por ``enlaces''
+%% denominados \e{pesos sinápticos}
+%% con una arquitectura organizada en capas.
+%% Cada nodo se conecta mediante enlaces ponderados denominados
+%% ``pesos sinápticos'' a todos los nodos en las capas adyacentes.
+
+%% La primer capa, denominada capa de entrada, contiene nodos sensores
+%% que ``leen'' un vector de entrada externo, y lo transmiten a través
+%% de los enlaces sinápticos a la primer capa oculta.
+%% Las capas subsiguientes se componen de ``neuronas'', nodos computadores
+%% que determinan su valor de salida a partir de las salidas de los nodos en
+%% la capa anterior y los valores de los pesos sinápticos que los conectan.
+
+%% Las capas ocultas reciben como entrada las
+%% salidas de la capa anterior, determinan su valor de salida aplicando
+%% una \e{función de activación} a la suma ponderada sus entradas, y
+%% transmiten su valor de salida a la capa siguiente. Este proceso
+%% continúa capa por capa hasta alcanzar la capa de salida.
+
+El perceptrón multicapa tiene una arquitectura acíclica organizada en
+\e{capas}.  La primer capa contiene, en lugar de neuronas, nodos
+``sensores'' que \e{leen} el vector de entrada: las salidas de cada
+nodo en la capa de entrada se corresponden con los componentes del
+vector recibido como entrada al MLP.  Las capas subsiguientes
+contienen neuronas, cada una de las cuales recibe como entrada todas
+las salidas de la capa anterior.  Dentro de una misma capa, las
+neuronas no se conectan entre sí.
+
+La salida de la red es aquella de las neuronas en la última capa,
+denominada \e{de salida}. Las capas que no son ni de entrada ni de
+salida se denominan \e{capas ocultas}.
+
+En la \iflatexml{}Figura~\ref{fig:mlp}\else\autoref{fig:mlp}\fi se
+representa un perceptrón multicapa de 2 capas, que lee un vector de 3
+elementos, el cual es propagado a través de la capa oculta de 4
+neuronas para finalmente calcular un vector de salida \hl{corregir y}
+$\yy$ a partir de las salidas de las 2 neuronas en la capa de salida.
+
