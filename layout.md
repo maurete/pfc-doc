@@ -5,7 +5,7 @@ S2.1-aprendizaje.tex
 S2.2-Hiperparams.tex
 S2.3-mlp.tex
 figures/fig_neurona/neurona.png
-S2.3-mlp2.tex
+S2.3.3-arquitectura.tex
 figures/fig_mlp/mlp.png
 S2.3.4-entrenam.tex
 S2.3.5-backprop.tex
