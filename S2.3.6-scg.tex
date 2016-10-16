@@ -1,0 +1,80 @@
+%
+\subsection{Método del gradiente conjugado}
+%
+Desde el punto de vista de la optimización numérica, el entrenamiento
+por descenso de gradiente puede ``mejorarse'' de modo que efectúe el
+tamaño de paso óptimo en cada iteración encontrando una ``velocidad de
+aprendizaje'' $\epsilon$ óptima en cada iteración mediante la técnica
+de ``búsqueda en la línea''. Este es un problema de optimización en
+una dimensión que requiere la propagación del error en cada cálculo.
+Al aplicar la búsqueda en la línea, se puede demostrar que dos pasos
+de actualización sucesivos ocurren en direcciones necesariamente
+perpendiculares. Asumiendo que se conoce un tal $\epsilon$ óptimo,
+esto implica que
+%
+\begin{align*}
+  \dpar{E(w(t+1))}{\epsilon}{}=0,
+\end{align*}
+%
+esto es, se ha encontrado un mínimo en la dirección
+de búsqueda de la búsqueda en la línea. Entonces, se tiene que
+%
+\begin{align}
+\label{mlp9}
+  \dpar{E(w(t+1))}{\epsilon}{} \tab= \dpar{E(w(t+1))}{w(t+1)}{}
+    \dpar{w(t)+\epsilon\cdot d(t)}{\epsilon}{} \notag\\
+  \tab= \nabla E(t+1) d(t) \notag\\
+  \tab=0.
+\end{align}
+%
+Esto significa que el nuevo gradiente $\nabla{}E(t+1)$, que determina
+la nueva dirección $d(t+1)$, y la dirección actual $d(t)$ son
+perpendiculares. Esta relación de ortogonalidad es la que aprovecha
+el método del gradiente conjugado.
+%
+\begin{quote}
+  Encontrar una velocidad de aprendizaje óptima es un procedimiento
+  iterativo costoso, luego no queremos perder este esfuerzo en los
+  pasos siguientes.
+\end{quote}
+%
+Resulta posible que la condición \refer{mlp9} también resulta válida
+para la actualización de pesos subsiguiente
+%
+\begin{align}
+\label{mlp10}
+  d(t)\nabla{}E(t+2)=0.
+\end{align}
+%
+Se puede demostrar que la condición \refer{mlp10} se satisface si existe
+una matriz hessiana $H$ con las derivadas segundas de los pesos tal
+que
+%
+\begin{align}\label{mlp11}
+  d(t) H d(t+1) =0.
+\end{align}
+%
+Dos vectores que satisfacen la condición \refer{mlp11} se denominan
+``conjugados''.
+
+Para determinar una nueva dirección de búsqueda que cumpla con la
+condición \refer{mlp11} se establece
+%
+\begin{align}
+  d(t+1) = -\nabla{}E(t+1)+\beta d(t)
+\end{align}
+%
+Esto significa que la nueva dirección de búsqueda es una combinación
+de la dirección indicada por el gradiene y por la nueva direccin de
+búsqueda. El parámetro $\beta$ se calcula, por ejemplo, de acuerdo a
+la regla de Polak-Ribiere. Mediante una búsqueda en la línea, se
+deberá encontrar una velocidad de aprendizaje óptima.
+
+Según varios reportes, el mayor costo computacional de la regla del
+gradiente conjugado (búsqueda en la línea + regla de Polak-Ribiere) se
+compensa con una convergencia mucho más rápida en problemas de
+clasificación binarios comparada con el método de
+retropropagación. Sin embargo, tal como se detalla en
+\cite{schiffmann}, esta técnica de optimización global puede
+experimentar severos problemas de convergencia cuando se aplica a
+tareas de aprendizaje más grandes.

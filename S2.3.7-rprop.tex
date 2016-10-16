@@ -1,0 +1,94 @@
+%
+\subsubsection{Rprop}
+%
+El método Rprop (\eng{Resilient backpropagation}, ``retropropagación
+resiliente'') \cite{rprop} es un esquema local cuyo principio básico
+es eliminar la influencia del tamaño del gradiente sobre el
+tamaño de incremento del peso. Consecuentemente, sólo el signo de la
+derivada es considerado para indicar la dirección de la actualización
+de los pesos.
+
+Al principio, todos los valores de actualización se establecen a
+$\Delta_0$, que es uno de los dos parametros de Rprop. Ya que
+$\Delta_0$ determina directamente el tamaño de la primera
+actualización de los pesos, se debe elegir su valor de acuerdo al
+tamaño de los mismos pesos. La elección de este valor es más bien no
+crítica, ya que se va adaptando a medida que el aprendizaje procede.
+
+Con el objeto de prevenir que los pesos se vuelvan demasiado grandes,
+se define el segundo parámetro $\Delta_{T{máx}}$, que limita el tamaño
+máximo de la actualización de los pesos. Comúnmente, la convergencia
+es insensible también al valor de este parámetro. Sin embargo, para
+algunos problemas puede resultar ventajoso establecer este valor más bajo
+con el objetivo de permitir sólo actualizaciones de pesos cautas.
+
+El tamaño del cambio de los pesos se determina por un
+valor de actualización específico para cada peso $\Delta_{ij}$:
+%
+\begin{align}
+\label{mlp20}
+  \Delta{}w_{ij}(t) = 
+  \begin{cases}
+    -\Delta_{ij}(t), & \T{si } \dpar{E}{w_{ij}}{}(t) > 0 \\
+    +\Delta_{ij}(t), & \T{si } \dpar{E}{w_{ij}}{}(t) < 0 \\
+    0, & \T{en otro caso}
+  \end{cases}
+\end{align}
+%
+El segundo paso del método Rprop es determinar los valores nuevos
+$\Delta_{ij}(t)$. Esto se basa en un proceso de adaptación dependiente
+del signo
+%
+\begin{align}
+\label{mlp20}
+  \Delta{}_{ij}^{(t)} = 
+  \begin{cases}
+    \eta^+\,\Delta_{ij}^{(t-1)}, & \T{si }\dpar{E}{w_{ij}}{}^{(t-1)}
+      \dpar{E}{w_{ij}}{}^{(t)} > 0 \\
+    \eta^-\,\Delta_{ij}^{(t-1)}, & \T{si }\dpar{E}{w_{ij}}{}^{(t-1)}
+      \dpar{E}{w_{ij}}{}^{(t)} < 0 \\
+    \Delta_{ij}^{(t-1)}, & \T{en otro caso},
+  \end{cases}
+  && 0<\eta^-<1<\eta^+.
+\end{align}
+%
+Los factores de incremento y decremento se establecen en $\eta^+=1,2$
+y $\eta^-=0.5$ respectivamente. Estos valores se basan en
+consideraciones teóricas y evaluaciones empíricas \cite{riedmiller},
+reduciendo el número de parámetros libres a 2: $\Delta_0$ y
+$\Delta_{T{máx}}$.
+
+Para resumir, el principio básico de Rprop es la adaptación directa de
+los valores de actualización de los pesos $\Delta_{ij}$. Contrastando
+con los algoritmos que ajustan la velocidad de aprendizaje, Rprop
+modifica directamente el tamaño del paso introduciendo el concepto de
+valores de actualización ``resilientes''. Como resultado, el esfuerzo
+de adaptación no se ``desenfoca'' como resultado de un comportamiento
+impredecible del gradiente. Dada la claridad y simplicidad de las
+leyes de aprendizaje, se introduce un pequeño incremento en el tiempo de
+entrenamiento, en comparación con la retropropagación ordinaria.
+
+Rprop sufre de los mismos problemas que el resto de los algoritmos de
+aprendizaje adaptativos. Ya que la adaptación se basa en una
+estimación de la topología de la función de error, tanto la adaptación
+como la actualización de los pesos se puede efectuar recién luego de
+que toda la información de gradiente esté disponible, en otras
+palabras, luego de que cada patrón haya sido presentado y el gradiente
+de la suma de los errores de todos los patrones es conocida.
+
+Consecuentemente, los procedimientos de aprendizaje adaptativos
+típicamente se basan en el ``aprendizaje batch''. Esto posiblemente
+reduce su eficacia en conjuntos de entrenamiento redundantes
+comparados a un descenso del gradiente estocástico, y presenta
+problemas con el uso de conjuntos de entrenamiento variables.
+
+Más aún, a un esquema de adaptación restringido local inherentemente le
+falta la visión del todo que las técnicas globales podrían llegar a
+tener. Si por ejemplo la dirección óötima del mínimo se sitúa sobre
+una diagonal, un esquema local tratará de reducir el error en cada
+dimensión con pasos pequeños en lugar de incrementar el paso compuesto
+sobre la diagonal, que sería el enfoque más apropiado en este caso.
+
+Sin embargo, los resultados reportados en las pruebas
+\cite{riedmiller} muestran las propiedades favorables de las
+estrategias de adaptación locales en las aplicaciones prácticas.

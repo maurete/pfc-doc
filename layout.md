@@ -8,4 +8,7 @@ figures/fig_neurona/neurona.png
 S2.3-mlp2.tex
 figures/fig_mlp/mlp.png
 S2.3-mlp3.tex
+S2.3.5-backprop.tex
+S2.3.6-scg.tex
+S2.3.7-rprop.tex
 sectionMquinas_de_ve.tex
