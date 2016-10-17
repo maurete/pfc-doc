@@ -1,31 +1,20 @@
 %
 %
-\subsection{Arquitectura de una red neuronal artificial}
+\subsection{Arquitectura}
 %
-Tanto el perceptrón multicapa así como las redes neuronales en general
-son arquitecturas de cómputo paralelo en las que la unidad de cómputo
-básica es la neurona. Desde un punto de vista matemático, la
-arquitectura puede interpretarse como un grafo dirigido, donde los
-nodos son neuronas artificiales, con las aristas que tienen un peso
-asociado, y conectan las salidas de una neurona con la entrada de
-otra.
+El perceptrón multicapa, así como las redes neuronales en general, es
+una arquitectura de cómputo paralelo en la que la unidad de cómputo
+básica es la neurona (artifical). Desde un punto de vista matemático,
+la red se representa como un grafo orientados, donde los nodos son
+neuronas y las aristas, con un sentido y una ponderación (peso)
+asociado, conectan las salidas de una neurona con la entrada de otra.
 
-Según la topología del grafo (y por tanto de la red), las redes
-neuronales pueden discriminarse en
-%
-\begin{itemize}
-\item redes \e{acíclicas} (también \e{con propagación hacia
-  adelante}), aquellas que no contienen bucles, y
-\item redes \e{recurrentes}, que presentan bucles de
-  \e{retroalimentación}.
-\end{itemize}
-%
-En otras palabras, en las redes recurrentes para al menos una neurona,
-resulta posible seguir las conexiones volviendo al punto de partida.
-
-La consecuencia de que no haya buecles es que el MLP no tiene memoria,
-en el sentido que la salida en el tiempo $t$ no depende del estado
-previo de la red en $t-1$.
+Según la topología del grafo, se dice que una red neuronal es
+\e{acíclicas} o \e{con propagación hacia adelante} cuando no existen
+bucles dentro de la red. Similarmente, se dice que una red es
+\e{recurrente}, cuando contiene bucles de {retroalimentación} en su
+topología. En una red recurrente, resulta posible encontrar al menos
+un camino que conduce al mismo punto de partida.
 
 %% y conectadas por ``enlaces''
 %% denominados \e{pesos sinápticos}
@@ -47,21 +36,24 @@ previo de la red en $t-1$.
 %% continúa capa por capa hasta alcanzar la capa de salida.
 
 El perceptrón multicapa tiene una arquitectura acíclica organizada en
-\e{capas}.  La primer capa contiene, en lugar de neuronas, nodos
-``sensores'' que \e{leen} el vector de entrada: las salidas de cada
-nodo en la capa de entrada se corresponden con los componentes del
-vector recibido como entrada al MLP.  Las capas subsiguientes
-contienen neuronas, cada una de las cuales recibe como entrada todas
-las salidas de la capa anterior.  Dentro de una misma capa, las
-neuronas no se conectan entre sí.
+\e{capas}. La primer capa se denomina \e{capa de entrada} y contiene,
+en lugar de neuronas, nodos sensores que ``leen'' el vector presentado
+como entrada a la red, estableciendos su valores de salida al valor de
+los componentes del vector.  Las capas subsiguientes contienen
+neuronas, cada una de las cuales recibe como entrada \e{todas} las
+salidas de la capa anterior.  Para el cálculo de las salidas de cada
+capa se requiere conocer los valores de salida de la capa anterior,
+por lo que se dice que el vector de entrada se \e{propaga hacia
+  adelante} a través de la red.
 
-La salida de la red es aquella de las neuronas en la última capa,
-denominada \e{de salida}. Las capas que no son ni de entrada ni de
-salida se denominan \e{capas ocultas}.
+%% Dentro de una misma capa, las neuronas no se conectan entre sí.
+
+La salida de la red en su conjunto es aquella de las neuronas en la
+última capa, denominada \e{capa de salida}. Las capas que no son ni de
+entrada ni de salida se denominan \e{capas ocultas}.
 
 En la \iflatexml{}Figura~\ref{fig:mlp}\else\autoref{fig:mlp}\fi se
 representa un perceptrón multicapa de 2 capas, que lee un vector de 3
 elementos, el cual es propagado a través de la capa oculta de 4
-neuronas para finalmente calcular un vector de salida \hl{corregir y}
-$\yy$ a partir de las salidas de las 2 neuronas en la capa de salida.
-
+neuronas para finalmente hasta alcanzar las 2 neuronas en la capa de
+salida.
