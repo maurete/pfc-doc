@@ -21,18 +21,19 @@ los pesos de la red de forma que ésta efectúe una transformación de
 las entradas a las salidas deseadas. Esta transformación viene dada
 por el conjunto de entrenamiento $D$: cada ejemplo $(\xx_j,\yy_j)$ en
 $D$ consta de un vector de activación $\xx_j$ y una salida deseada
-$\yy_j$.  La distancia entre la salida deseada y la salida efectiva de
-la red se mide con la función de energía (o de costo) $E$:
-%
-\begin{align}\label{e2:energy-function}
-  E = \frac{1}{2}\sum_{j=1}^{\ell}\|\yy_j-\hat{\yy}_j\|,
-\end{align}
-%
-en donde el vector $\hat{\yy}_j$ es el vector compuesto por las
-salidas de cada neurona en la capa de salida. La función $E$ puede
-interpretarse como una medida de \e{aptitud} de los pesos de la red al
-conjunto $D$, de modo que satisfacer el objetivo del aprendizaje es
-equivalente a encontrar un mínimo global de $E$.
+$\yy_j$.
+%% La distancia entre la salida deseada y la salida efectiva de
+%% la red se mide con la función de energía (o de costo) $E$:
+%% %
+%% \begin{align}\label{e2:energy-function}
+%%   E = \frac{1}{2}\sum_{j=1}^{\ell}\|\yy_j-\hat{\yy}_j\|,
+%% \end{align}
+%% %
+%% en donde el vector $\hat{\yy}_j$ es el vector compuesto por las
+%% salidas de cada neurona en la capa de salida. La función $E$ puede
+%% interpretarse como una medida de \e{aptitud} de los pesos de la red al
+%% conjunto $D$, de modo que satisfacer el objetivo del aprendizaje es
+%% equivalente a encontrar un mínimo global de $E$.
 
 Considerando una neurona $i$ en la capa de salida, sea $s_i(t)$ la
 salida de la misma en respuesta al estímulo $\xx(t)$ aplicado en la
@@ -42,7 +43,7 @@ vector de salida $\hat{\yy}$, de modo que $s_i=\hat{y}_i$.  La
 \e{señal de error} producida en la salida de esta neurona se define
 según
 %
-\begin{align}\label{4.2}
+\begin{align}\label{e2:error-signal-neuron} %4.2
   e_i(t)=s_{i}(t)-y_{i}
 \end{align}
 %
@@ -50,8 +51,7 @@ en donde $y_{i}$ es el $i$-ésimo elemento del vector de respuesta
 deseada $\yy$. La \e{energía de error instantáneo} de la neurona
 $i$ se define según
 %
-\begin{align}
-\label{4.3}
+\begin{align}\label{e2:error-energy-neuron} %4.3
   \C{E}_i(t)=\frac{1}{2}e^2_i(t).
 \end{align}
 %
@@ -59,18 +59,17 @@ Sumando las contribuciones error-energía de todas las neuronas en la
 capa de salida, se expresa la \e{energía total de error instantáneo}
 de la red entera como
 %
-\begin{align}
-\label{4.4}
+\begin{align}\label{e2:error-energy-net} %4.4
   \C{E}(n)&=\sum_{j\in C}\C{E}_j(n) \\
   &=\frac{1}{2}\sum_{j\in C}e^2_j(n).
 \end{align}
 %
-en donde el conjunto $C$ incluye todas las neuronas en la capa de
-salida. La energía de error promedio sobre el conjunto de entrenamiento,
-denominada también \e{riesgo empírico}, se define según
+en donde el conjunto $C$ incluye los subíndices para todas las
+neuronas en la capa de salida. La energía de error promedio sobre el
+conjunto de entrenamiento, denominada también \e{riesgo empírico}, se
+define según
 %
-\begin{align}
-\label{4.5}
+\begin{align}\label{e2:average-energy-net} %4.5
   \C{E}_{\T{av}}(\ell)&=\frac{1}{\ell}\sum_{n=1}^\ell\C{E}(n) \\
   &=\frac{1}{2\ell} \sum_{n=1}^\ell \sum_{j\in C}e^2_j(n).
 \end{align}
@@ -84,7 +83,6 @@ $\C{E}_{\T{av}}(\ell)$ en pos de simplificar la notación.
 Conforme avance el proceso de entrenamiento, se espera que cada
 actualización de los pesos de la red traiga consigo una reducción de
 los valores de estas funciones de energía del error.
-
 %
 \subsubsection{Aprendizaje en línea y aprendizaje por época}
 %
