@@ -4,6 +4,7 @@
 %
 El algoritmo de retropropagación es un algoritmo específico para el
 perceptrón multicapa que efectúa el cálculo del gradiente $\nabla E$
+
 necesario para el ajuste de los pesos de la red en el entrenamiento.
 Aprovechando la arquitectura del MLP, el algoritmo de retropropagación
 calcula el gradiente de la función de error comenzando por la capa de
@@ -76,6 +77,22 @@ entrenar el perceptrón multicapa.
 %% %
 %% \subsubsection{Descenso del gradiente}
 %% %
+
+En cada iteración $t=0,1,2,\ldots$, los pesos de la red
+se modifican a lo largo de una dirección de búsqueda
+$d(t)$ %, llevando los pesos en la dirección del mínimo estimado:
+%
+\begin{align}
+  \Delta w(t)\tab=\epsilon * d(t), \tabs w(t+1) \tab= w(t)+\Delta w(t).
+\end{align}
+%
+El parámetro $\epsilon$ es un número pequeño que escala la magnitud de
+la modificación de los pesos y se denomina \e{velocidad de
+aprendizaje}.  Para encontrar la dirección de búsqueda $d(t)$ se
+utiliza el gradiente $\nabla{}E=\dpar{E}{w}{}$, calculado mediante el
+algoritmo de retropropagación.
+
+
 
 \hl{referencia al ajuste de los pesos mas arriba}
 Una vez que se conocen las derivadas parciales, el paso siguiente en

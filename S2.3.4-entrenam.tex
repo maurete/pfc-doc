@@ -16,63 +16,38 @@
 %% éxito. En lugar de seguir un conjunto de reglas especificadas por
 %% expertos humanos, las redes neuronales artificiales ...
 
-%% El algoritmo de aprendizaje utilizado por una red neuronal artificial
-%% viene determinado por la arquitectura de la red.
-
-%% El algoritmo de entrenamiento supervisado
-
-%% %
-%% %
-%% \subsection{Entrenamiento del perceptrón multicapa}
-%% %
-
 El objetivo del entrenamiento en el perceptrón multicapa es ajustar
-los pesos de la red de forma que ésta efectúe una transformación
-de las entradas a las salidas deseadas. Esta transformación viene dada
+los pesos de la red de forma que ésta efectúe una transformación de
+las entradas a las salidas deseadas. Esta transformación viene dada
 por el conjunto de entrenamiento $D$: cada ejemplo $(\xx_j,\yy_j)$ en
 $D$ consta de un vector de activación $\xx_j$ y una salida deseada
-$\yy_j$.
-%% Una vez entrenada la red, cuando
-%% ésta recibe una activación $\xx_i$, el vector de salida
-%% debería ser $\yy_i$.
-La distancia entre la salida deseada y la salida efectiva de la red se
-mide con la función de costo (o de energía) $E$:
+$\yy_j$.  La distancia entre la salida deseada y la salida efectiva de
+la red se mide con la función de energía (o de costo) $E$:
 %
-\begin{align}
-  E = \frac{1}{2}\sum_{j=1}^{\ell}\|\yy_j-\B{s}_j\|,
+\begin{align}\label{e2:energy-function}
+  E = \frac{1}{2}\sum_{j=1}^{\ell}\|\yy_j-\hat{\yy}_j\|,
 \end{align}
 %
-en donde el vector $\B{s}_j$ es el vector compuesto por las salidas de
-cada neurona en la capa de salida. La función $E$ puede
+en donde el vector $\hat{\yy}_j$ es el vector compuesto por las
+salidas de cada neurona en la capa de salida. La función $E$ puede
 interpretarse como una medida de \e{aptitud} de los pesos de la red al
 conjunto $D$, de modo que satisfacer el objetivo del aprendizaje es
 equivalente a encontrar un mínimo global de $E$.
 
-En cada iteración $t=0,1,2,\ldots$, los pesos de la red
-se modifican a lo largo de una dirección de búsqueda
-$d(t)$ %, llevando los pesos en la dirección del mínimo estimado:
-%
-\begin{align}
-  \Delta w(t)\tab=\epsilon * d(t), \tabs w(t+1) \tab= w(t)+\Delta w(t).
-\end{align}
-%
-El parámetro $\epsilon$ es un número pequeño que escala la magnitud de
-la modificación de los pesos y se denomina \e{velocidad de
-aprendizaje}.  Para encontrar la dirección de búsqueda $d(t)$ se
-utiliza el gradiente $\nabla{}E=\dpar{E}{w}{}$, calculado mediante el
-algoritmo de retropropagación.
-
 Considerando una neurona $i$ en la capa de salida, sea $s_i(t)$ la
 salida de la misma en respuesta al estímulo $\xx(t)$ aplicado en la
-capa de entrada. La \e{señal de error} producida en la salida de esta
-neurona se define según
+capa de entrada.  Para simplicidad en la exposición, se asume que los
+índices $i$ de las neuronas en la capa de salida coinciden con los del
+vector de salida $\hat{\yy}$, de modo que $s_i=\hat{y}_i$.  La
+\e{señal de error} producida en la salida de esta neurona se define
+según
 %
 \begin{align}\label{4.2}
   e_i(t)=s_{i}(t)-y_{i}
 \end{align}
 %
 en donde $y_{i}$ es el $i$-ésimo elemento del vector de respuesta
-deseada $\B{y}$. La \e{energía de error instantáneo} de la neurona
+deseada $\yy$. La \e{energía de error instantáneo} de la neurona
 $i$ se define según
 %
 \begin{align}
@@ -92,72 +67,74 @@ de la red entera como
 %
 en donde el conjunto $C$ incluye todas las neuronas en la capa de
 salida. La energía de error promedio sobre el conjunto de entrenamiento,
-denominada \e{riesgo empírico}, se define según
+denominada también \e{riesgo empírico}, se define según
 %
 \begin{align}
 \label{4.5}
-  \C{E}_{\T{av}}(N)&=\frac{1}{N}\sum_{n=1}^N\C{E}(n) \\
-  &=\frac{1}{2N} \sum_{n=1}^N \sum_{j\in C}e^2_j(n).
+  \C{E}_{\T{av}}(\ell)&=\frac{1}{\ell}\sum_{n=1}^\ell\C{E}(n) \\
+  &=\frac{1}{2\ell} \sum_{n=1}^\ell \sum_{j\in C}e^2_j(n).
 \end{align}
 %
 Naturalmente, tanto la energía de error instantáneo como la energía de
 error promedio son funciones de todos los pesos sinápticos del
 perceptrón multicapa. Esta dependencia funcional no fue incluida de
-forma explícita en la definición de $\C{E}(n)$ y $\C{E}_{\T{av}}(N)$
-en pos de simplificar la notación.
+forma explícita en la definición de $\C{E}(n)$ y
+$\C{E}_{\T{av}}(\ell)$ en pos de simplificar la notación.
+
+Conforme avance el proceso de entrenamiento, se espera que cada
+actualización de los pesos de la red traiga consigo una reducción de
+los valores de estas funciones de energía del error.
 
 %
 \subsubsection{Aprendizaje en línea y aprendizaje por época}
 %
-Según en qué momento se efectúa la actualización de los pesos de la
-red neuronal, se distinguen dos casos: el aprendizaje en línea y el
-aprendizaje por época.
+El aprendizaje en línea y el aprendizaje por época hacen referencia
+al momento en que se efectúa la actualización de los pesos de la
+red neuronal.
 
-En el aprendizaje en línea, o aprendizaje por patrón, se
-propaga el error y se efectúa una actualización de los pesos de la red
-luego de cada
-presentación de un elemento del conjunto de aprendizaje.
-Este método se denomina también aprendizaje
-estocástico, y minimiza el error total
-minimizando el error para cada par de patrones, siendo que estas cosas
-no son de hecho lo mismo. Este método funciona especialmente bien para
-grandes conjuntos de entrenamiento que contengan información
+En el aprendizaje en línea, o aprendizaje por patrón, se efectúa una
+actualización de los pesos de la red luego de calcular la salida y el
+error instantáneo de cada ejemplo del conjunto de aprendizaje.  Este
+método se denomina también aprendizaje estocástico, y pretende
+minimizar la energía de error promedio minimizando el error
+instantáneo de cada patrón.  Este método funciona especialmente bien
+para grandes conjuntos de entrenamiento que contengan información
 redundante.
 
 En el aprendizaje por época, la actualización de los pesos de la red
-se efectúa al final de cada época, 
-sumando los gradientes de todo el conjunto de entrenamiento.  Cada
-actualización de los pesos intenta minimizar la sumatoria del error
-del conjunto de patrones, en otras palabras, la función de error en
-\refer{mlp1}. Los procedimientos adaptativos descritos en adelante
-utilizan este tipo de aprendizaje, ya que la información de gradiente
-sumada contiene información más fiable acerca de la forma de la
-función de error como un todo \cite{riedmiller}.  Algunos autores, sin
-embargo, sugieren que la mejor técnica es la del aprendizaje en línea
-\cite{haykin}.
-En el presente trabajo se considera en todos los casos el aprendizaje
-por épocas.
-%
-\subsubsection{Técnicas adaptativas}
-%
-A la fecha, se han propuesto muchas técnicas para afrontar los
-problemas inherentes del método de descenso por gradiente. La mayoría
-tienen sus bases de la disciplina de la teoría de
-optimización.
+se efectúa una vez que han sido calculadas las salidas de todos los
+patrones en el conjunto de entrenamiento, minimizando la función de
+error promedio $\C{E}_{\T{av}}(\ell)$. En el presente trabajo,
+se considera en todos los casos el aprendizaje por época.
 
-Estas técnicas se pueden dividir en dos
-categorías. Aquellos algoritmos que utilizan un conocimiento global
-del estado de la red como un todo, tal como la dirección del vector de
-actualización de los pesos ``entero'', son llamadas técnicas globales.
-Existen muchos ejemplos donde los algoritmos de aprendizaje utilizan el
-conocimiento global \cite{salomon,moeller}.
+%% Los procedimientos adaptativos descritos en adelante
+%% utilizan este tipo de aprendizaje, ya que la información de gradiente
+%% sumada contiene información más fiable acerca de la forma de la
+%% función de error como un todo \cite{riedmiller}.  Algunos autores, sin
+%% embargo, sugieren que la mejor técnica es la del aprendizaje en línea
+%% \cite{haykin}.
 
-Por contraste, las estrategias de adaptación locales se basan
-únicamente en información específica a los pesos, tal como el
-comportamiento temporal de la derivada parcial de este peso. El
-enfoque local se relaciona más naturalmente con el concepro de
-procesamiento distribuido en el que los cálculos pueden efectuarse en
-paralelo.  Más aún, en muchos casos se encuentra que las estrategias
-locales funcionan mucho mejor que las globales, a pesar del hecho que
-utilizan menos información y de que normalmente son mucho más rápidas
-y fáciles de calcular \cite{schiffmann}.
+%% %
+%% \subsubsection{Técnicas adaptativas}
+%% %
+%% A la fecha, se han propuesto muchas técnicas para afrontar los
+%% problemas inherentes del método de descenso por gradiente. La mayoría
+%% tienen sus bases de la disciplina de la teoría de
+%% optimización.
+
+%% Estas técnicas se pueden dividir en dos
+%% categorías. Aquellos algoritmos que utilizan un conocimiento global
+%% del estado de la red como un todo, tal como la dirección del vector de
+%% actualización de los pesos ``entero'', son llamadas técnicas globales.
+%% Existen muchos ejemplos donde los algoritmos de aprendizaje utilizan el
+%% conocimiento global \cite{salomon,moeller}.
+
+%% Por contraste, las estrategias de adaptación locales se basan
+%% únicamente en información específica a los pesos, tal como el
+%% comportamiento temporal de la derivada parcial de este peso. El
+%% enfoque local se relaciona más naturalmente con el concepro de
+%% procesamiento distribuido en el que los cálculos pueden efectuarse en
+%% paralelo.  Más aún, en muchos casos se encuentra que las estrategias
+%% locales funcionan mucho mejor que las globales, a pesar del hecho que
+%% utilizan menos información y de que normalmente son mucho más rápidas
+%% y fáciles de calcular \cite{schiffmann}.
