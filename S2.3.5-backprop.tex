@@ -3,29 +3,75 @@
 \subsection{El algoritmo de retropropagación}
 %
 El algoritmo de retropropagación es un algoritmo específico para el
-perceptrón multicapa que efectúa el cálculo del gradiente $\nabla E$
+perceptrón multicapa que efectúa entrenamiento ajustando los pesos
+$w_{ij}$ de la red en el sentido que minimiza la función de error
+$\C{E}$, a partir de la información obtenida del gradiente
+$\nabla\C{E}=\dpar{\C{E}}{w_{ij}}{}$.
 
-necesario para el ajuste de los pesos de la red en el entrenamiento.
-Aprovechando la arquitectura del MLP, el algoritmo de retropropagación
-calcula el gradiente de la función de error comenzando por la capa de
-salida y \e{propagando} el error $E$ en dirección inversa hasta la
-primer capa oculta.
+%% Aprovechando la arquitectura del MLP, el algoritmo de retropropagación
+%% calcula el gradiente de la función de error comenzando por la capa de
+%% salida y \e{propagando} el error $E$ en dirección inversa hasta la
+%% primer capa oculta.
 
-La idea básica para el cálculo de las derivadas parciales
-$\dpar{E}{w_{ij}}{}$ para cada peso en la red consiste en aplicar
-repetidamente la regla de la cadena
+La idea básica del algoritmo de retropropagación es aplicar a cada
+peso sináptico $w_{ij}(n)$ de la red una corrección
+$\Delta{}w_{ij}(n)$ proporcional a la derivada parcial
+$\dpar{\C{E}(n)}{w_{ij}}{}$. Según la regla de la cadena, esta derivada parcial puede escribirse
+%
+\begin{align}\label{e2:deriv-E-wrt-w-expanded}
+  \dpar{\C{E}(n)}{w_{ij}}{} = \dpar{\C{E}(n)}{e_i}{}
+  \dpar{e_i(n)}{s_i(n)}{}\dpar{s_i(n)}{v_i(n)}{}
+  \dpar{v_i(n)}{w_{ij}}{}.
+\end{align}
+%
+Diferenciando ambos lados de la 
+\iflatexml{}Ecuación~\ref{e2:error-energy-net}\else\autoref{e2:error-energy-net}\fi 
+respecto de $e_i(n)$, se tiene
+%
+\begin{align}\label{e2:deriv-E-wrt-e}
+  \dpar{\C{E}(n)}{e_i(n)}{} = e_i(n).
+\end{align}
+%
+Por la  
+\iflatexml{}Ecuación~\ref{e2:error-signal-neuron}\else\autoref{e2:error-signal-neuron}\fi,
+la derivada de $e_i(n)$ respecto de $s_i(n)$ viene dada por
+%
+\begin{align}\label{e2:deriv-e-wrt-s}
+  \dpar{e_i(n)}{s_i(n)}{} = -1.
+\end{align}
+%
+Por la
+\iflatexml{}Ecuación~\ref{e2:neuron-general}\else\autoref{e2:neuron-general}\fi,
+se tiene
+%
+\begin{align}\label{e2:deriv-s-wrt-v}
+  \dpar{s_i(n)}{v_i(n)}{} \tab = f'(v_i(n)),\\
+  \dpar{v_i(n)}{w_{ij}(n)}{} \tab = s_j(n).\\
+\end{align}
+%
+Reemplazando las Ecuaciones \ref{e2:deriv-E-wrt-e}--\ref{e2:deriv-s-wrt-v} en
+la
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-expanded}\else\autoref{e2:deriv-E-wrt-w-expanded}\fi,
+se tiene
 %
 \begin{align}\label{e2:deriv-E-wrt-w}
-  \dpar{E}{w_{ij}}{} = \dpar{E}{s_{i}}{}\dpar{s_i}{w_{ij}}{},
+  \dpar{\C{E}(n)}{w_{ij}}{} = -e_i(n) f'(v_i(n)) s_j(n).
 \end{align}
 %
-donde
-%
-\begin{align}\label{e2:deriv-s-wrt-w}
-  \dpar{s_i}{w_{ij}}{} = \dpar{s_i}{v_{i}}{}\dpar{v_i}{w_{ij}}{} =
-  f'(v_i) s_j .
-\end{align}
-%
+
+%% %
+%% \begin{align}\label{e2:deriv-E-wrt-w}
+%%   \dpar{E}{w_{ij}}{} = \dpar{E}{s_{i}}{}\dpar{s_i}{w_{ij}}{},
+%% \end{align}
+%% %
+%% donde
+%% %
+%% \begin{align}\label{e2:deriv-s-wrt-w}
+%%   \dpar{s_i}{w_{ij}}{} = \dpar{s_i}{v_{i}}{}\dpar{v_i}{w_{ij}}{} =
+%%   f'(v_i) s_j .
+%% \end{align}
+%% %
+
 El cálculo de $\dpar{E}{s_i}{}$, que representa la influencia
 de la salida $s_i$ de la unidad $i$ en el error global $E$,
 se distinguen los casos siguientes:
