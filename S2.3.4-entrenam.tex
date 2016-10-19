@@ -21,7 +21,9 @@ los pesos de la red de forma que ésta efectúe una transformación de
 las entradas a las salidas deseadas. Esta transformación viene dada
 por el conjunto de entrenamiento $D$: cada ejemplo $(\xx_j,\yy_j)$ en
 $D$ consta de un vector de activación $\xx_j$ y una salida deseada
-$\yy_j$.
+$\yy_j$. La discusión presentada a continuación sigue de cerca aquella
+presentada por \citeauthor{haykin} en el capítulo 4 de \cite{haykin}.
+
 %% La distancia entre la salida deseada y la salida efectiva de
 %% la red se mide con la función de energía (o de costo) $E$:
 %% %
@@ -35,43 +37,48 @@ $\yy_j$.
 %% conjunto $D$, de modo que satisfacer el objetivo del aprendizaje es
 %% equivalente a encontrar un mínimo global de $E$.
 
-Considerando una neurona $i$ en la capa de salida, sea $s_i(t)$ la
-salida de la misma en respuesta al estímulo $\xx(t)$ aplicado en la
-capa de entrada.  Para simplicidad en la exposición, se asume que los
-índices $i$ de las neuronas en la capa de salida coinciden con los del
-vector de salida $\hat{\yy}$, de modo que $s_i=\hat{y}_i$.  La
-\e{señal de error} producida en la salida de esta neurona se define
-según
+Considerando una neurona $i$ en la capa de salida, sea $s_i(n)$ la
+salida de la neurona en respuesta al estímulo $\xx(n)$ aplicado en la
+capa de entrada
+%% Para simplicidad en la exposición, se asume que los
+%% índices $i$ de las neuronas en la capa de salida coinciden con los del
+%% vector de salida $\hat{\yy}$, de modo que $s_i=\hat{y}_i$.
+La
+\e{señal de error} producida en la salida de esta neurona viene dada
+por
 %
 \begin{align}\label{e2:error-signal-neuron} %4.2
-  e_i(t)=s_{i}(t)-y_{i}
+  e_i(n)=y_{k}(n)-s_{i}(n)
 \end{align}
 %
-en donde $y_{i}$ es el $i$-ésimo elemento del vector de respuesta
-deseada $\yy$. La \e{energía de error instantáneo} de la neurona
-$i$ se define según
+en donde $y_k(n)$ es la componente del vector de respuesta deseada
+$\yy(n)$ correspondiente a la posición de la neurona $i$ en la capa de
+salida.
+%% en donde $y_{i}$ es el $i$-ésimo elemento del vector de respuesta
+%% deseada $\yy$.
+La \e{energía de error instantáneo} de la neurona $i$ se define según
 %
 \begin{align}\label{e2:error-energy-neuron} %4.3
-  \C{E}_i(t)=\frac{1}{2}e^2_i(t).
+  \C{E}_i(n)=\frac{1}{2}e^2_i(n).
 \end{align}
 %
 Sumando las contribuciones error-energía de todas las neuronas en la
 capa de salida, se expresa la \e{energía total de error instantáneo}
-de la red entera como
+de la red como
 %
 \begin{align}\label{e2:error-energy-net} %4.4
-  \C{E}(n)&=\sum_{j\in C}\C{E}_j(n) \\
-  &=\frac{1}{2}\sum_{j\in C}e^2_j(n).
+  \C{E}(n)&=\sum_{i\in C}\C{E}_i(n) \\
+  &=\frac{1}{2}\sum_{i\in C}e^2_i(n).
 \end{align}
 %
 en donde el conjunto $C$ incluye los subíndices para todas las
 neuronas en la capa de salida. La energía de error promedio sobre el
-conjunto de entrenamiento, denominada también \e{riesgo empírico}, se
-define según
+conjunto de entrenamiento, denominada también \e{riesgo empírico},
+viene dada por
 %
 \begin{align}\label{e2:average-energy-net} %4.5
   \C{E}_{\T{av}}(\ell)&=\frac{1}{\ell}\sum_{n=1}^\ell\C{E}(n) \\
-  &=\frac{1}{2\ell} \sum_{n=1}^\ell \sum_{j\in C}e^2_j(n).
+  \tab=\frac{1}{2\ell} \sum_{n=1}^\ell \sum_{i\in C}e^2_i(n).
 \end{align}
 %
 Naturalmente, tanto la energía de error instantáneo como la energía de
@@ -88,22 +95,25 @@ los valores de estas funciones de energía del error.
 %
 El aprendizaje en línea y el aprendizaje por época hacen referencia
 al momento en que se efectúa la actualización de los pesos de la
-red.
-
-En el aprendizaje en línea, o aprendizaje por patrón, se efectúa una
-actualización de los pesos de la red luego de calcular la salida y el
-error instantáneo de cada ejemplo del conjunto de aprendizaje.  Este
-método se denomina también aprendizaje estocástico, y busca
-minimizar la energía de error promedio minimizando el error
-instantáneo de cada patrón.  Este método funciona especialmente bien
-para grandes conjuntos de entrenamiento que contengan información
-redundante.
-
-En el aprendizaje por época, la actualización de los pesos de la red
-se efectúa una vez que han sido calculadas las salidas de todos los
-patrones en el conjunto de entrenamiento, minimizando la función de
-error promedio $\C{E}_{\T{av}}(\ell)$. En el presente trabajo,
-se considera en todos los casos el aprendizaje por época.
+red:
+%
+\begin{itemize}
+\item En el aprendizaje en línea, o aprendizaje por patrón, se efectúa una
+  actualización de los pesos de la red luego de calcular la salida y el
+  error instantáneo de cada ejemplo del conjunto de aprendizaje.  Este
+  método se denomina también aprendizaje estocástico, y busca
+  minimizar la energía de error promedio minimizando el error
+  instantáneo de cada patrón.  Este método funciona especialmente bien
+  para grandes conjuntos de entrenamiento que contengan información
+  redundante.
+\item En el aprendizaje por época, la actualización de los pesos de la red
+  se efectúa una vez que han sido calculadas las salidas de todos los
+  patrones en el conjunto de entrenamiento, minimizando la función de
+  error promedio $\C{E}_{\T{av}}(\ell)$.
+\end{itemize}
+%
+En el presente trabajo, se considera en todos los casos el aprendizaje
+por época.
 
 %% Los procedimientos adaptativos descritos en adelante
 %% utilizan este tipo de aprendizaje, ya que la información de gradiente

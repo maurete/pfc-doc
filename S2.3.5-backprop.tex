@@ -60,83 +60,124 @@ $s_i(n)$ según la según la
 Sin embargo, las neuronas en las capas ocultas también deberán ajustar
 sus pesos, ya que su valor de salida tiene influencia en la salida
 global de la red, aunque resulta imposible determinar una ``respuesta
-deseada'' correspondiente $y_k(n)$.
+deseada'' correspondiente $y_k(n)$.  Por ello, cuando la neurona $i$
+se ubica en una capa oculta, el cálculo de $\dpar{\C{E}(n)}{w_{ij}}{}$
+resulta más complejo.  En particular, se desea obtener el valor de
+$\dpar{\C{E}(n)}{s_i}{}$ correspondiente a una neurona en la capa
+oculta.
 
- Si la neurona $i$ se ubica en una capa oculta, el cálculo de
-  $\dpar{E}{s_i}{}$ resulta más complejo. Aplicando nuevamente la
-  regla de la cadena, se tiene:
-  %
-  \begin{align}\label{e2:deriv-E-wrt-s-hid} %mlp5
-    \dpar{E}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
-      \dpar{E}{s_k}{}\dpar{s_k}{s_i}{} \notag\\
+El razonamiento para el cálculo de $\dpar{\C{E}(n)}{s_{i}}{}$, cuando
+la neurona $i$ es oculta, es como sigue. Considérese en primer lugar
+que el valor de $\dpar{\C{E}(n)}{s_k}{}$ es conocido, con
+$k\in{}\C{S}(i)$, siendo $\C{S}(i)$ el conjunto de índices de todas
+las neuronas en la capa siguiente a la capa de $i$.  Entonces, se
+puede ver que
+%
+\begin{align}\label{e2:deriv-E-wrt-s-hid} %mlp5
+  \dpar{\C{E}}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
+      \dpar{\C{E}}{s_k}{}\dpar{s_k}{s_i}{} \notag\\
     \tab= \sum_{k\in\C{S}(i)}
-      \dpar{E}{s_k}{}\dpar{s_k}{v_k}{}\dpar{v_k}{s_i}{} \notag\\
-    \tab= \sum_{k\in\C{S}(i)} \dpar{E}{s_k}{} s'(v_k) w_{ki},
-  \end{align}
-  %
-
-  donde $\C{S}(i)$ denota el conjunto de todas las unidades $k$ en las
-sucesivas capas para la cual la unidad $i$ tiene una conexión
-pesada distinta de cero $w_{ki}$.
-
-En la
+      \dpar{\C{E}}{s_k}{}\dpar{s_k}{v_k}{}\dpar{v_k}{s_i}{} \notag\\
+    \tab= \sum_{k\in\C{S}(i)} \dpar{\C{E}}{s_k}{} s'(v_k) w_{ki}.
+\end{align}
+%
+Reemplazando la
 \iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-s-hid}\else\autoref{e2:deriv-E-wrt-s-hid}\fi
-se asume que los valores $\dpar{E}{s_k}{}$ para todas las capas
-sucesivas a la neurona $k$ es conocido. Ésta es la razón por la cual
-el agoritmo comienza el cálculo de $\dpar{E}{s_k}{}$ en la capa de
+y la
+\iflatexml{}Ecuación~\ref{e2:deriv-s-wrt-v}\else\autoref{e2:deriv-s-wrt-v}\fi
+en la 
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-expanded}\else\autoref{e2:deriv-E-wrt-w-expanded}\fi,
+se tiene entonces
+%
+\begin{align}\label{e2:deriv-E-wrt-w-hid} %mlp5
+  \dpar{\C{E}(n)}{w_{ij}}{} =
+  \sum_{k\in\C{S}(i)} \dpar{\C{E}(n)}{s_k(n)}{} s'(v_k(n)) w_{ki}
+  f'(v_i(n)) s_j(n).
+  %% \dpar{\C{E}}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
+  %%     \dpar{\C{E}}{s_k}{}\dpar{s_k}{s_i}{} \notag\\
+  %%   \tab= \sum_{k\in\C{S}(i)}
+  %%     \dpar{\C{E}}{s_k}{}\dpar{s_k}{v_k}{}\dpar{v_k}{s_i}{} \notag\\
+  %%   \tab= \sum_{k\in\C{S}(i)} \dpar{\C{E}}{s_k}{} s'(v_k) w_{ki}.
+\end{align}
+%
+Esta fórmula es la clave del algoritmo de retropropagación: por la
+arquitectura del MLP, la salida $s_i(n)$ de una neurona oculta ejerce
+una influencia en la salida de todas las neuronas en las capas
+subsiguientes.  Del mismo modo, se tiene que el \e{gradiente local} de
+la señal de error de la neurona viene determinado por los gradientes
+de error de todas las neuronas en las capas subsiguientes.
+
+Comenzando el cálculo de $\dpar{\C{E}(n)}{w_{ij}}{}$ por la capa de
 salida
-\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-s-hid}\else\autoref{e2:deriv-E-wrt-s-hid}\fi,
-continuando con las capas ocultas en orden inverso.
-%% Este requerimiento
-%% se satisface simplemente comenzando el cálculo de $\dpar{E}{s_k}{}$ a
-%% partir de la capa de salida (\refer{mlp4}) y luego continuar el cálculo
-%% para las unidades en la capas pecedentes según la \refer{mlp5}.
-Por ello se dice que la información del gradiente de error se propaga hacia atrás
-a partir de la capa de salida hasta la primer capa
-oculta. De allí el nombre `` retropropagación''.
+(\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w}\else\autoref{e2:deriv-E-wrt-w}\fi)
+y continuando con las capas ocultas en orden inverso
+(\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-hid}\else\autoref{e2:deriv-E-wrt-w-hid}\fi),
+el gradiente resulta calculable para todas las neuronas.  Por ello el
+nombre `` retropropagación'': se dice que la información del gradiente
+de error se propaga hacia atrás a partir de la capa de salida hasta la
+primer capa oculta.
 
 El desarrollo del algoritmo de retropropagación a mediados de los años
 80 representó un hito en el campo de las redes neuronales, ya
 que brindó un método computacionalemnte eficiente, usable, para
 entrenar el perceptrón multicapa.
-%% %
-%% \subsubsection{Descenso del gradiente}
-%% %
-
-En cada iteración $t=0,1,2,\ldots$, los pesos de la red
-se modifican a lo largo de una dirección de búsqueda
-$d(t)$ %, llevando los pesos en la dirección del mínimo estimado:
+%
+\subsubsection{Ajuste de los pesos de la red}
+%
+En cada paso del entrenamiento $n$, una vez calculada la salida de la
+red ante la netrada $\xx(n)$ y el gradiente
+$\dpar{\C{E}(n)}{w_{ij}}{}$ para todos los pesos de la red, el
+algoritmo aplica una corrección $\Delta{}w_{ij}(n)$ sobre el peso
+$w_{ij}(n)$ que viene dada por la ``regla delta''
+%
+\begin{align}\label{e2:delta-rule}
+  \Delta w_{ij}(n)\tab=\eta *\dpar{\C{E}(n)}{w_{ij}}{},
+\end{align}
+%
+en donde $\eta$ es el parámetro \e{velocidad de aprendizaje} del
+algoritmo de retropropagación. La utilización del signo menos en
+(\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w}\else\autoref{e2:deriv-E-wrt-w}\fi)
+indica el \e{descenso por gradiente} en el espacio de los pesos
+$w_{ij}$ de la red, esto es, el ajuste efectuado busca un cambio en la
+dirección que reduce el valor de $\C{E}(n)$.
+%
+\subsubsection{Entrenamiento por época}
+%
+El traslado del entrenamiento del perceptrón multicapa a una estrategia
+de ajuste por época deriva de manera sencilla de la definición de
+la energía de error promedio $\C{E}_{\T{av}}$ para la época 
+(\iflatexml{}Ecuación~\ref{e2:average-energy-net}\else\autoref{e2:average-energy-net}\fi):
+una vez calculadas las salidas $s(n)$ y los gradientes de error instantáneo
+$\dpar{\C{E}(n)}{w_{ij}}{}$ para cada patrón $n$ en el conjunto de entrenamiento,
+el gradiente de error promedio para la época viene dado por
 %
 \begin{align}
-  \Delta w(t)\tab=\epsilon * d(t), \tabs w(t+1) \tab= w(t)+\Delta w(t).
+  \dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}\tab=\frac{1}{\ell}\sum_{n=1}^\ell\dpar{\C{E}(n)}{w_{ij}}{},
 \end{align}
 %
-El parámetro $\epsilon$ es un número pequeño que escala la magnitud de
-la modificación de los pesos y se denomina \e{velocidad de
-aprendizaje}.  Para encontrar la dirección de búsqueda $d(t)$ se
-utiliza el gradiente $\nabla{}E=\dpar{E}{w}{}$, calculado mediante el
-algoritmo de retropropagación.
+y la corrección a aplicar a los pesos viene dada por
+%
+\begin{align}\label{e2:delta-rule}
+  \Delta w_{ij}(n)\tab=\eta *\dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}.
+\end{align}
+%
 
 
 
-\hl{referencia al ajuste de los pesos mas arriba}
-Una vez que se conocen las derivadas parciales, el paso siguiente en
-el aprendizaje por retropropagación es calcular el ajuste resultante a
-los pesos. En su forma más simple, la actualización de los pesos es un
-paso escalado en la dirección opuesta al gradiente.  En otras
-palabras, el negativo del gradiente se multiplica por una constante
-pequeña $\epsilon$, la velocidad de aprendizaje. Esta técnica de
-minimización se conoce comúnmente como el ``descenso del gradiente'':
-%
-\begin{align}\label{mlp6}
-  \Delta w(t) = - \epsilon \nabla E(t),
-\end{align}
-%
-o, para cada peso,
-%
-\begin{align}\label{mlp6}
-  \Delta w_{ij}(t) = - \epsilon \dpar{E}{w_{ij}}{}(t).
-\end{align}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %
 Si bien la regla básica de aprendizaje es simple, con frecuencia
 resulta difícil elegir en forma adecuada la velocidad de
@@ -160,12 +201,9 @@ la energía, en donde se deberían tomar pesos pequeños dada la
 elevada pendiente, las derivadas ``grandes'' llevan a pasos grandes,
 llevando posiblemente la búsqueda a una región completamente diferente
 del espacio de los pesos.
-
-\hl{agregar actualizacion de los pesos de una epoca}
-
-
+%
 \subsubsection{Término de momento}
-
+%
 Una idea para hacer el entrenamiento más estable es la adición de un
 \e{término de momento}
 %
