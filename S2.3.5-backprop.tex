@@ -131,7 +131,7 @@ algoritmo aplica una corrección $\Delta{}w_{ij}(n)$ sobre el peso
 $w_{ij}(n)$ que viene dada por la ``regla delta''
 %
 \begin{align}\label{e2:delta-rule}
-  \Delta w_{ij}(n)\tab=-\eta *\dpar{\C{E}(n)}{w_{ij}}{},
+  \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}(n)}{w_{ij}}{},
 \end{align}
 %
 en donde $\eta$ es el parámetro \e{velocidad de aprendizaje} del
@@ -158,67 +158,48 @@ el gradiente de error promedio para la época viene dado por
 y la corrección a aplicar a los pesos viene dada por
 %
 \begin{align}\label{e2:delta-rule-epoch}
-  \Delta w_{ij}(n)\tab=-\eta *\dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}.
+  \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}.
 \end{align}
 %
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 %
-Si bien la regla básica de aprendizaje es simple, con frecuencia
-resulta difícil elegir en forma adecuada la velocidad de
-aprendizaje. Una buena elección depende de la forma de la función de
-error, que obviamente cambia con cada problema de aprendizaje
-planteado, además de ser una función de dimensionalidad elevada.  Una
-velocidad de aprendizaje pequeña resultará en un tiempo elevado de
-convergencia en una función de error ``chata'', mientras que una velocidad
-de aprendizaje grande posiblemente genere oscilaciones, previniendo
-que el error caiga por debajo de un cierto valor.  Más aún, si bien la
-convergencia a un mínimo local puede probarse en determinadas
-circunstancias, no existen garantías que el algoritmo encuentre un
-mínimo global de la función de error.
+\subsubsection{La velocidad de aprendizaje y el término de momento}
+%
+Con frecuencia, resulta difícil elegir en forma adecuada la velocidad
+de aprendizaje $\eta$. La elección depende de la forma de la función
+de error, que obviamente cambia con cada problema de aprendizaje
+planteado. Si la ``superficie'' de la función de error es ``chata'',
+una velocidad de aprendizaje pequeña resultará en un tiempo de
+convergencia muy elevado.  Similarmente, una velocidad de aprendizaje
+grande posiblemente genere oscilaciones, previniendo que el error
+caiga por debajo de un cierto valor. Si bien la convergencia del
+algoritmo a un mínimo local puede probarse en ocasiones, no existen
+garantías de encontrar el mínimo global de la función de error.
 
 Otro problema con el descenso por gradiente es la influencia
-``contraintuitiva'' de la derivada parcial sobre el tamaño del paso en
-el ajuste de los pesos: si la función de error es ``playa'', la
-derivada es relativamente pequeña, resultando en un paso pequeño.  Por
-otro lado, ante la presencia de pendientes bruscas en la función de
-la energía, en donde se deberían tomar pesos pequeños dada la
-elevada pendiente, las derivadas ``grandes'' llevan a pasos grandes,
-llevando posiblemente la búsqueda a una región completamente diferente
-del espacio de los pesos.
-%
-\subsubsection{Término de momento}
-%
+``contraintuitiva'' de la magnitud del gradiente sobre el tamaño del
+paso en el ajuste de los pesos: si la función de error es ``playa'',
+la derivada es relativamente pequeña, resultando en un paso pequeño.
+Por otro lado, ante la presencia de ``pendientes bruscas'' en la
+función de la energía, en donde se deberían tomar pesos pequeños, la
+gran magnitud del gradiente lleva al algoritmo a efectuar pasos
+grandes, llevando posiblemente la búsqueda a una región completamente
+diferente del espacio de los pesos.
+
 Una idea para hacer el entrenamiento más estable es la adición de un
 \e{término de momento}
 %
-\begin{align}\label{mlp8}
-  \Delta w_{ij}(t) = - \epsilon \dpar{E}{w_{ij}}{}(t)
-    + \mu \Delta w_{ij}(t-1).
+\begin{align}\label{e2:momentum-term} %mlp8
+  \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}(n)}{w_{ij}}{}
+  +\mu\Delta w_{ij}(n-1).
 \end{align}
 %
 El parámetro de momento $\mu$ escala la influencia del paso anterior
 de actualización de los pesos en el paso actual. Esta técnica funciona
-bien en muchas tareas de aprendizaje, aunque no significa un
-incremento general de la estabilidad o de la velocidad de
-convergencia.  A veces, el descenso de gradiente sin término de
-momento obtiene iguales o mejores resultados que con el término de
-momento. Usualmente, al utilizar aprendizaje con término de momento se
-deberá disminuir la velocidad de aprendizaje para evitar inestabilidad
-en el proceso de aprendizaje.
+bien en muchos problemas, aunque no significa un incremento general de
+la estabilidad o de la velocidad de convergencia. A veces, el descenso
+de gradiente sin término de momento obtiene resultados iguales o
+mejores que con el término de momento.  Al utilizar aprendizaje con
+término de momento, probablemente se deba disminuir la velocidad de
+aprendizaje para evitar inestabilidad en el proceso de aprendizaje.
 
