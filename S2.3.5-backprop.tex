@@ -131,7 +131,7 @@ algoritmo aplica una corrección $\Delta{}w_{ij}(n)$ sobre el peso
 $w_{ij}(n)$ que viene dada por la ``regla delta''
 %
 \begin{align}\label{e2:delta-rule}
-  \Delta w_{ij}(n)\tab=\eta *\dpar{\C{E}(n)}{w_{ij}}{},
+  \Delta w_{ij}(n)\tab=-\eta *\dpar{\C{E}(n)}{w_{ij}}{},
 \end{align}
 %
 en donde $\eta$ es el parámetro \e{velocidad de aprendizaje} del
@@ -158,7 +158,7 @@ el gradiente de error promedio para la época viene dado por
 y la corrección a aplicar a los pesos viene dada por
 %
 \begin{align}\label{e2:delta-rule}
-  \Delta w_{ij}(n)\tab=\eta *\dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}.
+  \Delta w_{ij}(n)\tab=-\eta *\dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}.
 \end{align}
 %
 
