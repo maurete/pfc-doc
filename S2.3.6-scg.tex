@@ -1,80 +1,87 @@
 %
-\subsection{Método del gradiente conjugado}
+\subsection{Algoritmo del gradiente conjugado escalado}
 %
-Desde el punto de vista de la optimización numérica, el entrenamiento
-por descenso de gradiente puede ``mejorarse'' de modo que efectúe el
-tamaño de paso óptimo en cada iteración encontrando una ``velocidad de
-aprendizaje'' $\epsilon$ óptima en cada iteración mediante la técnica
-de ``búsqueda en la línea''. Este es un problema de optimización en
-una dimensión que requiere la propagación del error en cada cálculo.
-Al aplicar la búsqueda en la línea, se puede demostrar que dos pasos
-de actualización sucesivos ocurren en direcciones necesariamente
-perpendiculares. Asumiendo que se conoce un tal $\epsilon$ óptimo,
-esto implica que
-%
-\begin{align*}
-  \dpar{E(w(t+1))}{\epsilon}{}=0,
-\end{align*}
-%
-esto es, se ha encontrado un mínimo en la dirección
-de búsqueda de la búsqueda en la línea. Entonces, se tiene que
-%
-\begin{align}
-\label{mlp9}
-  \dpar{E(w(t+1))}{\epsilon}{} \tab= \dpar{E(w(t+1))}{w(t+1)}{}
-    \dpar{w(t)+\epsilon\cdot d(t)}{\epsilon}{} \notag\\
-  \tab= \nabla E(t+1) d(t) \notag\\
-  \tab=0.
-\end{align}
-%
-Esto significa que el nuevo gradiente $\nabla{}E(t+1)$, que determina
-la nueva dirección $d(t+1)$, y la dirección actual $d(t)$ son
-perpendiculares. Esta relación de ortogonalidad es la que aprovecha
-el método del gradiente conjugado.
-%
-\begin{quote}
-  Encontrar una velocidad de aprendizaje óptima es un procedimiento
-  iterativo costoso, luego no queremos perder este esfuerzo en los
-  pasos siguientes.
-\end{quote}
-%
-Resulta posible que la condición \refer{mlp9} también resulta válida
-para la actualización de pesos subsiguiente
-%
-\begin{align}
-\label{mlp10}
-  d(t)\nabla{}E(t+2)=0.
-\end{align}
-%
-Se puede demostrar que la condición \refer{mlp10} se satisface si existe
-una matriz hessiana $H$ con las derivadas segundas de los pesos tal
-que
-%
-\begin{align}\label{mlp11}
-  d(t) H d(t+1) =0.
-\end{align}
-%
-Dos vectores que satisfacen la condición \refer{mlp11} se denominan
-``conjugados''.
+Desde el punto de vista de la optimización numérica, el descenso por
+gradiente efectuado por el algoritmo de retropropagación puede
+mejorarse en varios aspectos.  El algoritmo del gradiente conjugado
+escalado (SCG), propuesto por \cite{scg} en 1990, incorpora una serie
+de mejoras que derivan en un entrenamiento notablemente más rápido.
 
-Para determinar una nueva dirección de búsqueda que cumpla con la
-condición \refer{mlp11} se establece
+Para llegar a una descripción del algoritmo SCG, resulta necesario
+revisar algunos conceptos en los que se basa. Las descripciones a
+continuación omiten, en pos de brevedad, detalles en las derivaciones
+y fórmulas específicas. Para referencia, se refiere al lector a
+\cite{haykin} (sección 4.16), \cite{riedmiller} y \cite{scg}.
+
+En primer lugar, considérese la ``regla delta''
+(\iflatexml{}Ecuación~\ref{e2:delta-rule}\else\autoref{e2:delta-rule}\fi)
+para actualización de los pesos.  Allí, la dirección de búsqueda del
+mínimo viene dada por el negativo del gradiente
+$-\nabla\C{E}(n)=-\dpar{\C{E}(n)}{w_{ij}}{}$, mientras que la
+velocidad de aprendizaje $\eta$ determina la magnitud del paso a
+efectuar.  La regla llamada del \e{descenso más pronunciado} consiste
+en buscar, en cada iteración, una velocidad de aprendizaje óptima
+$\eta(n)$ mediante una estrategia iterativa denominada \e{búsqueda en
+  la línea}.  Básicamente, la búsqueda en la línea consiste en evaluar
+la función de error resultante para distintos $\eta$ hasta encontrar
+el óptimo.  La ``regla delta'' del descenso más pronunciado resulta
+entonces
 %
-\begin{align}
-  d(t+1) = -\nabla{}E(t+1)+\beta d(t)
+\begin{align}\label{e2:delta-rule-steepest}
+  \Delta w_{ij}(n)\tab=-\eta(n)\nabla{\C{E}(n)},
 \end{align}
 %
-Esto significa que la nueva dirección de búsqueda es una combinación
-de la dirección indicada por el gradiene y por la nueva direccin de
-búsqueda. El parámetro $\beta$ se calcula, por ejemplo, de acuerdo a
-la regla de Polak-Ribiere. Mediante una búsqueda en la línea, se
-deberá encontrar una velocidad de aprendizaje óptima.
+donde $\eta(n)$ se determina mediante búsqueda en la línea.
 
-Según varios reportes, el mayor costo computacional de la regla del
-gradiente conjugado (búsqueda en la línea + regla de Polak-Ribiere) se
-compensa con una convergencia mucho más rápida en problemas de
-clasificación binarios comparada con el método de
-retropropagación. Sin embargo, tal como se detalla en
-\cite{schiffmann}, esta técnica de optimización global puede
-experimentar severos problemas de convergencia cuando se aplica a
-tareas de aprendizaje más grandes.
+Al utilizar la regla del descenso más pronunciado, se puede demostrar
+que dos pasos de actualización sucesivos ocurren en direcciones
+necesariamente perpendiculares.
+%% Esto ocurre porque, en dos iteraciones sucesivas $(n)$ y $(n+1)$ los
+%% gradientes $-\dpar{\C{E}(n)}{w_{ij}}{}$ $-\dpar{\C{E}(n)}{w_{ij}}{}$
+Esta perpendicularidad entre iteraciones genera un ``zigzagueo'' en el
+camino del descenso del gradiente. El algoritmo del \e{gradiente
+  conjugado} (no escalado) aprovecha esta perpendicularidad
+estableciendo como dirección de búsqueda una combinación de la
+dirección de búsqueda anterior y del gradiente actual, ``atravesando''
+el zigzag y logrando entonces pasos más pronunciados y directos.
+La regla de actualización de los pesos mediante gradiente conjugado
+se define por
+%
+\begin{align}\label{e2:delta-rule-conjugate}
+  \Delta w_{ij}(n)\tab=\eta(n)\dd(n),
+  \tabs \dd(n)\tab=-\nabla{\C{E}(n)}+\beta\dd(n-1),
+\end{align}
+%
+donde $\eta(n)$ se determina mediante búsqueda en la línea y
+$\beta$ viene dado por la fórmula de Polak-Ribière:
+%
+\begin{align}\label{e2:polak-ribiere}
+  \beta=
+  \frac{(\nabla{\C{E}(n)}-\nabla{\C{E}(n-1)})\nabla{\C{E}(n)}}{(\nabla{\C{E}(n-1)})^2}.
+\end{align}
+%
+
+%% Según varios reportes, el mayor costo computacional de la regla del
+%% gradiente conjugado (búsqueda en la línea + regla de Polak-Ribiere) se
+%% compensa con una convergencia mucho más rápida en problemas de
+%% clasificación binarios comparada con el método de
+%% retropropagación. Sin embargo, tal como se detalla en
+%% \cite{schiffmann}, esta técnica de optimización global puede
+%% experimentar severos problemas de convergencia cuando se aplica a
+%% tareas de aprendizaje más grandes.
+
+Finalmente, el \e{algoritmo del gradiente conjugado escalado} es una
+mejora del algoritmo del gradiente conjugado estándar.  Mientras que
+el algoritmo del gradiente conjugado estándar efectúa una búsqueda en
+la línea para determinar el tamaño de paso óptimo $\eta(n)$, el
+algoritmo del gradiente conjugado escalado utiliza una estrategia más
+eficiente de tipo Levenberg-Marquardt para regular la velocidad de
+aprendizaje en cada iteración.
+%% Adicionalmente, la utilización de esta
+%% estrategia deriva en una estabilidad y velocidad superiores del
+%% algoritmo frente al gradiente conjugado estándar.
+Los detalles de la derivación del algoritmo SCG se omiten de esta
+descripción debido a la gran cantidad de conceptos teóricos necesarios
+para explicarlo con claridad. El lector interesado encontrará en el
+trabajo original de su creador \cite{scg} una descripción detallada
+del método.
