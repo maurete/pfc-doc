@@ -17,5 +17,6 @@ S2.3.6-scg.tex
 S2.3.6.2-momentum.tex
 S1.3.6.2-steepest.tex
 S2.3.6.3-conjugate.tex
+S2.3.6.4-scg.tex
 S2.3.7-rprop.tex
 sectionMquinas_de_ve.tex
