@@ -1,25 +1,68 @@
 %
-\subsection{Algoritmo del gradiente conjugado escalado}
+\subsection{Variantes del algoritmo de retropropagación}
 %
-Desde el punto de vista de la optimización numérica, el descenso por
-gradiente efectuado por el algoritmo de retropropagación puede
-mejorarse en varios aspectos.  El algoritmo del gradiente conjugado
-escalado (SCG), propuesto por \cite{scg} en 1990, incorpora una serie
-de mejoras que derivan en un entrenamiento notablemente más rápido.
+Si bien el algoritmo de retropropagación resulta fundamental en el
+problema de calcular el gradiente de error $\nabla{\C{E}(n)}$ respecto
+de los pesos $w_{ij}$, muchas veces la estrategia de ajuste de los
+pesos de descenso por gradiente no resulta satisfactoria.  Por
+ejemplo, la elección del parámetro velocidad de aprendizaje depende de
+la forma de la función de error $\C{E}$, una función resulta difícil
+de visualizar dada su alta dimensionalidad, y que obviamente cambia
+para los diferentes conjuntos de entrenamiento.
+Con frecuencia, se encuentra que la velocidad de aprendizaje elegida
+es demasiado baja, añadiendo tiempo innecesario al entrenamiento, o
+demasiado alta, generando oscilaciones alrededor del mínimo local que
+impiden la convergencia.
 
-Para llegar a una descripción del algoritmo SCG, resulta necesario
-revisar algunos conceptos en los que se basa. Las descripciones a
-continuación omiten, en pos de brevedad, detalles en las derivaciones
-y fórmulas específicas. Para referencia, se refiere al lector a
-\cite{haykin} (sección 4.16), \cite{riedmiller} y \cite{scg}.
-
-En primer lugar, considérese la ``regla delta''
+A continuación se presentan algunos algoritmos alternativos que
+intentan salvar los inconvenientes del algoritmo de retropropagación
+básico.
+%
+\subsubsection{Retropropagación con término de momento}
+%
+%% Si la ``superficie'' de la función de error es ``chata'', una
+%% velocidad de aprendizaje pequeña resultará en un tiempo de
+%% convergencia muy elevado.  Similarmente, una velocidad de aprendizaje
+%% grande posiblemente genere oscilaciones, previniendo que el error
+%% caiga por debajo de un cierto valor.
+%% Si bien la convergencia del algoritmo a un mínimo local puede probarse
+%% en ocasiones, no existen garantías de encontrar el mínimo global de la
+%% función de error.
+Una estrategia simple que permite incrementar la velocidad de aprendizaje
+evitando la inestabilidad es modificar la ``regla delta''
 (\iflatexml{}Ecuación~\ref{e2:delta-rule}\else\autoref{e2:delta-rule}\fi)
-para actualización de los pesos.  Allí, la dirección de búsqueda del
-mínimo viene dada por el negativo del gradiente
+añadiedo un \e{término de momento}
+%
+\begin{align}\label{e2:momentum-term}
+  \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}(n)}{w_{ij}}{}
+  +\mu\Delta w_{ij}(n-1).
+\end{align}
+%
+El parámetro de momento $\mu$ controla el grado de influencia del paso
+anterior en el paso actual: si el paso actual tiene el mismo sentido
+que el anterior, tiene el efecto de aumentar la velocidad de
+aprendizaje; si en cambio el paso actual es de sentido opuesto al
+anterior, el término de momento actúa bajando la velocidad de
+aprendizaje.
+
+%% Esta técnica funciona bien en muchos problemas, aunque no significa un
+%% incremento general de la estabilidad o de la velocidad de
+%% convergencia. A veces, el descenso de gradiente sin término de momento
+%% obtiene resultados iguales o mejores que con el término de momento.
+%% Al utilizar aprendizaje con término de momento, probablemente se deba
+%% disminuir la velocidad de aprendizaje para evitar inestabilidad en el
+%% proceso de aprendizaje.
+%
+\subsubsection{Descenso más pronunciado}
+%
+En la ``regla delta''
+(\iflatexml{}Ecuación~\ref{e2:delta-rule}\else\autoref{e2:delta-rule}\fi)
+básica de la retropropagación, la dirección de búsqueda del mínimo
+viene dada por el negativo del gradiente
 $-\nabla\C{E}(n)=-\dpar{\C{E}(n)}{w_{ij}}{}$, mientras que la
 velocidad de aprendizaje $\eta$ determina la magnitud del paso a
-efectuar.  La regla llamada del \e{descenso más pronunciado} consiste
+efectuar.
+La regla llamada del \e{descenso más pronunciado} consiste
 en buscar, en cada iteración, una velocidad de aprendizaje óptima
 $\eta(n)$ mediante una estrategia iterativa denominada \e{búsqueda en
   la línea}.  Básicamente, la búsqueda en la línea consiste en evaluar
@@ -32,7 +75,10 @@ entonces
 \end{align}
 %
 donde $\eta(n)$ se determina mediante búsqueda en la línea.
-
+%% Los detalles del algoritmo de búsqueda en la línea se omiten aquí.
+%
+\subsubsection{Gradiente conjugado}
+%
 Al utilizar la regla del descenso más pronunciado, se puede demostrar
 que dos pasos de actualización sucesivos ocurren en direcciones
 necesariamente perpendiculares.
@@ -60,7 +106,6 @@ $\beta$ viene dado por la fórmula de Polak-Ribière:
   \frac{(\nabla{\C{E}(n)}-\nabla{\C{E}(n-1)})\nabla{\C{E}(n)}}{(\nabla{\C{E}(n-1)})^2}.
 \end{align}
 %
-
 %% Según varios reportes, el mayor costo computacional de la regla del
 %% gradiente conjugado (búsqueda en la línea + regla de Polak-Ribiere) se
 %% compensa con una convergencia mucho más rápida en problemas de
@@ -69,6 +114,20 @@ $\beta$ viene dado por la fórmula de Polak-Ribière:
 %% \cite{schiffmann}, esta técnica de optimización global puede
 %% experimentar severos problemas de convergencia cuando se aplica a
 %% tareas de aprendizaje más grandes.
+%
+\subsubsection{Gradiente conjugado escalado}
+%
+Desde el punto de vista de la optimización numérica, el descenso por
+gradiente efectuado por el algoritmo de retropropagación puede
+mejorarse en varios aspectos.  El algoritmo del gradiente conjugado
+escalado (SCG), propuesto por \cite{scg} en 1990, incorpora una serie
+de mejoras que derivan en un entrenamiento notablemente más rápido.
+
+Para llegar a una descripción del algoritmo SCG, resulta necesario
+revisar algunos conceptos en los que se basa. Las descripciones a
+continuación omiten, en pos de brevedad, detalles en las derivaciones
+y fórmulas específicas. Para referencia, se refiere al lector a
+\cite{haykin} (sección 4.16), \cite{riedmiller} y \cite{scg}.
 
 Finalmente, el \e{algoritmo del gradiente conjugado escalado} es una
 mejora del algoritmo del gradiente conjugado estándar.  Mientras que
@@ -85,3 +144,15 @@ descripción debido a la gran cantidad de conceptos teóricos necesarios
 para explicarlo con claridad. El lector interesado encontrará en el
 trabajo original de su creador \cite{scg} una descripción detallada
 del método.
+%
+\subsubsection{Rprop}
+%
+%% Otro problema con el descenso por gradiente es la influencia
+%% ``contraintuitiva'' de la magnitud del gradiente sobre el tamaño del
+%% paso en el ajuste de los pesos: si la función de error es ``playa'',
+%% la derivada es relativamente pequeña, resultando en un paso pequeño.
+%% Por otro lado, ante la presencia de ``pendientes bruscas'' en la
+%% función de la energía, en donde se deberían tomar pesos pequeños, la
+%% gran magnitud del gradiente lleva al algoritmo a efectuar pasos
+%% grandes, llevando posiblemente la búsqueda a una región completamente
+%% diferente del espacio de los pesos.

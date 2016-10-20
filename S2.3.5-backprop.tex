@@ -166,40 +166,6 @@ de error probablemente será más ``suave'', y por lo tanto el gradiente
 $\nabla\C{E}_{\T{av}}$ será numéricamente más estable, que en el caso
 del error intantáneo.
 %
-\subsubsection{La velocidad de aprendizaje y el término de momento}
-%
-La elección del parámetro velocidad de aprendizaje depende de la forma
-de la función de error. Esta función resulta difícil de visualizar
-dada su alta dimensionalidad, y obviamente cambia para los diferentes
-conjuntos de entrenamiento.  Con frecuencia, se encuentra que la
-velocidad de aprendizaje es demasiado baja, añadiendo tiempo
-innecesario al entrenamiento, o demasiado alta, generando oscilaciones
-alrededor del mínimo local que impiden la convergencia.
-%% Si la ``superficie'' de la función de error es ``chata'', una
-%% velocidad de aprendizaje pequeña resultará en un tiempo de
-%% convergencia muy elevado.  Similarmente, una velocidad de aprendizaje
-%% grande posiblemente genere oscilaciones, previniendo que el error
-%% caiga por debajo de un cierto valor.
-%% Si bien la convergencia del algoritmo a un mínimo local puede probarse
-%% en ocasiones, no existen garantías de encontrar el mínimo global de la
-%% función de error.
-Una estrategia simple que permite incrementar la velocidad de aprendizaje
-evitando la inestabilidad es modificar la ``regla delta''
-(\iflatexml{}Ecuación~\ref{e2:delta-rule}\else\autoref{e2:delta-rule}\fi)
-añadiedo un \e{término de momento}
-%
-\begin{align}\label{e2:momentum-term}
-  \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}(n)}{w_{ij}}{}
-  +\mu\Delta w_{ij}(n-1).
-\end{align}
-%
-El parámetro de momento $\mu$ controla el grado de influencia del paso
-anterior en el paso actual: si el paso actual tiene el mismo sentido
-que el anterior, tiene el efecto de aumentar la velocidad de
-aprendizaje; si en cambio el paso actual es de sentido opuesto al
-anterior, el término de momento actúa bajando la velocidad de
-aprendizaje.
-%
 \subsubsection{Criterio de corte}
 %
 En general, la convergencia del algoritmo de retropropagación no está
@@ -234,21 +200,3 @@ la que se utiliza prácticamente en todas las implementaciones: incluso
 cuando no se provee un conjunto de prueba separado, resulta común
 reservar parte del conjunto de entrenamiento para estimar el error de
 generalización.
-
-%% Esta técnica funciona bien en muchos problemas, aunque no significa un
-%% incremento general de la estabilidad o de la velocidad de
-%% convergencia. A veces, el descenso de gradiente sin término de momento
-%% obtiene resultados iguales o mejores que con el término de momento.
-%% Al utilizar aprendizaje con término de momento, probablemente se deba
-%% disminuir la velocidad de aprendizaje para evitar inestabilidad en el
-%% proceso de aprendizaje.
-
-%% Otro problema con el descenso por gradiente es la influencia
-%% ``contraintuitiva'' de la magnitud del gradiente sobre el tamaño del
-%% paso en el ajuste de los pesos: si la función de error es ``playa'',
-%% la derivada es relativamente pequeña, resultando en un paso pequeño.
-%% Por otro lado, ante la presencia de ``pendientes bruscas'' en la
-%% función de la energía, en donde se deberían tomar pesos pequeños, la
-%% gran magnitud del gradiente lleva al algoritmo a efectuar pasos
-%% grandes, llevando posiblemente la búsqueda a una región completamente
-%% diferente del espacio de los pesos.
