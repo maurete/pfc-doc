@@ -73,7 +73,7 @@ $k\in{}\C{S}(i)$, siendo $\C{S}(i)$ el conjunto de índices de todas
 las neuronas en la capa siguiente a la capa de $i$.  Entonces, se
 puede ver que
 %
-\begin{align}\label{e2:deriv-E-wrt-s-hid} %mlp5
+\begin{align}\label{e2:deriv-E-wrt-s-hid}
   \dpar{\C{E}}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
       \dpar{\C{E}}{s_k}{}\dpar{s_k}{s_i}{} \notag\\
     \tab= \sum_{k\in\C{S}(i)}
@@ -83,21 +83,15 @@ puede ver que
 %
 Reemplazando la
 \iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-s-hid}\else\autoref{e2:deriv-E-wrt-s-hid}\fi
-y la
-\iflatexml{}Ecuación~\ref{e2:deriv-s-wrt-v}\else\autoref{e2:deriv-s-wrt-v}\fi
-en la 
+y la \iflatexml{}Ecuación~\ref{e2:deriv-s-wrt-v}
+\else\autoref{e2:deriv-s-wrt-v}\fi en la 
 \iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-expanded}\else\autoref{e2:deriv-E-wrt-w-expanded}\fi,
 se tiene entonces
 %
-\begin{align}\label{e2:deriv-E-wrt-w-hid} %mlp5
+\begin{align}\label{e2:deriv-E-wrt-w-hid}
   \dpar{\C{E}(n)}{w_{ij}}{} =
   \sum_{k\in\C{S}(i)} \dpar{\C{E}(n)}{s_k(n)}{} s'(v_k(n)) w_{ki}
   f'(v_i(n)) s_j(n).
-  %% \dpar{\C{E}}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
-  %%     \dpar{\C{E}}{s_k}{}\dpar{s_k}{s_i}{} \notag\\
-  %%   \tab= \sum_{k\in\C{S}(i)}
-  %%     \dpar{\C{E}}{s_k}{}\dpar{s_k}{v_k}{}\dpar{v_k}{s_i}{} \notag\\
-  %%   \tab= \sum_{k\in\C{S}(i)} \dpar{\C{E}}{s_k}{} s'(v_k) w_{ki}.
 \end{align}
 %
 Esta fórmula es la clave del algoritmo de retropropagación: por la
@@ -124,10 +118,10 @@ entrenar el perceptrón multicapa.
 %
 \subsubsection{Ajuste de los pesos de la red}
 %
-En cada paso del entrenamiento $n$, una vez calculada la salida de la
-red ante la netrada $\xx(n)$ y el gradiente
-$\dpar{\C{E}(n)}{w_{ij}}{}$ para todos los pesos de la red, el
-algoritmo aplica una corrección $\Delta{}w_{ij}(n)$ sobre el peso
+En cada paso del entrenamiento $n$, se calcula la salida de la red
+$\B{s}(n)$ como respuesta a la entrada $\xx(n)$ y el gradiente
+$\dpar{\C{E}(n)}{w_{ij}}{}$. A partir de la información del gradiente,
+el algoritmo aplica una corrección $\Delta{}w_{ij}(n)$ sobre el peso
 $w_{ij}(n)$ que viene dada por la ``regla delta''
 %
 \begin{align}\label{e2:delta-rule}
@@ -135,24 +129,27 @@ $w_{ij}(n)$ que viene dada por la ``regla delta''
 \end{align}
 %
 en donde $\eta$ es el parámetro \e{velocidad de aprendizaje} del
-algoritmo de retropropagación. La utilización del signo menos en
-(\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w}\else\autoref{e2:deriv-E-wrt-w}\fi)
-indica el \e{descenso por gradiente} en el espacio de los pesos
-$w_{ij}$ de la red, esto es, el ajuste efectuado busca un cambio en la
-dirección que reduce el valor de $\C{E}(n)$.
+algoritmo de retropropagación. La utilización del signo menos en la
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w}
+\else\autoref{e2:deriv-E-wrt-w}\fi indica el \e{descenso por
+  gradiente} en el espacio de los pesos $w_{ij}$. Esto implica que el
+ajuste efectuado modifica los pesos en la dirección que reduce el
+valor de $\C{E}(n)$.
 %
 \subsubsection{Entrenamiento por época}
 %
-El traslado del entrenamiento del perceptrón multicapa a una estrategia
-de ajuste por época deriva de manera sencilla de la definición de
-la energía de error promedio $\C{E}_{\T{av}}$ para la época 
-(\iflatexml{}Ecuación~\ref{e2:average-energy-net}\else\autoref{e2:average-energy-net}\fi):
-una vez calculadas las salidas $s(n)$ y los gradientes de error instantáneo
-$\dpar{\C{E}(n)}{w_{ij}}{}$ para cada patrón $n$ en el conjunto de entrenamiento,
-el gradiente de error promedio para la época viene dado por
+La aplicación del algoritmo de retropropagación se adapta a una
+estrategia de ajuste por época deriva de manera sencilla. Dada de la
+definición de la energía de error promedio $\C{E}_{\T{av}}$ para la
+época (\iflatexml{}Ecuación~\ref{e2:average-energy-net}\else\autoref{e2:average-energy-net}\fi),
+se calculan las salidas $s(n)$ y los gradientes de error instantáneo
+$\dpar{\C{E}(n)}{w_{ij}}{}$ para cada ejemplo $(\xx(n),\yy(n))$ en el
+conjunto de entrenamiento. Entonces, el gradiente de error promedio
+para la época viene dado por
 %
-\begin{align}
-  \dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}\tab=\frac{1}{\ell}\sum_{n=1}^\ell\dpar{\C{E}(n)}{w_{ij}}{},
+\begin{align}\label{e2:deriv-Eav-wrt-w}
+  \dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}\tab=
+  \frac{1}{\ell}\sum_{n=1}^\ell\dpar{\C{E}(n)}{w_{ij}}{},
 \end{align}
 %
 y la corrección a aplicar a los pesos viene dada por
@@ -161,45 +158,96 @@ y la corrección a aplicar a los pesos viene dada por
   \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}.
 \end{align}
 %
-
+A diferencia del entrenamiento en línea, este ajuste se efectúa una
+única vez al final de cada época. Dado que la función $\C{E}_{\T{av}}$
+promedia todos los patrones de la época, la superficie de la función
+de error probablemente será más ``suave'', y por lo tanto el gradiente
+$\nabla\C{E}_{\T{av}}$ será numéricamente más estable, que en el caso
+del error intantáneo.
 %
 \subsubsection{La velocidad de aprendizaje y el término de momento}
 %
-Con frecuencia, resulta difícil elegir en forma adecuada la velocidad
-de aprendizaje $\eta$. La elección depende de la forma de la función
-de error, que obviamente cambia con cada problema de aprendizaje
-planteado. Si la ``superficie'' de la función de error es ``chata'',
-una velocidad de aprendizaje pequeña resultará en un tiempo de
-convergencia muy elevado.  Similarmente, una velocidad de aprendizaje
-grande posiblemente genere oscilaciones, previniendo que el error
-caiga por debajo de un cierto valor. Si bien la convergencia del
-algoritmo a un mínimo local puede probarse en ocasiones, no existen
-garantías de encontrar el mínimo global de la función de error.
-
-Otro problema con el descenso por gradiente es la influencia
-``contraintuitiva'' de la magnitud del gradiente sobre el tamaño del
-paso en el ajuste de los pesos: si la función de error es ``playa'',
-la derivada es relativamente pequeña, resultando en un paso pequeño.
-Por otro lado, ante la presencia de ``pendientes bruscas'' en la
-función de la energía, en donde se deberían tomar pesos pequeños, la
-gran magnitud del gradiente lleva al algoritmo a efectuar pasos
-grandes, llevando posiblemente la búsqueda a una región completamente
-diferente del espacio de los pesos.
-
-Una idea para hacer el entrenamiento más estable es la adición de un
-\e{término de momento}
+La elección del parámetro velocidad de aprendizaje depende de la forma
+de la función de error. Esta función resulta difícil de visualizar
+dada su alta dimensionalidad, y obviamente cambia para los diferentes
+conjuntos de entrenamiento.  Con frecuencia, se encuentra que la
+velocidad de aprendizaje es demasiado baja, añadiendo tiempo
+innecesario al entrenamiento, o demasiado alta, generando oscilaciones
+alrededor del mínimo local que impiden la convergencia.
+%% Si la ``superficie'' de la función de error es ``chata'', una
+%% velocidad de aprendizaje pequeña resultará en un tiempo de
+%% convergencia muy elevado.  Similarmente, una velocidad de aprendizaje
+%% grande posiblemente genere oscilaciones, previniendo que el error
+%% caiga por debajo de un cierto valor.
+%% Si bien la convergencia del algoritmo a un mínimo local puede probarse
+%% en ocasiones, no existen garantías de encontrar el mínimo global de la
+%% función de error.
+Una estrategia simple que permite incrementar la velocidad de aprendizaje
+evitando la inestabilidad es modificar la ``regla delta''
+(\iflatexml{}Ecuación~\ref{e2:delta-rule}\else\autoref{e2:delta-rule}\fi)
+añadiedo un \e{término de momento}
 %
-\begin{align}\label{e2:momentum-term} %mlp8
+\begin{align}\label{e2:momentum-term}
   \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}(n)}{w_{ij}}{}
   +\mu\Delta w_{ij}(n-1).
 \end{align}
 %
-El parámetro de momento $\mu$ escala la influencia del paso anterior
-de actualización de los pesos en el paso actual. Esta técnica funciona
-bien en muchos problemas, aunque no significa un incremento general de
-la estabilidad o de la velocidad de convergencia. A veces, el descenso
-de gradiente sin término de momento obtiene resultados iguales o
-mejores que con el término de momento.  Al utilizar aprendizaje con
-término de momento, probablemente se deba disminuir la velocidad de
-aprendizaje para evitar inestabilidad en el proceso de aprendizaje.
+El parámetro de momento $\mu$ controla el grado de influencia del paso
+anterior en el paso actual: si el paso actual tiene el mismo sentido
+que el anterior, tiene el efecto de aumentar la velocidad de
+aprendizaje; si en cambio el paso actual es de sentido opuesto al
+anterior, el término de momento actúa bajando la velocidad de
+aprendizaje.
+%
+\subsubsection{Criterio de corte}
+%
+En general, la convergencia del algoritmo de retropropagación no está
+garantizada, y no existe un criterio de corte bien definido para
+detener el entrenamiento. Algunos criterios razonables para establecer
+la convergencia pueden ser:
+%
+\begin{itemize}
+\item Cuando la norma del gradiente es muy pequeña
+  ($\|\nabla\C{E}\|\leq\epsilon$), probablemente se deba a que se
+  alcanzó un mínimo local de la función de error.
+\item Cuando la función de energía promedio $\C{E}_{\T{av}}$ varía muy
+  poco entre épocas, también podría significar que se alcanzó un
+  mínimo local, indicando convergencia.
+\end{itemize}
+%
+El problema de estos criterios es similar al de la velocidad de
+aprendizaje: los valores de tolerancia a considerar para la
+convergencia serán siempre dependientes del problema, y una elección
+incorrecta puede llevar ya sea a un corte prematuro del entrenamiento,
+o bien a que el algoritmo nunca converja.
 
+Existe sin embargo un criterio de convergencia que tiene a la vez un
+fundamento teórico y es independiente del conjunto de datos de
+entrenamiento: luego de cada iteración de entrenamiento, se clasifica
+un conjunto de prueba $T$
+(\iflatexml{}Ecuación~\ref{eq:conj-prueba}\else\autoref{eq:conj-prueba}\fi),
+obteniendo una estimación de error de generalización, y se detiene el
+entrenamiento cuando se observa que este error es adecuado, o bien
+cuando resulta evidente que ha alcanzado su mínimo. Esta estrategia es
+la que se utiliza prácticamente en todas las implementaciones: incluso
+cuando no se provee un conjunto de prueba separado, resulta común
+reservar parte del conjunto de entrenamiento para estimar el error de
+generalización.
+
+%% Esta técnica funciona bien en muchos problemas, aunque no significa un
+%% incremento general de la estabilidad o de la velocidad de
+%% convergencia. A veces, el descenso de gradiente sin término de momento
+%% obtiene resultados iguales o mejores que con el término de momento.
+%% Al utilizar aprendizaje con término de momento, probablemente se deba
+%% disminuir la velocidad de aprendizaje para evitar inestabilidad en el
+%% proceso de aprendizaje.
+
+%% Otro problema con el descenso por gradiente es la influencia
+%% ``contraintuitiva'' de la magnitud del gradiente sobre el tamaño del
+%% paso en el ajuste de los pesos: si la función de error es ``playa'',
+%% la derivada es relativamente pequeña, resultando en un paso pequeño.
+%% Por otro lado, ante la presencia de ``pendientes bruscas'' en la
+%% función de la energía, en donde se deberían tomar pesos pequeños, la
+%% gran magnitud del gradiente lleva al algoritmo a efectuar pasos
+%% grandes, llevando posiblemente la búsqueda a una región completamente
+%% diferente del espacio de los pesos.
