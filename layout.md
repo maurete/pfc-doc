@@ -14,7 +14,7 @@ S2.3.5.1-delta-rule.tex
 S2.3.5.2-epoch-delta.tex
 S2.3.5.3-stop-criteria.tex
 S2.3.6-scg.tex
-S2.3.6.2-momentum.tex
+S2.3.6.1-momentum.tex
 S2.3.6.2-steepest.tex
 S2.3.6.3-conjugate.tex
 S2.3.6.4-scg.tex
