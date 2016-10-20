@@ -5,6 +5,7 @@ S2.1-aprendizaje.tex
 S2.2-Hiperparams.tex
 S2.3-mlp.tex
 S2.3.1-biologico.tex
+S2.3.2-artificial.tex
 figures/fig_neurona/neurona.png
 S2.3.3-arquitectura.tex
 figures/fig_mlp/mlp.png
