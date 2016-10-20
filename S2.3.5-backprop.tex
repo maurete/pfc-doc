@@ -73,12 +73,13 @@ $k\in{}\C{S}(i)$, siendo $\C{S}(i)$ el conjunto de índices de todas
 las neuronas en la capa siguiente a la capa de $i$.  Entonces, se
 puede ver que
 %
-\begin{align}\label{e2:deriv-E-wrt-s-hid}
+\begin{align}
   \dpar{\C{E}}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
       \dpar{\C{E}}{s_k}{}\dpar{s_k}{s_i}{} \notag\\
     \tab= \sum_{k\in\C{S}(i)}
       \dpar{\C{E}}{s_k}{}\dpar{s_k}{v_k}{}\dpar{v_k}{s_i}{} \notag\\
     \tab= \sum_{k\in\C{S}(i)} \dpar{\C{E}}{s_k}{} s'(v_k) w_{ki}.
+    \label{e2:deriv-E-wrt-s-hid}
 \end{align}
 %
 Reemplazando la
