@@ -8,6 +8,7 @@ figures/fig_neurona/neurona.png
 S2.3.3-arquitectura.tex
 figures/fig_mlp/mlp.png
 S2.3.4-entrenam.tex
+S2.3.4.1-online-batch.tex
 S2.3.5-backprop.tex
 S2.3.6-scg.tex
 S2.3.7-rprop.tex
