@@ -124,7 +124,10 @@
 \usepackage{longtable}
 
 % para alinear numeros en el punto decimal (dentro de un tabular)
-%% \usepackage[detect-all,alsoload=abbr]{siunitx}
+\iflatexml
+\else
+\usepackage[detect-all,alsoload=abbr]{siunitx}
+\fi
 
 %\usepackage{glossaries}
 
