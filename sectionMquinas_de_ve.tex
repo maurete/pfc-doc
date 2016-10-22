@@ -78,20 +78,19 @@ existen infinitas funciones discriminantes lineales capaces de
 clasificar correctamente todos los elementos, y por ende, existen
 infinitos hiperplanos de separación.  Sin embargo, existe un único
 hiperplano de separación \e{óptimo} que maximiza la distancia a los
-puntos más cercanos $\zz_i=\Bphi(\xx_i)$.  Esto se expresa a través del
+puntos $\zz_i=\BPhi(\xx_i)$ más cercanos.  Esto se expresa a través del
 problema de optimización
 %
-\begin{align}
+\begin{align}\label{e2:svm-problem-basic}
   \begin{split}
     \min_{\ww,b} \quad\tabs \frac{1}{2}\|\ww\|^2, \\
     \T{sujeto a}\quad\tabs y_i f_i\geq1,\,i=1,\ldots,\ell\,, 
   \end{split}
-  \label{prob1}
 \end{align}
 %
-donde $f_i=\hat{y}(x_i)=\ww^T\BPhi(\xx_i)+b$ es la función
-discriminante lineal aplicada al vector $\xx_i$. En términos
-coloquiales, este problema puede leerse
+donde $f_i=f(x_i)=\ww^T\BPhi(\xx_i)+b$ es la función discriminante
+lineal aplicada al vector $\xx_i$. En términos coloquiales, este
+problema puede leerse
 %
 \begin{align*}
   \begin{split}
@@ -100,64 +99,69 @@ coloquiales, este problema puede leerse
     |f_i|\geq1 \quad \tabs \T{estableciendo en $1$ la distancia del
       hiperplano a los puntos más cercanos},\\
     y_i\hat{y}_i>0\quad \tabs \T{y tal que la clase $y_i$ coincida con el
-      signo del discriminante $\hat{y}_i=\T{signo}(f_i)$}.
+      signo del discriminante ($\hat{y}_i=\T{signo}(f_i)$)}.
   \end{split}
 \end{align*}
 %
 La distancia de un vector $\zz_i=\BPhi(\xx_i)$ al hiperplano
 $\ww^T\zz+b=0$ viene dada por $d_i=\frac{\ww}{\|w\|}\cdot\zz_i+b$, por
-ello, minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.
-Más aún, puede demostrarse que el vector solución $\ww_*$ puede escribirse como
-una combinación lineal de aquellos $\zz_i$ para los cuales $|d_i|=1$.
-Estos $\zz_i$ se denominan \e{vectores de soporte}, y los hiperplanos
-$\ww^T\zz+b=+1$ y $\ww^T\zz+b=-1$ que contienen los vectores de soporte
+ello, minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.  Más
+aún, puede demostrarse que el vector solución $\ww_*$ puede escribirse
+como una combinación lineal de aquellos $\zz_i$ para los cuales
+$|d_i|=1$.  Estos $\zz_i$ se denominan \e{vectores de soporte}, y los
+hiperplanos $\ww^T\zz+b=\pm1$ que contienen los vectores de soporte
 conforman el \e{margen} del clasificador.
-
-Desde el punto de vista numérico, el problema (\ref{prob1}) es un
-problema de optimización cuadrático convexo con restricciones
-lineales. Su solución puede ser calculada mediante diversas técnicas
-de optimización, aunque resulta complejo de resolver directamente
-debido a las restricciones
-$\hat{y}_i{y}_i={y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$.
-
+Desde el punto de vista numérico, el problema
+(\ref{e2:svm-problem-basic}) es un problema de optimización cuadrático
+convexo con restricciones lineales.
+%
+%
 \subsection{Formulación dual}
-  Mediante la
+%
+El problema (\ref{e2:svm-problem-basic}) resulta complejo de
+resolver directamente debido a las restricciones
+${y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$. Mediante la
 técnica de los multiplicadores de Lagrange \cite{LAGRANGE}
 \cite{bottou} resulta posible obtener una fomulación denominada
 \emph{dual} con restricciones más sencillas.
 
 En primer lugar, se define el funcional lagrangiano
-
-\begin{align}
+%
+\begin{align}\label{e2:lagrangian}
   \C{L}(\ww,b,\Balpha) = \frac{1}{2} \|\ww\|^2
-  + \sum_{i=1}^{\ell} \alpha_i (1-y_i(\langle\ww,\BPhi(\xx)\rangle+b))
-  \label{LP}
+  + \sum_{i=1}^{\ell} \alpha_i (1-y_i(\langle\ww,\BPhi(\xx)\rangle+b)).
 \end{align}
-que es la función a optimizar, a la que se le suman las restricciones
-(en forma normalizada $g(\xx)\leq0$) multiplicadas por coeficientes
-$\alpha_i$ denominados multiplicadores de Lagrange.
-A partir del lagrangiano se plantea la formulación \emph{dual}
-del problema
-
-\begin{align}
+%
+Como se puede ver, el funcional $\C{L}$ es la función a optimizar más
+las restricciones ${y}_if_i\geq{}1$ en forma normalizada $g(\xx)\leq0$
+y multiplicadas por coeficientes $\alpha_i$ denominados
+\e{multiplicadores de Lagrange}.  A partir del lagrangiano se plantea
+la formulación \emph{dual} del problema
+%
+\begin{align}\label{e2:svm-problem-dual}
   \begin{split}
-    \max_\alpha &\quad f(\Balpha) = \min_{\ww,b} \C{L}(\ww,b,\Balpha)\\
-    \T{sujeto a} &\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}
+    \max_\alpha \tabs\quad f(\Balpha) = \min_{\ww,b} \C{L}(\ww,b,\Balpha)\\
+    \T{sujeto a} \tabs\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}
   \end{split}
 \end{align}
+%
 En el mínimo, se tiene que
-
-\begin{align}
+%
+\begin{align}\label{e2:lagrangian-w}
   \dpar{\C{L}(\ww,b,\Balpha)}{\ww}{}
     &=\ww-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
     &\Rightarrow \ww = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i)
-  \label{dobleve}\\
+  \\
+  \label{e2:lagrangian-sum-yalpha}
   \dpar{\C{L}(\ww,b,\Balpha)}{b}{}
     &=-\sum_{i=1}^\ell y_i\alpha_i = 0
-      &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0,
+      &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0.
 \end{align}
-y el lagrangiano puede escribirse
-
+%
+Reemplazando (\ref{e2:lagrangian-w}) y (\ref{e2:lagrangian-sum-yalpha})
+en la \iflatexml{}Ecuación~\ref{e2:lagrangian}\else\autoref{e2:lagrangian}\fi
+el lagrangiano puede escribirse
+%
 \begin{align*}
   \C{L}(\ww,b,\Balpha)
   & = 
@@ -176,12 +180,13 @@ y el lagrangiano puede escribirse
     \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
     \sum_{i=1}^{\ell} \alpha_i  .
 \end{align*}
+%
 De este modo, el problema dual resulta en el problema de optimización
 cuadrático convexo
-
+%
 \begin{align}
   \begin{split}
-    \max_\alpha &\quad f(\Balpha) =
+    \max_\alpha &\quad
     -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
     \langle \BPhi(\xx_i),\BPhi(\xx_j) \rangle +
     \sum_{i=1}^{\ell} \alpha_i \\
@@ -190,27 +195,31 @@ cuadrático convexo
   \end{split}
   \label{prob2}
 \end{align}
+%
 Una vez encontrado $\Balpha^*$ que maximice el problema dual, se puede
 calcular la solución $(\ww^*,b^*)$ al problema primal.  El vector
-$\ww^*$ viene dado por (\autoref{dobleve}):
-
+$\ww^*$ viene dado por la
+ \iflatexml{}Ecuación~\ref{e2:lagrangian-w}\else\autoref{e2:lagrangian-w}\fi:
+%
 \begin{align*}
   \ww^* = \sum_{i=1}^\ell y_i\alpha^*_i\BPhi(\xx_i).
 \end{align*}
-El cálculo de $b^*$ deriva de las condiciones de complementariedad de
+%
+El cálculo de $b^*$ se deriva de las condiciones de complementariedad de
 Karush-Kuhn-Tucker\footnote{Para una explicación detallada de las
-  condiciones KKT, se refiere al lector a \hl{este libro}}: para todo
-$i\in\{1,\ldots,\ell\}$ se cumple que
+  condiciones de Karush-Kuhn-Tucker, se refiere al lector a
+  \hl{este libro}}: para todo $i\in\{1,\ldots,\ell\}$ se cumple que
 $\alpha^*_i(1-y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*))=0$. Entonces,
-para algún $\alpha^*_i\neq0$ se tiene
-
+para algún $\alpha^*_i\neq0$, se tiene
+%
 \begin{align}
-%  y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*) = 1 \iff
   b^* = y_i - \langle\ww^*,\BPhi(\xx_i)\rangle .
 \end{align}
+%
 La existencia de $\alpha^*_i\neq0$ está garantizada siempre que el
 conjunto de entrenamiento tenga elementos de ambas clases.
-
+%
+%
 \subsection{Núcleos}
 Un núcleo, denominado también por su nombre en inglés \eng{kernel}, es
 una función $k:X\times{}X\rightarrow{}\RR$ \cite{stewart} que
