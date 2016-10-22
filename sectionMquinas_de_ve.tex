@@ -1,103 +1,127 @@
-\section{Máquinas de vectores de soporte}
+%
+%
+%
+\section{Máquina de vectores de soporte}
+%
 La máquina de vectores de soporte (\eng{Support Vector Machine, SVM})
 es una máquina de aprendizaje propuesta por Boser et al. \cite{boser}
 y Cortes y Vapnik \cite{svm}, basada en el clasificador lineal.
 Debido a la simplicidad de su formulación y al cálculo eficiente de su
 solución, se ha convertido en una técnica muy popular para
 clasificación.
-
-Un \emph{clasificador lineal} \cite{nilsson} es una máquina de
-aprendizaje en la que, dado un patrón de entrada $\xx\in{}X$ a
-clasificar, calcula primero un \e{vector imagen} $\zz=\BPhi(\xx)\in{}Z$,
-para luego asignarle una clase de salida $y=\pm{}1$ según sea el signo
-de la función discriminante lineal $\hat{y}=\ww^T\zz+b$. La función
+%
+%
+\subsection{El clasificador lineal}
+%
+Un \e{clasificador lineal} \cite{nilsson} es una máquina de
+aprendizaje que, dado un patrón de entrada $\xx\in{}X$ a clasificar,
+calcula primero un \e{vector imagen} $\zz=\BPhi(\xx)\in{}Z$, para
+luego asignarle una clase de salida $\hat{y}=\pm{}1$ según sea el
+signo de la función discriminante lineal $f=\ww^T\zz+b$. La función
 $\BPhi:X\rightarrow{}Z$ se elige a partir del conocimiento previo del
 problema, mientras que los valores de $\ww$ y $b$ se determinan
-durante el entrenamiento.  Con esta formulación del clasificador
+durante el entrenamiento. Con esta formulación del clasificador
 lineal, se puede ver que la función $\BPhi$ transforma el espacio
 vectorial de entrada $X$ en otro espacio vectorial inducido $Z$,
-llamado \e{espacio imagen}. En este espacio, el hiperplano $\ww^T\zz+b=0$
-define una frontera de decisión entre las clases $y=+1$ e $y=-1$.
-
+llamado \e{espacio imagen}. En este espacio, el hiperplano
+$\ww^T\zz+b=0$ define una frontera de decisión entre las clases
+$\hat{y}=+1$ e $\hat{y}=-1$.
+%
 \begin{quote}
-  {\bfseries Notación.}\quad{}En la literatura, resulta común encontrar que
-  el vector $\zz$ se denomina \e{vector de características}
-  (\e{feature vector}) y el espacio vectorial $Z$ como \e{espacio de
-    las características} (\e{feature space}).  En este trabajo se
-  prefiere denominarlos con los nombres alternativos \e{vector imagen}
-  y \e{espacio vectorial imagen} para evitar confusión con el proceso
-  de extracción de características a partir de los datos de entrada,
-  que es un proceso externo a la máquina de aprendizaje.
+  {\bfseries Notación.}\quad{}En la literatura, resulta común
+  encontrar que el vector $\zz$ se denomina \e{vector de
+    características} (\e{feature vector}) y el espacio vectorial $Z$
+  como \e{espacio de las características} (\e{feature space}).  En
+  este trabajo se prefiere denominarlos con los nombres alternativos
+  \e{vector imagen} y \e{espacio vectorial imagen} para evitar
+  confusión con el proceso de extracción de características, la etapa
+  de pre-procesamiento de los datos que genera vectores aptos para su
+  utilización en la máquina de aprendizaje.
 \end{quote}
+%
 
 Una máquina de vectores de soporte es un clasificador lineal que
 incorpora tres ideas adicionales. En primer lugar, el proceso de
 entrenamiento de la SVM consiste en buscar el hiperplano de separación
 óptimo, que maximice la distancia a los ejemplos más cercanos. Esta
-búsqueda se plantea como la solución a un problema de optimización
-convexo que, como se verá en adelante, resulta central al proceso
-de entrenamiento.
+búsqueda se plantea como la solución a un problema de optimización.
 
-Otra importante propiedad de la SVM es que, mediante la utilización de
-familias especiales de funciones denominadas núcleos, el problema de
-optimización se plantea de un modo tal que no es necesario calcular la
-transformación $\BPhi$ de manera explícita. Esto se traduce en una
-ventaja en términos computacionales, ya que se evita realizar cálculos
-con vectores imagen $z\in{}Z$ de dimensionalidad elevada.
-Incluso, el caso $|Z|=\infty$ resulta computacionalmente tratable.
+Por otra parte, la formulación de la máquina de vectores de soporte
+es tal que no es necesario
+calcular la transformación $\BPhi$ de manera explícita. Esto se logra
+mediante la utilización de familias especiales de funciones
+denominadas núcleos, que permiten calcular productos internos entre
+vectores imagen $\zz\in{}Z$ de manera implícita.  La utilización de
+funciones núcleo en la SVM permite tratar de manera eficiente los
+vectores imagen $\zz$ de dimensionalidad elevada.  Incluso, el caso
+$|Z|=\infty$ resulta computacionalmente tratable.
 
 Por último, la SVM incorpora (en su variante más común) un término de
 regularización que repercute de dos formas a la solución del problema
-de optimización. Por un lado, permite su aplicación a conjuntos de
-datos no separables, y por otro, regula la complejidad
-de la solución a través de un parámetro $C$, de modo de evitar el
-sobreajuste.
-
-\subsection{Hiperplano óptimo}
+de optimización: por un lado, permite su aplicación a conjuntos de
+datos no separables, y por otro, regula la complejidad de la solución
+a través de un parámetro $C$, evitando el sobreajuste.
+%
+%
+\subsection{El hiperplano de separación óptimo}
+%
 Dado un conjunto de entrenamiento
-$D=\left((x_1,y_1),\ldots,(x_\ell,y_\ell)\right)$, se dice que éste es
-linealmente separable cuando existe una función discriminante lineal
-tal que su signo coincide con la clase de todos los elementos del
-conjunto. Cuando $D$ es linealmente separable, se sabe que existe una
-infinidad de funciones discriminantes lineales
-$\hat{y}(\xx)=\ww^T\BPhi(\xx)+b$ tal que el hiperplano $\hat{y}=0$
-cumple con esta condición.
+$D=\left((\xx_1,y_1),\ldots,(\xx_\ell,y_\ell)\right)$, se dice que
+éste es linealmente separable en el espacio imagen $Z$ cuando existe
+una función discriminante lineal $f(\xx)=\ww^T\BPhi(\xx)+b$ tal
+que su signo permite determinar, sin errores, la clase de todos los
+elementos del conjunto. La ecuación $f=0$ determina un
+hiperplano en $Z$ denominado \e{hiperplano de separación}.
 
-El hiperplano óptimo de separación es aquel que maximiza la distancia
-a los ejemplos $(\xx_i,y_i)$ más cercanos. Esto se expresa a través
-del problema de optimización
-
+Cuando el conjunto $D$ es linealmente separable en $Z$, se sabe que
+existen infinitas funciones discriminantes lineales capaces de
+clasificar correctamente todos los elementos, y por ende, existen
+infinitos hiperplanos de separación.  Sin embargo, existe un único
+hiperplano de separación \e{óptimo} que maximiza la distancia a los
+puntos más cercanos $\zz_i=\Bphi(\xx_i)$.  Esto se expresa a través del
+problema de optimización
+%
 \begin{align}
   \begin{split}
-    \min\quad & \C{P}(\ww,b)=\frac{1}{2}\|\ww\|^2\\ \T{sujeto a}\quad
-    & y_i\hat{y}_i\geq1,\,i=1,\ldots,\ell\,, 
+    \min_{\ww,b} \quad\tabs \frac{1}{2}\|\ww\|^2, \\
+    \T{sujeto a}\quad\tabs y_i f_i\geq1,\,i=1,\ldots,\ell\,, 
   \end{split}
   \label{prob1}
 \end{align}
-donde $\hat{y}_i=\hat{y}(x_i)=\ww^T\BPhi(\xx_i)+b$ es la función
+%
+donde $f_i=\hat{y}(x_i)=\ww^T\BPhi(\xx_i)+b$ es la función
 discriminante lineal aplicada al vector $\xx_i$. En términos
-coloquiales, el problema puede leerse
-
+coloquiales, este problema puede leerse
+%
 \begin{align*}
   \begin{split}
-    \min \frac{1}{2}\|\ww\|^2 \quad & \T{encontrar el $\ww$ más
+    \min \frac{1}{2}\|\ww\|^2 \quad \tabs \T{encontrar el $\ww$ más
       pequeño según la norma euclídea $\|\cdot\|$}\ldots\\
-    |\hat{y}_i|\geq1 \quad & \T{estableciendo en $1$ la distancia del
+    |f_i|\geq1 \quad \tabs \T{estableciendo en $1$ la distancia del
       hiperplano a los puntos más cercanos},\\
-    y_i\hat{y}_i>0\quad & \T{y tal que la clase $y_i$ coincida con el
-      signo del discriminante $\hat{y}_i$}.
+    y_i\hat{y}_i>0\quad \tabs \T{y tal que la clase $y_i$ coincida con el
+      signo del discriminante $\hat{y}_i=\T{signo}(f_i)$}.
   \end{split}
 \end{align*}
-La distancia del vector $\BPhi(\xx_i)$ al hiperplano $\ww^T\BPhi+b=0$
-viene dada por $d_i=\frac{\ww}{\|w\|}\cdot\xx_i+b$, por ello,
-minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.  El
-problema \autoref{prob1} es un problema de optimización cuadrático convexo
-con restricciones lineales.
+%
+La distancia de un vector $\zz_i=\BPhi(\xx_i)$ al hiperplano
+$\ww^T\zz+b=0$ viene dada por $d_i=\frac{\ww}{\|w\|}\cdot\zz_i+b$, por
+ello, minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.
+Más aún, puede demostrarse que el vector solución $\ww_*$ puede escribirse como
+una combinación lineal de aquellos $\zz_i$ para los cuales $|d_i|=1$.
+Estos $\zz_i$ se denominan \e{vectores de soporte}, y los hiperplanos
+$\ww^T\zz+b=+1$ y $\ww^T\zz+b=-1$ que contienen los vectores de soporte
+conforman el \e{margen} del clasificador.
+
+Desde el punto de vista numérico, el problema (\ref{prob1}) es un
+problema de optimización cuadrático convexo con restricciones
+lineales. Su solución puede ser calculada mediante diversas técnicas
+de optimización, aunque resulta complejo de resolver directamente
+debido a las restricciones
+$\hat{y}_i{y}_i={y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$.
 
 \subsection{Formulación dual}
-El problema de optimización \autoref{prob1} resulta complejo de resolver
-directamente debido a las restricciones
-$\hat{y}_i{y}_i={y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$.  Mediante la
+  Mediante la
 técnica de los multiplicadores de Lagrange \cite{LAGRANGE}
 \cite{bottou} resulta posible obtener una fomulación denominada
 \emph{dual} con restricciones más sencillas.
