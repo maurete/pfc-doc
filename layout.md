@@ -23,4 +23,5 @@ S2.3.6.4-scg.tex
 S2.3.6.5-rprop.tex
 S2.4-svm.tex
 S2.4.1-clasif-lineal.tex
+S2.4.2-hiperp-optimo.tex
 sectionMquinas_de_ve.tex
