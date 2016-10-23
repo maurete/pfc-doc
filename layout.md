@@ -21,4 +21,5 @@ S2.3.6.2-steepest.tex
 S2.3.6.3-conjugate.tex
 S2.3.6.4-scg.tex
 S2.3.6.5-rprop.tex
+S2.4-svm.tex
 sectionMquinas_de_ve.tex
