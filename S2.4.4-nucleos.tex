@@ -1,0 +1,110 @@
+%
+%
+\subsection{Núcleos}
+Un núcleo, denominado también por su nombre en inglés \eng{kernel}, es
+una función $k:X\times{}X\rightarrow{}\RR$ \cite{stewart} que
+generaliza el concepto de métrica. En términos intuitivos, el núcleo
+permite comparar la similaridad entre dos elementos
+$\xx_1,\xx_2\in{}X$ en un espacio vectorial inducido $F$, denominado
+\e{espacio imagen}, que usualmente tiene una dimensionalidad elevada.
+
+\begin{definicion}
+[Núcleo]
+  Una función $k:X\times{}X\rightarrow{}\R{R}$ se dice un núcleo (de
+  Mercer) en el conjunto $X$ si cumple con las siguientes propiedades:
+  \begin{enumerate}
+  \item $k(\xx_1,\xx_2)=k(\xx_2,\xx_1)$ para todo $\xx_1,\xx_2\in{}X$
+  \item Para cada $n\in\R{N}$ y para todos los puntos
+    $(x_1,\ldots,x_n)\in{}X^n$ la matriz de Gram
+    $K\in\R{R}^{n\times{}n}$ definida como
+    $K_{ij}=k(\xx_i,\xx_j),\,i,j\in\{1,\ldots,n\}$ es semidefinida
+    positiva.
+  \end{enumerate}
+\end{definicion}
+Para un núcleo $k$, el teorema de Mercer \cite{mercer} asegura la
+existencia de un espacio de Hilbert $F$ y una transformación
+$\BPhi:X\rightarrow{}F$ tal que, para cualquier par de vectores
+$\xx_1,\xx_2\in{}X$, el núcleo calcula el producto interno de los
+mismos en el espacio imagen:
+$k(\xx_1,\xx_2)=\langle\BPhi(\xx_1),\BPhi(\xx_2)\rangle$. Es
+importante tener en cuenta que ni el espacio $F$ ni la transformación
+$\BPhi$ son únicos.
+
+El siguiente procedimiento se llama el \emph{truco del kernel} o
+\emph{kernelización} de un algoritmo lineal: dado un método lineal
+formulado en términos de productos internos de los datos y un núcleo
+$k$, reemplazar todos los productos internos por la función $k$.  El
+teorema de Mercer asegura que esto es equivalente a la aplicación de
+la transformación $\BPhi$ primero y el algoritmo
+lineal después.
+
+Cuando se tienen dos vectores $\vv,\ww\in{}F$ definidos en términos
+de combinaciones lineales de vectores transformados al espacio imagen
+
+\begin{align*}
+  \vv=\sum_{i=1}^{n}\alpha_i\BPhi(\xx_i) \quad\T{ y }\quad
+  \ww=\sum_{j=1}^{m}\beta_j\BPhi(\xx_j'),
+\end{align*}
+el producto interno $\langle\vv,\ww\rangle$ se puede calcular en
+términos del núcleo según
+
+\begin{align}
+  \langle \vv,\ww\rangle&=\big\langle\sum_{i=1}^{n}\alpha_i\BPhi(\xx_i),
+      \sum_{j=1}^{m}\beta_j\BPhi(\xx_j')\big\rangle \notag\\
+    &=\sum_{i=1}^{n}\sum_{j=1}^{m}
+      \alpha_i\beta_j\big\langle\BPhi(\xx_i),\Phi(\xx_j')\big\rangle\notag\\
+    &=\sum_{i=1}^{n}\sum_{j=1}^{m} \alpha_i\beta_jk(\xx_i,\xx_j').
+\end{align}
+De este resultado se derivan las siguientes propiedades
+
+\begin{align}
+  \langle{}v,\Phi(x)\rangle &= \sum_{i=1}^{n}\alpha_ik(x_i,x) \\
+  \|v\|^2 &= \langle{}v\rangle=\sum_{i,j=1}^n\alpha_i\alpha_jk(x_i,x_j)\\
+  \|\Phi(x)\|^2 &=k(x,x).
+\end{align}
+De este modo, las operaciones de producto interno en el espacio imagen
+$F$ se pueden efectuar a través de la función núcleo $k$, sin necesidad
+de calcular la transformación $\BPhi$ en forma explícita.
+
+Desde un punto de vista puramente matemático, la utilización del truco
+del kernel no aporta ninguna ventaja ya que los algoritmos son
+equivalentes. Desde un punto de vista computacional, sin embargo, la
+diferencia es decisiva: mediante el truco del kernel se pueden
+calcular productos internos en espacios vectoriales de alta
+dimensionalidad --incluso infinita--, sin necesidad de aplicar la
+transformación $\BPhi$, cuyo cálculo directo muchas veces resulta
+prohibitivo o incluso imposible en un ordenador.
+
+Es intuitivamente claro que la elección de un núcleo que represente
+una métrica específica al problema puede mejorar el rendimiento de las
+máquinas de aprendizaje. Por ejemplo, en una tarea de clasificación es
+conveniente elegir una métrica que agrupa las diferentes clases.
+
+El núcleo lineal $k(x,x')=\langle{}x,x'\rangle=x^Tx'$ simplemente
+calcula el producto interno en el espacio de entrada, correspondiente
+a la transformación identidad $\BPhi(\xx)=\xx$.
+
+Como primer ejemplo no trivial se considera el núcleo polinómico
+$k(x,x')=\left(\langle{}x,x'\rangle+\theta\right)^d$ con grado
+$d\in\R{N}$ y desvío $\theta\in\RR$. Este núcleo es una generalización
+del núcleo lineal, el cual se obtiene para $d=1$ y $\theta=0$. Su
+espacio imagen es el espacio de los polinomios de grado
+$d$ sobre el espacio $X$, con la notable propiedad de que
+el cálculo del núcleo toma sólo $\C{O}(\dim{}X)$ operaciones,
+mientras que el cálculo explícito de la transformación
+lleva 
+$\C{O}\left((\dim{}X)^d\right)$ operaciones.
+
+El núcleo más utilizado es la función de base radial
+(\eng{Radial basis function, RBF})
+
+\begin{align}
+  k(x,x')=\exp\left(-\frac{\|x-x'\|^2}{2\sigma^2}\right)
+  =\exp\left(-\gamma\|x-x'\|^2\right)
+\end{align}
+con el parámetro de amplitud $\sigma$ en la primera forma, o con el
+parámetro de concentración $\gamma$ en la segunda forma. Corresponde
+a un espacio imagen de dimensión infinita, que no permite
+una representación directa de la transformación $\BPhi$.
+El kernel RBF se puede calcular
+en $\C{O}(\dim{}X)$ operaciones.
