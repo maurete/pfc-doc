@@ -118,13 +118,12 @@ convexo con restricciones lineales.
 %
 \subsection{Formulación dual}
 %
-El problema (\ref{e2:svm-problem-basic}) resulta complejo de
-resolver directamente debido a las restricciones
-${y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$. Mediante la
-técnica de los multiplicadores de Lagrange \cite{LAGRANGE}
-\cite{bottou} resulta posible obtener una fomulación denominada
-\emph{dual} con restricciones más sencillas.
-
+El problema (\ref{e2:svm-problem-basic}) resulta complejo de resolver
+directamente debido a la complejidad de las restricciones
+${y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$. Sin embargo, mediante la técnica
+de los multiplicadores de Lagrange \cite{LAGRANGE} \cite{bottou}
+resulta posible obtener una fomulación denominada \emph{dual} con
+restricciones más sencillas.
 En primer lugar, se define el funcional lagrangiano
 %
 \begin{align}\label{e2:lagrangian}
@@ -132,37 +131,41 @@ En primer lugar, se define el funcional lagrangiano
   + \sum_{i=1}^{\ell} \alpha_i (1-y_i(\langle\ww,\BPhi(\xx)\rangle+b)).
 \end{align}
 %
-Como se puede ver, el funcional $\C{L}$ es la función a optimizar más
-las restricciones ${y}_if_i\geq{}1$ en forma normalizada $g(\xx)\leq0$
-y multiplicadas por coeficientes $\alpha_i$ denominados
-\e{multiplicadores de Lagrange}.  A partir del lagrangiano se plantea
-la formulación \emph{dual} del problema
+El funcional $\C{L}$ es la función a optimizar más las restricciones
+del problema (\ref{e2:svm-problem-basic}) escritas en forma
+normalizada $g(\xx)\leq0$ y multiplicadas por coeficientes $\alpha_i$,
+denominados \e{multiplicadores de Lagrange}. Utilizando el funcional
+lagrangiano se plantea la formulación \emph{dual} del problema
 %
 \begin{align}\label{e2:svm-problem-dual}
   \begin{split}
-    \max_\alpha \tabs\quad f(\Balpha) = \min_{\ww,b} \C{L}(\ww,b,\Balpha)\\
-    \T{sujeto a} \tabs\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}
+    \max_\alpha \tabs\quad = \min_{\ww,b} \C{L}(\ww,b,\Balpha)\\
+    \T{sujeto a} \tabs\quad \alpha_i \geq 0,\, i=1,\ldots,\ell
   \end{split}
 \end{align}
 %
-En el mínimo, se tiene que
+En la forma dual, las restricciones son mucho más simples, y el problema
+resulta más sencillo de resolver. Aún así, resulta posible encontrar una
+formulación alternativa, cuya conveniencia resultará evidente
+al tratar el concepto de funciones núcleo. En primer lugar, se observa que
+las derivadas del $\C{L}$ se anulan en el máximo:
 %
 \begin{align}\label{e2:lagrangian-w}
   \dpar{\C{L}(\ww,b,\Balpha)}{\ww}{}
     &=\ww-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
-    &\Rightarrow \ww = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i)
+    &\Rightarrow& \ww &= \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i),
   \\
   \label{e2:lagrangian-sum-yalpha}
   \dpar{\C{L}(\ww,b,\Balpha)}{b}{}
     &=-\sum_{i=1}^\ell y_i\alpha_i = 0
-      &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0.
+      &\Rightarrow& \sum_{i=1}^\ell y_i\alpha_i &= \yy^T\Balpha = 0.
 \end{align}
 %
 Reemplazando (\ref{e2:lagrangian-w}) y (\ref{e2:lagrangian-sum-yalpha})
 en la \iflatexml{}Ecuación~\ref{e2:lagrangian}\else\autoref{e2:lagrangian}\fi
 el lagrangiano puede escribirse
 %
-\begin{align*}
+\begin{align}
   \C{L}(\ww,b,\Balpha)
   & = 
     \frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
@@ -175,14 +178,16 @@ el lagrangiano puede escribirse
     -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
     \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
     \sum_{i=1}^{\ell} \alpha_i  - b \sum_{i=1}^\ell y_i\alpha_i \\
- & = 
+    \label{e2:lagrangian-alt}
+    & = 
     -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
     \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
     \sum_{i=1}^{\ell} \alpha_i  .
-\end{align*}
+\end{align}
 %
-De este modo, el problema dual resulta en el problema de optimización
-cuadrático convexo
+Entonces, incorporando (\ref{e2:lagrangian-alt}) y
+(\ref{e2:lagrangian-sum-alpha}), el problema (\ref{e2:problem-dual})
+se escribe
 %
 \begin{align}
   \begin{split}
@@ -196,19 +201,22 @@ cuadrático convexo
   \label{prob2}
 \end{align}
 %
-Una vez encontrado $\Balpha^*$ que maximice el problema dual, se puede
-calcular la solución $(\ww^*,b^*)$ al problema primal.  El vector
-$\ww^*$ viene dado por la
- \iflatexml{}Ecuación~\ref{e2:lagrangian-w}\else\autoref{e2:lagrangian-w}\fi:
+Éste es un problema de optimización cuadrático convexo, que puede
+resolverse mediante algoritmos eficientes.  Una vez encontrado
+$\Balpha^*$ que maximice el problema dual, se puede calcular la
+solución $(\ww^*,b^*)$ al problema primal.  El vector $\ww^*$ viene
+dado por la
+\iflatexml{}Ecuación~\ref{e2:lagrangian-w}\else\autoref{e2:lagrangian-w}\fi:
 %
-\begin{align*}
+\begin{align}\label{e2:w-from-alpha}
   \ww^* = \sum_{i=1}^\ell y_i\alpha^*_i\BPhi(\xx_i).
-\end{align*}
+\end{align}
 %
-El cálculo de $b^*$ se deriva de las condiciones de complementariedad de
-Karush-Kuhn-Tucker\footnote{Para una explicación detallada de las
-  condiciones de Karush-Kuhn-Tucker, se refiere al lector a
-  \hl{este libro}}: para todo $i\in\{1,\ldots,\ell\}$ se cumple que
+El cálculo de $b^*$ se deriva de una las condiciones de
+complementariedad de Karush-Kuhn-Tucker\footnote{Para una explicación
+  detallada de las condiciones de Karush-Kuhn-Tucker, se refiere al
+  lector a \hl{este libro}}, que establece que para todo
+$i\in\{1,\ldots,\ell\}$,
 $\alpha^*_i(1-y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*))=0$. Entonces,
 para algún $\alpha^*_i\neq0$, se tiene
 %
@@ -221,13 +229,15 @@ conjunto de entrenamiento tenga elementos de ambas clases.
 %
 %
 \subsection{Núcleos}
+%
 Un núcleo, denominado también por su nombre en inglés \eng{kernel}, es
 una función $k:X\times{}X\rightarrow{}\RR$ \cite{stewart} que
 generaliza el concepto de métrica. En términos intuitivos, el núcleo
 permite comparar la similaridad entre dos elementos
-$\xx_1,\xx_2\in{}X$ en un espacio vectorial inducido $F$, denominado
+$\xx_1,\xx_2\in{}X$ en el espacio vectorial inducido $Z$, el
 \e{espacio imagen}, que usualmente tiene una dimensionalidad elevada.
 
+%
 \begin{definicion}
 [Núcleo]
   Una función $k:X\times{}X\rightarrow{}\R{R}$ se dice un núcleo (de
@@ -241,13 +251,15 @@ $\xx_1,\xx_2\in{}X$ en un espacio vectorial inducido $F$, denominado
     positiva.
   \end{enumerate}
 \end{definicion}
+%
+
 Para un núcleo $k$, el teorema de Mercer \cite{mercer} asegura la
-existencia de un espacio de Hilbert $F$ y una transformación
-$\BPhi:X\rightarrow{}F$ tal que, para cualquier par de vectores
+existencia de un espacio de Hilbert $Z$ y una transformación
+$\BPhi:X\rightarrow{}Z$ tal que, para cualquier par de vectores
 $\xx_1,\xx_2\in{}X$, el núcleo calcula el producto interno de los
 mismos en el espacio imagen:
 $k(\xx_1,\xx_2)=\langle\BPhi(\xx_1),\BPhi(\xx_2)\rangle$. Es
-importante tener en cuenta que ni el espacio $F$ ni la transformación
+importante tener en cuenta que ni el espacio $Z$ ni la transformación
 $\BPhi$ son únicos.
 
 El siguiente procedimiento se llama el \emph{truco del kernel} o
@@ -258,16 +270,17 @@ teorema de Mercer asegura que esto es equivalente a la aplicación de
 la transformación $\BPhi$ primero y el algoritmo
 lineal después.
 
-Cuando se tienen dos vectores $\vv,\ww\in{}F$ definidos en términos
+Cuando se tienen dos vectores $\vv,\ww\in{}Z$ definidos en términos
 de combinaciones lineales de vectores transformados al espacio imagen
-
+%
 \begin{align*}
   \vv=\sum_{i=1}^{n}\alpha_i\BPhi(\xx_i) \quad\T{ y }\quad
   \ww=\sum_{j=1}^{m}\beta_j\BPhi(\xx_j'),
 \end{align*}
+%
 el producto interno $\langle\vv,\ww\rangle$ se puede calcular en
 términos del núcleo según
-
+%
 \begin{align}
   \langle \vv,\ww\rangle&=\big\langle\sum_{i=1}^{n}\alpha_i\BPhi(\xx_i),
       \sum_{j=1}^{m}\beta_j\BPhi(\xx_j')\big\rangle \notag\\
@@ -275,15 +288,17 @@ términos del núcleo según
       \alpha_i\beta_j\big\langle\BPhi(\xx_i),\Phi(\xx_j')\big\rangle\notag\\
     &=\sum_{i=1}^{n}\sum_{j=1}^{m} \alpha_i\beta_jk(\xx_i,\xx_j').
 \end{align}
+%
 De este resultado se derivan las siguientes propiedades
-
+%
 \begin{align}
   \langle{}v,\Phi(x)\rangle &= \sum_{i=1}^{n}\alpha_ik(x_i,x) \\
   \|v\|^2 &= \langle{}v\rangle=\sum_{i,j=1}^n\alpha_i\alpha_jk(x_i,x_j)\\
   \|\Phi(x)\|^2 &=k(x,x).
 \end{align}
+%
 De este modo, las operaciones de producto interno en el espacio imagen
-$F$ se pueden efectuar a través de la función núcleo $k$, sin necesidad
+$Z$ se pueden efectuar a través de la función núcleo $k$, sin necesidad
 de calcular la transformación $\BPhi$ en forma explícita.
 
 Desde un punto de vista puramente matemático, la utilización del truco
@@ -308,28 +323,29 @@ Como primer ejemplo no trivial se considera el núcleo polinómico
 $k(x,x')=\left(\langle{}x,x'\rangle+\theta\right)^d$ con grado
 $d\in\R{N}$ y desvío $\theta\in\RR$. Este núcleo es una generalización
 del núcleo lineal, el cual se obtiene para $d=1$ y $\theta=0$. Su
-espacio imagen es el espacio de los polinomios de grado
-$d$ sobre el espacio $X$, con la notable propiedad de que
-el cálculo del núcleo toma sólo $\C{O}(\dim{}X)$ operaciones,
-mientras que el cálculo explícito de la transformación
-lleva 
-$\C{O}\left((\dim{}X)^d\right)$ operaciones.
+espacio imagen es el espacio de los polinomios de grado $d$ sobre el
+espacio $X$, con la notable propiedad de que el cálculo del núcleo
+toma sólo $\C{O}(\dim{}X)$ operaciones, mientras que el cálculo
+explícito de la transformación lleva $\C{O}\left((\dim{}X)^d\right)$
+operaciones.
 
 El núcleo más utilizado es la función de base radial
 (\eng{Radial basis function, RBF})
-
+%
 \begin{align}
   k(x,x')=\exp\left(-\frac{\|x-x'\|^2}{2\sigma^2}\right)
   =\exp\left(-\gamma\|x-x'\|^2\right)
 \end{align}
+%
 con el parámetro de amplitud $\sigma$ en la primera forma, o con el
-parámetro de concentración $\gamma$ en la segunda forma. Corresponde
-a un espacio imagen de dimensión infinita, que no permite
-una representación directa de la transformación $\BPhi$.
-El kernel RBF se puede calcular
-en $\C{O}(\dim{}X)$ operaciones.
-
+parámetro de concentración $\gamma$ en la segunda forma. Corresponde a
+un espacio imagen de dimensión infinita, que no permite una
+representación directa de la transformación $\BPhi$.  El kernel RBF se
+puede calcular en $\C{O}(\dim{}X)$ operaciones.
+%
+%
 \subsection{SVM de margen rígido}
+%
 El tipo más simple de máquina de vectores de soporte es la SVM de
 margen rígido, y consiste en un clasificador lineal de máximo margen
 en el espacio imagen, que incorpora el ``truco del kernel''.
