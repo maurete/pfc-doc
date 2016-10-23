@@ -26,4 +26,5 @@ S2.4.1-clasif-lineal.tex
 S2.4.2-hiperp-optimo.tex
 S2.4.3-problema-dual.tex
 S2.4.4-nucleos.tex
+S2.4.5-margen-duro.tex
 sectionMquinas_de_ve.tex
