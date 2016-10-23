@@ -1,0 +1,52 @@
+%
+%
+\subsection{El clasificador lineal}
+%
+Un \e{clasificador lineal} \cite{nilsson} es una máquina de
+aprendizaje que, dado un patrón de entrada $\xx\in{}X$ a clasificar,
+calcula primero un \e{vector imagen} $\zz=\BPhi(\xx)\in{}Z$, para
+luego asignarle una clase de salida $\hat{y}=\pm{}1$ según sea el
+signo de la función discriminante lineal $f=\ww^T\zz+b$. La función
+$\BPhi:X\rightarrow{}Z$ se elige a partir del conocimiento previo del
+problema, mientras que los valores de $\ww$ y $b$ se determinan
+durante el entrenamiento. Con esta formulación del clasificador
+lineal, se puede ver que la función $\BPhi$ transforma el espacio
+vectorial de entrada $X$ en otro espacio vectorial inducido $Z$,
+llamado \e{espacio imagen}. En este espacio, el hiperplano
+$\ww^T\zz+b=0$ define una frontera de decisión entre las clases
+$\hat{y}=+1$ e $\hat{y}=-1$.
+%
+\begin{quote}
+  {\bfseries Notación.}\quad{}En la literatura, resulta común
+  encontrar que el vector $\zz$ se denomina \e{vector de
+    características} (\e{feature vector}) y el espacio vectorial $Z$
+  como \e{espacio de las características} (\e{feature space}).  En
+  este trabajo se prefiere denominarlos con los nombres alternativos
+  \e{vector imagen} y \e{espacio vectorial imagen} para evitar
+  confusión con el proceso de extracción de características, la etapa
+  de pre-procesamiento de los datos que genera vectores aptos para su
+  utilización en la máquina de aprendizaje.
+\end{quote}
+%
+
+Una máquina de vectores de soporte es un clasificador lineal que
+incorpora tres ideas adicionales. En primer lugar, el proceso de
+entrenamiento de la SVM consiste en buscar el hiperplano de separación
+óptimo, que maximice la distancia a los ejemplos más cercanos. Esta
+búsqueda se plantea como la solución a un problema de optimización.
+
+Por otra parte, la formulación de la máquina de vectores de soporte
+es tal que no es necesario
+calcular la transformación $\BPhi$ de manera explícita. Esto se logra
+mediante la utilización de familias especiales de funciones
+denominadas núcleos, que permiten calcular productos internos entre
+vectores imagen $\zz\in{}Z$ de manera implícita.  La utilización de
+funciones núcleo en la SVM permite tratar de manera eficiente los
+vectores imagen $\zz$ de dimensionalidad elevada.  Incluso, el caso
+$|Z|=\infty$ resulta computacionalmente tratable.
+
+Por último, la SVM incorpora (en su variante más común) un término de
+regularización que repercute de dos formas a la solución del problema
+de optimización: por un lado, permite su aplicación a conjuntos de
+datos no separables, y por otro, regula la complejidad de la solución
+a través de un parámetro $C$, evitando el sobreajuste.
