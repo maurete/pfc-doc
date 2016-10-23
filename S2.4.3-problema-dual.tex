@@ -1,0 +1,104 @@
+%
+%
+\subsection{Formulación dual}
+%
+El problema (\ref{e2:svm-problem-basic}) resulta complejo de
+resolver directamente debido a las restricciones
+${y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$. Mediante la
+técnica de los multiplicadores de Lagrange \cite{LAGRANGE}
+\cite{bottou} resulta posible obtener una fomulación denominada
+\emph{dual} con restricciones más sencillas.
+
+En primer lugar, se define el funcional lagrangiano
+%
+\begin{align}\label{e2:lagrangian}
+  \C{L}(\ww,b,\Balpha) = \frac{1}{2} \|\ww\|^2
+  + \sum_{i=1}^{\ell} \alpha_i (1-y_i(\langle\ww,\BPhi(\xx)\rangle+b)).
+\end{align}
+%
+Como se puede ver, el funcional $\C{L}$ es la función a optimizar más
+las restricciones ${y}_if_i\geq{}1$ en forma normalizada $g(\xx)\leq0$
+y multiplicadas por coeficientes $\alpha_i$ denominados
+\e{multiplicadores de Lagrange}.  A partir del lagrangiano se plantea
+la formulación \emph{dual} del problema
+%
+\begin{align}\label{e2:svm-problem-dual}
+  \begin{split}
+    \max_\alpha \tabs\quad f(\Balpha) = \min_{\ww,b} \C{L}(\ww,b,\Balpha)\\
+    \T{sujeto a} \tabs\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}
+  \end{split}
+\end{align}
+%
+En el mínimo, se tiene que
+%
+\begin{align}\label{e2:lagrangian-w}
+  \dpar{\C{L}(\ww,b,\Balpha)}{\ww}{}
+    &=\ww-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
+    &\Rightarrow \ww = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i)
+  \\
+  \label{e2:lagrangian-sum-yalpha}
+  \dpar{\C{L}(\ww,b,\Balpha)}{b}{}
+    &=-\sum_{i=1}^\ell y_i\alpha_i = 0
+      &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0.
+\end{align}
+%
+Reemplazando (\ref{e2:lagrangian-w}) y (\ref{e2:lagrangian-sum-yalpha})
+en la \iflatexml{}Ecuación~\ref{e2:lagrangian}\else\autoref{e2:lagrangian}\fi
+el lagrangiano puede escribirse
+%
+\begin{align*}
+  \C{L}(\ww,b,\Balpha)
+  & = 
+    \frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle \\
+    &\qquad\qquad +
+    \sum_{i=1}^{\ell} \alpha_i \left(1-y_i\left(\left\langle
+    \sum_{j=1}^\ell y_j\alpha_j\BPhi(\xx_j) ,\BPhi(\xx_i)\right\rangle
+    +b\right)\right)\\
+  & = 
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
+    \sum_{i=1}^{\ell} \alpha_i  - b \sum_{i=1}^\ell y_i\alpha_i \\
+ & = 
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
+    \sum_{i=1}^{\ell} \alpha_i  .
+\end{align*}
+%
+De este modo, el problema dual resulta en el problema de optimización
+cuadrático convexo
+%
+\begin{align}
+  \begin{split}
+    \max_\alpha &\quad
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle \BPhi(\xx_i),\BPhi(\xx_j) \rangle +
+    \sum_{i=1}^{\ell} \alpha_i \\
+    \T{sujeto a} &\quad \yy^T\Balpha = 0, \\
+    &\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}.
+  \end{split}
+  \label{prob2}
+\end{align}
+%
+Una vez encontrado $\Balpha^*$ que maximice el problema dual, se puede
+calcular la solución $(\ww^*,b^*)$ al problema primal.  El vector
+$\ww^*$ viene dado por la
+ \iflatexml{}Ecuación~\ref{e2:lagrangian-w}\else\autoref{e2:lagrangian-w}\fi:
+%
+\begin{align*}
+  \ww^* = \sum_{i=1}^\ell y_i\alpha^*_i\BPhi(\xx_i).
+\end{align*}
+%
+El cálculo de $b^*$ se deriva de las condiciones de complementariedad de
+Karush-Kuhn-Tucker\footnote{Para una explicación detallada de las
+  condiciones de Karush-Kuhn-Tucker, se refiere al lector a
+  \hl{este libro}}: para todo $i\in\{1,\ldots,\ell\}$ se cumple que
+$\alpha^*_i(1-y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*))=0$. Entonces,
+para algún $\alpha^*_i\neq0$, se tiene
+%
+\begin{align}
+  b^* = y_i - \langle\ww^*,\BPhi(\xx_i)\rangle .
+\end{align}
+%
+La existencia de $\alpha^*_i\neq0$ está garantizada siempre que el
+conjunto de entrenamiento tenga elementos de ambas clases.
