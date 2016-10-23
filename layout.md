@@ -24,4 +24,5 @@ S2.3.6.5-rprop.tex
 S2.4-svm.tex
 S2.4.1-clasif-lineal.tex
 S2.4.2-hiperp-optimo.tex
+S2.4.3-problema-dual.tex
 sectionMquinas_de_ve.tex
