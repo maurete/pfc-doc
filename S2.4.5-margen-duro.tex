@@ -1,0 +1,75 @@
+
+\subsection{SVM de margen rígido}
+El tipo más simple de máquina de vectores de soporte es la SVM de
+margen rígido, y consiste en un clasificador lineal de máximo margen
+en el espacio imagen, que incorpora el ``truco del kernel''.
+
+Sea $k:X\times{}X\rightarrow\RR$ una función núcleo, y sea
+$\BPhi:X\rightarrow\C{H}$ la transformación al espacio imagen que
+satisface
+$\left\langle\BPhi(\xx_1),\BPhi(\xx_2)\right\rangle=k(\xx_1,\xx_2)$.
+Se asume que el conjunto de datos transformado
+$\left((\BPhi(\xx_1),y_1)),\ldots,(\BPhi(\xx_\ell),y_\ell)\right)
+\in\left(\C{H}\times\{\pm1\}\right)^\ell$ es linealemente separable en
+$\C{H}$.  Se puede entonces obtener el clasificador de margen amplio
+
+\begin{align}
+  h(\xx)=\T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right)
+\end{align}
+en donde $\ww^*$, $b^*$ son solución al problema
+
+\begin{align}
+\label{svm-hardmargin}
+  \begin{split}
+    \min_{\ww,b} \quad & \frac{1}{2}\|\ww\|^2\\
+    \T{sujeto a}\quad & y_n\left(\langle\ww,\Phi(\xx_n)\rangle+b\right)
+    \geq 1 \T{ para todo } n\in\{1,\ldots,\ell\}.
+  \end{split}
+\end{align}
+Este problema es el mismo que \autoref{prob1}, y su solución puede
+calcularse a través de la formulación dual \autoref{prob2}. Mediante el
+truco del kernel, se obtiene
+
+\begin{align}
+  f(\Balpha)
+  & = -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell
+    y_iy_j\alpha_i\alpha_j \langle \BPhi(\xx_i),\BPhi(\xx_j) \rangle +
+    \sum_{i=1}^{\ell} \alpha_i \notag\\
+  & = -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell
+    y_iy_j\alpha_i\alpha_j k(\xx_i,\xx_j) + \sum_{i=1}^{\ell} \alpha_i
+    \notag \\
+  & = -\frac{1}{2}\Balpha^T\,\YY\,\KK\,\YY\,\Balpha
+    + \B{1}^T\Balpha  
+\end{align}
+donde $\B{1}^T=(1,\ldots,1)$, $\KK$ es la matriz de Gram con elementos
+$K_{ij}=k(\xx_i,\xx_j)$ y $\YY$ es la matriz diagonal de
+$\ell\times\ell$ elementos tal que $Y_{ii}=y_i$.
+Definiendo la matriz semidefinida positiva $\QQ=\YY\KK\YY$ con elementos
+$Q_{ij}=y_iy_jk(\xx_i,\xx_j)$, el problema dual se plantea como
+el problema de optimización cuadrático
+
+\begin{align}
+\begin{split}
+    \max_{\Balpha} \quad
+    & f(\Balpha) = \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
+    \T{sujeto a}\quad & \yy^T\Balpha = 0, \\
+                      & \alpha_i\geq 0, \T{ para todo } i\in {1,\ldots,\ell }.
+\end{split}\end{align}
+Éste es el problema de optimización que se resuelve durante el
+entrenamiento de una SVM de ``margen rígido'' cuando los datos son
+separables en $F$. Una vez que se tiene $\Balpha^*$ que maximiza el problema,
+el modelo $h(\xx)$ puede calcularse mediante el truco del kernel según
+
+\begin{align}
+  \begin{split}
+    h(\xx) &= \T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right)\\
+    &= \T{signo}\left(\sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx)+b^*\right).
+  \end{split}
+\label{eq:svm-model-hard}
+\end{align}
+Si $j$ es el índice para el cual $\alpha^*_j\neq0$, el valor de $b^*$
+puede calcularse con
+
+\begin{align}
+    b^* &= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j).
+\end{align}
