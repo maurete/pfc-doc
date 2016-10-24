@@ -20,11 +20,12 @@ sobre el clasificador lineal básico es que, durante el entrenamiento,
 $\zz_i=\BPhi(\xx_i)$ más cercanos. Esto se expresa a través del
 problema de optimización
 %
-\begin{align}\label{e2:svm-problem-basic}
+\begin{align}
   \begin{split}
     \min_{\ww,b} \quad\tabs \frac{1}{2}\|\ww\|^2, \\
     \T{sujeto a}\quad\tabs y_i f_i\geq1,\,i=1,\ldots,\ell\,.
   \end{split}
+  \label{e2:svm-problem-basic}
 \end{align}
 %
 Aquí, $f_i=f(x_i)=\ww^T\BPhi(\xx_i)+b$ es la función discriminante
