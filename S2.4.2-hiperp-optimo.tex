@@ -48,9 +48,9 @@ ello, minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.
 
 Puede demostrarse que el vector solución $\ww_*$ al problema
 (\ref{e2:svm-problem-basic}) es una combinación lineal de aquellos
-vectores $\zz_i$ para los cuales $|d_i|=1$. Estos $\zz_i$ se denominan
-\e{vectores de soporte}, y los hiperplanos $\ww^T\zz+b=\pm1$ que
-contienen los vectores de soporte conforman el \e{margen} del
+vectores $\zz_i$ para los cuales $|\ww^T\zz_i+b|=1$. Estos $\zz_i$ se
+denominan \e{vectores de soporte}, y los hiperplanos $\ww^T\zz+b=\pm1$
+que contienen los vectores de soporte conforman el \e{margen} del
 clasificador.
 
 %% Desde el punto de vista numérico, el problema
