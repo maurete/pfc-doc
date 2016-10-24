@@ -2,19 +2,33 @@
 %
 \subsection{El clasificador lineal}
 %
-Un \e{clasificador lineal} \cite{nilsson} es una máquina de
-aprendizaje que, dado un patrón de entrada $\xx\in{}X$ a clasificar,
-calcula primero un \e{vector imagen} $\zz=\BPhi(\xx)\in{}Z$, para
-luego asignarle una clase de salida $\hat{y}=\pm{}1$ según sea el
-signo de la función discriminante lineal $f=\ww^T\zz+b$. La función
-$\BPhi:X\rightarrow{}Z$ se elige a partir del conocimiento previo del
-problema, mientras que los valores de $\ww$ y $b$ se determinan
-durante el entrenamiento. Con esta formulación del clasificador
-lineal, se puede ver que la función $\BPhi$ transforma el espacio
-vectorial de entrada $X$ en otro espacio vectorial inducido $Z$,
-llamado \e{espacio imagen}. En este espacio, el hiperplano
-$\ww^T\zz+b=0$ define una frontera de decisión entre las clases
-$\hat{y}=+1$ e $\hat{y}=-1$.
+El clasificador lineal es una máquina de aprendizaje \cite{nilsson}
+que sirve como fundamento de la máquina de vectores de soporte. De
+hecho, esta última puede ser entendida como un tipo particular de
+clasificador lineal.
+
+En primer lugar, sea una función $\BPhi:X\rightarrow{}Z$ tal que
+transforma el denominado \e{espacio de entrada} a otro espacio
+vectorial inducido $Z$, denominado \e{espacio imagen}.  A partir del
+conocimiento previo del problema, se pretende que la transformación
+$\BPhi$ sea tal que los \e{vectores imagen} $\zz=Bphi(\xx)$ se
+ubiquen, según su clase $y$, en regiones del espacio $Z$ bien
+diferenciadas entre sí.
+
+Entonces, dado un patrón de entrada $\xx\in{}X$, el clasificador
+lineal calcula primero el vector imagen $\zz=\BPhi(\xx)$, para luego
+asignarle una clase de salida $\hat{y}=\pm{}1$ según sea el signo de
+la función discriminante lineal $f=\ww^T\zz+b$.  Los valores de $\ww$
+y $b$ se determinan en entrenamiento del clasificador, cuyos detalles
+se omite de la presente descripción.
+
+Por último, se observa que la ecuación $\ww^T\zz+b=0$ define un
+hiperplano en el espacio inducido $Z$, el cual determina una frontera
+de decisión entre las clases $\hat{y}=+1$ e $\hat{y}=-1$. Para
+visualizarlo, obsérvese que, desde el punto de vista geométrico, el
+signo de $\ww^T\zz+b$ determina de qué lado del plano se encuentra el
+punto $\zz$.
+
 %
 \begin{quote}
   {\bfseries Notación.}\quad{}En la literatura, resulta común
@@ -28,25 +42,3 @@ $\hat{y}=+1$ e $\hat{y}=-1$.
   utilización en la máquina de aprendizaje.
 \end{quote}
 %
-
-Una máquina de vectores de soporte es un clasificador lineal que
-incorpora tres ideas adicionales. En primer lugar, el proceso de
-entrenamiento de la SVM consiste en buscar el hiperplano de separación
-óptimo, que maximice la distancia a los ejemplos más cercanos. Esta
-búsqueda se plantea como la solución a un problema de optimización.
-
-Por otra parte, la formulación de la máquina de vectores de soporte
-es tal que no es necesario
-calcular la transformación $\BPhi$ de manera explícita. Esto se logra
-mediante la utilización de familias especiales de funciones
-denominadas núcleos, que permiten calcular productos internos entre
-vectores imagen $\zz\in{}Z$ de manera implícita.  La utilización de
-funciones núcleo en la SVM permite tratar de manera eficiente los
-vectores imagen $\zz$ de dimensionalidad elevada.  Incluso, el caso
-$|Z|=\infty$ resulta computacionalmente tratable.
-
-Por último, la SVM incorpora (en su variante más común) un término de
-regularización que repercute de dos formas a la solución del problema
-de optimización: por un lado, permite su aplicación a conjuntos de
-datos no separables, y por otro, regula la complejidad de la solución
-a través de un parámetro $C$, evitando el sobreajuste.
