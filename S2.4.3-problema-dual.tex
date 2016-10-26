@@ -28,32 +28,40 @@ se plantea la formulación \emph{dual} del problema
 \begin{align}\label{e2:svm-problem-dual}
   \begin{split}
     \max_\alpha \tabs\quad f(\Balpha) = \min_{\ww,b} \C{L}(\ww,b,\Balpha)\\
-    \T{sujeto a} \tabs\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}
+    \T{sujeto a} \tabs\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}.
   \end{split}
 \end{align}
 %
-Obsérvese que en este problema las restricciones son más sencillas y
-aplican únicamente a los multiplicadores de Lagrange. Una condición
-necesaria para la existencia de los multiplicadores $\alpha_i$ es que
-la función objetivo del problema (\ref{e2:svm-problem-basic}) sea
-continuamente derivable en las cercanías del mínimo local $(\ww^*,b^*)$.
-\hl{citar condiciones KKT}
-Además, dado que $(\ww^*,b^*)$ es un mínimo local, puede verse que
+En este problema las restricciones son más sencillas y
+aplican únicamente a los multiplicadores de Lagrange. 
+Dado que $\frac{1}{2}\|\ww\|^2$ es una función continuamente derivable
+y convexa, y dado que $\C{L}$ es continuamente derivable respecto de
+sus argumentos en las cercanías del punto óptimo
+$(\ww^*,b^*,\Balpha^*)$, las condiciones de Karush-Kuhn-Tucker
+\cite{kkt} garantizan la existencia de una solución
+$(\ww^*,\b^*,\Balpha^*)$ al problema dual
+(\iflatexml{}Ecuación~\ref{e2:svm-problem-dual}\else\autoref{e2:svm-problem-dual}\fi)
+tal que $(\ww^*,b^*)$ también es solución al problema primal
+(\iflatexml{}Ecuación~\ref{e2:svm-problem-basic}\else\autoref{e2:svm-problem-basic}\fi).
+
+Al ser el punto ``silla'' $(\ww^*,b^*,\Balpha^*)$ solución del
+problema dual (\ref{e2:svm-problem-dual}), sus respectivas derivadas
+parciales se anulan:
 %
 \begin{align}\label{e2:lagrangian-w}
-  \evalen{\dpar{\C{L}(\ww,b,\Balpha)}{\ww}{}}{\ww=\ww^*}
+  \evalen{\ww=\ww^*}{\dpar{\C{L}(\ww,b,\Balpha)}{\ww}{}}
     &=\ww^*-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
     &\Rightarrow \ww^* = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i)
   \\
   \label{e2:lagrangian-sum-yalpha}
-  \evalen{\dpar{\C{L}(\ww,b,\Balpha)}{b}{}}{b=b^*}
+  \evalen{b=b^*}{\dpar{\C{L}(\ww,b,\Balpha)}{b}{}}
     &=-\sum_{i=1}^\ell y_i\alpha_i = 0
       &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0.
 \end{align}
 %
-Reemplazando (\ref{e2:lagrangian-w}) y
+Reemplazando los resultados (\ref{e2:lagrangian-w}) y
 (\ref{e2:lagrangian-sum-yalpha}) en la
-\iflatexml{}Ecuación~\ref{e2:lagrangian}\else\autoref{e2:lagrangian}\fi
+\iflatexml{}Ecuación~\ref{e2:lagrangian}\else\autoref{e2:lagrangian}\fi,
 el lagrangiano puede escribirse
 %
 \begin{align*}
@@ -75,9 +83,8 @@ el lagrangiano puede escribirse
     \sum_{i=1}^{\ell} \alpha_i  .
 \end{align*}
 %
-Con este resultado, se han eliminado las referencias a las variables
-originales $(\ww,b)$, quedando el problema únicamente definido en
-términos de los multiplicadores de Lagrange $\alpha_i$:
+Con este resultado, se reescribe el problema dual en función de los
+multiplicadores de Lagrange $\alpha_i$:
 %
 \begin{align}
   \begin{split}
@@ -91,19 +98,18 @@ términos de los multiplicadores de Lagrange $\alpha_i$:
   \label{e2:svm-problem-dual2}
 \end{align}
 %
-Una vez encontrado $\Balpha^*$ que maximice el problema
-(\ref{e2:svm-problem-dual}), la solución $(\ww^*,b^*)$ al problema
-original. El vector $\ww^*$ se obtiene directamente de la
+Este problema se resuelve directamente, resultando en una solución
+$\Balpha^*$.  El vector solución $\ww^*$ al problema original
+(\ref{e2:svm-problem-basic}) se obtiene por la
  \iflatexml{}Ecuación~\ref{e2:lagrangian-w}\else\autoref{e2:lagrangian-w}\fi:
 %
 \begin{align*}
   \ww^* = \sum_{i=1}^\ell y_i\alpha^*_i\BPhi(\xx_i).
 \end{align*}
 %
-El cálculo de $b^*$ se deriva de las condiciones de complementariedad de
-Karush-Kuhn-Tucker\footnote{Para una explicación detallada de las
-  condiciones de Karush-Kuhn-Tucker, se refiere al lector a
-  \hl{este libro}}: para todo $i\in\{1,\ldots,\ell\}$ se cumple que
+El cálculo de $b^*$ óptimo se deriva de las condiciones de
+complementariedad de Karush-Kuhn-Tucker \cite{kkt,bottou}, que
+establecen que para todo $i\in\{1,\ldots,\ell\}$, se cumple
 $\alpha^*_i(1-y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*))=0$. Entonces,
 para algún $\alpha^*_i\neq0$, se tiene
 %
@@ -111,6 +117,6 @@ para algún $\alpha^*_i\neq0$, se tiene
   b^* = y_i - \langle\ww^*,\BPhi(\xx_i)\rangle .
 \end{align}
 %
-En el caso de la SVM, la existencia de $\alpha^*_i\neq0$ está
-garantizada siempre que el conjunto de entrenamiento tenga elementos
-de ambas clases.
+La existencia de $\alpha^*_i\neq0$ está garantizada siempre que el
+conjunto de entrenamiento tenga elementos de ambas clases
+\cite{glasmachers}.
