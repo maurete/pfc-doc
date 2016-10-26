@@ -15,7 +15,7 @@ infinitos hiperplanos de separación de clases.
 
 La característica saliente de la máquina de vectores de soporte por
 sobre el clasificador lineal básico es que, durante el entrenamiento,
-ésta trata de encontrar un hiperplano de separación $\ww^T\zz+b$
+ésta trata de encontrar un hiperplano de separación $\ww^T\zz+b=0$
 \e{óptimo}, que maximiza la distancia a los puntos
 $\zz_i=\BPhi(\xx_i)$ más cercanos. Esto se expresa a través del
 problema de optimización
@@ -28,7 +28,7 @@ problema de optimización
   \label{e2:svm-problem-basic}
 \end{align}
 %
-Aquí, $f_i=f(x_i)=\ww^T\BPhi(\xx_i)+b$ es la función discriminante
+Aquí, $f_i=f(\xx_i)=\ww^T\BPhi(\xx_i)+b$ es la función discriminante
 lineal aplicada al vector $\xx_i$. En términos coloquiales, este
 problema puede leerse
 %
@@ -50,9 +50,14 @@ ello, minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.
 Puede demostrarse que el vector solución $\ww_*$ al problema
 (\ref{e2:svm-problem-basic}) es una combinación lineal de aquellos
 vectores $\zz_i$ para los cuales $|\ww^T\zz_i+b|=1$. Estos $\zz_i$ se
-denominan \e{vectores de soporte}, y los hiperplanos $\ww^T\zz+b=\pm1$
-que contienen los vectores de soporte conforman el \e{margen} del
-clasificador.
+denominan \e{vectores de soporte}, lo que da el nombre al
+clasificador.  Asimismo, los hiperplanos $\ww^T\zz+b=\pm1$ que
+contienen los vectores de soporte conforman el llamado \e{margen} del
+clasificador. El problema (\ref{e2:svm-problem-basic}) también puede
+entenderse como la maximización de la distancia del hiperplano
+$\ww^T\zz+b=0$ al margen $\ww^T\zz+b=\pm1$. Esto da origen al nombre
+alternativo de la máquina de vectores de soporte: \e{clasificador de
+  margen máximo}.
 
 %% Desde el punto de vista numérico, el problema
 %% (\ref{e2:svm-problem-basic}) es un problema de optimización cuadrático

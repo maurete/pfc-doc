@@ -8,10 +8,10 @@ hecho, esta última puede ser entendida como un tipo particular de
 clasificador lineal.
 
 En primer lugar, sea una función $\BPhi:X\rightarrow{}Z$ tal que
-transforma el denominado \e{espacio de entrada} a otro espacio
+transforma el denominado \e{espacio de entrada} $X$ a otro espacio
 vectorial inducido $Z$, denominado \e{espacio imagen}.  A partir del
-conocimiento previo del problema, se pretende que la transformación
-$\BPhi$ sea tal que los \e{vectores imagen} $\zz=Bphi(\xx)$ se
+conocimiento previo del problema: se pretende que la transformación
+$\BPhi$ sea tal que los \e{vectores imagen} $\zz=\BPhi(\xx)$ se
 ubiquen, según su clase $y$, en regiones del espacio $Z$ bien
 diferenciadas entre sí.
 
@@ -19,15 +19,15 @@ Entonces, dado un patrón de entrada $\xx\in{}X$, el clasificador
 lineal calcula primero el vector imagen $\zz=\BPhi(\xx)$, para luego
 asignarle una clase de salida $\hat{y}=\pm{}1$ según sea el signo de
 la función discriminante lineal $f=\ww^T\zz+b$.  Los valores de $\ww$
-y $b$ se determinan en entrenamiento del clasificador, cuyos detalles
-se omite de la presente descripción.
+y $b$ se determinan en el entrenamiento del clasificador, cuyos detalles
+se omiten de la presente descripción.
 
 Por último, se observa que la ecuación $\ww^T\zz+b=0$ define un
-hiperplano en el espacio inducido $Z$, el cual determina una frontera
-de decisión entre las clases $\hat{y}=+1$ e $\hat{y}=-1$. Para
-visualizarlo, obsérvese que, desde el punto de vista geométrico, el
-signo de $\ww^T\zz+b$ determina de qué lado del plano se encuentra el
-punto $\zz$.
+hiperplano en el espacio inducido $Z$. Dicho hiperplano determina una
+frontera de decisión entre las clases $\hat{y}=+1$ e
+$\hat{y}=-1$. Para visualizarlo, obsérvese que, desde el punto de
+vista geométrico, el signo de $\ww^T\zz+b$ determina de qué lado del
+plano se encuentra el punto $\zz$.
 
 %
 \begin{quote}
