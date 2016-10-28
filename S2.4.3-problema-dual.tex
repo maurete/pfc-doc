@@ -103,7 +103,7 @@ $\Balpha^*$.  El vector solución $\ww^*$ al problema original
 (\ref{e2:svm-problem-basic}) se obtiene por la
  \iflatexml{}Ecuación~\ref{e2:lagrangian-w}\else\autoref{e2:lagrangian-w}\fi:
 %
-\begin{align*}
+\begin{align*}\label{e2:w-from-alpha}
   \ww^* = \sum_{i=1}^\ell y_i\alpha^*_i\BPhi(\xx_i).
 \end{align*}
 %
@@ -113,7 +113,7 @@ establecen que para todo $i\in\{1,\ldots,\ell\}$, se cumple
 $\alpha^*_i(1-y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*))=0$. Entonces,
 para algún $\alpha^*_i\neq0$, se tiene
 %
-\begin{align}
+\begin{align}\label{e2:b-from-alpha}
   b^* = y_i - \langle\ww^*,\BPhi(\xx_i)\rangle .
 \end{align}
 %
