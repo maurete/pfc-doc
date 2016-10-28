@@ -4,92 +4,55 @@
 %
 La máquina de vectores de soporte más simple es aquella llamada ``de
 margen duro'', y consiste en un clasificador lineal de máximo margen
-que incorpora el ``truco del núcleo''.
-
-
-
-Dado un núcleo $k:X\times{}X\rightarrow\RR$ y su transformación
-correspondiente $\BPhi:X\rightarrow{}Z$, se asume que el conjunto de
-datos transformado $\left((\BPhi(\xx_1),y_1)),\ldots,(\BPhi(\xx_\ell),y_\ell)\right)\in\left(Z\times\{\pm1\}\right)^\ell$
-es linealmente separable en el espacio inducido $Z$. El entrenamiento de la SVM de margen duro
-consiste en resolver el problema de optimización (\ref{e2:svm-problem-kernel}), que en
+que incorpora el ``truco del núcleo'': dado un núcleo
+$k:X\times{}X\rightarrow\RR$, se asume que el conjunto de datos
+transformado $\left((\zz_1,y_1)),\ldots,(\zz_\ell,y_\ell)\right)$,
+$\zz_i=\BPhi(\xx_i)$, es linealmente separable en el espacio inducido
+$Z$. El entrenamiento de la SVM de margen duro consiste en resolver el
+problema de optimización (\ref{e2:svm-problem-núcleo}), que en
 notación vectorial se escribe
 %
 \begin{align}
+  \label{e2:svm-hard-margin}
   \begin{split}
     \max_{\Balpha}\quad\tabs
       \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
     \T{sujeto a} \quad\tabs
       \yy^T\Balpha = 0, \\
       \tabs \alpha_i\geq 0,  i\in {1,\ldots,\ell }.
-\end{split}
+  \end{split}
 \end{align}
+%
+La matriz $\QQ$ es semidefinida positiva, y sus elementos vienen dados
+por $Q_{ij}=y_iy_jk(\xx_i,\xx_j)$. El vector $\B{1}$ es un vector
+columna de $\ell$ elementos iguales a 1.
 
+El entrenamiento de este problema se efectúa comúnmente mediante el
+algoritmo denominado SMO (\eng{Sequential Minimal Optimization},
+Optimización Mínima Secuencial) \cite{smo} específicamente diseñado
+para la SVM, aunque puede ser resuelto mediante cualquier algoritmo
+capaz de resolver un algoritmo de optimización cuadrática.
 
-
-
-
-
-
-%% Se puede entonces obtener el clasificador de margen amplio
-%% \begin{align}
-%%   h(\xx)=\T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right)
-%% \end{align}
-%% en donde $\ww^*$, $b^*$ son solución al problema
-
-%% \begin{align}
-%% \label{svm-hardmargin}
-%%   \begin{split}
-%%     \min_{\ww,b} \quad & \frac{1}{2}\|\ww\|^2\\
-%%     \T{sujeto a}\quad & y_n\left(\langle\ww,\Phi(\xx_n)\rangle+b\right)
-%%     \geq 1 \T{ para todo } n\in\{1,\ldots,\ell\}.
-%%   \end{split}
-%% \end{align}
-%% Este problema es el mismo que \autoref{prob1}, y su solución puede
-%% calcularse a través de la formulación dual \autoref{prob2}. Mediante el
-%% truco del kernel, se obtiene
-
-%% \begin{align}
-%%   f(\Balpha)
-%%   & = -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell
-%%     y_iy_j\alpha_i\alpha_j \langle \BPhi(\xx_i),\BPhi(\xx_j) \rangle +
-%%     \sum_{i=1}^{\ell} \alpha_i \notag\\
-%%   & = -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell
-%%     y_iy_j\alpha_i\alpha_j k(\xx_i,\xx_j) + \sum_{i=1}^{\ell} \alpha_i
-%%     \notag \\
-%%   & = -\frac{1}{2}\Balpha^T\,\YY\,\KK\,\YY\,\Balpha
-%%     + \B{1}^T\Balpha  
-%% \end{align}
-%% donde $\B{1}^T=(1,\ldots,1)$, $\KK$ es la matriz de Gram con elementos
-%% $K_{ij}=k(\xx_i,\xx_j)$ y $\YY$ es la matriz diagonal de
-%% $\ell\times\ell$ elementos tal que $Y_{ii}=y_i$.
-
-Definiendo la matriz semidefinida positiva $\QQ=\YY\KK\YY$ con elementos
-$Q_{ij}=y_iy_jk(\xx_i,\xx_j)$, el problema dual se plantea como
-el problema de optimización cuadrático
-
-\begin{align}
-\begin{split}
-    \max_{\Balpha} \quad
-    & f(\Balpha) = \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
-    \T{sujeto a}\quad & \yy^T\Balpha = 0, \\
-                      & \alpha_i\geq 0, \T{ para todo } i\in {1,\ldots,\ell }.
-\end{split}\end{align}
-Éste es el problema de optimización que se resuelve durante el
-entrenamiento de una SVM de ``margen rígido'' cuando los datos son
-separables en $F$. Una vez que se tiene $\Balpha^*$ que maximiza el problema,
-el modelo $h(\xx)$ puede calcularse mediante el truco del kernel según
-
+El modelo de la máquina de vectores de soporte de margen
+duro viene dado por
+%
 \begin{align}
   \begin{split}
-    h(\xx) &= \T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right)\\
-    &= \T{signo}\left(\sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx)+b^*\right).
+    h(\xx) &= \T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right),
   \end{split}
-\label{eq:svm-model-hard}
+\label{e2:svm-model-hard0}
 \end{align}
-Si $j$ es el índice para el cual $\alpha^*_j\neq0$, el valor de $b^*$
-puede calcularse con
-
+%
+donde $(\ww^*,b^*)$ (solución al problema primal)
+viene dada por las Ecuaciones \ref{e2:w-from-alpha} y \ref{e2:b-from-alpha}.
+Incorporando el truco del núcleo, se tiene
+%
 \begin{align}
-    b^* &= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j).
+    \langle\ww^*,\BPhi(\xx)\rangle \tab= \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx),\\
+    b^* \tab= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j),
 \end{align}
+%
+donde el subíndice $j$ es aquel para el cual se cumple $\alpha_j>0$.
+Tal como se expuso anteriormente, la existencia de $\alpha_j>0$ está
+garantizada siempre que el conjunto de datos $T$ contenga elementos de
+ambas clases.
