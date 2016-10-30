@@ -9,7 +9,7 @@ $k:X\times{}X\rightarrow\RR$, se asume que el conjunto de datos
 transformado $\left((\zz_1,y_1)),\ldots,(\zz_\ell,y_\ell)\right)$,
 $\zz_i=\BPhi(\xx_i)$, es linealmente separable en el espacio inducido
 $Z$. El entrenamiento de la SVM de margen duro consiste en resolver el
-problema de optimización (\ref{e2:svm-problem-núcleo}), que en
+problema de optimización (\ref{e2:svm-problem-kernel}), que en
 notación vectorial se escribe
 %
 \begin{align}
@@ -23,15 +23,14 @@ notación vectorial se escribe
   \end{split}
 \end{align}
 %
-La matriz $\QQ$ es semidefinida positiva, y sus elementos vienen dados
-por $Q_{ij}=y_iy_jk(\xx_i,\xx_j)$. El vector $\B{1}$ es un vector
-columna de $\ell$ elementos iguales a 1.
-
-El entrenamiento de este problema se efectúa comúnmente mediante el
-algoritmo denominado SMO (\eng{Sequential Minimal Optimization},
-Optimización Mínima Secuencial) \cite{smo} específicamente diseñado
-para la SVM, aunque puede ser resuelto mediante cualquier algoritmo
-capaz de resolver un algoritmo de optimización cuadrática.
+La matriz $\QQ$ es semidefinida positiva con elementos por
+$Q_{ij}=y_iy_jk(\xx_i,\xx_j)$, y $\B{1}$ es un vector columna de
+$\ell$ elementos iguales a $1$.  El entrenamiento de este problema se
+efectúa comúnmente mediante el algoritmo denominado SMO
+(\eng{Sequential Minimal Optimization}, Optimización Mínima
+Secuencial) \cite{smo} específicamente diseñado para la SVM, aunque
+puede ser resuelto mediante cualquier algoritmo capaz de resolver un
+problema de optimización cuadrático.
 
 El modelo de la máquina de vectores de soporte de margen
 duro viene dado por
@@ -43,16 +42,21 @@ duro viene dado por
 \label{e2:svm-model-hard0}
 \end{align}
 %
-donde $(\ww^*,b^*)$ (solución al problema primal)
-viene dada por las Ecuaciones \ref{e2:w-from-alpha} y \ref{e2:b-from-alpha}.
+donde $(\ww^*,b^*)$ (solución al problema primal) viene dada por las
+Ecuaciones \ref{e2:w-from-alpha} y \ref{e2:b-from-alpha}.
 Incorporando el truco del núcleo, se tiene
 %
 \begin{align}
-    \langle\ww^*,\BPhi(\xx)\rangle \tab= \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx),\\
-    b^* \tab= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j),
+  \langle\ww^*,\BPhi(\xx)\rangle \tab=
+  \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx),\\
+  b^* \tab= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j),
 \end{align}
 %
 donde el subíndice $j$ es aquel para el cual se cumple $\alpha_j>0$.
-Tal como se expuso anteriormente, la existencia de $\alpha_j>0$ está
-garantizada siempre que el conjunto de datos $T$ contenga elementos de
-ambas clases.
+Incorporando estos resultados al modelo $h(\xx)$, se tiene
+%
+\begin{align}
+  h(\xx) &= \T{signo}\left(\sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx)+b^*\right).
+\label{e2:svm-model-hard}
+\end{align}
+%
