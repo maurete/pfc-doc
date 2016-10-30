@@ -2,71 +2,85 @@
 %
 \subsection{SVM de margen blando}
 %
-La SVM de margen blando (con regularización ``L1'' o ``de norma 1'')
-es el tipo de clasificador SVM más utilizado.  Consiste en un
-clasificador de margen máximo con el truco del kernel, tal como la SVM
-de margen duro. A diferencia de ésta, sin embargo, la SVM de margen
-blando contiene un término de regularización que controla la
-``cantidad de error'' permitido al modelo, obteniendo un balance entre
-el error de entrenamiento y la complejidad del modelo obtenido.  La
-introducción del término de regularización a la SVM de margen rígido
-permite su aplicación a problemas no separables en el espacio imagen,
-ya que se permiten errores de clasificación en el entrenamiento.
+La máquina de vectores de soporte llamada ``de margen blando''
+incorpora regularización al proceso de entrenamiento, permitiendo la
+clasificación errónea de ciertos ejemplos de entrenamiento.  Al
+aplicar regularización, los modelos resultantes son más simples, y
+además, permite entrenar el clasificador con datos de entrenamiento
+que no son linealmente separables.
 
-Como medida de complejidad del modelo
-$h(\xx)=\T{signo}(\langle{}\ww,\BPhi(\xx)\rangle{}+b)$
-se utiliza el valor $\frac{1}{2}\|\ww\|^2$, que es la misma función optimizada en
-la SVM de margen rígido. Dado que el margen funcional
-de la SVM se fija a uno, una gran norma de $w$ corresponde a un
-pequeño margen geométrico $\rho=1/\|w\|$, y consecuentemente a un modelo más complejo.
-Otra forma de ver este concepto es que para valores pequeños de
-$\|w\|$, la función $\langle{}\ww,\BPhi(\xx)\rangle+b$ es suave en el
-espacio de entrada, y para valores mayores de $\|w\|$ se vuelve más
-``abrupta'' (en el sentido que posee derivadas más grandes).
-
-Como medida del error de entrenamiento, se utiliza una función de
-pérdida $L:X\times\RR\times\RR\rightarrow\RR^{\geq0}$.  Para cada
-elemento $(x_n,y_n)$ del conjunto de entrenamiento se introduce la
-variable de holgura no negativa $\xi_n$, que es la función de pérdida
-``bisagra''
-
+En la máquina de vectores de soporte sin regularización (``margen
+duro''), el objetivo del entrenamiento es reducir la complejidad del
+modelo resultante: esto puede verse a partir de la interpretación
+geométrica de $\ww$: una gran norma de $w$ corresponde a un pequeño
+margen geométrico $\rho=1/\|\ww\|$, y consecuentemente a un modelo más
+complejo.  La SVM de margen blando agrega al objetivo de minimización
+una medida del error de clasificación sobre el conjunto de
+entrenamiento.  Para cada ejemplo de entrenamiento $(\xx_i,y_i)$ se
+introduce la variable de holgura no negativa $\xi_i$, que es la
+función de pérdida ``bisagra''
+%
 \begin{align}
-\xi_n = 
-  L(x,y,\langle{}w,\Phi(x)\rangle+b) =
-  \max\{0,1-y_n(\langle{}w,\Phi(x_n)\rangle+b)\},
+  \xi_n = \max\{0,1-y_n(\langle{}\ww,\Phi(\xx_i)\rangle+b)\}.
 \end{align}
-la cual mide la violación funcional del margen para cada instancia
-$(\xx_n,y_n)\in{}D$.
+%
+La variable $\xi_i$ mide la violación funcional del margen para cada
+ejemplo $(\xx_i,y_i)$, que es la distancia al hiperplano de separación
+para aquellos ejemplos incorrectamente clasificados.
 
-Con lo anterior se tienen entonces dos objetivos a minimizar,
-$\frac{1}2{}\|w\|^2$ y $\sum_{n=1}^{\ell}\xi_n$, que cuantifican
-complejidad de la hipótesis y error de entrenamiento respectivamente.
-Se introduce entonces un parámetro de regularización $C>0$ que
-ajusta el balance entre la minimización del riesgo empírico y
-el control complejidad, y se formula el problema
-de optimización \emph{primal}
-
+Se introduce un parámetro de regularización $C>0$ que ajusta el
+balance entre complejidad del modelo y la cantidad de error, y se
+formula el problema de optimización \emph{primal}
+%
 \begin{align}
-\label{svm-primal-blando}
+  \label{svm-primal-blando}
   \begin{split}
-    \min_{(w,b,\xi)} \quad & \frac{1}{2}\|w\|^2+C\sum_{n=1}^{\ell}\xi_n\\
+    \min_{(\ww,b,\xi)} \quad & \frac{1}{2}\|\ww\|^2+C\sum_{i=1}^{\ell}\xi_i\\
     \T{sujeto a} \quad &
-    y_n\left(\langle{}w,\Phi(x_n)\rangle+b\right) \geq 1-\xi_n \T{ para todo }
-    n\in\{1,\ldots,\ell\}, \\
-    & \xi_n \geq 0 \T{ para todo } n\in\{1,\ldots,\ell\}.
+    y_i\left(\langle{}\ww,\BPhi(\xx_i)\rangle+b\right) \geq 1-\xi_i, i=1,\ldots,\ell, \\
+    & \xi_i \geq 0, i=1,\ldots,\ell.
   \end{split}
 \end{align}
-El lagrangiano para este problema es
+%
 
+%% La SVM de margen blando (con regularización ``L1'' o ``de norma 1'')
+%% es el tipo de clasificador SVM más utilizado.  Consiste en un
+%% clasificador de margen máximo con el truco del núcleo, tal como la SVM
+%% de margen duro. A diferencia de ésta, sin embargo, la SVM de margen
+%% blando contiene un término de regularización que controla la
+%% ``cantidad de error'' permitido al modelo, obteniendo un balance entre
+%% el error de entrenamiento y la complejidad del modelo obtenido.  La
+%% introducción del término de regularización a la SVM de margen rígido
+%% permite su aplicación a problemas no separables en el espacio imagen,
+%% ya que se permiten errores de clasificación en el entrenamiento.
+
+%% Como medida de complejidad del modelo
+%% $h(\xx)=\T{signo}(\langle{}\ww,\BPhi(\xx)\rangle{}+b)$
+%% se utiliza el valor $\frac{1}{2}\|\ww\|^2$, que es la misma función optimizada en
+%% la SVM de margen rígido.
+
+%% Otra forma de ver este concepto es que para valores pequeños de
+%% $\|w\|$, la función $\langle{}\ww,\BPhi(\xx)\rangle+b$ es suave en el
+%% espacio de entrada, y para valores mayores de $\|w\|$ se vuelve más
+%% ``abrupta'' (en el sentido que posee derivadas más grandes).
+
+%% Como medida del error de entrenamiento, se utiliza una función de
+%% pérdida $L:X\times\RR\times\RR\rightarrow\RR^{\geq0}$. 
+
+
+Para obtener la forma dual de este problema, en primer lugar se
+calcula el funcional lagrangiano
+%
 \begin{align}
   \begin{split}    
   \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta) &= \frac{1}{2} \|\ww\|^2 + C \sum_{i=1}^{\ell} \xi_i \\
   &+ \sum_{i=1}^{\ell} \alpha_i (1-\xi_i-y_i(\langle\ww,\BPhi(\xx_i)\rangle+b)) - \sum_{i=1}^{\ell} \beta_i\xi_i
   \end{split}
 \end{align}
+%
 En el mínimo, se establecen las derivadas respecto de las variables
 $\ww$, $b$, $\Bxi$ a cero y se obtiene
-
+%
 \begin{align}
   \dpar{ \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta)}{\ww}{}
     &=\ww-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
@@ -79,8 +93,9 @@ $\ww$, $b$, $\Bxi$ a cero y se obtiene
     &=C-\alpha_i-\beta_i = 0
     &\Rightarrow \alpha_i \leq C,
 \end{align}
+%
 Reescribiendo estos resultados en el problema dual, se tiene
-
+%
 \begin{align}
 \begin{split}\label{svmprob-dual-soft}
     \max_{\Balpha} \quad
@@ -88,17 +103,22 @@ Reescribiendo estos resultados en el problema dual, se tiene
     \T{sujeto a}\quad & \yy^T\Balpha = 0, \\
                       & 0\leq\alpha_i\leq C, \T{ para todo } i\in {1,\ldots,\ell }.
 \end{split}\end{align}
+%
 Este problema es el mismo que aquel de la SVM de magen duro, salvo por la restricción
 $\alpha_i\leq C$.
 
+El problema \ref{PROBLEMA-SVM} es el tipo de clasificador SVM más utilizado,
+y se denomina también SVM ``de norma 1'' o ``con regularización L1''. Esto
+se debe a que la variable holgura $\xi_i$ se incorpora con potencia 1.
 Una variante de la SVM de margen suave utiliza la norma dos del
 vector holgura $\B{\xi}=(\xi_1,\ldots,\xi_\ell)^T$, correspondiente
-a la pérdida de bisagra al cuadrado, para medir el error empírico.
-En este caso, el objetivo primal se define como
-
+a la pérdida de bisagra al cuadrado. En este caso, el objetivo primal
+se define como
+%
 \begin{align}
   \label{svm-l2}
   \frac{1}{2}\|w\|^2+\frac{C}{2}\sum_{n=1}^{\ell}\xi_n^2
 \end{align}
+%
 con las mismas restricciones que el problema anterior.
 Esta formulación se denomina ``SVM de margen blando con regularización L2''.
