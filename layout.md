@@ -6,7 +6,7 @@ figures/metodopropio/metodopropio.png
 S3.2-Entrada.tex
 figures/fastafmt/tumblr_m5vasd38lu1qfhbc2o3_1280.png
 subsubsectionVariant.tex
-figures/rnafoldfmt/default_figure.png
+figures/rnafoldfmt/tumblr_m5vasd38lu1qfhbc2o3_1280.png
 S3.3-Caracts.tex
 S3.1.1-Tripletes.tex
 T3.3.1-TripletFeats.tex
