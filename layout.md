@@ -4,7 +4,7 @@ C3-Metodo.tex
 S3.1-Descripcion.tex
 figures/metodopropio/metodopropio.png
 S3.2-Entrada.tex
-figures/fastafmt/default_figure.png
+figures/fastafmt/tumblr_m5vasd38lu1qfhbc2o3_1280.png
 subsubsectionVariant.tex
 figures/rnafoldfmt/default_figure.png
 S3.3-Caracts.tex
