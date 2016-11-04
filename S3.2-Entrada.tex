@@ -1,4 +1,28 @@
+%
+%
+%
 \section{Formato de entrada}
+%
+La lectura de archivos de entrada se efectúa a partir de la
+especificación del usuario. El método lee en su entrada archivos de
+secuencias en un formato estándar denominado FASTA \cite{fasta}.
+Para cada archivo, se especifica
+%
+\begin{enumerate}
+\item nombre del archivo,
+\item clase de los ejemplos contenidos, y
+\item proporción de elementos a utilizar para entrenamiento y prueba.
+\end{enumerate}
+%
+Cuando el archivo contiene ejemplos de pre-miRNAs verdaderos, la clase
+es ``positiva'' ($+1$), cuando contiene ejemplos de ``pseudo''
+pre-miRNAs la clase se establece a ``negativa'' ($-1$).  No se permite
+la lectura de archivos con elementos de clase mixta.  La proporción de
+elementos a utilizar para entrenamiento y prueba determina la cantidad
+de ejemplos de cada archivo que pasarán a integrar el conjunto de
+entrenamiento, utilizado para la generación del modelo, y el de
+prueba, utilizado para clasificación.
+
 Los datos de entrada vienen dados en un formato estándar denominado
 FASTA, originado por el software de igual nombre publicado
 inicialmente en 1985 por \citeauthor{fasta} \cite{fasta}.  Los

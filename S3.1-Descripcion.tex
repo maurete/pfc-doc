@@ -1,12 +1,8 @@
-\section{Descripción general del método}
-
-El método recibe como entrada archivos de secuencias en un formato
-estándar denominado FASTA. Para cada archivo se debe especificar la
-\e{clase} de los ejemplos contenidos: positiva (+1) para pre-miRNAs
-verdaderos, negativa (-1) para ``pseudo'' pre-miRNAs.  Adicionalmente,
-se debe especificar (para cada archivo) la proporción de elementos
-a utilizar para entrenamiento y prueba.
-
+%
+%
+%
+\section{Descripción general}
+%
 Se distinguen tres tareas principales que describen la funcionalidad
 del sistema: generación del problema de clasificación, obtención del
 modelo óptimo del clasificador, y clasificación (predicción) de nuevos
@@ -24,3 +20,11 @@ ser utilizado para clasificar nuevos ejemplos.
 
 La clasificación es la tarea de aplicar el modelo ya entrenado a
 nuevos datos, a fin de obtener predicciones de clase.
+
+Visto desde el punto de vista global, el método recibe en su entrada
+archivos de datos (en formato FASTA), que contienen secuencias de
+pre-miRNAs candidatos a procesar, y archivos de modelo producto del
+entrenamiento inicial del clasificador. A la salida, devuelve un
+modelo de clasificador entrenado a partir del conjunto de
+entrenamiento y/o predicciones de clase para los ejemplos del conjunto
+de prueba.
