@@ -5,7 +5,7 @@ S3.1-Descripcion.tex
 figures/metodopropio/metodopropio.png
 S3.2-Entrada.tex
 figures/fastafmt/fasta.png
-subsubsectionVariant.tex
+S3.2.1-rnafoldfmt.tex
 figures/rnafoldfmt/rnafold.png
 S3.3-Caracts.tex
 S3.3.1-Tripletes.tex
