@@ -1,27 +1,27 @@
-
+%
+%
 \subsection{Características de tripletes}
-Este grupo consta de 32 características que cuentan la ocurrencia, en
-la zona del tallo del pre-miRNA, de las 32 combinaciones posibles de
-``tripletes'' que relacionan secuencia y estructura secundaria:
-\mono{A...}, \mono{A..(}, \mono{A.(.}, etcétera.
-
-Para un nucleótido en la posición $i$ de la secuencia, el ``triplete''
-consiste en una secuencia que contiene la base del nucleótido (\ntA,
-\ntC, \ntG, o \ntU) seguida de la estructura secundaria local en las
-posiciones $i-1,i,i+1$. La estructura secundaria se representa en los
-tripletes por un valor binario ``apareado'' \pairL (paréntesis) y ``no
-apareado'' \noPair (punto).
+%
+Este grupo de 32 características cuenta la ocurrencia, en la zona del
+tallo del pre-miRNA, de los ``tripletes'' que relacionan secuencia y
+estructura secundaria. Para un nucleótido en la posición $i$ de la
+secuencia, el ``triplete'' se compone de 4 caracteres, comenzando con
+la base del nucleótido $i$ (\ntA, \ntC, \ntG, o \ntU) y seguido de la
+estructura secundaria local en las posiciones $i-1,i,i+1$,
+representada en forma binaria como ``acoplado'' \pairL (paréntesis) y
+``no aacoplado'' \noPair (punto).
 
 Originalmente propuestas por \citeauthor{xue} en su trabajo
 \cite{xue}, la justificación para estas características se basa en los
 siguientes postulados:
-
+%
 \begin{itemize}
 \item Dentro del pre-miRNA, el miRNA ``maduro'' se encuentra en la
   zona del ``tallo''.
 \item Los pre-miRNAs, al ser bien conservados, contienen un alto grado
   de complementariedad en las bases que conforman el tallo.
 \end{itemize}
+%
 Las características de tripletes describen en un vector de 32
 elementos la relación secuencia--estructura secundaria local de los
 nucleótidos en el tallo, y es de esperar que la aparición de
@@ -40,7 +40,7 @@ pre-miRNAs presentan estructura secundaria con múltiples bucles y
 tallos.
 
 El procedimiento de cálculo para estas características consiste en
-
+%
 \begin{enumerate}
 \item Validar que la instancia tiene estructura secundaria con un
   único tallo y un único bucle central.
@@ -51,5 +51,6 @@ El procedimiento de cálculo para estas características consiste en
 \item Normalizar la cuenta de cada triplete dividiendo entre la
   cantidad total de tripletes encontrados.
 \end{enumerate}
+%
 Si el ejemplo no cumple con la primer condición, el cálculo de
 características de triplete simplemente no se lleva a cabo.
