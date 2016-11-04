@@ -21,10 +21,12 @@ ser utilizado para clasificar nuevos ejemplos.
 La clasificación es la tarea de aplicar el modelo ya entrenado a
 nuevos datos, a fin de obtener predicciones de clase.
 
-Visto desde el punto de vista global, el método recibe en su entrada
-archivos de datos (en formato FASTA), que contienen secuencias de
-pre-miRNAs candidatos a procesar, y archivos de modelo producto del
-entrenamiento inicial del clasificador. A la salida, devuelve un
-modelo de clasificador entrenado a partir del conjunto de
-entrenamiento y/o predicciones de clase para los ejemplos del conjunto
-de prueba.
+Desde un punto de vista global, el método recibe en su entrada
+archivos con secuencias de (candidatos de) pre-miRNAs a procesar, y
+opcionalmente un archivo de modelo producto de un entrenamiento
+anterior.  Los pre-miRNAs (candidatos) leídos en la entrada pasan a
+integrar los conjuntos de entrenamiento (obtención del modelo) y
+prueba (predicción de pertenencias de clase) según especificación del
+usuario.  A la salida, según las tareas a efectuar, devuelve un modelo
+de clasificador entrenado y/o predicciones de clase para los ejemplos
+del conjunto de prueba.
