@@ -1,31 +1,30 @@
+%
+%
+%
 \section{Extracción de caracerísticas}
-Los datos de entrada vienen dados en forma de cadenas de caracteres de
-longitud variable. Si bien este tipo de datos no es estrictamente
-intratable por los clasificadores SVM y MLP, resulta mucho más
-conveniente convertir los ejemplos a vectores numéricos de longitud
-fija. De ésto se trata el proceso de extracción de características.
-
-Las ``características'' son valores numéricos representativos de cada
-ejemplo, calculados a patir de la información dada en forma de texto.
-Para cada ejemplo, se calcula un ``vector de características'' que
-será la entrada a la máquina de aprendizaje durante el entrenamiento y
-la clasificación.
+%
+La extracción de características es el proceso de calcular, vectores
+numéricos de longitud fija que representan cada ejemplo.  Estos
+\e{vectores de características} son una representación más conveniente
+de los ejemplos originalmente dados en forma de cadenas de caracteres
+de longitud variable.
 
 El vector de características incorpora medidas tomadas sobre la
 secuencia, la estructura secundaria, y la mínima energía libre
-resultante del cálculo de la estructura secundaria.  Estas 66 medidas
-replican aquellas utilizadas en los trabajos previos de \cite{xue, ng,
-  batuwita}.  Según la naturaleza de las características, se
+resultante del cálculo de la estructura secundaria. Consta de 66 medidas
+basadas en aquellas utilizadas en los trabajos previos de \cite{xue, ng,
+  batuwita}. Según la naturaleza de estas características, se
 distinguen cuatro ``grupos'':
-
+%
 \begin{itemize}
 \item 32 características de tripletes,
 \item 4 características auxiliares de tripletes,
 \item 23 características de la secuencia, y
 \item 7 características de la estructura secundaria.
 \end{itemize}
-El cálculo de las características (excepto las de la secuencia)
+%
+El cálculo de las características (a excepción de las de la secuencia)
 requiere el conocimiento de la estructura secundaria de cada
-ejemplo. Por ello, el método soporta la invocación automática de
-herramientas externas para el cálculo de la estructura secundaria
-cuando ésta no viene dada.
+ejemplo. Por ello, el método incorpora el cálculo automático de la
+estructura secundaria utilizando herramientas externas, cuando no se
+provee la información de estructura secundaria.
