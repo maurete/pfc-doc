@@ -1,21 +1,21 @@
+%
+%
+%
 \section{Normalización de los vectores de características}
-En un vector de $N$ características, cada posición se corresponde con
-una variable que representa una cantidad de naturaleza diversa, tal
-como se ha visto en la descripción del vector de características. Esta
-diversidad implica que dentro del mismo vector coexisten valores
-numéricamente muy dispares entre sí. Al tratar algebraicamente los
-vectores de características, las disparidades numéricas entre sus
-propios elementos trae como consecuencia que algunas características
-(variables) tendrán más ponderación que otras con magnitudes absolutas
-menores.
+%
+Dado que las componentes dentro de un vector de características
+representan cantidades de naturaleza diversa, el rango numérico de
+cada una de ellas también se da en forma dispar.  Al tratar
+algebraicamente los vectores de características, esta disparidad
+numérica implica que algunas características (variables) tendrán más
+ponderación que otras de menor magnitud.
 
 La normalización de los vectores de características consiste en
 modificar el rango de cada variable a un intervalo conocido, como por
-ejemplo $[0,1]$ o $[-1,+1]$.  La normalización de las variables de
-entrada tiende a generar problemas numéricamente mejor condicionados,
-al tiempo que aumente la velocidad de convergencia del entrenamiento y
-reduce la posibilidad de que éste se ``trabe'' sobre un mínimo local
-\cite{nnfaq2}.
+ejemplo $[0,1]$ o $[-1,+1]$. Esta normalización tiende a generar
+problemas mejor condicionados, al tiempo que incrementa la velocidad
+de convergencia del entrenamiento y reduce la posibilidad de recaer
+sobre un mínimo local \cite{nnfaq2}.
 
 El primer paso para aplicar normalización consiste en calcular valores
 de desplazamiento y escalado para cada variable (característica), a
@@ -23,40 +23,40 @@ partir de un conjunto de datos ``testigo'', comúnmente el primer
 archivo provisto como entrada al método.
 
 Para el conjunto testigo $I$ con $\ell$ elementos, se forma una matriz
-$M^I{}_{(\ell\times N)}$ en la que cada fila $i$ representa un ejemplo
-y cada columna $j$ representa una variable.  Para cada columna en
-$M^I$, se calcula un valor de desplazamiento $d_j(I)$ y un valor de
+$M^I{}_{(\ell\times{}F)}$ en la que cada fila $i$ representa un
+ejemplo y cada columna $j$ representa una variable. Para cada columna
+en $M^I$, se calcula un valor de desplazamiento $d_j(I)$ y un valor de
 escala $s_j(I)$ que permiten transformar el rango de la variable $x_j$
 al intervalo deseado, a partir del rango observado para la variable en
 el conjunto $I$.
 
 Como ejemplo, para llevar las variables al rango $[0,1]$ se tiene
-
+%
 \begin{align}
-  d_j(I) = - \min_i m_{ij}, && s_j(I) = \frac{1}{\max_i m_{ij} - \min_i m_{ij}}.
+  d_j(I) &= - \min_i m_{ij}, & s_j(I) &= \frac{1}{\max_i m_{ij} - \min_i m_{ij}}.
 \end{align}
+%
 Similarmente, para llevar las variables de la matriz testigo $I$
 al intervalo simétrico respecto al origen $[-1,+1]$,
-
+%
 \begin{align}
-  d_j(I) = - \frac{1}{2} \left(\max_i m_{ij} + \min_i m_{ij}\right), &&
-  s_j(I) = \frac{2}{\max_i m_{ij} - \min_i m_{ij}}.
+  d_j(I) &= - \frac{1}{2} \left(\max_i m_{ij} + \min_i m_{ij}\right), &
+  s_j(I) &= \frac{2}{\max_i m_{ij} - \min_i m_{ij}}.
 \end{align}
-
+%
 Una vez calculados $\B{d}(I)$ y $\B{s}(I)$, se aplican los mismos
 factores de escalado y desplazamiento sobre \e{todos} los conjuntos de
-datos, de modo de conservar las variaciones relativas entre los
-diferentes conjuntos de datos.
-Para cada conjunto de datos $D$ (incluyendo $I$), la normalización
-se aplica sobre cada vector de características
-$x_i = (m_{i1}, m_{i2}, \ldots, m_{iN})$ según
-
+datos, de modo de conservar las variaciones relativas entre ellos.
+Para cada conjunto $D$ (incluyendo $I$), la normalización se aplica
+sobre cada vector de características $\xx_i = (m_{i1}, m_{i2}, \ldots,
+m_{iF})$ según
+%
 \begin{align}
   \xx_i^{*} = (\xx_i + \B{d}(I)) \C{D}(\B{s}(I)),\quad \xx_i\in D,
 \end{align}
+%
 donde $\C{D}(\B{s})$ es la matriz diagonal tal que $\C{D}_{jj}=s_j$.
 
-En todos los casos, al efectuar entrenamiento, la información de
-normalización se guarda en el modelo del clasificador, ya que será
-necesario aplicarla a cada nuevo ejemplo de prueba no visto
-previamente por el clasificador.
+Al efectuar entrenamiento, la información de normalización se guarda
+en el modelo del clasificador, ya que será necesario aplicarla a cada
+nuevo ejemplo de prueba no visto previamente por el clasificador.
