@@ -79,24 +79,30 @@ aleatoriamente el orden de los ejemplos en los conjuntos resultantes.
 %
 \subsection{Generación de particiones para validación cruzada}
 %
-A partir del conjunto de entrenamiento $D^E$ con $\ell^E$ elementos,
-las particiones de validación se arman con $p\cdot\ell^E$ elementos en
-secuencia, desfasados $\ell^E/k$ elementos entre sí. La $j$-ésima
-partición de validación viene dada por
+El armado de las particiones de validación cruzada requiere la
+especificación de dos parámetros: $k$, el número de particiones a
+generar (iteraciones), y $p$ es la proporción de elementos de
+entrenamiento a utilizar en cada partición de validación. Por defecto,
+se utilizan los valores $k=10$ y $p=1/k$.
+
+Cada una de las $k$ particiones de validación se compone con ejemplos
+del conjunto de entrenamiento $D^E$, tomando $p\cdot\ell^E$ elementos
+en secuencia, contando a partir del elemento $j\frac{\ell^E}{k}$.  La
+$j$-ésima partición de validación, $j=1,\ldots,k$, viene dada por
 %
 \begin{align}
-  D^V_j &= \left((\xx_u,y_u)\right), &
-  u &= \left\lfloor\frac{\ell^E}{k}(j-1)+1\right\rceil,\ldots,
-       \left\lfloor\frac{\ell^E}{k}(j-1)+p\ell^E\right\rceil\T{mód}\,{\ell^E},&
-  j &= 1,\ldots,k.
+  D^V_j \tab= \left((\xx_u,y_u)\right), \tabs
+  \begin{split}
+    u &= \left\lfloor\frac{\ell^E}{k}(j-1)+1\right\rceil,\ldots,
+    \left\lfloor\frac{\ell^E}{k}(j-1)+p\ell^E\right\rceil.
+  \end{split}
 \end{align}
 %
-Aquí, $\T{mód}$ representa el operador módulo, $k$ es el número de
-iteraciones de validación cruzada, y $p$ es la proporción de elementos
-a utilizar para validación. Por defecto, se utilizan los valores
-$k=10$ y $p=1/k$. Los conjuntos de estimación correspondientes
-contienen los restantes ejemplos de entrenamiento no utilizados para
-validación:
+Cuando $u>\ell^E$, se utiliza el índice $\u^*=u-\ell^E$, por lo que $u$
+funciona de modo ``circular''.
+
+Los conjuntos de estimación correspondientes contienen los restantes
+ejemplos de entrenamiento no utilizados para validación:
 %
 \begin{align}
   D^T_k &= D^E \setminus D^V_j, \quad j=1,\ldots,k.
