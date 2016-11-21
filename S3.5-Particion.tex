@@ -81,27 +81,27 @@ aleatoriamente el orden de los ejemplos en los conjuntos resultantes.
 %
 El armado de las particiones de validación cruzada requiere la
 especificación de dos parámetros: $k$, el número de particiones a
-generar (iteraciones), y $p$ es la proporción de elementos de
+generar (iteraciones), y $p$, la proporción de elementos de
 entrenamiento a utilizar en cada partición de validación. Por defecto,
 se utilizan los valores $k=10$ y $p=1/k$.
 
-Cada una de las $k$ particiones de validación se compone con ejemplos
-del conjunto de entrenamiento $D^E$, tomando $p\cdot\ell^E$ elementos
-en secuencia, contando a partir del elemento $j\frac{\ell^E}{k}$.  La
-$j$-ésima partición de validación, $j=1,\ldots,k$, viene dada por
+La $j$-ésima partición de validación ($j=1,\ldots,k$) se genera con
+$p\cdot\ell^E$ ejemplos del conjunto de entrenamiento $D^E$, en
+secuencia a partir del elemento $(j-1)\frac{\ell^E}{k}+1$:
 %
 \begin{align}
   D^V_j \tab= \left((\xx_u,y_u)\right), \tabs
   \begin{split}
-    u &= \left\lfloor\frac{\ell^E}{k}(j-1)+1\right\rceil,\ldots,
-    \left\lfloor\frac{\ell^E}{k}(j-1)+p\ell^E\right\rceil.
+    u &= \left\lfloor\frac{\ell^E}{k}(j-1)+1\right\rceil^{(*)},\ldots,
+    \left\lfloor\frac{\ell^E}{k}(j-1)+p\ell^E\right\rceil^{(*)}.
   \end{split}
 \end{align}
 %
-Cuando $u>\ell^E$, se utiliza el índice $\u^*=u-\ell^E$, por lo que $u$
-funciona de modo ``circular''.
+El operador $(*)$ indica que el índice $u$ es un índice ``circular'':
+si su valor excede el tamaño del conjunto $\ell^E$, se resta $\ell^e$, de
+modo que el valor de $u$ se mantiene siempre entre $1$ y $\ell^E$.
 
-Los conjuntos de estimación correspondientes contienen los restantes
+Los conjuntos de estimación correspondientes se componen con los
 ejemplos de entrenamiento no utilizados para validación:
 %
 \begin{align}
