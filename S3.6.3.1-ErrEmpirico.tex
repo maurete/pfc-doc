@@ -1,0 +1,70 @@
+%
+\subsubsection{Derivación de la función error empírico}
+%
+La definición de la función error empírico se basa en el error del
+clasificador sobre un conjunto de prueba $T$, el cual es un estimador
+no sesgado del error de generalización. Considérese la definición del
+error de prueba sobre un conjunto
+$T=((\tilde{x}_k,\tilde{y}_k))\,n=1,\ldots,N$ de clase conocida
+(\iflatexml{}Ecuación~\ref{eq:error-prueba}\else\autoref{eq:error-prueba}\fi).
+Este error puede escribirse en la forma equivalente
+%
+\begin{align}
+\label{e3:error-test-alt}
+  E^T = \frac{1}{N}\sum_{k=1}^{N} H(-{y}_k {c}_k))
+\end{align}
+%
+donde $c_k=h(\xx_k)$ es la predicción de clase del modelo SVM
+entrenado, y $H(\cdot)$ es la función escalón de Heaviside. Fijando el
+tipo de núcleo utilizado y los conjuntos de datos de entrenamiento y
+validación, se puede considerar
+%
+\begin{align}
+\label{e3:error-test-func-theta}  
+  E^T = E^T(\Btheta),
+\end{align}
+%
+por lo que minimizar $E^T(\Btheta)$ equivale a seleccionar los
+hiperparámetros óptimos $\Btheta$ para el conjunto $T$.  La función
+$E^T$ así definida es una función objetivo válida para la comparación
+de modelos, sin embargo, por definición es una función discontinua, lo
+que imposibilita la optimización eficiente mediante descenso de
+gradiente.
+
+Una interpretación alternativa del concepto de error, basada en la
+teoría bayesiana, permite desarrollar una función objetivo con
+características deseables de continuidad y derivabilidad.  Si $p_k$ es
+la \e{probabilidad a posteriori} de que el ejemplo $\xx_k$ pertenezca
+a la clase positiva
+%
+\begin{align}
+  \label{e3:pk}
+  p_k = p(x_k) = P(c_k=+1|x_k), % = z_k
+\end{align}
+%
+se puede caracterizar la \e{probabilidad de error} $E_k$ cometido al
+clasificar el ejemplo $\xx_k$ según
+%
+\begin{align}
+\label{e3:Ek}
+  E_k = P(c_k\neq y_k) = |t_k-{p}_k| =
+  \begin{cases}
+    {p}_k, & t_k=0\\ 1-{p}_k, & t_k = 1,
+  \end{cases}
+\end{align}
+%
+donde $t_k=\frac{y_k+1}{2}$ es un ``valor deseado'' calculado a partir
+de la clase conocida $y_k$.  Entonces, la probabilidad de error para
+el conjunto $T$ puede escribirse
+%
+\begin{align}
+\label{Err1}
+  E = \sum_{k=1}^{N} E_k.
+\end{align}
+%
+La función $E$ especifica el denominado \e{error empírico} y es la
+función objetivo a minimizar. Para su cálculo, sin embargo, se
+requiere el conocimiento de la probabilidad $p_k$, información que el
+modelo SVM no brinda, al tratarse de una salida binaria. Sin embargo,
+resulta posible calcular una probabilidad estimada $\hat{p}_k$, que
+permite su utilización en la práctica.
