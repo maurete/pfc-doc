@@ -1,93 +1,99 @@
-
+%
+%
 \subsection{Minimización del error empírico}
-La estrategia de minimización del error empírico es aplicable al
-clasificador SVM, y optimiza mediante descenso de gradiente una
-función objetivo denominada \e{error empírico} que se define a partir
-de una interpretación probabilística del modelo SVM.
+%
+La estrategia de minimización del error empírico, aplicable a la
+máquina de vectores de soporte, optimiza una función objetivo
+denominada \e{error empírico} basada en una interpretación
+probabilística de la salida del modelo del clasificador SVM.
 
 La función error empírico fue propuesta por \citeauthor{ayat} en
-\cite{ayat} como una función objetivo continua y derivable respecto a
-los hiperparámetros del núcleo.  La estrategia aquí presentada
-incorpora además el cálculo del gradiente respecto del hiperparámetro
-$C$ \cite{keerthi,glasmachers}, implementado en \cite{shark}, lo que
-permite optimizar todos los hiperparámetros de la Máquina de Vectores
-de Soporte, incluyendo la regularización $C$, siempre que el núcleo
-sea derivable respecto de sus propios hiperparámetros.
-
+\cite{ayat} para la selección automática de los parámetros del núcleo.
+En el presente trabajo, se incorpora el cálculo del gradiente de la
+función respecto del hiperparámetro de regularización $C$
+\cite{keerthi,glasmachers} tal como se implementa en \cite{shark}.  De
+este modo, la estrategia de minimización del error empírico soporta la
+selección automática de todos los hiperparámetros de la máquina de
+vectores de soporte, incluyendo la regularización $C$.
+%
 \begin{quote}
-  \sbs{Notación.}
-  El lector experto encontrará que la denominación ``error empírico''
-  resulta confusa, ya que en la disciplina este nombre se utiliza como
-  equivalente de ``error de entrenamiento''. En el presente trabajo se
-  ha decidido mantener esta denominación de los autores \cite{ayat},
-  efectuando el mayor esfuerzo por distinguir entre ``error de
-  entrenamiento'' y la función objetivo ``error empírico'', que se
-  trata más precisamente de una interpretación probabilística del
-  error de validación cruzada.
-  %% Se advierte al lector experto en la materia que, en toda la
-  %% extensión del presente trabajo, la denominación ``error empírico''
-  %% hace referencia únicamente a la función objetivo aquí definida,
-  %% utilizándose el término ``error de entrenamiento'' para referir al
-  %% concepto de otro modo conocido como ``riesgo empírico'' en la
-  %% especialidad.
+  \sbs{Terminología.}
+  El lector experto encontrará ambigua la denominación de la función
+  ``error empírico''.  En la disciplina este nombre se utiliza como
+  equivalente de ``error de entrenamiento''.  En este trabajo, se
+  mantiene la denominación de los autores \cite{ayat}, diferenciando
+  entre ``error de entrenamiento'' como la tasa de error del modelo
+  sobre el conjunto de entrenamiento, y ``error empírico'', que se
+  trata de una interpretación probabilística del error de validación
+  cruzada sobre el conjunto de entrenamiento.
 \end{quote}
-La función objetivo del error empírico se basa en la definición del
-error del clasificador sobre un conjunto de prueba $T$, el cual es
-un estimador
-no sesgado del error de generalización.  Considérese la definición del
-error de prueba sobre un conjunto $T=((\xx_k,y_k)),\,n=1,\ldots,N$ de
-clase conocida (\autoref{eq:error-prueba}).  Este error puede
-escribirse en la forma equivalente
+%
 
-\begin{align*}
-\label{E^V}
+La definición de la función error empírico se basa en el error del
+clasificador sobre un conjunto de prueba $T$, el cual es un estimador
+no sesgado del error de generalización. Considérese la definición del
+error de prueba sobre un conjunto
+$T=((\tilde{x}_k,\tilde{y}_k))\,n=1,\ldots,N$ de clase conocida
+(\iflatexml{}Ecuación~\ref{eq:error-prueba}\else\autoref{eq:error-prueba}\fi).
+Este error puede escribirse en la forma equivalente
+%
+\begin{align}
+\label{e3:error-test-alt}
   E^T = \frac{1}{N}\sum_{k=1}^{N} H(-{y}_k {c}_k))
-\end{align*}
+\end{align}
+%
 donde $c_k=h(\xx_k)$ es la predicción de clase del modelo SVM
-entrenado, y $H(\cdot)$ es la función escalón de Heaviside.  Fijando
-el tipo de núcleo utilizado y los conjuntos de datos de entrenamiento
-y validación, se puede considerar
-
-\begin{align*}
-  E^T = E^T(\theta),
-\end{align*}
-y consecuentemente, minimizar $E^T(\Btheta)$ equivale a seleccionar
-los hiperparámetros óptimos $\Btheta$. La función $E^T$ así definida
-es una función objetivo válida para la comparación de modelos, sin
-embargo, por definición es una función discontinua, lo que
-imposibilita la optimización eficiente mediante descenso de gradiente.
+entrenado, y $H(\cdot)$ es la función escalón de Heaviside. Fijando el
+tipo de núcleo utilizado y los conjuntos de datos de entrenamiento y
+validación, se puede considerar
+%
+\begin{align}
+\label{e3:error-test-func-theta}  
+  E^T = E^T(\Btheta),
+\end{align}
+%
+por lo que minimizar $E^T(\Btheta)$ equivale a seleccionar los
+hiperparámetros óptimos $\Btheta$ para el conjunto $T$.  La función
+$E^T$ así definida es una función objetivo válida para la comparación
+de modelos, sin embargo, por definición es una función discontinua, lo
+que imposibilita la optimización eficiente mediante descenso de
+gradiente.
 
 Una interpretación alternativa del concepto de error, basada en la
 teoría bayesiana, permite desarrollar una función objetivo con
 características deseables de continuidad y derivabilidad.  Si $p_k$ es
 la \e{probabilidad a posteriori} de que el ejemplo $\xx_k$ pertenezca
 a la clase positiva
-
+%
 \begin{align}
+  \label{e3:pk}
   p_k = p(x_k) = P(c_k=+1|x_k), % = z_k
 \end{align}
+%
 se puede caracterizar la \e{probabilidad de error} $E_k$ cometido al
 clasificar el ejemplo $\xx_k$ según
-
+%
 \begin{align}
-\label{Ek}
+\label{e3:Ek}
   E_k = P(c_k\neq y_k) = |t_k-{p}_k| =
   \begin{cases}
     {p}_k, & t_k=0\\ 1-{p}_k, & t_k = 1,
   \end{cases}
 \end{align}
+%
 donde $t_k=\frac{y_k+1}{2}$ es un ``valor deseado'' calculado a partir
 de la clase conocida $y_k$.  Entonces, la probabilidad de error para
 el conjunto $T$ puede escribirse
-
+%
 \begin{align}
 \label{Err1}
   E = \sum_{k=1}^{N} E_k.
 \end{align}
+%
 La función $E$ especifica el denominado \e{error empírico} y es la
-función objetivo a minimizar.  Para su cálculo, sin embargo, se
+función objetivo a minimizar. Para su cálculo, sin embargo, se
 requiere el conocimiento de la probabilidad $p_k$, información que el
-modelo SVM no brinda, al tratarse de una salida binaria.  Sin embargo,
+modelo SVM no brinda, al tratarse de una salida binaria. Sin embargo,
 resulta posible calcular una probabilidad estimada $\hat{p}_k$, que
 permite su utilización en la práctica.
 
