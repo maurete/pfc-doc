@@ -22,6 +22,7 @@ S3.6-SelAutoHiperp.tex
 S3.6.1-SelTrivial.tex
 S3.6.2-BusqExhaust.tex
 S3.6.3-ErrEmpirico.tex
+S3.6.3.1-ErrEmpirico.tex
 S3.6.4-RMB.tex
 S3.6-Entrenamiento.tex
 S3.7-Clasificacion.tex
