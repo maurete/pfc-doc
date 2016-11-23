@@ -1,0 +1,50 @@
+
+\subsubsection{Estimación de la probabilidad ${p}_k$}
+El modelo $h$ de una máquina de vectores de soporte
+(\autoref{eq:svm-model-hard}) puede escribirse
+
+\begin{align*}
+  h(\xx_k) = \T{signo}(f_k), \qquad\qquad
+  f_k=\langle\ww,\BPhi(\xx_k)\rangle+b.
+\end{align*}
+Utilizando el valor de $f_k$, la salida del modelo
+previa a aplicar la función signo, se puede calcular una probabilidad
+estimada $\hat{p}_k$ según
+
+\begin{align}
+  \hat{p}_k=\frac{1}{1+e^{Af_k+B}} \qquad \approx p_k.
+\end{align}
+Los parámetros $A$ y $B$ se determinan optimizando el problema
+
+\begin{align}
+  \arg\min_{A,B} \quad & -\sum_{k=1}^{N} \log(E_k)
+  \label{abproblem}
+\end{align}
+sobre el conjunto de prueba $T$. La optimización de este sub-problema
+se realiza mediante una técnica de descenso de gradiente, ya que las
+derivadas de $\hat{p}_k$ respecto de sus parámetros $A$ y $B$ son
+fácilmente calculables:
+
+\begin{align*}
+  \dpar{\hat{p}_k}{A}{}&=-f_k e^{Af_k+B}\frac{1}{(1+e^{Af_k+B})^2}
+  =-f_k\hat{p}_k(1-\hat{p}_k),&\\
+  \dpar{\hat{p}_k}{B}{}&=    -e^{Af_k+B}\frac{1}{(1+e^{Af_k+B})^2}
+  =-   \hat{p}_k(1-\hat{p}_k).
+\end{align*}
+Esta técnica para obtener un estimador $p_k$ de la probabiidad a
+posteriori real fue presentada por \citeauthor{platt} en \cite{platt}.
+La elección de una función logística como $\hat{p}_k$ se basa en la
+presunción de que las salidas $f_k$ para las entradas $\{\xx_k\}$ de
+clase positiva tienen una distribución gaussiana en $f$.
+
+Una interpretación intuitiva de $\hat{p}_k$ es que, para una salida
+$f_k$ de gran magnitud que se ubica lejos del hiperplano de separación
+en el espacio inducido por el núcleo, el clasificador SVM tiene amplia
+certeza de su decisión.  Asimismo, se tendrá que cuando el valor de
+$f_k=0$, $x_k$ recae exactamente en el plano de separación y se
+obtiene la peor predicción posible $\hat{p}_k=0.5$\footnote{La
+  condición $\hat{p}_k=0.5$ cuando $x_k$ se ubica sobre el plano de
+  separación implica $B=0$, sin embargo, se considera igualmente $B$
+  como un valor a optimizar, respetando el método original
+  \cite{platt}.} y, similarmente, cuanto más ancho sea el margen de
+separación, más suave deberá ser la pendiente de $\hat{p}_k$.
