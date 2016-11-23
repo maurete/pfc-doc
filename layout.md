@@ -25,6 +25,7 @@ S3.6.3-ErrEmpirico.tex
 S3.6.3.1-ErrEmpirico.tex
 S3.6.3.2-pk.tex
 S3.6.3.3-gradiente.tex
+S3.6.3.4-Algoritmo.tex
 S3.6.4-RMB.tex
 S3.6-Entrenamiento.tex
 S3.7-Clasificacion.tex
