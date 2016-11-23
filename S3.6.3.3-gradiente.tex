@@ -1,0 +1,117 @@
+
+\subsubsection{Cálculo del gradiente $\grad{E}$}
+Sustituyendo la probabilidad real $p_k$ por el estimador
+$\hat{p}_k$, y calculando el gradiente, se tiene
+
+\begin{align}
+\label{gradE}
+  \grad{E} = \sum_{k=1}^{N} \grad{E_k} =
+  \sum_{ i:t_i=0  } \grad{\hat{p}_i}
+  - \sum_{ j:t_j=1  } \grad{\hat{p}_j}
+  = \sum_{k=1}^{N} y_k \grad{\hat{p}_k}
+\end{align}
+Por la regla de composición de las derivadas, la derivada
+$\grad{\hat{p}_k}=\dpar{\hat{p}_k}{\theta_j}{}$ respecto de un
+hiperparámetro ${\theta_j}$ es
+
+\begin{align}
+  \dpar{\hat{p}_k}{\theta_j}{} =
+  \dpar{\hat{p}_k}{f_k}{}\dpar{f_k}{\theta_j}{} =
+  -A\hat{p}_k(1-\hat{p}_k)\dpar{f_k}{\theta_j}{}.
+  \label{eq:deriv-pk-thetak}
+\end{align}
+Para la determinación de $\dpar{f_k}{\theta_j}{}$ se sigue el
+procedimiento propuesto en \cite{keerthi,glasmachers} e implementado
+en \cite{shark}.
+En primer lugar, se observa que $f_k$ puede calcularse según
+
+\begin{align}
+  f_k = \langle w,\Phi(x_k)\rangle+b = \sum_{i=1}^l \alpha_i y_i k(x_i,x_k) + b
+  \label{fk}
+\end{align}
+donde $k(\cdot,\cdot)$ es la función núcleo, y $\alpha_i, b$ son los
+parámetros del modelo SVM entrenado $h$.
+
+Según sea el valor de $\alpha_i$ correspondiente al vector de
+entrenamiento $\xx_i$, se definen los conjuntos de índices
+
+\begin{align}
+  \label{unbounded-sv-set}
+  u &= \left\{i\in\{1,\ldots,l\}:0<y_i\alpha_i<C \right\}\\
+  \label{bounded-sv-set}
+  g &= \left\{i\in\{1,\ldots,l\}: y_i\alpha_i=C \right\}\\
+  n &= \left\{i\in\{1,\ldots,l\}: \alpha_i=0 \right\}.
+\end{align}
+Mediante interpretación geométrica de la solución al problema de la
+SVM, se sabe que para aquellos vectores $\xx_i$ que no son de soporte,
+se cumple que $\alpha_i=0$, luego las derivadas $\alpha_n$ respecto de los
+hiperparámetros son nulas. Para el caso $\alpha_i=\pm{}C$, se tiene
+
+\begin{align}
+  \dpar{\alpha_g}{C}{} = y_g, && \dpar{\alpha_g}{{\theta}^K_j}{} = 0,
+\end{align}
+ya que el valor de $\alpha_g$ viene limitado (en valor absoluto) por el
+parámetro $C$. Para simplificar el cálculo de las derivadas de
+$\alpha_u$ y $b$ se plantea un problema en forma matricial. Sea la
+\emph{matriz del núcleo} $K$
+
+\begin{align}
+  K = \begin{pmatrix} k(x_1,x_1) & k(x_1,x_2) & \cdots & k(x_1,x_l)
+    \\ k(x_2,x_1) & k(x_2,x_2) & \cdots & k(x_2,x_l) \\ \vdots &
+    \vdots & \ddots & \vdots \\ k(x_l,x_1) & k(x_l,x_2) & \cdots &
+    k(x_l,x_l)
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    (K_{\uu\uu}) & (K_{\uu\Bg}) & (K_{\uu\nn}) \\
+    (K_{\Bg\uu}) & (K_{\Bg\Bg}) & (K_{\Bg\nn}) \\
+    (K_{\nn\uu}) & (K_{\nn\Bg}) & (K_{\nn\nn})
+  \end{pmatrix}
+\end{align}
+donde en la matriz de la derecha los elementos de $K$ han sido
+reordenados en submatrices $K_{uu},K_{ug},\ldots$ según los conjuntos
+de índices $u, g, n$ definidos anteriormente.  Sea la matriz
+
+\begin{align}
+  H=\begin{pmatrix} K_{uu} & \B{1}_u \\ \B{1}_u^T & 0
+  \end{pmatrix}
+\end{align}
+con $\B{1}_u$ un vector columna de $|u|$ elementos iguales a 1,
+entonces la derivada de $(\B{\alpha}_u,b)^T$ respecto del
+hiperparámetro $j$ del núcleo $\theta^K_j$ viene dada por
+
+\begin{align}
+  \dpar{}{\theta^K_j}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=
+    -H^{-1} \left[
+      \dpar{H}{\theta^K_j}{}
+      \begin{pmatrix}\alpha_{u}\\b\end{pmatrix}
+        +C \begin{pmatrix}\dpar{K_{gu}}{\theta^K_j}{}\\0\end{pmatrix}
+          y_g
+          \right], \\
+  \dpar{}{C}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=
+    -H^{-1} \left[
+      \begin{pmatrix}{K_{gu}}\\\B{1_g^T}\end{pmatrix} y_g
+      \right],
+\end{align}
+donde $\B{1}_g$ un vector columna de $|g|$ elementos iguales a 1 y
+$\B{y}_g$ el vector de clases correspondientes a los elementos en
+$g$. Para los detalles de este resultado se refiere al lector a
+\cite{glasmachers} y \cite{keerthi}.
+
+Una vez obtenidas las derivadas de $({\B{\alpha},b})^T$ respecto de
+los hiperparámetros $\B{\theta}$, la derivada de $f_k$  respecto
+de los mismos viene dada por
+
+\begin{align}
+  \dpar{f_k}{C}{} &=  \sum_{i=1}^l y_i\left[
+    \dpar{\alpha_i}{C}{} k(x_i,x_k) \right]
+  + \dpar{b}{C}{} ,\\
+  \dpar{f_k}{\theta^K_j}{} &=  \sum_{i=1}^l y_i \left[
+    \dpar{\alpha_i}{\theta^K_j}{} k(x_i,x_k) +
+    \dpar{k(x_i,x_k)}{\theta^K_j}{} \alpha_i \right]
+  + \dpar{b}{\theta^K_j}{}. 
+\end{align}
+Con este resultado, resulta posible el cálculo de la derivada de la
+probabilidad estimada $\dpar{\hat{p}_k}{\theta_j}{}$
+(\autoref{eq:deriv-px-thetak}), y con ella la del gradiente
+$\nabla{}E$ (\autoref{gradE}).
