@@ -2,19 +2,19 @@
 \subsubsection{Derivación de la función error empírico}
 %
 La función de error empírico se basa en el error del modelo sobre un
-conjunto de prueba de clase conocida, el cual es un estimador no
+conjunto de prueba, el cual es un estimador no
 sesgado del error de generalización.  El \e{error de prueba} del
 modelo $h(\xx)$ sobre el conjunto
-$T=((\tilde{x}_k,\tilde{y}_k)),\,k=1,\ldots,N$ viene dado por
+$T=((\tilde{x}_j,\tilde{y}_j)),\,j=1,\ldots,N$ viene dado por
 la \iflatexml{}Ecuación~\ref{eq:error-prueba}\else\autoref{eq:error-prueba}\fi,
 y puede escribirse en la forma equivalente
 %
 \begin{align}
 \label{e3:error-test-alt}
-  E^T &= \frac{1}{N}\sum_{k=1}^{N} H(-{y}_k {c}_k)
+  E^T &= \frac{1}{N}\sum_{j=1}^{N} H(-{y}_j {c}_j)
 \end{align}
 %
-donde $c_k=h(\xx_k)$ es la salida del modelo, y
+donde $c_j=h(\xx_j)$ es la salida del modelo, y
 $H(\cdot)$ es la función escalón de Heaviside. Fijando el núcleo
 utilizado y los conjuntos de datos de entrenamiento $D$ y prueba $T$, se
 puede considerar
@@ -37,37 +37,57 @@ gradiente. Una interpretación alternativa del concepto de error,
 basada en la teoría bayesiana, permite desarrollar una función
 objetivo con características deseables de continuidad y derivabilidad.
 
-Si se conoce la \e{probabilidad a posteriori} $p_k$ de que el ejemplo
-$\xx_k$ pertenezca a la clase positiva
+Si se conoce la \e{probabilidad a posteriori} $p_j$ de que el ejemplo
+$\xx_j$ pertenezca a la clase positiva
 %
 \begin{align}
   \label{e3:pk}
-  p_k = p(x_k) = P(c_k=+1|x_k),
+  p_j = p(x_j) = P(c_j=+1|x_j),
 \end{align}
 %
-se puede caracterizar la \e{probabilidad de error} $E_k$ cometido al
-clasificar el ejemplo $\xx_k$ según
+se puede caracterizar la \e{probabilidad de error} $E_j$ cometido al
+clasificar el ejemplo $\xx_j$ según
 %
 \begin{align}
 \label{e3:Ek}
-  E_k = P(c_k\neq y_k) = |t_k-{p}_k| =
+  E_j = P(c_j\neq y_j) = |t_j-{p}_j| =
   \begin{cases}
-    {p}_k, & t_k=0\\ 1-{p}_k, & t_k = 1,
+    {p}_j, & t_j=0\\ 1-{p}_j, & t_j = 1,
   \end{cases}
 \end{align}
 %
-donde $t_k=\frac{y_k+1}{2}$ es un ``valor deseado'' calculado a partir
-de la clase conocida $y_k$. La probabilidad de error para el conjunto
+donde $t_j=\frac{y_j+1}{2}$ es un ``valor deseado'' calculado a partir
+de la clase conocida $y_j$. La probabilidad de error para el conjunto
 completo $T$ puede escribirse
 %
 \begin{align}
 \label{Err1}
-  E = \sum_{k=1}^{N} E_k.
+  E = \frac{1}{N}\sum_{j=1}^{N} E_j.
 \end{align}
 %
-La función $E$ es el \e{error empírico} y es la función objetivo a
-minimizar. El cálculo de $E$ requiere el conocimiento de la
-probabilidad $p_k$ (\iflatexml{}Ecuación~\ref{e3:pk}\else\autoref{e3:pk}\fi),
-que no puede determinarse directamente a partir de la salida binaria
-del modelo SVM. En cambio, se utiliza un estimador de la probabilidad
-$\hat{p}_k$, tal como se detalla a continuación.
+De este modo, se ha reemplazado la distribución $H$ por la de la probabilidad
+$p_j$.
+
+Para el cálculo de $E$ se requiere conocer la probabilidad $p_j$
+(\iflatexml{}Ecuación~\ref{e3:pk}\else\autoref{e3:pk}\fi), la cual no
+puede determinarse a partir de la salida binaria del modelo SVM.  En
+su lugar, se utiliza un estimador de $\hat{p}_j$, resultando en la
+probabilidad de error aproximada $\hat{E}$ para el conjunto $T$
+%
+\begin{align}
+  \label{Err1}
+  \hat{E}\tab=\sum_{j=1}^{N}\hat{E}_j,\tabs
+  \hat{E}_j\tab=|t_j-\hat{p}_j| =
+  \begin{cases}
+    \hat{p}_j,&t_j=0,\\1-\hat{p}_j,&t_j=1.
+  \end{cases}
+\end{align}
+%
+
+El error $\hat{E}$ puede calcularse sobre el mismo conjunto de entrenamiento
+siguiendo una estrategia de validación cruzada de $k$ iteraciones, entrenando
+en cada caso, 
+
+En la práctica, se 
+La función $\hat{E}$ se denomina \e{error empírico} y es la función objetivo a
+minimizar.
