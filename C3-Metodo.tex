@@ -2,17 +2,37 @@
 %
 %
 %
-\chapter{Especificación}
+\chapter{Descripción del software}
 %
-El objetivo del desarrollo es la generación de un software de
-reconocimiento de secuencias de pre-miRNAs completo, cuya
-funcionalidad abarca desde la lectura y procesamiento de los datos en
-un formato estándar hasta la obtención de predicciones de clase,
-incluyendo la extracción de características, la normalización de los
-conjuntos de datos, y la obención del modelo del clasificador.
+La funcionalidad del software desarrollado se centra en dos tareas
+principales: la obtención del modelo del clasificador y la
+clasificación de secuencias con este modelo.
 
-Un objetivo adicional del desarrollo es lograr un software fácil de
-utilizar por parte del usuario no experto. Por ello, el método incluye
-estrategias de parametrización automática de los clasificadores.
-%% así como una interfaz web básica que permite la utilización del
-%% software en línea, sin necesidad de instalación.
+La obtención del modelo consiste en la optimización de los
+hiperparámetros para el clasificador seleccionado, para luego efectuar
+el entrenamiento con los hiperparámetros óptimos, obteniendo un modelo
+capaz de clasificar nuevos datos.
+
+La clasificación requiere la especificación de un modelo a utilizar
+además de los datos a clasificar, y consiste simplemente en obtener
+predicciones de clase para cada secuencia utilizando el modelo
+provisto.
+
+Los datos de entrada al método vienen dados en archivos de texto que
+contienen directamente las secuencias a procesar.  Sobre estos datos
+en formato texto se aplica un proceso llamado \e{extracción de
+  características} que construye un vector de longitud fija con
+medidas tomadas sobre estos datos y cuyos elementos son más
+informativos y no redundantes en comparación con la información de
+entrada ``en bruto''.
+
+Luego se prosigue con el entrenamiento o clasificación,
+``alimentando'' al algoritmo con vectores de características en lugar
+de la representación original.
+
+El presente capítulo se organiza en tres secciones: la primera
+describe la parte de \e{preprocesamiento} de los datos, convirtiendo
+las secuencias de texto a vectores de características. La segunda
+parte describe el proceso de generación del modelo del
+clasificador. Finalmente, la última parte presenta una descripción de
+la tarea de clasificación.
