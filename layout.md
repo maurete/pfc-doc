@@ -2,7 +2,6 @@ abstract.tex
 titlepage.tex
 C3-Metodo.tex
 S3.1-Descripcion.tex
-figures/metodopropio/metodopropio.png
 S3.2-Entrada.tex
 figures/fastafmt/fasta.png
 S3.2.1-rnafoldfmt.tex
