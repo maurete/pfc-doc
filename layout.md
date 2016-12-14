@@ -4,7 +4,7 @@ C3-Metodo.tex
 S3.1-Preprocesamiento.tex
 S3.1.1-FormatoEntrada.tex
 figures/fastafmt/fasta.png
-S3.2.1-rnafoldfmt.tex
+S3.1.1.1-rnafoldfmt.tex
 figures/rnafoldfmt/rnafold.png
 S3.3-Caracts.tex
 S3.3.1-Tripletes.tex
