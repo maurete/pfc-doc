@@ -8,7 +8,7 @@ S3.1.1.1-rnafoldfmt.tex
 figures/rnafoldfmt/rnafold.png
 S3.1.2-Caracts.tex
 S3.1.2.1-Tripletes.tex
-T3.3.1-TripletFeats.tex
+T3.1.2.1-TripletFeats.tex
 S3.1.2.2-Aux.tex
 T3.1.2.2-FeatsAux.tex
 S3.1.2.3-Secuencia.tex
