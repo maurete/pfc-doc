@@ -15,7 +15,7 @@ S3.1.2.3-Secuencia.tex
 T3.1.2.3-FeatsSequence.tex
 S3.1.2.4-EstructuraSec.tex
 T3.1.2.4-FeatsStructure.tex
-S3.1.2-Normalizacion.tex
+S3.1.3-Normalizacion.tex
 S3.5-Particion.tex
 S3.6-SelAutoHiperp.tex
 S3.6.1-SelTrivial.tex
