@@ -1,7 +1,7 @@
 abstract.tex
 titlepage.tex
 C3-Metodo.tex
-S3.1-Descripcion.tex
+S3.1-Preprocesamiento.tex
 S3.2-Entrada.tex
 figures/fastafmt/fasta.png
 S3.2.1-rnafoldfmt.tex
