@@ -1,7 +1,7 @@
-header = 00-custom-header.tex header.tex
+header = documentclass.tex header.tex
 layout = layout.md
-title = 01-custom-title.tex
-contents = $(shell egrep -v "^figures/" ${layout})
+title = begindocument.tex
+contents = $(shell egrep -v "^figures/" ${layout}) enddocument.tex
 output = output.tex
 
 aux = $(output:%.tex=%.aux) $(output:%.tex=%.log) \
@@ -24,10 +24,8 @@ all: pdf
 
 temp: $(header) $(contents)
 	@ cat $(header) > $(output)
-	@ echo '\\begin{document}' >> $(output)
 	@ cat $(title) >> $(output)
 	@ cat $(contents) >> $(output)
-	@ echo '\\end{document}' >> $(output)
 
 pdf: temp
 	@ $(cc) $(output) || ( $(crm) $(output:%.tex=%.bcf); exit 1 )
