@@ -2,17 +2,31 @@
 %
 %
 %
-\chapter{Especificación}
+\chapter{Descripción del software}
 %
-El objetivo del desarrollo es la generación de un software de
-reconocimiento de secuencias de pre-miRNAs completo, cuya
-funcionalidad abarca desde la lectura y procesamiento de los datos en
-un formato estándar hasta la obtención de predicciones de clase,
-incluyendo la extracción de características, la normalización de los
-conjuntos de datos, y la obención del modelo del clasificador.
+El software desarrollado es un sistema de reconocimiento de
+\premirna{s} cuya funcionalidad puede describirse en torno a tres
+componentes principales: generación del modelo del clasificador,
+clasificación y preprocesamiento de los datos. La generación del
+modelo consiste en encontrar \hparam{s} óptimos para luego obtener el
+modelo del clasificador sobre los datos de entrenamiento.  La
+clasificación es la aplicación del modelo sobre datos nuevos para
+obtener predicciones de clase. El preprocesamiento abarca el conjunto
+de tareas ejecutadas previo a la generación del modelo y/o
+clasificación, y su propósito es transformar los archivos de datos a
+un formato utilizable por la máquina de aprendizaje.
 
-Un objetivo adicional del desarrollo es lograr un software fácil de
-utilizar por parte del usuario no experto. Por ello, el método incluye
-estrategias de parametrización automática de los clasificadores.
-%% así como una interfaz web básica que permite la utilización del
-%% software en línea, sin necesidad de instalación.
+Como punto de partida se consideraron los trabajos previos
+\cite{xue,ng,batuwita,sheng,sewer,ding}. En ellos se presentan
+herramientas de software con propósito similar al del método
+desarrollado en el presente trabajo. En particular, se utilizaron
+conjuntos de datos y técnicas de extracción de \caract{s} de
+\cite{xue,ng,batuwita} debido a la disponibilidad de los datos
+suplementarios.
+
+La implementación se efectuó en lenguaje Matlab versión R2012b y hace
+uso de los módulos adicionales ``Neural Network Toolbox'' y
+``Bioinformatics Toolbox'' del mismo software. Además, integra
+funcionalidad con las herramientas ``libSVM'' \cite{libsvm} y RNAFold
+del paquete ``Vienna RNA'' \cite{vienna}. Se utilizó el software
+\cite{webdemobuilder} para la creación de la interfaz web.

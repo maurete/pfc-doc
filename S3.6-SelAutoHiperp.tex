@@ -3,9 +3,40 @@
 %
 \section{Selección automática de hiperparámetros}
 %
-El método incorpora diferentes ``estrategias'' para la obtención de
-los hiperparámetros óptimos $\Btheta^*$ para el problema de
-entrenamiento dado.  Las ``estrategias'' descritas a continuación
-abarcan tanto una \hyperref[funcobjetivo]{función objetivo} que
-representa la aptitud del modelo obtenido, así como un algoritmo de
-optimización de dicha función.
+La selección automática de hiperparámetros es el paso previo al
+entrenamiento del clasificador, y su objetivo es encontrar aquellos
+\hparam{s} del clasificador (que regulan el proceso de entrenamiento)
+con tal de maximizar la capacidad de generalización del modelo sobre
+el conjunto de datos de entrenamiento.  Según el clasificador, los
+hiperparámetros optimizados son:
+%
+\begin{description}
+\item[MLP:] Número de neuronas en la capa oculta.
+\item[SVM con núcleo lineal:] Variable de holgura $C$.
+\item[SVM con núcleo RBF:] Variable de holgura $C$ y amplitud de la
+  función radial $\gamma$.
+\end{description}
+
+Como se ha visto anteriormente, la capacidad de generalización es un
+objetivo teórico imposible de medir en la práctica. Para sortear esta
+incertidumbre, se definen una serie de ``estrategias'' que intentan
+resolver estos problemas mediante distintos enfoques:
+%
+\begin{description}
+\item[Estrategia trivial:] Consiste en seleccionar hiperparámetros
+  preestablecidos, sin entrenamiento. Se utiliza como estrategia
+  ``básica'' para comparación de los métodos.
+\item[Estrategia de búsqueda exhausiva:] Efectúa una búsqueda
+  exhaustiva de los hiperparámetros maximizando la tasa de
+  clasificación de validación cruzada.
+\item[Estrategia de reducción del error empírico:] Realiza una
+  búsqueda por gradiente en el espacio de los hiperparámetros de la
+  tasa de clasificación de validación cruzada.
+\item[Estrategia RMB]: Minimiza una función de derivación teórica
+  intentando maximizar la tasa de clasificación.
+\end{description}
+%
+En todos los casos, la selección automática de hiperparámetros es un
+proceso que recibe a su entrada los datos de entrenamiento, y retorna
+un vector de hiperparámetros óptimos según el clasificador y la
+estrategia utilizada.

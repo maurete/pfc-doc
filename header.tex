@@ -15,11 +15,13 @@
 % ../pfc/doc/conf/fuentes.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%% \usepackage[T1]{fontenc}
-%% \usepackage{libertine}
-%% \usepackage[scale=0.96]{tgheros}
-%% \usepackage[scaled=0.9]{zi4}
-% \renewcommand{\tt}{\mathtt} % evitar clash de euler con koma-script
+\iflatexml\else
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\usepackage[scale=0.96]{tgheros}
+\usepackage[scaled=0.9]{zi4}
+\renewcommand{\tt}{\mathtt} % evitar clash de euler con koma-script
+\fi
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ../pfc/doc/conf/packages.tex
@@ -32,26 +34,27 @@
 %       argumento opcional.
 \usepackage[spanish,es-tabla,english]{babel}
 %
+%
 % inputenc define la codificación de caracteres del código fuente, acá utf8.
 \usepackage[utf8]{inputenc}
 %
 % ===
 % === Layout
 % ===
-% 
+%
 % relsize provee comandos para utilizar tamaños de fuente relativos
 \usepackage{relsize}
 %
 % ===
 % === Gráficos
 % ===
-% 
+%
 % pst-pdf me permite usar PSTricks con pdflatex. Necesito cargarlo sólo si está
 %         definida la variable pdf, por eso está entre \ifpdf ... \fi
 %\ifpdf\usepackage{pst-pdf}\fi
 %
 % color me permite usar colores en el documento.
-%\usepackage[dvipsnames,tables]{xcolor}
+\usepackage[dvipsnames,tables]{xcolor}
 %
 % graphicx me da el comando \includegraphics para insertar imágenes (?)
 \usepackage{graphicx}
@@ -93,8 +96,16 @@
 %
 %
 %
+
+% better citation handling
+\iflatexml
+\newcommand*{\citeauthor}[1]{\textcolor{RoyalBlue}{(autor de \cite{#1})}}
+\else
+%%\usepackage[square,comma,numbers,sort&compress]{natbib}
 \usepackage[backend=biber,sorting=none,style=ieee,eprint=false,url=false]{biblatex} %% style=ieee
 %% requiere texlive-bibtex-extra en debian
+\fi
+
 
 %% % para eliminar espacio entre items de una lista
 %% \usepackage{enumitem}
@@ -130,8 +141,15 @@
 \fi
 
 %\usepackage{glossaries}
-
 %% \usepackage[spanish]{algorithm2e}
+
+%% Verbatims con fomato lindo
+\usepackage{fancyvrb}
+% interpretar \ como un comando dentro del verbatim
+\iflatexml
+\else
+\fvset{fontsize=\footnotesize,commandchars=\\\{\}}
+\fi
 
 % para teoremas etc
 \usepackage{amsthm}
@@ -179,11 +197,12 @@
 \newcommand{\bp}[2]{\textrm{\mono{#1-#2}}{ }}
 \newcommand{\grad}[1]{\nabla{#1}}
 \newcommand{\tableStyle}{
-\ifpdf\relsize{-0.5}\center\sffamily\fi
+\iflatexml\else\ifpdf\relsize{-0.5}\center\sffamily\fi\fi
 }
 \newcommand{\captionStyle}{
-\ifpdf\relsize{-0.5}\fi
+\iflatexml\else\ifpdf\relsize{-0.5}\fi\fi
 }
+\newcommand{\figureStyle}{\tableStyle}
 \newcommand{\tE}{&{\smaller $\bar{x}$}&}
 \newcommand{\tF}[1]{\multirow{2}{*}{#1}\tE}
 \newcommand{\tZ}{&{\smaller $\sigma$}&}
@@ -201,6 +220,9 @@
 \newcommand{\mipred}{\sbsf{miPred}}
 \newcommand{\micropred}{\sbsf{microPred}}
 \newcommand{\deltamirbase}{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
+\newcommand{\premirna}[1]{pre-miRNA#1}
+\newcommand{\caract}[1]{característica#1}
+\newcommand{\hparam}[1]{hiperparámetro#1}
 \newcommand{\rowMEANN}[2]{&
   \multirow{2}{*}{\tablenum[table-format=1.0,table-number-alignment=right]{#1}}&
   \multirow{2}{*}{\tablenum[table-format=3.0,table-number-alignment=right]{#2}}&
@@ -232,7 +254,7 @@
 % ===
 % === Comandos
 % ===
-% 
+%
 % T: para escribir texto común cuando en modo math
 %    uso: \T{texto que aparecerá en letra normal}
 \newcommand{\T}{\textrm}
@@ -345,7 +367,7 @@
 % ===
 % === Environments
 % ===
-% 
+%
 % enunciado: un environment que básicamente tiene el mismo efecto que el
 %            comando consigna.
 %            uso: \begin{enunciado} ... contenido ... \end{enunciado}
@@ -428,12 +450,6 @@
 \usepackage{soulutf8}
 \fi
 
-% better citation handling
-\iflatexml
-\newcommand*{\citeauthor}[1]{\textcolor{RoyalBlue}{(autor de \cite{#1})}}
-\else
-\usepackage[square,comma,numbers,sort&compress]{natbib}
-\fi
 
 \iflatexml
 \newcommand{\refer}{\textcolor{OliveGreen}{Fig./Ec./etc. }\ref}
