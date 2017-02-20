@@ -3,78 +3,96 @@
 %
 \subsection{Partición de los datos}
 %
-El método requiere la especificación de un conjunto de datos para
-entrenamiento toda vez que se pretenda obtener un modelo de
-clasificador. Asimismo, aquellos ejemplos para los que se desea
-obtener una predicción (dado un modelo entrenado) componen el conjunto
-de prueba.
+La partición de los datos implementa el método de retención, separando
+los conjuntos de datos en un conjunto \e{de entrenamiento} y otro
+\e{de prueba}. Esta partición se efectúa según la especificación del
+usuario al momento de la carga de los archivos.
 
-Una vez efectuadas la extracción de características y la
-normalización, los archivos de entrada originales se han convertido en
-conjuntos $D_1,\ldots,D_N$ que contienen los vectores de
-características normalizados y la información de clase para cada
-ejemplo. La partición de los datos refiere al armado de los conjuntos
-de entrenamiento $D^E$ y prueba $D^P$ con los elementos de estos
-conjuntos a partir de la especificación del usuaio.
+Internamente, los conjuntos de datos se guardan como matrices de
+$\ell^E$ (entrenamiento) y $\ell^P$ (prueba) filas por $70$ columnas.
+Las primeras $66$ columnas representan los vectores de características
+normalizados de cada ejemplo, y las restantes 4 contienen la clase del
+ejemplo e índices de referencia.
 
-El conjunto $D_n=((\xx_i,y_i)),\,i=1,\ldots,\ell_n$ se corresponde con
-el $n$-ésimo archivo de entrada. El objetivo es armar los conjuntos de
-entrenamiento $D^E$ y de prueba $D^P$ con elementos de los
-$D_n,\,n=1,\ldots,N$.  Para cada conjunto $D_n$, el usuario especifica
-una proporción $p_n^E$ de elementos del conjunto $D_n$ a utilizar como
-entrenamiento, y otra proporción $p_n^P$ de elementos de $D_n$ a
-utilizar para prueba. Los valores de $p_n^E,p_n^P$ son tales que
-%
-\begin{align}
-  0\ \leq\ p_n^E, p_n^P\ \leq\  p_n^E + p_n^P\ \leq\ 1,
-\end{align}
-%
-esto es, $p_n^E$ y $p_n^P$ son números enre 0 y 1 cuya suma es menor o
-igual a 1.
+Para cada conjunto de datos $D_n$ de $\ell_n$ elementos,
+correspondiente con un archivo de entrada, en primer lugar se generan
+índices únicos para cada ejemplo, y se agregan en las últimas 4
+columnas junto a la clase.  El segundo paso consiste en intercambiar
+las filas en forma pseudoaleatoria.  Finalmente, se seleccionan las
+primeras $\ell_n\cdot{}p_n^E$ filas resultantes agregándolas al
+conjunto de entrenamiento, y las $\ell_n\cdot{}p_n^P$ filas restantes
+al conjunto de prueba.
 
-El primer paso consiste en permutar aleatoriamente el orden de los
-elementos de los conjuntos de entrada $D_n$
-%
-\begin{align}
-  D^*_n = ((\xx_j,y_j)), \quad j = \sigma(i,\ell_n,s), \quad i=1,\ldots,\ell_n,
-\end{align}
-%
-donde $\sigma$ es una función de permutación pseudoaleatoria que
-requiere la especificación de una \e{semilla} $s$. Seguidamente se
-particiona cada conjunto $D_n$ en sub-conjuntos de entrenamiento
-y prueba
-%
-\begin{align}
-  D^E_n &= ((\xx_u,y_u)\in D^*_n),& u&=1,\ldots,\ell^E_n, \\
-  D^P_n &= ((\xx_v,y_v)\in D^*_n),& v&=1,\ldots,\ell^P_n,
-\end{align}
-%
-donde
-%
-\begin{align}
-  \begin{split}
-    \ell^E_n &= \left\lfloor\ell_n\cdot p_n^E \right\rceil, \\
-    \ell^P_n &= \lfloor\ell_n\cdot p_n^P\rceil.
-  \end{split}
-\end{align}
-%
-El operador $\lfloor\cdot\rceil$ es el operador de redondeo.
-Finalmente, se ensamblan los conjuntos de entrenamiento y prueba según
-%
-\begin{align}
-  D^E &= \left( (\xx_u,y_u) \in \bigcup_n {D}^E_n \right), &
-  u &= \sigma(i,\ell^E,s), &
-  i &= 1,\ldots,\ell^E, &
-  \ell^E &= \left| D^E \right| = \sum_n \ell^E_n ,\\
-  D^P &= \left( (\xx_v,y_v) \in \bigcup_n {D}^P_n \right), &
-  v &= \sigma(j,\ell^P,s), &
-  j &= 1,\ldots,\ell^P, &
-  \ell^P &= \left| D^P \right| = \sum_n \ell^P_n .
-\end{align}
-%
-Esto es, los conjuntos de entrenamiento $D^E$ y prueba $D^P$ se arman
-concatenando los respectivos $D^E_n$ y $D^P_n$ y luego permutando
-aleatoriamente el orden de los ejemplos en los conjuntos resultantes.
+Una vez conformados los conjuntos de entrenamiento y prueba,
+se permutan aleatoriamente las filas de ambos conjuntos.
+
+
+%% Una vez efectuadas la extracción de características y la
+%% normalización, los archivos de entrada originales se han convertido en
+%% conjuntos $D_1,\ldots,D_N$ que contienen los vectores de
+%% características normalizados y la información de clase para cada
+%% ejemplo. La partición de los datos refiere al armado de los conjuntos
+%% de entrenamiento $D^E$ y prueba $D^P$ con los elementos de estos
+%% conjuntos a partir de la especificación del usuaio.
+
+%% El conjunto $D_n=((\xx_i,y_i)),\,i=1,\ldots,\ell_n$ se corresponde con
+%% el $n$-ésimo archivo de entrada. El objetivo es armar los conjuntos de
+%% entrenamiento $D^E$ y de prueba $D^P$ con elementos de los
+%% $D_n,\,n=1,\ldots,N$.  Para cada conjunto $D_n$, el usuario especifica
+%% una proporción $p_n^E$ de elementos del conjunto $D_n$ a utilizar como
+%% entrenamiento, y otra proporción $p_n^P$ de elementos de $D_n$ a
+%% utilizar para prueba. Los valores de $p_n^E,p_n^P$ son tales que
+%% %
+%% \begin{align}
+%%   0\ \leq\ p_n^E, p_n^P\ \leq\  p_n^E + p_n^P\ \leq\ 1,
+%% \end{align}
+%% %
+%% esto es, $p_n^E$ y $p_n^P$ son números enre 0 y 1 cuya suma es menor o
+%% igual a 1.
+
+%% El primer paso consiste en permutar aleatoriamente el orden de los
+%% elementos de los conjuntos de entrada $D_n$
+%% %
+%% \begin{align}
+%%   D^*_n = ((\xx_j,y_j)), \quad j = \sigma(i,\ell_n,s), \quad i=1,\ldots,\ell_n,
+%% \end{align}
+%% %
+%% donde $\sigma$ es una función de permutación pseudoaleatoria que
+%% requiere la especificación de una \e{semilla} $s$. Seguidamente se
+%% particiona cada conjunto $D_n$ en sub-conjuntos de entrenamiento
+%% y prueba
+%% %
+%% \begin{align}
+%%   D^E_n &= ((\xx_u,y_u)\in D^*_n),& u&=1,\ldots,\ell^E_n, \\
+%%   D^P_n &= ((\xx_v,y_v)\in D^*_n),& v&=1,\ldots,\ell^P_n,
+%% \end{align}
+%% %
+%% donde
+%% %
+%% \begin{align}
+%%   \begin{split}
+%%     \ell^E_n &= \left\lfloor\ell_n\cdot p_n^E \right\rceil, \\
+%%     \ell^P_n &= \lfloor\ell_n\cdot p_n^P\rceil.
+%%   \end{split}
+%% \end{align}
+%% %
+%% El operador $\lfloor\cdot\rceil$ es el operador de redondeo.
+%% Finalmente, se ensamblan los conjuntos de entrenamiento y prueba según
+%% %
+%% \begin{align}
+%%   D^E &= \left( (\xx_u,y_u) \in \bigcup_n {D}^E_n \right), &
+%%   u &= \sigma(i,\ell^E,s), &
+%%   i &= 1,\ldots,\ell^E, &
+%%   \ell^E &= \left| D^E \right| = \sum_n \ell^E_n ,\\
+%%   D^P &= \left( (\xx_v,y_v) \in \bigcup_n {D}^P_n \right), &
+%%   v &= \sigma(j,\ell^P,s), &
+%%   j &= 1,\ldots,\ell^P, &
+%%   \ell^P &= \left| D^P \right| = \sum_n \ell^P_n .
+%% \end{align}
+%% %
+%% Esto es, los conjuntos de entrenamiento $D^E$ y prueba $D^P$ se arman
+%% concatenando los respectivos $D^E_n$ y $D^P_n$ y luego permutando
+%% aleatoriamente el orden de los ejemplos en los conjuntos resultantes.
 %
 %
 \subsection{Generación de particiones para validación cruzada}

@@ -1,30 +1,24 @@
 %
 %
+\subsection{Extracción de características}
 %
-\subsection{Extracción de caracerísticas}
-%
-La extracción de características es el proceso de calcular, vectores
-numéricos de longitud fija que representan cada ejemplo.  Estos
-\e{vectores de características} son una representación más conveniente
-de los ejemplos originalmente dados en forma de cadenas de caracteres
-de longitud variable.
+La extracción de características es el proceso de construir una
+representación de los datos mediante un conjunto fijo de
+características numéricas y/o categóricas que describen cada
+observación (ejemplo).  Una ``característica'' es un atributo o medida
+que se toma sobre el dato original y se trata como variable aleatoria.
 
-El vector de características incorpora medidas tomadas sobre la
-secuencia, la estructura secundaria, y la mínima energía libre
-resultante del cálculo de la estructura secundaria. Consta de 66 medidas
-basadas en aquellas utilizadas en los trabajos previos de \cite{xue, ng,
-  batuwita}. Según la naturaleza de estas características, se
-distinguen cuatro ``grupos'':
-%
-\begin{itemize}
-\item 32 características de tripletes,
-\item 4 características auxiliares de tripletes,
-\item 23 características de la secuencia, y
-\item 7 características de la estructura secundaria.
-\end{itemize}
-%
-El cálculo de las características (a excepción de las de la secuencia)
-requiere el conocimiento de la estructura secundaria de cada
-ejemplo. Por ello, el método incorpora el cálculo automático de la
-estructura secundaria utilizando herramientas externas, cuando no se
-provee la información de estructura secundaria.
+En otras palabras, la extracción de \caract{s} transforma la
+representación original (cadenas de caracteres) a un conjunto fijo de
+variables numéricas.  Mediante esta transformación se pretende
+alcanzar una mejor representación de los datos desde el punto de vista
+de la máquina de aprendizaje, que sea al mismo tiempo más informativa
+(menos redundante) y numéricamente tratable.
+
+La construcción del conjunto de características conforma toda una
+disciplina en sí misma, y excede el alcance del presente trabajo.  En
+el software \hl{propio} se adopta un enfoque simple, generando un
+conjunto de características agregado a partir de los trabajos tomados
+como referencia \cite{xue,ng,batuwita}.  Según el tipo de medida que
+representan, se distinguen grupos de \caract{s} de tripletes (x36), de
+secuencia (x23) y de estructura secundaria (x7).

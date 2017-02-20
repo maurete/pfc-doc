@@ -1,54 +1,59 @@
 %
 %
-%
 \subsection{Formato de entrada}
 %
-Los datos de entrada vienen dados en un formato estándar denominado
-FASTA, originado por el software de igual nombre publicado
-inicialmente en 1985 por \citeauthor{fasta} \cite{fasta}.  Para cada
-archivo, se especifica
-%
-\begin{enumerate}
-\item nombre del archivo,
-\item clase de los ejemplos contenidos, y
-\item proporción de elementos a utilizar para entrenamiento y prueba.
-\end{enumerate}
-%
-Cuando el archivo contiene ejemplos de pre-miRNAs verdaderos, la clase
-es ``positiva'' ($+1$), cuando contiene ejemplos de ``pseudo''
-pre-miRNAs la clase se establece a ``negativa'' ($-1$).  No se permite
-la lectura de archivos con elementos de clase mixta.  La proporción de
-elementos a utilizar para entrenamiento y prueba determina la cantidad
-de ejemplos de cada archivo que pasarán a integrar el conjunto de
-entrenamiento, utilizado para la generación del modelo, y el de
-prueba, utilizado para clasificación.
+El sistema interpreta a su entrada archivos de texto con secuencias de
+ejemplo. El formato soportado es una extensión del formato FASTA que
+permite la lectura de información de estructura secundaria.  El
+formato FASTA tiene origen en un software de igual nombre
+\citeauthor{fasta} \cite{fasta} y es muy difundido dentro de la
+disciplina. Una variante de FASTA es el formato producido por RNAFold
+\cite{vienna}, software utilizado para el cálculo de la estructura
+secundaria de ácidos ribonucleicos. El formato definido a continuación
+es compatible tanto con el formato FASTA estándar, así como con el
+formato RNAfold.
 
-Los archivos FASTA son archivos de texto que contienen secuencias
-\e{anotadas}, con líneas de descripción intercaladas entre fragmentos
-de secuencia.
-La línea de descripción comienza con el carácter \mono{>} seguido por
-un nombre identificador (``número de acceso'') de la secuencia.  La
-línea continúa con una descripción del ejemplo, que
-puede contener, por ejemplo, el nombre científico de la especie, o la
-posición de la secuencia en el genoma de la especie. Tanto el nombre
-identificador como la descripción son opcionales.
+Los archivos leídos en la entrada son archivos de texto plano que
+contienen uno o más ejemplos contiguos. Cada ejemplo se describe por
+una línea de descripción, una o más líneas de secuencia, y
+opcionalmente una o más líneas de estructura secundaria.
+
+La línea de descripción comienza con el carácter ``mayor que''
+(\mono{>}) seguido de un identificador (``número de acceso'') de la
+secuencia. Continúa con una descripción del ejemplo que puede
+contener, por ejemplo, el nombre científico de la especie o la
+posición de la secuencia dentro del genoma de la especie. Tanto el
+nombre identificador como la descripción son opcionales.
+Cada línea de descripción indica el comienzo de un nuevo ejemplo.
 
 Las líneas de secuencia siguen a la de descripción, y consisten en
-carácteres contiguos, en el que cada carácter representa un
-nucleótido. En el ácido ribonucleico (RNA), un nucleótido puede estar
-compuesto por una de las cuatro bases siguientes:
-%
-\begin{enumerate}
-\item Adenina (\mono{A}),
-\item Citosina (\mono{C}),
-\item Guanina (\mono{G}),
-\item Uracilo (\mono{U}).
-\end{enumerate}
-%
-Las líneas de secuencia se componen entonces por caracteres \mono{A},
-\mono{C}, \mono{G}, y \mono{U}.  La secuencia termina cuando se
-encuentra una línea que comience con el carácter \mono{>}, dando lugar
-a un nuevo ejemplo, o bien, el fin de archivo.
-En la \iflatexml{}Figura~\ref{fastafmt}\else\autoref{fastafmt}\fi se
-muestra un fragmento de archivo FASTA
-con 3 ejemplos de pre-miRNAs del organismo modelo \e{C. elegans}.
+caracteres contiguos que representan nucleótidos. En el ácido
+ribonucleico (RNA), un nucleótido contiene una de las bases adenina
+(\mono{A}), citosina (\mono{C}), guanina (\mono{G}), o uracilo
+(\mono{U}), luego, los caracteres permitidos en la secuencia son
+\mono{ACGU} y sus variantes en minúsculas \mono{acgu}. También se
+permiten caracteres de fin de línea, que son ignorados. La secuencia
+termina cuando se encuentra el comienzo de una línea de descripción o
+de estructura secundaria.
+
+Las líneas de estructura secundaria vienen dadas en notación
+``punto-paréntesis'' compuesta por caracteres \mono{.}, \mono{(}, y
+\mono{)}, indicando que el nucleótido correspondiente está suelto (no
+acoplado), o es primero o segundo dentro de un par de bases,
+respectivamente.  Opcionalmente, la línea finaliza por un número entre
+paréntesis que indica la denominada ``mínima energía libre''
+resultante del cálculo de la estructura secundaria. La estructura
+secundaria termina cuando se encuentra el comienzo de una línea de
+descripción, que indica el comienzo de un nuevo ejemplo.
+
+El formato de entrada así definido es compatible con el formato FASTA
+estándar, sin información de estructura secundaria, así como con el
+formato de RNAFold \cite{vienna}, software utilizado para el cálculo
+de la estructura secundaria de ácidos ribonucleicos.
+
+En la \iflatexml{}Figura~\ref{fastafmt}\else\autoref{fastafmt}\fi{} se
+muestra un fragmento de archivo FASTA con 3 ejemplos de pre-miRNAs de
+la especie \e{Caenorhabditis elegans}, y en la
+\iflatexml{}Figura~\ref{rnafoldfmt}\else\autoref{rnafoldfmt}\fi{} se
+muestran los mismos ejemplos con formato RNAFold incluyendo la
+estructura secundaria.

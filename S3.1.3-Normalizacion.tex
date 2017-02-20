@@ -3,27 +3,28 @@
 %
 \subsection{Normalización de los vectores de características}
 %
-Las componentes del vector de características representan cantidades
-diversas que toman valores dentro de rangos numéricos también
-diferentes, según su naturaleza.  Al efectuar operaciones algebraicas
-con vectores de características, la disparidad numérica de las
-componentes implica que algunas de ellas tendrán más ``peso'' que
-otras de menor magnitud.
+%% Los elementos que componen el vector de características representan
+%% cantidades diversas con rangos numéricos diferentes, según su
+%% naturaleza. Esta disparidad numérica entre los elementos del
+%% mismo vector implica que, al efectuar operaciones algebraicas
+%% algunas \caract{s} de valor absoluto mayor tendrán más ``peso''
+%% que otras de menor magnitud.
 
 La normalización de los vectores de características consiste en
 modificar el rango de cada variable a un intervalo determinado, por
-ejemplo $[0,1]$ o $[-1,+1]$. Esta normalización tiende a generar
-problemas mejor condicionados, al tiempo que incrementa la velocidad
-de convergencia del entrenamiento \cite{nnfaq2}.
+ejemplo $[0,1]$ o $[-1,+1]$. Esta normalización genera problemas mejor
+condicionados, al tiempo que incrementa la velocidad de convergencia
+del entrenamiento \cite{nnfaq2}.
 
-Partiendo de un conjunto de datos representativo $I$ con $\ell$
-vectores de $F$ características, se forma una matriz
-$M^I{}_{(\ell\times{}F)}$ en la que cada fila $i$ corresponde a un
-ejemplo y cada columna $j$ representa una variable.  Para cada columna
-de $M^I$, se calcula un desplazamiento $d_j(I)$ y un factor de
-escalado $s_j(I)$ que permiten transformar el rango de la variable
-$x_j$ al intervalo especificado. Por ejemplo, para llevar las
-variables al rango $[0,1]$ se tiene
+Para la normalización se considera un conjunto de datos representativo
+$I$, tal como aquel formado con el primer achivo leído a la entrada.
+Este conjunto de $\ell$ vectores de $F$ características, conforma una
+matriz $M^I{}_{(\ell\times{}F)}$, en la que cada fila $i$ corresponde
+a un ejemplo y cada columna $j$ representa una variable
+(\caract{}). Para cada columna de $M^I$, se calcula un desplazamiento
+$d_j(I)$ y un factor de escalado $s_j(I)$ que permiten transformar el
+rango de la variable $x_j$ al intervalo especificado. Por ejemplo,
+para llevar las variables al rango $[0,1]$ se tiene
 %
 \begin{align}
   d_j(I) &= - \min_i m_{ij}, &
@@ -38,22 +39,22 @@ $[-1,+1]$,
   s_j(I) &= \frac{2}{\max_i m_{ij} - \min_i m_{ij}}.
 \end{align}
 %
-El desplazamiento $\B{d}(I)$ y el factor de escala $\B{s}(I)$ se
-aplican a todos los conjuntos de datos de entrada al clasificador,
-estén o no incluidos en el conjunto representativo $I$, de modo que se
-mantienen las diferencias relativas entre los diferentes conjuntos de
-datos. La normalización de cada vector de características
-$\xx_i=(m_{i1},m_{i2},\ldots,m_{iF})$ se efectúa haciendo
+El desplazamiento $\B{d}(I)$ y el factor de escala $\B{s}(I)$
+calculados a partir de $I$ se aplican a todos los datos
+de entrada al clasificador, manteniendo las diferencias relativas
+entre los diferentes conjuntos de datos. La normalización de un
+vector de características $\xx=(x_{1},x_{2},\ldots,x_{F})$ se
+efectúa haciendo
 %
 \begin{align}
-  \xx_i^{*} = (\xx_i + \B{d}(I)) \C{S}(I),\quad \xx_i\in D,
+  x_j^{*} = ( x_j + d_j(I) ) s_j(I), \quad j=1,\ldots,F.
 \end{align}
 %
-donde $\C{S}$ es la matriz diagonal tal que $\C{S}_{jj}=s_j$.
+%donde $\C{S}$ es la matriz diagonal tal que $\C{S}_{jj}=s_j$.
 
 La normalización aplicada a los conjuntos de datos durante el
 entrenamiento tiene un impacto directo sobre el modelo generado, ya
 que el mismo aprende a clasificar vectores de características
-\e{normalizados}.  Por ello, la información de normalización se guarda
+\e{normalizados}. Por ello, la información de normalización se guarda
 como parte del mismo modelo y es aplicada automáticamente a cada nuevo
 ejemplo a clasificar.

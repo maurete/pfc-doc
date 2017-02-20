@@ -4,77 +4,29 @@
 %
 \chapter{Descripción del software}
 %
-La funcionalidad del software desarrollado se centra en dos tareas
-principales: la generación del modelo del clasificador y la
-clasificación de nuevas secuencias con un modelo previamente
-generado.
+El software desarrollado es un sistema de reconocimiento de
+\premirna{s} cuya funcionalidad puede describirse en torno a tres
+componentes principales: generación del modelo del clasificador,
+clasificación y preprocesamiento de los datos. La generación del
+modelo consiste en encontrar \hparam{s} óptimos para luego obtener el
+modelo del clasificador sobre los datos de entrenamiento.  La
+clasificación es la aplicación del modelo sobre datos nuevos para
+obtener predicciones de clase. El preprocesamiento abarca el conjunto
+de tareas ejecutadas previo a la generación del modelo y/o
+clasificación, y su propósito es transformar los archivos de datos a
+un formato utilizable por la máquina de aprendizaje.
 
-La generación del modelo es la tarea de entrenar un modelo de
-clasificador óptimo para un \e{conjunto de entrenamiento} $D$.  En
-este caso, la entrada al sistema es una serie de archivos de
-secuencias, que en conjunto deberán formar un conjunto de
-entrenamiento válido, con ejemplos de clase positiva y negativa.
-La secuencia de pasos efectuada para la obtención del modelo óptimo
-es:
-%
-\begin{enumerate}
-\item Preprocesamiento de los datos
-\item Generación de particiones de validación cruzada
-\item Optimización de los hiperparámetros del clasificador
-\item Entrenamiento
-\end{enumerate}
-%
-Una vez efectuado este proceso, se obtiene a la salida del método un
-modelo de clasificador apto para clasificar nuevas secuencias.
+Como punto de partida se consideraron los trabajos previos
+\cite{xue,ng,batuwita,sheng,sewer,ding}. En ellos se presentan
+herramientas de software con propósito similar al del método
+desarrollado en el presente trabajo. En particular, se utilizaron
+conjuntos de datos y técnicas de extracción de \caract{s} de
+\cite{xue,ng,batuwita} debido a la disponibilidad de los datos
+suplementarios.
 
-La clasificación de nuevas secuencias consiste en aplicar un modelo
-previamente generado sobre los archivos de secuencias provistos como
-entrada, obteniendo predicciones de clase para cada una de ellas. En
-este caso, el método recibe como entrada un modelo de clasificador
-entrenado y uno o más archivos de secuencia.  A la salida, genera
-predicciones de clase para cada una se las secuencias procesadas.  La
-obtención de predicciones de clase consta de los siguientes pasos
-%
-\begin{enumerate}
-\item Preprocesamiento de los archivos de secuencias
-\item Aplicación del modelo sobre las secuencias
-\end{enumerate}
-%
-De este modo se obtienen las predicciones de clase para todas las
-secuencias procesadas.
-
-Tanto para la generación del modelo como para la clasificación, el
-sistema efectúa una serie de tareas denominadas genéricamente como
-``preprocesamiento''. En particular, estas tareas consisten en
-%
-\begin{enumerate}
-\item Plegado de secuencias
-\item Extracción de características
-\item Normalización
-\item Aleatorización
-\end{enumerate}
-%
-Estos pasos de preprocesamiento tienen como objetivo la generación de
-un ``problema de clasificación'' mejor condicionado desde el punto de
-vista del clasificador.  Los archivos de texto contienen secuencias de
-(candidatos a) pre-miRNAs a procesar. A través del ``plegado'' de las
-secuencias se calcula la estructura secundaria, incorporando más
-información que la directamente disponible de la secuencia.
-Seguidamente, se aplica sobe la secuencia junto a la información de
-plegado un proceso llamado \e{extracción de características},
-construyendo para cada secuencia original un vector de longitud fija
-cuyos elementos son más informativos y menos redundantes en
-comparación con la información de entrada ``en bruto''.  La
-normalización y aleatorización de los datos se efectúan para mejorar
-las condiciones en que se entrena el clasificador.
-
-Luego se prosigue con el entrenamiento o clasificación,
-``alimentando'' al algoritmo con vectores de características en lugar
-de la representación original.
-
-El presente capítulo se organiza en tres secciones: la primera
-describe la parte de \e{preprocesamiento} de los datos, convirtiendo
-las secuencias de texto a vectores de características. La segunda
-parte describe el proceso de generación del modelo del
-clasificador. Finalmente, la última parte presenta una descripción de
-la tarea de clasificación.
+La implementación se efectuó en lenguaje Matlab versión R2012b y hace
+uso de los módulos adicionales ``Neural Network Toolbox'' y
+``Bioinformatics Toolbox'' del mismo software. Además, integra
+funcionalidad con las herramientas ``libSVM'' \cite{libsvm} y RNAFold
+del paquete ``Vienna RNA'' \cite{vienna}. Se utilizó el software
+\cite{webdemobuilder} para la creación de la interfaz web.

@@ -2,6 +2,7 @@ header = documentclass.tex header.tex
 layout = layout.md
 title = begindocument.tex
 contents = $(shell egrep -v "^figures/" ${layout}) enddocument.tex
+figures = $(shell ls figures/*/figure.tex) $(shell ls figures/*/caption.tex)
 output = output.tex
 
 aux = $(output:%.tex=%.aux) $(output:%.tex=%.log) \
@@ -23,9 +24,11 @@ all: pdf
 	$(crm) $(output) $(aux) $(biber_aux)
 
 temp: $(header) $(contents)
-	@ cat $(header) > $(output)
-	@ cat $(title) >> $(output)
-	@ cat $(contents) >> $(output)
+	echo '\\include{documentclass}' > $(output)
+	echo '\\include{header}' >> $(output)
+	echo '\\include{begindocument}' >> $(output)
+	cat $(layout) | sed 's/^/\\includeFileOrFigure\{/g ; s/$$/}/g ;' >> $(output)
+	echo '\\include{enddocument}' >> $(output)
 
 pdf: temp
 	@ $(cc) $(output) || ( $(crm) $(output:%.tex=%.bcf); exit 1 )

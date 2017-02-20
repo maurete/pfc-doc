@@ -41,14 +41,14 @@
 % ===
 % === Layout
 % ===
-% 
+%
 % relsize provee comandos para utilizar tamaños de fuente relativos
 \usepackage{relsize}
 %
 % ===
 % === Gráficos
 % ===
-% 
+%
 % pst-pdf me permite usar PSTricks con pdflatex. Necesito cargarlo sólo si está
 %         definida la variable pdf, por eso está entre \ifpdf ... \fi
 %\ifpdf\usepackage{pst-pdf}\fi
@@ -141,8 +141,12 @@
 \fi
 
 %\usepackage{glossaries}
-
 %% \usepackage[spanish]{algorithm2e}
+
+%% Verbatims con fomato lindo
+\usepackage{fancyvrb}
+% interpretar \ como un comando dentro del verbatim
+\fvset{fontsize=\footnotesize,commandchars=\\\{\}}
 
 % para teoremas etc
 \usepackage{amsthm}
@@ -190,11 +194,12 @@
 \newcommand{\bp}[2]{\textrm{\mono{#1-#2}}{ }}
 \newcommand{\grad}[1]{\nabla{#1}}
 \newcommand{\tableStyle}{
-\ifpdf\relsize{-0.5}\center\sffamily\fi
+\iflatexml\else\ifpdf\relsize{-0.5}\center\sffamily\fi\fi
 }
 \newcommand{\captionStyle}{
-\ifpdf\relsize{-0.5}\fi
+\iflatexml\else\ifpdf\relsize{-0.5}\fi\fi
 }
+\newcommand{\figureStyle}{\tableStyle}
 \newcommand{\tE}{&{\smaller $\bar{x}$}&}
 \newcommand{\tF}[1]{\multirow{2}{*}{#1}\tE}
 \newcommand{\tZ}{&{\smaller $\sigma$}&}
@@ -212,6 +217,9 @@
 \newcommand{\mipred}{\sbsf{miPred}}
 \newcommand{\micropred}{\sbsf{microPred}}
 \newcommand{\deltamirbase}{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
+\newcommand{\premirna}[1]{pre-miRNA#1}
+\newcommand{\caract}[1]{característica#1}
+\newcommand{\hparam}[1]{hiperparámetro#1}
 \newcommand{\rowMEANN}[2]{&
   \multirow{2}{*}{\tablenum[table-format=1.0,table-number-alignment=right]{#1}}&
   \multirow{2}{*}{\tablenum[table-format=3.0,table-number-alignment=right]{#2}}&
@@ -243,7 +251,7 @@
 % ===
 % === Comandos
 % ===
-% 
+%
 % T: para escribir texto común cuando en modo math
 %    uso: \T{texto que aparecerá en letra normal}
 \newcommand{\T}{\textrm}
@@ -356,7 +364,7 @@
 % ===
 % === Environments
 % ===
-% 
+%
 % enunciado: un environment que básicamente tiene el mismo efecto que el
 %            comando consigna.
 %            uso: \begin{enunciado} ... contenido ... \end{enunciado}
