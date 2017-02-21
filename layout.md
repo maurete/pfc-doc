@@ -5,6 +5,7 @@ S1.1-miRNAs.tex
 figures/hsa-mir-299_ss/hsa-mir-299_ss.png
 S1.1-miRNAs2.tex
 S1.2-Clasificacion.tex
+S1.3-Motivacion.tex
 C2-teoria.tex
 S2.1-aprendizaje.tex
 S2.2-Hiperparams.tex
