@@ -4,6 +4,7 @@ title = begindocument.tex
 contents = $(shell egrep -v "^figures/" ${layout}) enddocument.tex
 figures = $(shell ls figures/*/figure.tex) $(shell ls figures/*/caption.tex)
 output = output.tex
+revision = revision.tex
 
 aux = $(output:%.tex=%.aux) $(output:%.tex=%.log) \
 $(output:%.tex=%.out) $(output:%.tex=%.toc) $(dep:%.tex=%.aux)
@@ -23,14 +24,21 @@ crm  = rm -f
 all: pdf
 	$(crm) $(output) $(aux) $(biber_aux)
 
+rev:
+	echo -n '\\iflatexml\\else\\ohead{rev: ' > $(revision)
+	git rev-parse HEAD | cut -c1-7 >> $(revision)
+	git diff-index --quiet HEAD -- || echo -n '*' >> $(revision)
+	echo ', \\today}\\fi' >> $(revision)
+
 temp: $(header) $(contents)
 	echo '\\include{documentclass}' > $(output)
 	echo '\\include{header}' >> $(output)
+	echo '\\include{revision}' >> $(output)
 	echo '\\include{begindocument}' >> $(output)
 	cat $(layout) | sed 's/^/\\includeFileOrFigure\{/g ; s/$$/}/g ;' >> $(output)
 	echo '\\include{enddocument}' >> $(output)
 
-pdf: temp
+pdf: rev temp
 	@ $(cc) $(output) || ( $(crm) $(output:%.tex=%.bcf); exit 1 )
 
 # borrar todos los compilados y auxiliares
