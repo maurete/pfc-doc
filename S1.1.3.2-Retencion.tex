@@ -1,0 +1,18 @@
+%
+\subsubsection{Método de retención}
+\label{retencion}
+%
+Con frecuencia, en los problemas reales el conjunto de prueba $T$ no
+viene dado como tal, y en cambio se genera un conjunto $T^*\subset{}D$
+seleccionando ejemplos al azar del conjunto de entrenamiento $D$.  A
+fin de que exista una cierta ``independencia''\footnote{Estrictamente,
+  la independencia no existe en este caso, ya que la pertenencia de un
+  ejemplo al conjunto de entrenamiento $D^*$ implica la no pertenecia
+  al conjunto de prueba $T^*$.} de los datos en $T^*$ respecto del
+conjunto de entrenamiento, se genera un nuevo conjunto de entrenamiento
+$D^*\subset{}D:D^*\cap{}T^*=\emptyset$ que será usado para entrenar la
+máquina de aprendizaje. El conjunto $D^*$ se denomina en ocasiones
+\e{conjunto de estimación}.
+Finalmente, el error de prueba puede ser estimado calculando el error
+sobre el conjunto $T^*$. Este método es conocido como el \e{método de
+  retención}.

@@ -1,0 +1,18 @@
+%
+\subsubsection{Validación cruzada dejando uno fuera}
+%
+En el método de validación cruzada ``clásico'' de $k$ iteraciones, se
+tiene para valores pequeños de $k$ una reducción en la varianza y para
+valores grandes una reducción del sesgo introducido por el particionado.
+En el extremo, cuando se
+establece $k$ al número de elementos en $D$, se está ante un método de
+\e{validación cruzada dejando uno fuera}. La condición $k=\ell=\|D\|$
+implica la reducción del sesgo a un valor mínimo, ya que se separa
+sólo un elemento para validación. Sin embargo, la varianza obtenida
+mediante este método es máxima.
+
+Para obtener una estimación del error de generalización mediante este
+método es necesario entrenar el clasificador $\ell$ veces, lo que deriva
+en un costo computacional muy elevado. Sin embargo, para el caso de un
+clasificador SVM existen técnicas para el cálculo eficiente del error
+dejando uno fuera \cite{chapelle,lee-keerthi}.
