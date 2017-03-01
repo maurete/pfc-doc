@@ -6,6 +6,7 @@ S1.1.3-EstimErrGeneral.tex
 S1.1.3.1-ErrPrueba.tex
 S1.1.3.2-Retencion.tex
 S1.1.3.3-Crossval.tex
+S2.1.3.4-LOO.tex
 S2.1.4-Regularizacion.tex
 S2.1.5-Medidas.tex
 S2.1.5.1-sesp.tex
