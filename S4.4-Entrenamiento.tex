@@ -1,0 +1,26 @@
+\section{Entrenamiento de clasificadores}
+\funcheader{mlp\_xtrain}{Datos de entrenamiento, datos de validación,
+  número de neuronas en la capa oculta}{Modelo MLP entrenado}
+La función de entrenamiento del clasificador MLP es
+\func{mlp\_xtrain}. Esta función efectúa entrenamiento del
+clasificador MLP con corte prematuro, según la tasa de clasificación
+de un conjunto de validación. Este conjunto de validación puede ser
+suministrado de forma explícita, tal como al utilizar validación
+cruzada, o bien se utiliza el 20\% de los datos suministrados en el
+conjunto de entrenamiento mediante selección aleatoria.
+
+\hl{early stopping}
+
+\hl{siempre se deja una parte de los datos para validar}
+
+\funcheader{mysvm\_train}{Datos de entrenamiento, núcleo,
+  regularización $C$, hiperparámetros del núcleo}{ Modelo SVM
+  entrenado}
+La función para entrenamiento SVM es \func{mysvm\_train}. Brinda una
+interfaz común a los clasificadores SVM de Matlab y de libSVM y
+devualve un modelo SVM entrenado.  Como argumento, recibe el conjunto
+de entrenamiento, el hiperparámetro $C$, la función núcleo y sus
+propios hiperparámetros.  Se codificaron además las funciones
+(wrappers casi triviales de) núcleo lineal y RBF, extendiendo la
+implementación provista por Matlab/libsvm, permitiendo calcular la
+derivada del núcleo respecto de sus hiperparámetros.

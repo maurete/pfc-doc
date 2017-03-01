@@ -1,0 +1,62 @@
+\subsubsection{Función objetivo}
+La estrategia aquí propuesta utiliza una de estas cotas
+alternativas, denotada $\rho$ y definida según
+
+\begin{align}
+  \rho = \rho_R \cdot \rho_M,
+\end{align}
+donde $\rho_R$, $\rho_M$ son los factores ``radio'' y ``margen''
+
+\begin{align}
+  \rho_R &= R^2+\frac{1}{C}, \\
+  \rho_M &= \|\ww\|^2+2C\sum\xi_i.
+\end{align}
+A diferencia de $\T{RM}$, la función $\rho$ ajusta el valor
+real de $E_{\T{LOO}}$ con demasiada holgura, con lo que su valor
+pierde el significado original de representar una tasa de error. Sin
+embargo, tiene la importante propiedad de poseer un mínimo global en
+las cercanías de los hiperparámetros óptimos $(C,\gamma)$ que
+minimizan la tasa de error $E_{\T{LOO}}$.
+
+\subsubsection{Cálculo de $\rho$}
+El valor $R^2$, necesario para el cálculo de $\rho_R$, viene dado por
+
+\begin{align}
+  R^2 = 1 - \Bbeta_*^T \KK \Bbeta_*,
+\end{align}
+donde $\Bbeta_*$ es la solución al problema de optimización conocido
+como ``SVM de una clase'' \cite{scholkopf}
+
+\begin{align}
+\begin{split}
+  \arg\min_{\Bbeta}\quad&\Bbeta^T \KK \Bbeta,\\
+  \T{sujeto a}    \quad&0\leq\beta_i\leq{}1,\quad{}i=1,\ldots,\ell,\\
+                       &\B{1}^T_\ell\,\Bbeta=1.
+  \end{split}
+  \label{svm-oneclass}
+\end{align}
+Aquí, $\B{1}_{\ell}$ es un vector columna con $\ell$ elementos iguales
+a 1, y $\KK$ es la matriz del núcleo con elementos
+$k_{ij}=k(\xx_i,\xx_j)$. La matriz $\KK$ es definida positiva siempre
+que se cumpla la condición
+
+\begin{align}
+\label{cond-kmatrix-defpos}
+  i\neq j \iff \xx_i\neq\xx_j,\quad \forall\,i,j\in{1,\ldots,\ell},
+\end{align}
+esto es, siempre que no haya ejemplos repetidos en el conjunto de
+entrenamiento. Sin perder mucha generalidad, se considera que tal es
+el caso, y con ello, se asegura que el problema \cite{svm-oneclass}
+tiene solución única \cite{SOL-UNICA-DEFINIDA-POSITIVA}.
+
+El valor ``margen'' $\rho_M$ es dos veces la solución al problema de
+optimización de la SVM (\autoref{svm-primal-blando}).  Dada la
+equivalencia primal-dual de la solución, si $\Balpha$ es solución a
+la forma dual (\autoref{svmprob-dual-soft}), se tiene simplemente
+
+\begin{align}
+\label{prieqdual}
+  \rho_M &= 2\left(\frac{1}{2}\|\ww\|^2+C\sum\xi_i \right)
+  =2\left(\B{e}^T\Balpha-\frac{1}{2}\Balpha^T\B{Q}\Balpha\right),
+\end{align}
+donde $\QQ$ es la matriz con elementos $Q_{ij}=y_iy_jk(\xx_i,\xx_j)$.

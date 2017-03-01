@@ -1,0 +1,10 @@
+\section{Clasificación}
+\funcheader{mlp\_classify, mysvm\_classify}{Datos de prueba, modelo entrenado}{
+  Predicciones de clase}
+La clasificación de nuevos datos con un clasificador MLP o SVM se
+efectúa mediante las funciones \func{mlp\_classify} y
+\func{mysvm\_classify}, respectivamente.  Ambas funciones reciben como
+argumento el modelo del clasificador ya entrenado y los datos a
+clasificar (en forma de vectores de características como filas de una
+matriz), y retornan una predicción de clase para cada elemento (fila
+de la matriz) en un vector columna.

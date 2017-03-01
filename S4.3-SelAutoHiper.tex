@@ -1,0 +1,143 @@
+\section{Selección automática de hiperparámetros}
+Las siguientes funciones implementan las diferentes estrategias de
+selección de hiperparámetros. Las funciones nombradas
+\func{select\_model} son funciones de ``alto nivel'' que implementan
+la estrategia de modo utilizable directamente por el usuario. Estas
+funciones reciben directamente una estructura de datos denominada
+``problema'', devuelta por \func{problem\_gen}, descripta en la
+sección de interfaz de usuario de línea de comandos.
+
+La selección automática de hiperparámetros es implementada por diferentes
+funciones según la estrategia utilizada. En general, todas
+las funciones de selección de hiperparámetros reciben un ``problema''
+de clasificación que especifica los datos a utilizar para
+entrenamiento, y devuelven un modelo entrenado óptimo según la
+estrategia elegida.  Este ``problema'' se obtiene como salida de la
+función \func{problem\_gen}.
+
+\funcheader{select\_model\_trivial}{Datos de entrenamiento}{
+  Valores de hiperparámetros por defecto
+  ($C=1,\,\gamma=\frac{1}{2F}$), modelo entrenado}
+La función \func{select\_model\_trivial} retorna simplemente los
+hiperparámetros óptimos de una SVM $C=1$ y $\gamma=\frac{1}{2F}$,
+donde $F$ es la longitud del vector de características.  Además,
+retorna un modelo entrenado con estos hiperparámetros.
+
+Implementa la estrategia de selección de hiperparámetros trivial.
+Evitando la búsqueda de hiperparámetros óptimos, entrena un modelo
+sobre el conjunto de entrenamiento utilizando aquellos hiperparámetros
+``por defecto'' correspondientes al clasificador especificado.
+
+\funcheader{select\_model\_mlp}{Datos de entrenamiento, opcion
+  ``trivial''}{Cantidad óptima de neuronas en la capa oculta, modelo
+  entrenado}
+La función \func{select\_model\_mlp} obtiene el número óptimo $h^*$ de
+neuronas en la capa oculta de un perceptrón multicapa, seleccionando
+de entre los diferentes valores probados (\autoref{mlp-hidden-tries})
+aquel que obtiene en promedio el mayor valor $G_m$ de validación
+cruzada.  Si se selecciona la opción ``trivial'' retorna simplemente
+$h^*=0$.  En todos los casos, retorna también un MLP entrenado con el
+conjunto de entrenamiento y el $h^*$ óptimo encontrado.
+
+\funcheader{select\_model\_gridsearch}{Datos de entrenamiento, núcleo
+  a utilizar, número de iteraciones, estrategia de
+  refinamiento}{Hierparámetros $C$, $\gamma$ óptimos, modelo
+  entrenado}
+La función \func{select\_model\_gridsearch} implementa la estrategia
+de búsqueda en la grilla. Efectúa la búsqueda de hiperparámetros
+óptimos en una ``grilla'' $C-\gamma$ para el núcleo RBF y una ``grilla
+1D'' $C$ al utilizar el núcleo lineal.  La ``grilla'' es una
+estructura en memoria con matrices superpuestas, cada una de las
+cuales contiene en cada posición $i,j$ una variable ($C$, $\gamma$) o
+un resultado de clasificación (tal como el valor $G_m$ promedio).  Las
+estrategias de ``refinamiento'' codificadas en las funciones
+\func{grid\_nbest}, \func{grid\_zoom}, \func{grid\_threshold} efectúan
+``interpolación'' de estas matrices insertando nuevas filas/columnas y
+marcando las nuevas posiciones $i,j$ a probar.  Este procedimiento se
+repite hasta alcanzar el número máximo de iteraciones.
+Internamente, la función $\func{select\_model\_gridsearch}$
+``linealiza'' la grilla, convirtiéndola en múltiples arreglos 1D, y
+efectúa las pruebas de cada iteración en paralelo.  Esto se logra
+invocando las funciones \func{grid\_linearize} y \func{grid\_repack}
+para reconvertir la grilla a su estado ``entendible''.
+
+Las funciones
+\func{select\_model\_rmb} y \func{select\_model\_empirical} consisten
+básicamente en una invocación a la función de optimización por
+descenso de gradiente \func{opt\_bfgs} con la función objetivo
+correspondiente.
+
+\funcheader{opt\_bfgs}{Función objetivo y derivada, punto inicial,
+  tolerancia, iteraciones máximas}{Punto óptimo que minimiza la
+  función objetivo}
+La función \func{opt\_bfgs} implementa el algoritmo de optimización
+genérico BFGS.  Dada la función objetivo, la derivada, y un punto
+inicial, calcula sucesivamente el valor de la función y una dirección
+de búsqueda hasta lograr reducir el valor de la función objetivo
+mediante búsqueda en la línea, invocando a \func{opt\_linesearch}.  La
+búsqueda finaliza cuando la norma del gradiente es menor a la
+tolerancia.  Se trata de una reimplementación en Matlab de la función
+``optimize.py'' (Travis E. Oliphant, parte de SciPy http://scipy.org).
+
+\funcheader{select\_model\_empirical}{Datos de entrenamiento, núcleo a
+  utilizar}{Hiperparámetros $C$, $\gamma$ óptimos, modelo entrenado}
+Implementa la estrategia de selección de hiperparámetros mediante el
+criterio del error empírico.  La implementación define las funciones a
+ser pasadas como parámetro a la función de optimización.  En
+particular, especifica ``hndlers'' a la función de entrenamiento, a la
+función de prueba tal que devuelva la salida $f$, y especifica la
+función objetivo como el error empírico $E$ calculado sobre todo el
+conjunto (agregado) de validación cruzada mediante la función
+\func{error\_empirical}.
+La función \func{model\_csvm} calcula la derivada de la
+salida $f$ respecto de los hiperparámetros, necesaria para el
+cálculo de la derivada con \func{opt\_bfgs}.
+Una vez encontrado $\Btheta$ óptimo, se
+entrena un modelo SVM con el conjunto completo de datos de
+entrenamiento.
+
+\funcheader{error\_empirical}{Salidas $f_i$, valores deseados $d_i$}{
+  Error empírico $E_i$ para cada elemento}
+La función \func{error\_empirical} efectúa entrenamiento de la
+sigmoidea invocando a \func{model\_sigmoid\_train}, y una vez
+encontrados $A$, $B$ óptimos se obtiene el error empírico de cada
+elemento según {\ref{error-empirico}}.
+La función calcula además la derivada parcial del error empírico
+respecto de la salida $f_i$.
+
+\funcheader{model\_sigmoid\_train}{Salidas $f_i$, valores deseados
+  $d_i$}{ Parámetros óptimos $A$, $B$ de la sigmoidea}
+La función \func{error\_empirical} efectúa entrenamiento de la
+sigmoidea invocando a \func{model\_sigmoid\_train}, optimizando
+mediante el algoritmo Rprop la función sigmoidea, codificada en
+\func{model\_sigmoid} \hl{referencia a una ecuacion}.
+
+\funcheader{model\_csvm}{Modelo SVM entrenado, ejemplos a
+  clasificar}{Predicciones de clase, salida continua $f_i$, derivadas
+  respecto de los hiperparámetros}
+La función \func{model\_csvm} obtiene el valor de la salida de la SVM
+antes de aplicar la funcion signo y ademas calcula las derivadas
+repecto de los hiperparámetros según \hl{referencia al calculo de la
+  deriv wrt hiperp}
+
+\funcheader{select\_model\_rmb}{Datos de
+  entrenamiento}{Hiperparámetros óptimos y modelo SVM-RBF entrenado}
+La función \func{select\_model\_rmb} define como función objetivo la
+cota RMB, implementada (incluyendo derivada) en la función
+\func{error\_rmb\_csvm}. Una vez encontrado el punto $C,\gamma$
+óptimo, entrena una SVM que es retornada como salida de la función.
+La optimización se realiza mediante \func{opt\_bfgs}.
+
+\funcheader{error\_rmb\_csvm}{Datos de entrenamiento, hiperparámetros
+  $C$,$\gamma$}{ Valor de la función $\rho$, derivadas wrt los
+  hiperparámetros.}
+Calcula el valor de la cota RMB para el conjunto de entrenamiento dado
+con parámetros $C$, $\gamma$, así como las derivadas respecto de estos
+hiperparámetros.  Invoca la función \func{opt\_rsquared} para el
+cálculo de $R^2$.
+
+\funcheader{opt\_rsquared}{Matriz del núcleo RBF $\KK$}{Vector óptimo
+  $\Bbeta$, valor $R^2$}
+Resuelve el problema de SVM de una clase {\ref{one-class-svm}},
+invocando bibliotecas estándar.  Obtiene el valor $R^2$ y el $\Bbeta$
+óptimo.
