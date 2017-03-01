@@ -1,0 +1,39 @@
+
+\subsection{Minimización de la cota radio-margen}
+La cota ``radio-margen'' es una función con la propiedad de ser un
+límite superior al error de validación cruzada dejando uno fuera, y se
+calcula directamente a partir de la información disponible en el
+modelo de una máquina de vectores de soporte.  La función
+``radio-margen'' propuesta originalmente por \citeauthor{vapnik}
+\cite{vapnik} para un modelo SVM  con término de regularización $L2$
+(\autoref{svm-l2}), viene dada por % vapnik sec. 10.7, pag 441
+
+\begin{align}
+  \T{RM} = 4R^2 \|w\|^2.
+\end{align}
+Aquí, $R$ es el radio de la hiperesfera que, en el espacio inducido
+por el núcleo, engloba todos los vectores de soporte, y $\|\ww\|$ es
+la norma del vector normal al hiperplano de separación, que define el
+margen del modelo $h$ de la SVM.  Para esta cota, se cumple
+desigualdad
+
+\begin{align}
+  E_{\T{LOO}} \leq \T{RM},
+\end{align}
+donde $E_{\T{LOO}}$ es el error de validación cruzada dejando uno
+fuera.
+
+El error de validación cruzada dejando uno fuera $E_{\T{LOO}}$ es uno
+de los mejores estimadores del error de generalización disponibles.
+Por ello, la idea de minimizar una cota de este error, que es a la vez
+es continua, derivable y fácilmente calculable, resulta muy atractiva.
+De hecho, en \cite{chapelle} se presenta un algoritmo de minimización
+de la cota $\T{RM}$ mediante descenso por gradiente en el espacio de
+los hiperparámetros.  Sin embargo, dado que la mayoría de SVMs
+utilizadas en la práctica incorporan regularización $L1$ en lugar de
+$L2$, la utilidad real de minimizar la cota $\T{RM}$ es limitada.
+
+En \cite{chung} se proponen varias funciones ``alternativas'',
+inspiradas en la cota radio-margen $\T{RM}$, y aplicables al caso
+específico del núcleo gaussiano (RBF) y formulación $L1$.
+

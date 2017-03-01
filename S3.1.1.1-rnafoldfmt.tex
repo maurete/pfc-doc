@@ -1,0 +1,23 @@
+%
+\subsubsection{Variante RNAFold}
+%
+El software RNAFold \cite{vienna} se utiliza para el cálculo de la
+estructura secundaria de ácidos ribonucleicos. Los archivos generados
+por este software vienen dados en un formato similar a FASTA, donde
+cada ejemplo se describe exactamente en tres líneas:
+%
+\begin{enumerate}
+\item La línea de descripción, con las mismas características que en
+  el formato FASTA.
+\item La línea de secuencia, tal como en el formato FASTA, con la
+  excepción de que no se permiten caracteres de salto de línea dentro
+  de la secuencia.
+\item La línea de estructura secundaria, compuesta por caracteres
+  \mono{(}, \mono{)}, y \mono{.}, y (opcionalmente) terminada por un
+  número entre paréntesis que indica la denominada ``mínima energía
+  libre''.
+\end{enumerate}
+%
+En la \iflatexml{}Figura~\ref{rnafoldfmt}\else\autoref{rnafoldfmt}\fi{} se
+muestra la estructura del formato RNAFold equivalente para los ejemplos de
+la \iflatexml{}Figura~\ref{fastafmt}\else\autoref{fastafmt}\fi.

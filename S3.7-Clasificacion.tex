@@ -1,0 +1,28 @@
+\section{Clasificación}
+A partir del proceso de entrenamiento se obtiene un modelo entrenado
+$\hat{y} = h(\xx)$ que, para un patrón $\xx$, devuelve una predicción
+de pertenencia de clase positiva o negativa $\hat{y}\in\{-1,+1\}$.
+
+Dado el modelo entrenado $\hat{y} = h(\xx)$ y el conjunto de prueba
+
+\begin{align*}
+  P = \left( (\xx_1,y_1),\ldots,(\xx_\ell,y_\ell) \right),
+\end{align*}
+la clasificación consiste simplemente en aplicar el modelo a todos los
+elementos de $P$ de modo que la predicción de clase del ejemplo
+$\xx_i$ es
+
+\begin{align*}
+  \hat{y}_i = h(\xx_i).
+\end{align*}
+Se debe notar que, toda vez que el conjunto $P$ sea utilizado para
+clasificación, el valor de las etiquetas $y_i,\,i=1,\ldots,\ell,$ es
+ignorado.
+
+En el caso particular del MLP, el modelo $h$ es un conjunto $\B{h}$
+de 5 modelos $(h_1, h_2, h_3, h_4, h_5)^T$, y la pertenencia de clase para
+un ejemplo $\xx$ se establece según
+
+\begin{align}
+  y = \T{moda}( h_1(\xx), h_2(\xx), h_3(\xx), h_4(\xx), h_5(\xx)).
+\end{align}
