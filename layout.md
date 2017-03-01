@@ -2,6 +2,7 @@ abstract.tex
 titlepage.tex
 C2-teoria.tex
 S2.1-aprendizaje.tex
+S2.1.5-Medidas.tex
 S2.2-Hiperparams.tex
 S2.3-mlp.tex
 S2.3.1-biologico.tex
