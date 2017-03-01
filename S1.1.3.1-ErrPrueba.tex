@@ -1,0 +1,24 @@
+%
+\subsubsection{Error de prueba}
+%
+Una situación óptima se da cuando se dispone de una muestra $T$,
+independiente e idénticamente distribuida a $\nu$, denominada
+\e{conjunto de prueba}:
+%
+\begin{align}
+  T=((\tilde{x}_1,\tilde{y}_1),\ldots,(\tilde{x}_N,\tilde{y}_N))\sim\nu^N.
+  \label{eq:conj-prueba}
+\end{align}
+%
+A partir del conjunto $T$ se define el \e{error de prueba}
+(o \e{de test}) como la pérdida media
+%
+\begin{align}
+  E_{test}=\frac{1}{N}\sum_{n=1}^N
+  L(\tilde{x}_N,\tilde{y}_N,h(\tilde{x}_N)).
+  \label{eq:error-prueba}
+\end{align}
+%
+Este error de prueba es una estimación no sesgada del error de
+generalización verdadero $\C{R}_\nu(h)$, y puede ser utilzado para
+comparar modelos.
