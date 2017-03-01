@@ -7,7 +7,8 @@ output = output.tex
 revision = revision.tex
 
 aux = $(output:%.tex=%.aux) $(output:%.tex=%.log) \
-$(output:%.tex=%.out) $(output:%.tex=%.toc) $(dep:%.tex=%.aux)
+$(output:%.tex=%.out) $(output:%.tex=%.toc) $(header:%.tex=%.aux) \
+$(title:%.tex=%.aux) $(contents:%.tex=%.aux) $(revision:%.tex=%.aux)
 
 biber_aux = $(output:%.tex=%.bbl) $(output:%.tex=%.bcf) \
 $(output:%.tex=%.blg) $(output:%.tex=%.run.xml) \
@@ -25,9 +26,11 @@ all: pdf
 	$(crm) $(output) $(aux) $(biber_aux)
 
 rev:
-	echo -n '\\iflatexml\\else\\ohead{rev: ' > $(revision)
-	git rev-parse HEAD | cut -c1-7 >> $(revision)
-	git diff-index --quiet HEAD -- || echo -n '*' >> $(revision)
+	echo -n '\\iflatexml\\else\\ohead{\small ' > $(revision)
+	git rev-parse --abbrev-ref HEAD | tr -d '\n' >> $(revision)
+	echo -n ', rev. ' >> $(revision)
+	git rev-parse HEAD | cut -c1-7 | tr -d '\n' >> $(revision)
+	git diff-index --quiet HEAD -- || echo -n '+' >> $(revision)
 	echo ', \\today}\\fi' >> $(revision)
 
 temp: $(header) $(contents)
