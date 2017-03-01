@@ -3,6 +3,7 @@ titlepage.tex
 C2-teoria.tex
 S2.1-aprendizaje.tex
 S1.1.3-EstimErrGeneral.tex
+S1.1.3.1-ErrPrueba.tex
 S2.1.4-Regularizacion.tex
 S2.1.5-Medidas.tex
 S2.1.5.1-sesp.tex
