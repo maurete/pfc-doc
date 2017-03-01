@@ -15,11 +15,13 @@
 % ../pfc/doc/conf/fuentes.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%% \usepackage[T1]{fontenc}
-%% \usepackage{libertine}
-%% \usepackage[scale=0.96]{tgheros}
-%% \usepackage[scaled=0.9]{zi4}
-% \renewcommand{\tt}{\mathtt} % evitar clash de euler con koma-script
+\iflatexml\else
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\usepackage[scale=0.96]{tgheros}
+\usepackage[scaled=0.9]{zi4}
+\renewcommand{\tt}{\mathtt} % evitar clash de euler con koma-script
+\fi
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ../pfc/doc/conf/packages.tex
@@ -32,20 +34,21 @@
 %       argumento opcional.
 \usepackage[spanish,es-tabla,english]{babel}
 %
+%
 % inputenc define la codificación de caracteres del código fuente, acá utf8.
 \usepackage[utf8]{inputenc}
 %
 % ===
 % === Layout
 % ===
-% 
+%
 % relsize provee comandos para utilizar tamaños de fuente relativos
 \usepackage{relsize}
 %
 % ===
 % === Gráficos
 % ===
-% 
+%
 % pst-pdf me permite usar PSTricks con pdflatex. Necesito cargarlo sólo si está
 %         definida la variable pdf, por eso está entre \ifpdf ... \fi
 %\ifpdf\usepackage{pst-pdf}\fi
@@ -74,6 +77,7 @@
 % url es un verbatim para escribir URL's que permite linebreaks dentro de ésta.
 %     para usarlo, \url{<URL>}
 \usepackage{url}
+
 %
 % ===
 % === Matemáticas
@@ -93,11 +97,19 @@
 %
 %
 %
+
+% better citation handling
+\iflatexml
+\newcommand*{\citeauthor}[1]{\textcolor{RoyalBlue}{(autor de \cite{#1})}}
+\else
+%%\usepackage[square,comma,numbers,sort&compress]{natbib}
 \usepackage[backend=biber,sorting=none,style=ieee,eprint=false,url=false]{biblatex} %% style=ieee
 %% requiere texlive-bibtex-extra en debian
+\fi
+
 
 %% % para eliminar espacio entre items de una lista
-%% \usepackage{enumitem}
+\usepackage{enumitem}
 %% \setlist{noitemsep}
 %% \setlist[description]{noitemsep}
 %% \setlist[enumerate]{noitemsep}
@@ -119,16 +131,26 @@
 %% \makesavenoteenv{tabular}
 
 % para tabulars mas lindos/legibles
-%% \usepackage{booktabs}
+\usepackage{booktabs}
 % tablas que se extienden por varias págs.
 \usepackage{longtable}
 
 % para alinear numeros en el punto decimal (dentro de un tabular)
-%% \usepackage[detect-all,alsoload=abbr]{siunitx}
+\iflatexml
+\else
+\usepackage[detect-all,alsoload=abbr]{siunitx}
+\fi
 
 %\usepackage{glossaries}
-
 %% \usepackage[spanish]{algorithm2e}
+
+%% Verbatims con fomato lindo
+\usepackage{fancyvrb}
+% interpretar \ como un comando dentro del verbatim
+\iflatexml
+\else
+\fvset{fontsize=\footnotesize,commandchars=\\\{\}}
+\fi
 
 % para teoremas etc
 \usepackage{amsthm}
@@ -176,11 +198,12 @@
 \newcommand{\bp}[2]{\textrm{\mono{#1-#2}}{ }}
 \newcommand{\grad}[1]{\nabla{#1}}
 \newcommand{\tableStyle}{
-\ifpdf\relsize{-0.5}\center\sffamily\fi
+\iflatexml\else\ifpdf\relsize{-0.5}\center\sffamily\fi\fi
 }
 \newcommand{\captionStyle}{
-\ifpdf\relsize{-0.5}\fi
+\iflatexml\else\ifpdf\relsize{-0.5}\fi\fi
 }
+\newcommand{\figureStyle}{\tableStyle}
 \newcommand{\tE}{&{\smaller $\bar{x}$}&}
 \newcommand{\tF}[1]{\multirow{2}{*}{#1}\tE}
 \newcommand{\tZ}{&{\smaller $\sigma$}&}
@@ -198,6 +221,9 @@
 \newcommand{\mipred}{\sbsf{miPred}}
 \newcommand{\micropred}{\sbsf{microPred}}
 \newcommand{\deltamirbase}{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
+\newcommand{\premirna}[1]{pre-miRNA#1}
+\newcommand{\caract}[1]{característica#1}
+\newcommand{\hparam}[1]{hiperparámetro#1}
 \newcommand{\rowMEANN}[2]{&
   \multirow{2}{*}{\tablenum[table-format=1.0,table-number-alignment=right]{#1}}&
   \multirow{2}{*}{\tablenum[table-format=3.0,table-number-alignment=right]{#2}}&
@@ -214,17 +240,13 @@
 \newcommand{\PR}{\T{\slshape Pr}}
 \newcommand{\AC}{\T{\slshape Ac}}
 
-\newcommand{\feedforward}{con propagación hacia adelante}
+\newcounter{FeatureCounter}
 \newcommand{\headRow}{  \sfbf{\footnotesize Pos.} &
   \sfbf{\footnotesize Característica} &
   \sfbf{\footnotesize Descripción}
 }
-\newcommand{\tripletRow}[1]{
-  \stepcounter{FeatureCounter}\theFeatureCounter & $N_{\T{\mono{#1}}}$
-  & Ocurrencias del triplete \mono{#1} en la región del tallo.}
-\newcommand{\dnRow}[1]{
-  \stepcounter{FeatureCounter}\theFeatureCounter & $N_{\T{\mono{#1}}}$
-  & Número de dinucleótidos \mono{#1} en la secuencia.}
+
+\newcommand{\feedforward}{con propagación hacia adelante}
 \newcommand{\funcheader}[3]{\begin{description}%
   \item[Función]{#1}\item[Entradas]{#2}\item[Salidas]{#3}%
 \end{description}}
@@ -233,7 +255,7 @@
 % ===
 % === Comandos
 % ===
-% 
+%
 % T: para escribir texto común cuando en modo math
 %    uso: \T{texto que aparecerá en letra normal}
 \newcommand{\T}{\textrm}
@@ -346,7 +368,7 @@
 % ===
 % === Environments
 % ===
-% 
+%
 % enunciado: un environment que básicamente tiene el mismo efecto que el
 %            comando consigna.
 %            uso: \begin{enunciado} ... contenido ... \end{enunciado}
@@ -429,12 +451,6 @@
 \usepackage{soulutf8}
 \fi
 
-% better citation handling
-\iflatexml
-\newcommand*{\citeauthor}[1]{\textcolor{RoyalBlue}{(autor de \cite{#1})}}
-\else
-\usepackage[square,comma,numbers,sort&compress]{natbib}
-\fi
 
 \iflatexml
 \newcommand{\refer}{\textcolor{OliveGreen}{Fig./Ec./etc. }\ref}
@@ -452,4 +468,9 @@
   urlcolor=black
 }
 \fi
-
+%
+% Koma-Script page headings
+\iflatexml\else
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\fi

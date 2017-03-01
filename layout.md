@@ -5,3 +5,6 @@ S1.1-miRNAs.tex
 figures/hsa-mir-299_ss/hsa-mir-299_ss.png
 S1.1-miRNAs2.tex
 S1.2-Clasificacion.tex
+S1.3-Motivacion.tex
+S1.4-Objetivos.tex
+S1.5-Alcances.tex
