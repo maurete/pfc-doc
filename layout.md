@@ -2,6 +2,7 @@ abstract.tex
 titlepage.tex
 C2-teoria.tex
 S2.1-aprendizaje.tex
+S2.1.2-Entrenamiento.tex
 S2.1.2.1-Sobreajuste.tex
 S2.1.3-EstimErrGeneral.tex
 S2.1.3.1-ErrPrueba.tex
