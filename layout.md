@@ -2,6 +2,7 @@ abstract.tex
 titlepage.tex
 C2-teoria.tex
 S2.1-aprendizaje.tex
+S2.1.1.4-Clasificador.tex
 S2.1.1.5-FuncPerdida.tex
 S2.1.1.6-ErrGeneralizacion.tex
 S2.1.2-Entrenamiento.tex
