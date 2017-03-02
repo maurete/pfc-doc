@@ -21,6 +21,7 @@ S2.1.5-Medidas.tex
 S2.1.5.1-sesp.tex
 S2.2-Hiperparams.tex
 S2.2.1-SelAuto.tex
+S2.2.1.1-FuncObjetivo.tex
 S2.3-mlp.tex
 S2.3.1-biologico.tex
 S2.3.2-artificial.tex
