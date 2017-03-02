@@ -1,0 +1,30 @@
+%
+%
+\subsection{Selección automática de hiperparámetros}
+%
+Dado el conjunto de entrenamiento $D$, el objetivo de la selección
+automática de hiperparámetros es encontrar los hiperparámetros óptimos
+$\Btheta_*$ tal que el modelo resultante ajuste a los datos en $D$ con
+mínimo error (de generalización).
+
+En general, un algoritmo que implementa selección automática de
+hiperparámetros sigue un esquema iterativo en el cual, partiendo de un
+vector de hiperparámetros iniciales $\Btheta_0$, entrena en cada
+iteración $i$ la máquina de aprendizaje sobre el conjunto $D$ con
+hiperparámetros $\Btheta_i$, ajustando sucesivamente el valor de
+$\Btheta_{i+1}$ mediante la información disponible del modelo
+$h_i$. Este proceso se repite hasta satisfacer algún criterio de
+corte.
+
+Más formalmente, un algoritmo de selección automática de
+hiperparámetros puede definirse como una transformación
+%
+\begin{align}
+  S:\C{D}\rightarrow\C{P}
+\end{align}
+%
+que, dado un conjunto de entrenamiento ${D}\in\C{D}$, invoca la máquina de
+aprendizaje $A$ en sucesivas iteraciones hasta encontrar un vector de
+parámetros $\Btheta_*\in\C{P}$ que surge de optimizar una \e{función
+  objetivo}, típicamente relacionada al error de generalización del
+modelo obtenido en cada iteración.
