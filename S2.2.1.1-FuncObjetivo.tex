@@ -1,0 +1,21 @@
+%
+\subsubsection{Función objetivo}
+%
+Una función objetivo sirve de criterio para determinar la mejor
+solución a un problema de optimización, asignando a cada caso de
+prueba un valor numérico que refleja la idoneidad del modelo obtenido
+con determinados hiperparámetros $\Btheta$.
+Intuitivamente, se puede decir que una función objetivo estima el
+error de generalización del clasificador, y sus variables de entrada
+son, directa o indirectamente, el conjunto de datos de entrenamiento y
+los hiperparámetros del clasificador.
+
+Una función objetivo ideal es una función continua, derivable, y con
+un mínimo global coincidente con el mínimo de la función del error de
+generalización. La función objetivo más utilizada es el error
+de clasificación sobre algún conjunto de validación, la cual es una
+función discontinua y no derivable, ya que se construye a partir de la
+experiencia de clasificación de un conjunto de datos finito.
+Sin embargo, como se verá más adelante, resulta posible derivar
+funciones objetivo derivables que permiten una solución eficiente al
+problema de la búsqueda de hiperparámetros óptimos.
