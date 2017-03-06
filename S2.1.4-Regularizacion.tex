@@ -2,19 +2,16 @@
 %
 \subsection{Regularización}
 %
-Al minimizar el error de entrenamiento se produce una tendencia al
-sobreajuste, lo que se traduce en un rendimiento de generalización
-subóptimo. Este sobreajuste genera fronteras de decisión relativamente
-complejas para problemas que en realidad tienden a ser más simples.
-Esto se condice con un principio a menudo referido como la \e{navaja de
-Ockam}:
-``las entidades no deben multiplicarse más allá de lo necesario'',
-afirmando que las explicaciones simples son más plausibles y los
-modelos sencillos son más explicativos y más confiables que los
-complicados.
+Se dice que un modelo presenta sobreajuste cuando genera soluciones
+relativamente complejas para problemas que en realidad tienden a ser
+más simples.  Esto evoca un principio a menudo referido como la
+\e{navaja de Ockam}: ``las entidades no deben multiplicarse más allá
+de lo necesario'', afirmando que las explicaciones simples son más
+plausibles y los modelos sencillos son más explicativos y más
+confiables que los complicados.
 
-La \e{regularización} consiste en forzar la simplicidad del modelo, y es
-una de las estrategias principales utilizadas para evitar el
+La \e{regularización} consiste en forzar la simplicidad del modelo,
+evitando el
 sobreajuste del modelo generado por la máquina de aprendizaje. Existen
 dos formas comunes para incorporar simplicidad en el modelo:
 %
@@ -24,9 +21,10 @@ dos formas comunes para incorporar simplicidad en el modelo:
   del error de entrenamiento.
 \end{itemize}
 %
-El segundo enfoque requiere alguna forma de medir la ``complejidad'' del
-modelo. Ambos procedimientos regularizan el proceso de aprendizaje, ya
+Ambos procedimientos regularizan el proceso de aprendizaje, ya
 que favorecen las hipótesis más simples.
+El segundo enfoque requiere alguna forma de medir la ``complejidad'' del
+modelo.
 
 Cuando el entrenamiento de la máquina de aprendizaje es un proceso
 gradual, una técnica alternativa de regularización consiste en

@@ -2,26 +2,23 @@
 \subsubsection{Validación cruzada de $k$ iteraciones}
 %
 En un procedimiento de \emph{validación cruzada de $k$ iteraciones}
-\cite{crossval}, el conjunto $D$ se subdivide en $k$ conjuntos
-disjuntos $D_1,\ldots,D_k$ de tamaños similares denominados
-\e{particiones}.
+\cite{crossval}, el conjunto de entrenamiento $D$ se subdivide en $k$
+conjuntos disjuntos $V_1,\ldots,V_k$ de tamaños similares denominados
+\e{particiones de validación}.
 
-El entrenamiento de la máquina de aprendizaje se efectúa sobre $k-1$
-particiones, y se clasifican aquellos datos de la partición restante
-(llamada \e{de validación}) para obtener una medida de desempeño de
-clasificación de la partición actual. Se repite el procedimiento $k$
-veces, seleccionando en cada iteración una partición diferente para
-validación.  Una vez completado el proceso, se dispondrá de $k$
-medidas de desempeño de la máquina de aprendizaje. Estas medidas
-pueden ser promediadas para obtener un estimador del desempeño de la
-máquina de aprendizaje. Este estimador es una medida más acertada que
-el error de entrenamiento para estimar el error de generalización del
-modelo.
+Para cada $i=1,\ldots,k$, se efectúa el entrenamiento sobre un
+conjunto $D_i=D\setminus{}V_i$ excluyendo a $V_i$, y se evalúa el
+modelo obtenido con los datos de $V_i$.  Una vez completado el
+proceso, se dispondrá de $k$ medidas de desempeño que pueden ser
+promediadas para obtener una estimación del error de generalización
+del modelo. Este resultado se utiliza comúnmente para ajustar los
+hiperparámetros que regulan el proceso de entrenamiento, antes de
+entrenar un modelo definitivo sobre el conjunto completo $D$.
 
-El error de validación cruzada presenta una menor varianza que aquel
-del método de retención, sin embargo, al no ser los subconjuntos $D_i$
-independientes e idénticamente distribuidos entre sí, se introduce un
-sesgo en la estimación del error de generalización.  Tal como en el
-caso del método de retención, en conjuntos de datos pequeños el método
-de validación cruzada presenta una alta varianza respecto de la
-elección de diferentes $D_i$.
+%% El error de validación cruzada presenta una menor varianza que aquel
+%% del método de retención, sin embargo, al no ser los subconjuntos $D_i$
+%% independientes e idénticamente distribuidos entre sí, se introduce un
+%% sesgo en la estimación del error de generalización.  Tal como en el
+%% caso del método de retención, en conjuntos de datos pequeños el método
+%% de validación cruzada presenta una alta varianza respecto de la
+%% elección de diferentes $D_i$.

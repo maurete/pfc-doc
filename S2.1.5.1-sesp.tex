@@ -16,12 +16,14 @@ ejemplos de clase negativa.  Ambas medidas son independientes del
 número de elementos presentes en el conjunto de prueba, aunque no de
 la proporción entre elementos positivos y negativos.
 
-La importancia de las medidas de sensibilidad y especificidad es que
-pueden utilizarse para elegir, por ejemplo, el clasificador con menor
-cantidad de falsos negativos ($\SP=1$), una característica deseable en
-aplicaciones tales como detectores de patógenos en bancos de sangre y
-detectores de explosivos en aeropuertos.
-
+%% La importancia de las medidas de sensibilidad y especificidad es que
+%% pueden utilizarse para elegir, por ejemplo, el clasificador con menor
+%% cantidad de falsos negativos ($\SP=1$), una característica deseable en
+%% aplicaciones tales como detectores de patógenos en bancos de sangre y
+%% detectores de explosivos en aeropuertos.
+%
+\subsubsection{Media geométrica de la sensibilidad y  la especificidad}
+%
 En ocasiones, se requiere medir el funcionamiento de un clasificador a
 partir de una única medida que caracterice la aptitud del clasificador
 en general. En estos casos, resulta común utilizar la media geométrica
@@ -31,12 +33,12 @@ entre la sensibilidad y la especificidad
   \GM \tab = \sqrt{\SE\cdot\SP}.
 \end{align}
 %
-%% %
-%% \subsubsection{Otras medidas de desempeño}
-%% %
-
-Otras medidas comúnmente utilizadas para evaluación de un clasificador
-binario son
+%
+\subsubsection{Otras medidas}
+%
+En determinados problemas, resulta conveniente utilizar medidas
+alternativas para evaluar el comportamiento de un clasificador
+binario:
 %
 \begin{align}
     \T{Precisión} \tab\tabs \PR \tab=\frac{\VP}{\VP+\FP},\\
@@ -48,3 +50,6 @@ binario son
     }{\sqrt{(\VP+\FP)(\VP+\FN)(\VN+\FP)(\VN+\FN)}}.
 \end{align}
 %
+La precisión, por ejemplo, es la proporción aciertos de entre todos
+los resultados positivos, y la exactitud es la proporción de
+resultados correctos independientemente de la clase.

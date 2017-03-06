@@ -1,18 +1,17 @@
 %
 \subsubsection{Validación cruzada dejando uno fuera}
 %
-En el método de validación cruzada ``clásico'' de $k$ iteraciones, se
-tiene para valores pequeños de $k$ una reducción en la varianza y para
-valores grandes una reducción del sesgo introducido por el particionado.
-En el extremo, cuando se
-establece $k$ al número de elementos en $D$, se está ante un método de
-\e{validación cruzada dejando uno fuera}. La condición $k=\ell=\|D\|$
-implica la reducción del sesgo a un valor mínimo, ya que se separa
-sólo un elemento para validación. Sin embargo, la varianza obtenida
-mediante este método es máxima.
+La validación cruzada dejando uno fuera (\e{leave-one-out}) es el caso
+especial cuando se establece el número de particiones $k$ igual al
+número de elementos $\ell$ en el conjunto de entrenamiento $D$.  El
+modelo obtenido en cada iteración será muy similar al resultante de
+entrenar con el conjunto de datos completo, por lo que es de esperar
+que la estimación del error obtenida en este caso sea lo más cercana
+al comportamiento ``real'' del modelo final entrenado sobre $D$.
 
-Para obtener una estimación del error de generalización mediante este
-método es necesario entrenar el clasificador $\ell$ veces, lo que deriva
-en un costo computacional muy elevado. Sin embargo, para el caso de un
-clasificador SVM existen técnicas para el cálculo eficiente del error
-dejando uno fuera \cite{chapelle,lee-keerthi}.
+La importancia de este procedimiento reside en el hecho que es el
+mejor estimador del error real de la máquina de aprendizaje.  En
+general, no se utiliza en la práctica debido a su elevado costo
+computacional, ya que se requieren $\ell$ entrenamientos para su
+cálculo.  Sin embargo, en determinados casos específicos existen
+técnicas eficientes para su cálculo \cite{chapelle,lee-keerthi}.

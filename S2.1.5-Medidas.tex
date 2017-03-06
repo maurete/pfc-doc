@@ -2,16 +2,17 @@
 %
 \subsection{Medidas de evaluación de un clasificador binario}
 %
-Los clasificadores binarios generan modelos cuya salida toma
-exactamente dos valores posibles, que se interpretan en forma genérica
-como ``verdadero'' y ``falso''. Para esta clase especialmente
-importante de clasificadores se utiliza una serie de métricas que
-relacionan la pertenencia de clase de los datos de entrada con el
+Los clasificadores binarios generan modelos cuya salida alterna
+entre dos valores posibles, que se interpretan en forma genérica
+como ``clase positiva'' y ``clase negativa''.
+Para este tipo especialmente
+importante de clasificadores, se utilizan una serie de métricas que
+relacionan la pertenencia de clase de los datos con el
 error de clasificación.
 
-Dado un modelo $h$ con salida binaria, se definen las siguientes
+Dado un modelo $h$ de salida binaria, se definen las siguientes
 medidas que caracterizan el resultado de clasificar un conjunto de
-prueba $T$:
+prueba (o de validación) $T$:
 %
 \iflatexml\begin{itemize}\else\begin{itemize}[style=nextline]\fi
   \item\e{Verdaderos positivos ($\VP$)}: número de elementos de clase
@@ -26,5 +27,5 @@ prueba $T$:
 %
 Estas cuatro medidas conforman la llamada \e{matriz de confusión}
 característica del clasificador, y dependen en todos los casos del
-número de elementos positivos y negativos presentes en el conjunto de
-prueba.
+número de elementos positivos y negativos presentes en el conjunto
+$T$.

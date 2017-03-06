@@ -11,6 +11,7 @@ S2.1.1.5-FuncPerdida.tex
 S2.1.1.6-ErrGeneralizacion.tex
 S2.1.2-Entrenamiento.tex
 S2.1.2.1-Sobreajuste.tex
+S2.1.2.2-BiasVariance.tex
 S2.1.3-EstimErrGeneral.tex
 S2.1.3.1-ErrPrueba.tex
 S2.1.3.2-Retencion.tex

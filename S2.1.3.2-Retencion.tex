@@ -2,17 +2,17 @@
 \subsubsection{Método de retención}
 \label{retencion}
 %
-Con frecuencia, en los problemas reales el conjunto de prueba $T$ no
-viene dado como tal, y en cambio se genera un conjunto $T^*\subset{}D$
-seleccionando ejemplos al azar del conjunto de entrenamiento $D$.  A
-fin de que exista una cierta ``independencia''\footnote{Estrictamente,
-  la independencia no existe en este caso, ya que la pertenencia de un
-  ejemplo al conjunto de entrenamiento $D^*$ implica la no pertenecia
-  al conjunto de prueba $T^*$.} de los datos en $T^*$ respecto del
-conjunto de entrenamiento, se genera un nuevo conjunto de entrenamiento
-$D^*\subset{}D:D^*\cap{}T^*=\emptyset$ que será usado para entrenar la
-máquina de aprendizaje. El conjunto $D^*$ se denomina en ocasiones
-\e{conjunto de estimación}.
-Finalmente, el error de prueba puede ser estimado calculando el error
-sobre el conjunto $T^*$. Este método es conocido como el \e{método de
-  retención}.
+En un problema de aprendizaje típico, toda la información que se
+conoce del fenómeno a modelar es una muestra $U\in\C{D}$ con todos los
+ejemplos conocidos. El \e{método de retención} consiste en seleccionar
+un porcentaje de elementos de $U$ para armar el conjunto de prueba
+$T$, y utilizar los elementos restantes de $U$ para generar el
+conjunto de entrenamiento $D$. De este modo, la máquina de aprendizaje
+se evalúa sobre un conjunto datos independiente del conjunto de
+entrenamiento.
+
+En ocasiones, el conjunto de entrenamiento $D$ se subdivide siguiendo
+el mismo procedimiento en conjuntos de \e{estimación} $E$ y
+\e{validación} $V$.  Estos conjuntos son utilizados durante el
+entrenamiento para ajustar los hiperparámetros del algoritmo de
+aprendizaje, antes de entrenar el modelo final sobre el conjunto $D$.
