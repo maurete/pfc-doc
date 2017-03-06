@@ -6,6 +6,7 @@ S2.1.1-Conceptos.tex
 S2.1.1.1-SupLearn.tex
 S2.1.1.2-Modelo.tex
 S2.1.1.3-MaqAprendizaje.tex
+S2.1.1.X-Hiperparams.tex
 S2.1.1.4-Clasificador.tex
 S2.1.1.5-FuncPerdida.tex
 S2.1.1.6-ErrGeneralizacion.tex
@@ -20,7 +21,6 @@ S2.1.3.4-LOO.tex
 S2.1.4-Regularizacion.tex
 S2.1.5-Medidas.tex
 S2.1.5.1-sesp.tex
-S2.1.1.X-Hiperparams.tex
 S2.2.1-SelAuto.tex
 S2.2.1.1-FuncObjetivo.tex
 S2.3-mlp.tex
