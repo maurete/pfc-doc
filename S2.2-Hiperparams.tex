@@ -1,41 +1,18 @@
 %
+\subsubsection{Hiperparámetros}
 %
-%
-\section{Hiperparámetros}
-%
-Hasta el momento se ha definido una máquina de aprendizaje
-(\refer{eq:maqaprendizaje}) como un algoritmo que, dado un conjunto
-de entrenamiento $D$, genera un modelo $h$ que relaciona valores de
-entrada y de salida de una distribución desconocida $\nu$. En la
-práctica, se encuentra que la mayoría de las técnicas de aprendizaje
+La mayoría de las técnicas de aprendizaje
 requieren la especificación de parámetros adicionales que regulan el
-proceso de aprendizaje.
-
-Los parámetros que regulan la generación del modelo se denominan
+proceso de aprendizaje. Estos parámetros se denominan
 \e{hiperparámetros}, marcando una distinción con los \e{parámetros}
 del modelo $h$ --que se ajustan a partir del conjunto de datos
-$D$. Dependiendo de la máquina de aprendizaje a utilizar, los
-hiperparámetros pueden determinar, entre otros,
-%
-\begin{itemize}
-\item la familia de modelos $H\subset\C{H}$ a utilizar,
-\item los parámteros propios de la familia de modelos $H$,
-\item la estrategia de optimización a utilizar durante el
-  entrenamiento,
-\item la topología de una red neuronal,
-\item la \e{velocidad de aprendizaje},
-\item la precisión requerida de la solución,
-\item la \e{regularización} a aplicar al modelo.
-\end{itemize}
-%
-Como se puede advertir, los elementos del conjunto de hiperparámetros
-son de naturaleza variada: familias de funciones, vectores numéricos,
-números reales son algunos de los tipos posibles.
+$D$.
 
-Algunos hiperparámetros pueden ajustarse sin considerar los datos en
-el conjunto de entrenamiento $D$, esto es, son independientes del
-problema de clasificación; otros, en cambio, deberán ajustarse para
-cada problema en particular. En adelante, se hace hincapié en aquellos
+Si bien no existe una definición formal de hiperparámetro, 
+puede decirse que aquellos parámetros que no pueden aprenderse durante el entrenamiento son hiperparámetros.
+
+
+En adelante, se hace hincapié en aquellos
 hiperparámetros numéricos dependientes del problema, expresados en
 forma genérica como un vector
 $\Btheta=(\theta_1,\theta_2,\ldots)$. La máquina de
