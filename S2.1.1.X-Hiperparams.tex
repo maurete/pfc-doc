@@ -1,27 +1,14 @@
 %
 \subsubsection{Hiperparámetros}
 %
-La mayoría de las técnicas de aprendizaje
-requieren la especificación de parámetros adicionales que regulan el
-proceso de aprendizaje. Estos parámetros se denominan
-\e{hiperparámetros}, marcando una distinción con los \e{parámetros}
-del modelo $h$ --que se ajustan a partir del conjunto de datos
-$D$.
+Los hiperparámetros son aquellos parámetros que regulan el proceso de
+aprendizaje, y que no pueden determinarse directamente a partir de
+los datos. Se denominan de este modo porque en general se relacionan
+con conceptos de más alto nivel que los parámetros del modelo, tales
+como la complejidad de la solución o la velocidad de aprendizaje.
 
-Si bien no existe una definición formal de hiperparámetro, 
-puede decirse que aquellos parámetros que no pueden aprenderse durante el entrenamiento son hiperparámetros.
-
-
-En adelante, se hace hincapié en aquellos
-hiperparámetros numéricos dependientes del problema, expresados en
-forma genérica como un vector
-$\Btheta=(\theta_1,\theta_2,\ldots)$. La máquina de
-aprendizaje puede escribirse como una transformación
-%
-\begin{align}
-  A:\C{D}\times\C{P}\rightarrow\C{H},
-\end{align}
-%
-esto es, un algoritmo que recibe como entrada los datos en $D\in\C{D}$
-y un vector de hiperparámetros $\Btheta\in\C{P}$, para obtener
-mediante entrenamiento un modelo óptimo $h\in\C{H}$.
+Los \hparams{} no pueden ser determinados durante el entrenamiento.
+En cambio, deben ser elegidos antes de efectuar el mismo.
+En general, se seleccionan de manera manual en una estrategia de
+prueba y error. Sin embargo, para determinados tipos de modelos
+existen técnicas automáticas para su determinación.
