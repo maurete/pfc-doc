@@ -1,6 +1,10 @@
 %
-\subsubsection{Parámetros}
+\subsubsection{Parámetros del modelo y entrenamiento}
 %
-En general, el modelo $h$ es una función que pertenece a una familia de modelos más general $H$.
-Durante el entrenamiento, se busca ajustar los parámetros de $H$ arribando a una función
-más específica $h$ que ajusta a los datos del conjunto de entrenamiento $D$.
+Comúnmente, el modelo $h$ deriva de una función más general $H(\xx,\B{p})$, en donde
+$\B{p}$ es un conjunto de \e{parámetros} que modifican la respuesta (salida)
+de $H$ ante determinados estímulos (entrada) $\xx$.
+
+Se llama \e{entrenamiento} al proceso de selección de los parámetros $\B{p}$
+a partir del conjunto de datos $D$, obteniendo un modelo $h(\xx)=H(\xx,\B{p})$
+que ``ajusta'' los datos minimizando una medida de error $E=f(\xx,h(\xx))$.
