@@ -7,7 +7,6 @@ S2.1.1.1-SupLearn.tex
 S2.1.1.2-Modelo.tex
 S2.1.1.X-Params.tex
 S2.1.1.3-MaqAprendizaje.tex
-S2.1.1.X-Entrenamiento.tex
 S2.1.1.X-Hiperparams.tex
 S2.1.1.4-Clasificador.tex
 S2.1.1.5-FuncPerdida.tex
