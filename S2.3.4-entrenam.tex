@@ -19,10 +19,10 @@
 El objetivo del entrenamiento en el perceptrón multicapa es ajustar
 los pesos de la red de forma que ésta efectúe una transformación de
 las entradas a las salidas deseadas. Esta transformación viene dada
-por el conjunto de entrenamiento $D$: cada ejemplo $(\xx_j,\yy_j)$ en
-$D$ consta de un vector de activación $\xx_j$ y una salida deseada
-$\yy_j$. La discusión presentada a continuación sigue de cerca aquella
-presentada por \citeauthor{haykin} en el capítulo 4 de \cite{haykin}.
+por el conjunto de entrenamiento $D$, compuesto por $\ell$ ejemplos
+denotados por $(\xx(n),\yy(n))$, $n=1,\ldots,\ell$.
+La discusión presentada a continuación sigue de cerca aquella
+presentada en \cite[Capítulo~4]{haykin}.
 
 %% La distancia entre la salida deseada y la salida efectiva de
 %% la red se mide con la función de energía (o de costo) $E$:
@@ -38,11 +38,8 @@ presentada por \citeauthor{haykin} en el capítulo 4 de \cite{haykin}.
 %% equivalente a encontrar un mínimo global de $E$.
 
 Considerando una neurona $i$ en la capa de salida, sea $s_i(n)$ la
-salida de la neurona en respuesta al estímulo $\xx(n)$ aplicado en la
-capa de entrada
-%% Para simplicidad en la exposición, se asume que los
-%% índices $i$ de las neuronas en la capa de salida coinciden con los del
-%% vector de salida $\hat{\yy}$, de modo que $s_i=\hat{y}_i$.
+salida de la misma en respuesta al estímulo $\xx(n)$ aplicado en la
+capa de entrada.
 La
 \e{señal de error} producida en la salida de esta neurona viene dada
 por
@@ -71,13 +68,13 @@ de la red como
   &=\frac{1}{2}\sum_{i\in C}e^2_i(n).
 \end{align}
 %
-en donde el conjunto $C$ incluye los subíndices para todas las
+Aquí, el conjunto $C$ contiene los subíndices de las
 neuronas en la capa de salida. La energía de error promedio sobre el
-conjunto de entrenamiento, denominada también \e{riesgo empírico},
+conjunto de entrenamiento
 viene dada por
 %
 \begin{align}\label{e2:average-energy-net} %4.5
-  \C{E}_{\T{av}}(\ell)&=\frac{1}{\ell}\sum_{n=1}^\ell\C{E}(n) \\
+  \C{E}_{\T{av}}&=\frac{1}{\ell}\sum_{n=1}^\ell\C{E}(n) \\
   \tab=\frac{1}{2\ell} \sum_{n=1}^\ell \sum_{i\in C}e^2_i(n).
 \end{align}
 %
@@ -85,7 +82,7 @@ Naturalmente, tanto la energía de error instantáneo como la energía de
 error promedio son funciones de todos los pesos sinápticos del
 perceptrón multicapa. Esta dependencia funcional no fue incluida de
 forma explícita en la definición de $\C{E}(n)$ y
-$\C{E}_{\T{av}}(\ell)$ en pos de simplificar la notación.
+$\C{E}_{\T{av}}$ en pos de simplificar la notación.
 
 Conforme avance el proceso de entrenamiento, se espera que cada
 actualización de los pesos de la red traiga consigo una reducción de
