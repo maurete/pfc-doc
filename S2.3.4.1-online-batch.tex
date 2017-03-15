@@ -16,12 +16,17 @@ red:
   Este método funciona especialmente bien
   para grandes conjuntos de entrenamiento que contengan información
   redundante.
-\item En el aprendizaje por época, la actualización de los pesos de la red
+\item En el aprendizaje por época (\e{batch learning}),
+  la actualización de los pesos de la red
   se efectúa una vez que han sido calculadas las salidas de todos los
   patrones en el conjunto de entrenamiento, minimizando la función de
   error promedio $\C{E}_{\T{av}}$.
 \end{itemize}
 %
+Mientras que el aprendizaje en línea resulta idóneo para situaciones en donde
+se requiere una adaptación continua de la máquina de aprendizaje, el
+aprendizaje por época redunda en superficies de error más estables, ya que
+se promedia todo el conjunto de datos.
 En el presente trabajo, se considera en todos los casos el aprendizaje
 por época.
 
