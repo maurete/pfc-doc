@@ -1,20 +1,17 @@
 %
 %
-\subsection{El algoritmo de retropropagación}
+\subsection{El algoritmo de retropropagación básico}
 %
 El algoritmo de retropropagación es un algoritmo específico para el
 perceptrón multicapa que efectúa entrenamiento ajustando los pesos
-$w_{ij}$ de la red en el sentido que minimiza la función de error
-$\C{E}$, a partir de la información obtenida del gradiente
-$\nabla\C{E}=\dpar{\C{E}}{w_{ij}}{}$.
+$w_{ij}$ de la red, minimizando la función de error
+$\C{E}(n)$ a partir de la información del gradiente
+$\nabla\C{E}(n)=\dpar{\C{E}(n)}{w_{ij}}{}$.
 
-%% Aprovechando la arquitectura del MLP, el algoritmo de retropropagación
-%% calcula el gradiente de la función de error comenzando por la capa de
-%% salida y \e{propagando} el error $E$ en dirección inversa hasta la
-%% primer capa oculta.
-
-La idea básica del algoritmo de retropropagación es aplicar a cada
-peso sináptico $w_{ij}(n)$ de la red una corrección
+Para lograr simplicidad en la formulación, se describe
+en primer lugar el algoritmo de retropropagación para un entrenamiento "en línea".
+La idea básica es aplicar a cada
+peso sináptico $w_{ij}$ de la red una corrección
 $\Delta{}w_{ij}(n)$ proporcional a la derivada parcial
 $\dpar{\C{E}(n)}{w_{ij}}{}$.  Según la regla de la cadena, esta
 derivada parcial puede escribirse
@@ -26,7 +23,7 @@ derivada parcial puede escribirse
 %
 Diferenciando ambos lados de la
 \iflatexml{}Ecuación~\ref{e2:error-energy-neuron}
-\else\autoref{e2:error-energy-neuron}\fi respecto de $s_i(n)$, se tiene
+\else\autoref{e2:error-energy-neuron}\fi{} respecto de $s_i(n)$, se tiene
 %
 \begin{align}\label{e2:deriv-E-wrt-s}
   \dpar{\C{E}(n)}{s_i(n)}{} = -e_i(n).
@@ -37,7 +34,7 @@ Por la \iflatexml{}Ecuación~\ref{e2:neuron-general}
 %
 \begin{align}\label{e2:deriv-s-wrt-v}
   \dpar{s_i(n)}{v_i(n)}{} \tab = f'(v_i(n)),\tabs
-  \dpar{v_i(n)}{w_{ij}(n)}{} \tab = s_j(n).\\
+  \dpar{v_i(n)}{w_{ij}}{} \tab = s_j(n).\\
 \end{align}
 %
 Reemplazando las Ecuaciones
@@ -83,9 +80,9 @@ puede ver que
 \end{align}
 %
 Reemplazando la
-\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-s-hid}\else\autoref{e2:deriv-E-wrt-s-hid}\fi
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-s-hid}\else\autoref{e2:deriv-E-wrt-s-hid}\fi{}
 y la \iflatexml{}Ecuación~\ref{e2:deriv-s-wrt-v}
-\else\autoref{e2:deriv-s-wrt-v}\fi en la 
+\else\autoref{e2:deriv-s-wrt-v}\fi{} en la 
 \iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-expanded}\else\autoref{e2:deriv-E-wrt-w-expanded}\fi,
 se tiene entonces
 %
@@ -114,5 +111,5 @@ primer capa oculta.
 
 El desarrollo del algoritmo de retropropagación a mediados de los años
 80 representó un hito en el campo de las redes neuronales, ya
-que brindó un método computacionalemnte eficiente, usable, para
+que brindó un método computacionalmente eficiente, usable, para
 entrenar el perceptrón multicapa.
