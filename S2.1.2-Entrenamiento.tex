@@ -2,18 +2,24 @@
 %
 \subsection{Entrenamiento}
 %
-Todo el conocimiento que se tiene sobre la distribución generadora de
-datos $\nu$ proviene del conjunto de datos finito
-$D=\left((\xx_1,\yy_1),\ldots,(\xx_\ell,\yy_\ell)\right)$. Este conjunto de
-datos define una distribución empírica
+El entrenamiento es el proceso de construir un modelo $h(\xx)$ a
+partir de los datos del conjunto de entrenamiento
+$D=\left((\xx_1,\yy_1),\ldots,(\xx_\ell,\yy_\ell)\right)$.  Este
+conjunto es una muestra (de probabilidad desconocida) de la
+distribución generadora de datos $\nu$, y define una distribución
+\e{empírica}
 %
 \begin{align}
   \hat{\nu}=\frac{1}{\ell}\sum_{i=1}^{\ell}\delta_{(\xx_i,\yy_i)}(\xx,\yy)
 \end{align}
 %
 donde $\delta_{(\xx,\yy)}$ denota el delta de Dirac en
-$(\xx,\yy)\in{}X\times{}Y$. Esta distribución conduce a la definición del
-\e{error de entrenamiento} como el error de un modelo $h$ sobre los
+$(\xx,\yy)\in{}X\times{}Y$.
+%
+\subsubsection{Error de entrenamiento}
+%
+La distribución empírica $\hat{\nu}$ conduce a la definición del
+\e{error de entrenamiento} como el error del modelo $h$ sobre los
 datos de entrenamiento en $D$:
 %
 \begin{align}
@@ -22,6 +28,9 @@ datos de entrenamiento en $D$:
 \end{align}
 %
 en donde $L$ es una función de pérdida.
+%
+
+%
 Una forma de entrenamiento básica de la máquina de aprendizaje consiste en 
 seleccionar el modelo con el mínimo error de entrenamiento
 %
