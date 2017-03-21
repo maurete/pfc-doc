@@ -1,4 +1,6 @@
 *~
+revision.tex
+*.pdf
 *.bak
 *.aux
 *.bbl

@@ -1618,4 +1618,177 @@
   url =		 {https://books.google.com.ar/books?id=GowoAQAAMAAJ}
 }
 
+@article{lee-keerthi,
+  author =	 {M. M. S. Lee and S. S. Keerthi and Chong Jin Ong and
+                  D. DeCoste},
+  journal =	 {IEEE Transactions on Neural Networks},
+  title =	 {An efficient method for computing leave-one-out
+                  error in support vector machines with Gaussian
+                  kernels},
+  year =	 {2004},
+  volume =	 {15},
+  number =	 {3},
+  pages =	 {750-757},
+  abstract =	 {In this paper, we give an efficient method for
+                  computing the leave-one-out (LOO) error for support
+                  vector machines (SVMs) with Gaussian kernels quite
+                  accurately. It is particularly suitable for
+                  iterative decomposition methods of solving SVMs. The
+                  importance of various steps of the method is
+                  illustrated in detail by showing the performance on
+                  six benchmark datasets. The new method often leads
+                  to speedups of 10-50 times compared to standard LOO
+                  error computation. It has good promise for use in
+                  hyperparameter tuning and model comparison.},
+  keywords =	 {Gaussian processes;iterative methods;support vector
+                  machines;Gaussian kernels;benchmark
+                  datasets;hyperparameter tuning;iterative
+                  decomposition methods;leave-one-out error
+                  computing;model comparison;support vector
+                  machines;Iterative
+                  methods;Kernel;Laboratories;Lagrangian
+                  functions;Learning systems;Machine
+                  learning;Mechanical engineering;Propulsion;Support
+                  vector machine classification;Support vector
+                  machines;Computing Methodologies;Normal
+                  Distribution;Research Design},
+  doi =		 {10.1109/TNN.2004.824266},
+  ISSN =	 {1045-9227},
+  month =	 {May},
+}
 
+@book{haykin,
+  title={Neural networks and learning machines},
+  author={Haykin, Simon S and Haykin, Simon S and Haykin, Simon S and Haykin, Simon S},
+  volume={3},
+  year={2009},
+  publisher={Pearson Upper Saddle River, NJ, USA}
+}
+
+@inproceedings{kuhntucker,
+  address =	 "Berkeley, Calif.",
+  author =	 "Kuhn, H. W. and Tucker, A. W.",
+  booktitle =	 "Proceedings of the Second Berkeley Symposium on
+                  Mathematical Statistics and Probability",
+  pages =	 "481--492",
+  publisher =	 "University of California Press",
+  title =	 "Nonlinear Programming",
+  url =		 "http://projecteuclid.org/euclid.bsmsp/1200500249",
+  year =	 "1951"
+}
+
+@techreport{smo,
+  author =	 {Platt, John},
+  title =	 {Sequential Minimal Optimization: A Fast Algorithm
+                  for Training Support Vector Machines},
+  booktitle =	 {},
+  year =	 {1998},
+  month =	 {April},
+  abstract =	 {This paper proposes a new algorithm for training
+                  support vector machines: Sequential Minimal
+                  Optimization , or SMO . Training a support vector
+                  machine requires the solution of a very large
+                  quadratic programming (QP) optimization problem. SMO
+                  breaks this large QP problem into a series of
+                  smallest possible QP problems. These small QP
+                  problems are solved analytically, which avoids using
+                  a time-consuming numerical QP optimization as an
+                  inner loop. The amount of memory required for SMO is
+                  linear in the training set size, which allows SMO to
+                  handle very large training sets. Because matrix
+                  computation is avoided, SMO scales somewhere between
+                  linear and quadratic in the training set size for
+                  various test problems, while the standard chunking
+                  SVM algorithm scales somewhere between linear and
+                  cubic in the training set size. SMO's computation
+                  time is dominated by SVM evaluation, hence SMO is
+                  fastest for linear SVMs and sparse data sets. On
+                  real- world sparse data sets, SMO can be more than
+                  1000 times faster than the chunking algorithm.},
+  publisher =	 {},
+  url =
+                  {https://www.microsoft.com/en-us/research/publication/sequential-minimal-optimization-a-fast-algorithm-for-training-support-vector-machines/},
+  address =	 {},
+  pages =	 {21},
+  journal =	 {},
+  volume =	 {},
+  chapter =	 {},
+  isbn =	 {},
+}
+
+@article {fasta,
+  author =	 {Lipman, DJ and Pearson, WR},
+  title =	 {Rapid and sensitive protein similarity searches},
+  volume =	 {227},
+  number =	 {4693},
+  pages =	 {1435--1441},
+  year =	 {1985},
+  doi =		 {10.1126/science.2983426},
+  publisher =	 {American Association for the Advancement of Science},
+  abstract =	 {An algorithm was developed which facilitates the
+                  search for similarities between newly determined
+                  amino acid sequences and sequences already available
+                  in databases. Because of the
+                  algorithm{\textquoteright}s efficiency on many
+                  microcomputers, sensitive protein database searches
+                  may now become a routine procedure for molecular
+                  biologists. The method efficiently identifies
+                  regions of similar sequence and then scores the
+                  aligned identical and differing residues in those
+                  regions by means of an amino acid replacability
+                  matrix. This matrix increases sensitivity by giving
+                  high scores to those amino acid replacements which
+                  occur frequently in evolution. The algorithm has
+                  been implemented in a computer program designed to
+                  search protein databases very rapidly. For example,
+                  comparison of a 200-amino-acid sequence to the
+                  500,000 residues in the National Biomedical Research
+                  Foundation library would take less than 2 minutes on
+                  a minicomputer, and less than 10 minutes on a
+                  microcomputer (IBM PC).},
+  issn =	 {0036-8075},
+  URL =		 {http://science.sciencemag.org/content/227/4693/1435},
+  eprint =
+                  {http://science.sciencemag.org/content/227/4693/1435.full.pdf},
+  journal =	 {Science}
+}
+
+@techreport{scholkopf,
+  author =	 {Platt, John and Schölkopf, Bernhard and
+                  Shawe-Taylor, John and Smola, Alex J. and
+                  Williamson, Robert C.},
+  title =	 {Estimating the Support of a High-Dimensional
+                  Distribution},
+  booktitle =	 {},
+  year =	 {1999},
+  month =	 {November},
+  abstract =	 {Suppose you are given some dataset drawn from
+                  an underlying probability distribution P and you
+                  want to estimate a "simple" subset S of input space
+                  such that the probability that a test point drawn
+                  from P lies outside of S is bounded by some a priori
+                  specified v between 0 and 1. We propose a method to
+                  approach this problem by trying to estimate a
+                  function f which is positive on S and negative on
+                  the complement. The functional form of f is given by
+                  a kernel expansion in terms of a potentially small
+                  subset of the training data; it is regularized by
+                  controlling the length of the weight vector in an
+                  associated feature space. The expansion coefficients
+                  are found by solving a quadratic programming
+                  problem, which we do by carrying out sequential
+                  optimization over pairs of input patterns. We also
+                  provide a preliminary theoretical analysis of the
+                  statistical performance of our algorithm. The
+                  algorithm is a natural extension of the support
+                  vector algorithm to the case of unlabelled data.},
+  publisher =	 {},
+  url =
+                  {https://www.microsoft.com/en-us/research/publication/estimating-the-support-of-a-high-dimensional-distribution/},
+  address =	 {},
+  pages =	 {30},
+  journal =	 {},
+  volume =	 {},
+  chapter =	 {},
+  isbn =	 {},
+}
