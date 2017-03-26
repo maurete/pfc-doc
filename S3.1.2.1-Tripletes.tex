@@ -2,35 +2,33 @@
 %
 \subsubsection{Características de tripletes}
 %
-Una propiedad distintiva de los \premirna{s} es su estructura
-secundaria en forma de horquilla. En \cite{xue}, \citeauthor{xue}
-proponen un método para diferenciar ejemplos de \premirna{s}
-``reales'' de otras secuencias con la misma estructura secundaria,
-denominadas ``pseudo \premirna{s}'', observando que la distribución de
-sub-estructuras locales difiere significativamente entre unos y otros.
-A partir de estas observaciones, proponen generar un conjunto
-de \caract{s} que representa la distribución de las sub-estructuras
-locales dentro del ``tallo'' de la horquilla.
+Las \caract{s} de tripletes, propuestas en el método \e{Triplet-SVM}
+\cite{xue}, se basan en la idea de que la propiedad distintiva de los
+\premirna{s} es una estructura secundaria en forma de horquilla.  En
+el trabajo original, los autores proponen un método para clasificar
+secuencias con estructura secundaria en forma de horquilla entrenando
+con \premirna{s} ``reales'' y otras secuencias con la misma estructura
+secundaria denominadas ``pseudo \premirna{s}''.
 
-Los tripletes son pequeñas cadenas de caracteres que relacionan la
-base de cada nucleótido y su estructura secundaria local.  Para un
-nucleótido en la posición $i$, el triplete correspondiente es una
-cadena de 4 caracteres que contiene la base (\ntA, \ntC, \ntG, o \ntU)
-seguida de la sub-estructura secundaria local en $i-1,i,i+1$,
-representada en forma binaria como ``acoplado'' \pairL (paréntesis) y
-``no acoplado'' \noPair (punto).
+Las \caract{s} de tripletes se justifican en la observación empírica
+que la distribución (frecuencia de aparición) de sub-estructuras
+locales en la región del tallo de la horquilla difiere
+significativamente entre ambas clases.
 
-En la \iflatexml{}Figura~\ref{triplet}\else\autoref{triplet}\fi{} se
-muestra un \premirna{} con estructura secundaria en forma de horquilla
-y se describen sus diferentes partes según la estructura secundaria.
-Por ejemplo, el ``tallo'' de la horquilla es la región resultante
-luego de descartar el bucle central y los extremos no acoplados.
+%% A partir de estas observaciones, proponen generar un conjunto de
+%% \caract{s} que representa la distribución de las sub-estructuras
+%% locales dentro del ``tallo'' de la horquilla.
 
-Contando el número de ocurrencias de cada una de las 32 combinaciones
-posibles de tripletes en la región del tallo, se obtiene un vector que
-caracteriza la distribución de las sub-estructuras locales.  Además,
-se incorporan 4 medidas auxiliares que resultan del cálculo de los
-tripletes:
+Un ``triplete'' es una cadena de caracteres que relaciona la base de
+un nucleótido en la posición $i$ (\ntA, \ntC, \ntG, o \ntU) con su
+estructura secundaria local en $i-1,i,i+1$, representada en forma
+binaria como ``acoplado'' \pairL (paréntesis) y ``no acoplado''
+\noPair (punto).
+
+El conjunto de \caract{s} de tripletes incluye 32 medidas que cuentan
+el número de ocurrencias de las 32 combinaciones posibles de tripletes
+en la región del tallo junto con 4 medidas auxiliares que derivadas
+del cálculo de los tripletes:
 %
 \begin{itemize}
 \item longitud del tallo,
@@ -40,14 +38,19 @@ tripletes:
 \end{itemize}
 %
 
-La principal limitación de las características de tripletes es que su
-cálculo resulta posible únicamente para ejemplos en forma de horquilla
-con un bucle central único, ya que de otro modo la definición del
-``tallo'' pierde sentido. Por ello, estas \caract{s} no se calculan
-cuando el ejemplo contiene bucles múltiples en su estrucutra secundaria.
+En la \iflatexml{}Figura~\ref{triplet}\else\autoref{triplet}\fi{} se
+ilustra el proceso de extracción de tripletes para el \premirna{}
+\sbs{cel-lsy-66} de la base de datos miRBase \cite{mirbase} y una
+representación de la estructura secundaria resaltando las partes que
+la componen: bases sueltas y acopladas, pares de bases, tallo, bucle
+central y extremos.
 
-%% En la implementación, se diferencian las \caract{s} de distribución de
-%% los tripletes (llamadas ``triplet'') de las \caract{s} auxiliares
-%% (llamadas ``triplet-extra'').
-A continuación se tabulan las 36 características de tripletes y su
-posición en el vector de características.
+La principal limitación de las características de tripletes reside en
+que su cálculo resulta posible únicamente cuando la estructura
+secundaria tiene forma de horquilla, ya que de otro modo la definición
+del ``tallo'' pierde sentido.  Por ello, estas \caract{s} no se
+calculan cuando el ejemplo contiene bucles múltiples en su estrucutra
+secundaria.
+
+En la tabla a continuación se detallan las 36 características de
+tripletes y su posición en el vector de características.
