@@ -4,12 +4,11 @@
 %
 La extracción de características es el proceso de construir una
 representación de los datos mediante un conjunto fijo de
-características numéricas y/o categóricas que describen cada
+variables numéricas y/o categóricas que describen cada
 observación (ejemplo).  Una ``característica'' es un atributo o medida
 que se toma sobre el dato original y se trata como variable aleatoria.
-
 En otras palabras, la extracción de \caract{s} transforma la
-representación original (cadenas de caracteres) a un conjunto fijo de
+representación original de cadenas de caracteres a un conjunto fijo de
 variables numéricas.  Mediante esta transformación se pretende
 alcanzar una mejor representación de los datos desde el punto de vista
 de la máquina de aprendizaje, que sea al mismo tiempo más informativa
@@ -17,8 +16,12 @@ de la máquina de aprendizaje, que sea al mismo tiempo más informativa
 
 La construcción del conjunto de características conforma toda una
 disciplina en sí misma, y excede el alcance del presente trabajo.  En
-el software \hl{propio} se adopta un enfoque simple, generando un
-conjunto de características agregado a partir de los trabajos tomados
-como referencia \cite{xue,ng,batuwita}.  Según el tipo de medida que
-representan, se distinguen grupos de \caract{s} de tripletes (x36), de
-secuencia (x23) y de estructura secundaria (x7).
+el presente desarrollo se adopta un enfoque simple, que consiste en
+construir un vector de 66 \caract{s} tomando como referencia los
+trabajos \cite{xue,ng,batuwita}.
+
+Las 66 medidas que componen el vector de \caract{s} se distinguen,
+según el tipo de dato que representan, en 36 \caract{s} de tripletes,
+23 \caract{s} de la secuencia, y 7 de la estructura secundaria.  A
+continuación, se describe la composición del vector de \caract{s}
+según este orden.
