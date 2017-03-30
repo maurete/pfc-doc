@@ -1,0 +1,30 @@
+%
+%
+\section{Construcción del modelo del clasificador SVM}
+%
+AL igual que para el caso del clasificador MLP, la construcción
+del modelo SVM es un proceso de dos etapas: en primer lugar se determinan
+valores óptimos para los hiperparámetros, y una vez encontrados, se procede a
+entrenar el modelo ``hiperparametrizado''.
+
+A diferencia del caso MLP, sin embargo, en una máquina de vectores de soporte
+los \hparam{s} pueden ser más de uno, y se trata de variables continuas.
+
+Esto junto a las propiedades analíticas de la SVM permite aplicar estrategias
+de selección de hiperparámetros más complejas que aprovechan mejor la información
+del modelo SVM. Incluso, se puede aplicar optimización mediante descenso por gradiente.
+%
+\begin{description}
+\item[Estrategia trivial:] Consiste en seleccionar hiperparámetros
+  preestablecidos, sin entrenamiento. Se utiliza como estrategia
+  ``básica'' para comparación de los métodos.
+\item[Estrategia de búsqueda en la grilla:] Efectúa una búsqueda
+  exhaustiva de los hiperparámetros maximizando la tasa de
+  clasificación de validación cruzada.
+\item[Estrategia de minimización del error empírico:] Realiza una
+  búsqueda por gradiente en el espacio de los hiperparámetros de la
+  tasa de clasificación de validación cruzada.
+\item[Estrategia de minimización de la cota RMB]: Minimiza una función de derivación teórica
+  intentando maximizar la tasa de clasificación.
+\end{description}
+%

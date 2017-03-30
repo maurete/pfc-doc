@@ -1,37 +1,6 @@
 %
 %
-\subsection{Búsqueda exhaustiva}
-%
-La estrategia de búsqueda exhaustiva utiliza como función objetivo el
-valor $G_m$ promedio de validación cruzada, y selecciona los
-hiperparámetros óptimos mediante prueba y error dentro de un rango
-preestablecido. Dado que la naturaleza de los hiperparámetros es
-diferente según el clasificador, el algoritmo de búsqueda también
-difiere en cada caso.
-%
-\subsubsection{Perceptrón multicapa}
-%
-El hiperparámetro del perceptrón multicapa es el número de neuronas en
-la capa oculta $h$, una variable discreta no negativa. La
-inicialización aleatoria del perceptrón multicapa introduce
-fluctuaciones aleatorias en la función objetivo $G_m$ de validación
-cruzada, lo que implica que se deben efectuar una gran cantidad de
-repeticiones de inicialización--entrenamiento--prueba para obtener
-resultados fiables.  Por ello, en lugar de efectuar la búsqueda sobre
-todos los valores posibles, se prueban 20 valores de $h$ entre 0 y 200
-en una escala aproximadamente logarítmica:
-%
-\begin{align}
-  \label{mlp-hidden-tries}
-  h=0,1,2,3,4,5,7,9,11,14,19,24,32,41,54,70,91,118,154,200.
-\end{align}
-%
-Por defecto, se efectúan 5 repeticiones de
-inicialización--entrenamiento--prueba para cada valor de $h$. Se
-selecciona aquel valor de $h$ para el cual se obtuvo el mayor valor de
-$G_m$ de validación cruzada en promedio.
-%
-\subsubsection{Máquina de vectores de soporte}
+\subsection{Búsqueda en la grilla}
 %
 Los hiperparámetros a optimizar en una máquina de vectores de soporte
 son $C$ y $\gamma$ (para núcleo RBF), que son variables reales no

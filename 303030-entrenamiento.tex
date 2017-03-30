@@ -1,0 +1,20 @@
+%
+\subsubsection{Entrenamiento}
+%
+Una vez determinados los hiperparámetros óptimos del clasificador
+mediante alguna de las estrategias descriptas previamente, se entrena
+una máquina de aprendizaje (SVM o MLP) con el conjunto de
+entrenamiento completo $D$, obteniendo un modelo ``final''.
+
+La salida del método consiste en el modelo de la máquina de
+aprendizaje correspondiente, el cual servirá, junto a una
+especificación del escalado y offset a utilizar, para clasificar
+elementos nuevos.
+
+Para el caso del perceptrón multicapa, el modelo en realidad
+consiste en 5 redes neuronales inicializadas con datos aleatorios
+y entrenadas con el mismo conjunto de datos $D$.
+De este modo, se neutraliza hasta cierto punto los efectos negativos
+que una red mal ondicionada pudiera generar un mal modelo.
+
+{\Huge \hl{Agregar detalles implementacion pertinentes}}
