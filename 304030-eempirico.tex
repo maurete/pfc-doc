@@ -2,19 +2,17 @@
 %
 \subsection{Minimización del error empírico}
 %
-La estrategia de minimización del error empírico, aplicable a la
-máquina de vectores de soporte, optimiza una función objetivo
-denominada \e{error empírico} basada en una interpretación
-probabilística de la salida del modelo del clasificador SVM.
+La función ``error empírico'' es una función que mide el error de
+validación cruzada sobre el conjunto de entrenamiento adaptando un
+modelo probabilístico a la salida del clasificador. De este modo,
+resulta posible calcular las derivadas del modelo SVM respecto de sus
+hiperparámetros, lo que deriva en la estrategia de minimización del
+error empírico mediante descenso por gradiente.
 
-La función error empírico fue propuesta por \citeauthor{ayat} en
-\cite{ayat} para la selección automática de los parámetros del núcleo.
-En el presente trabajo, se incorpora el cálculo del gradiente de la
-función respecto del hiperparámetro de regularización $C$
-\cite{keerthi,glasmachers} tal como se implementa en \cite{shark}.  De
-este modo, la estrategia de minimización del error empírico soporta la
-selección automática de todos los hiperparámetros de la máquina de
-vectores de soporte, incluyendo la regularización $C$.
+La implementación se basa en la propuesta de \cite{ayat}, incorporando
+el cálculo del gradiente del modelo SVM respecto del hiperparámetro de
+regularización $C$ \cite{keerthi,glasmachers} tal como se implementa
+en \cite{shark}.
 %
 \begin{quote}
   \sbs{Terminología.}
