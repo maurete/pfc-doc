@@ -21,11 +21,14 @@ como ``SVM de una clase'' \cite{scholkopf}:
 %
 Aquí, $\B{1}_{\ell}$ es un vector columna con $\ell$ elementos iguales
 a 1, y $\KK$ es la matriz del núcleo con elementos
-$k_{ij}=k(\xx_i,\xx_j)$.
+$k_{ij}=k(\xx_i,\xx_j)$. El Problema (\ref{svm-oneclass}) se resuelve
+mediante un algoritmo de optimización estándar, y su solución es única
+siempre que no haya elementos repetidos en el conjunto de entrenamiento
+\cite{chung}.
 
 El valor ``margen'' $\rho_M$ es dos veces la solución al problema de
-optimización de la SVM (\autoref{svm-primal-blando}).  Dada la
-equivalencia primal-dual de la solución, si $\Balpha$ es solución a
+optimización de la SVM (\autoref{svm-primal-blando}). La
+equivalencia primal-dual de la solución establece que, si $\Balpha$ es solución a
 la forma dual (\autoref{svmprob-dual-soft}), se tiene simplemente
 %
 \begin{align}
