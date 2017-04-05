@@ -1,0 +1,13 @@
+*~
+revision.tex
+*.pdf
+*.bak
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.out
+*.run.xml
+*.toc
+\#*\#

@@ -1,0 +1,31 @@
+%
+\subsubsection{Gradiente conjugado escalado}
+%
+El algoritmo del gradiente conjugado escalado (\e{scaled conjugate
+  gradient, SCG}) \cite{scg} es una mejora del algoritmo del gradiente
+conjugado estándar. Mientras que el algoritmo del gradiente conjugado
+estándar efectúa una búsqueda en la línea para determinar el tamaño de
+paso óptimo $\eta(n)$, el algoritmo del gradiente conjugado escalado
+utiliza una estrategia más eficiente de tipo Levenberg-Marquardt para
+regular la velocidad de aprendizaje en cada iteración.
+%% En pos de lograr brevedad en la exposición, se omiten los detalles de
+%% la derivación de este algoritmo dada la gran cantidad de conceptos
+%% teóricos necesarios para explicarlo con claridad.  El lector
+%% interesado encontrará en el trabajo original de su creador \cite{scg}
+%% una descripción detallada del método.
+
+En la actualidad, junto al algoritmo Rprop descripto a continuación,
+el algoritmo SCG es la forma de entrenamiento estándar del perceptrón
+multicapa debido a su estabilidad y velocidad de entrenamiento.
+
+%% Desde el punto de vista de la optimización numérica, el descenso por
+%% gradiente efectuado por el algoritmo de retropropagación puede
+%% mejorarse en varios aspectos.  El algoritmo del gradiente conjugado
+%% escalado (SCG), propuesto por \cite{scg} en 1990, incorpora una serie
+%% de mejoras que derivan en un entrenamiento notablemente más rápido.
+
+%% Para llegar a una descripción del algoritmo SCG, resulta necesario
+%% revisar algunos conceptos en los que se basa. Las descripciones a
+%% continuación omiten, en pos de brevedad, detalles en las derivaciones
+%% y fórmulas específicas. Para referencia, se refiere al lector a
+%% \cite{haykin} (sección 4.16), \cite{riedmiller} y \cite{scg}.
