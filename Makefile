@@ -37,7 +37,7 @@ temp: $(header) $(contents)
 	echo '\\include{documentclass}' > $(output)
 	echo '\\include{header}' >> $(output)
 	echo '\\include{revision}' >> $(output)
-	echo '\\include{begindocument}' >> $(output)
+	echo '\\input{begindocument}' >> $(output)
 	cat $(layout) | sed 's/^/\\includeFileOrFigure\{/g ; s/$$/}/g ;' >> $(output)
 	echo '\\include{enddocument}' >> $(output)
 

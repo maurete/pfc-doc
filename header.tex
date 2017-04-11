@@ -17,10 +17,25 @@
 %
 \iflatexml\else
 \usepackage[T1]{fontenc}
+
+% Linux Libertine
 \usepackage{libertine}
+
+% TeX Gyre Heros
 \usepackage[scale=0.96]{tgheros}
+
+% Inconsolata
 \usepackage[scaled=0.9]{zi4}
-\renewcommand{\tt}{\mathtt} % evitar clash de euler con koma-script
+
+% Para evitar clash de euler con koma-script
+\renewcommand{\tt}{\mathtt}
+
+% Source Sans Pro
+% \usepackage{sourcesanspro}
+
+% Bitstream charter en modo math
+% \usepackage[bitstream-charter]{mathdesign}
+
 \fi
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -212,7 +227,7 @@
 \newcommand{\rowSTD}{&&{\smaller $\sigma$}}
 \newcommand{\rowSKIP}{\addlinespace[2pt]}
 \newcommand{\ti}{\textsmaller}
-\newcommand{\func}[1]{\emph{#1}}
+\newcommand{\func}[1]{{\texttt{#1}}}
 \newcommand{\Gm}{\scriptsize $G_m$}
 \newcommand{\Ft}[1]{\mrow{2}{*}{#1}}
 \newcommand{\tbmean}{\smaller{2} $\bar{x}$}
@@ -249,6 +264,12 @@
 \newcommand{\feedforward}{con propagación hacia adelante}
 \newcommand{\funcheader}[3]{\begin{description}%
   \item[Función]{#1}\item[Entradas]{#2}\item[Salidas]{#3}%
+\end{description}}
+\newcommand{\funcentry}[4]{\begin{description}%
+  \item[Función]{#1}
+  \item[Entradas]{#2}
+  \item[Salidas]{#3}
+  \item[Descripción]{#4}
 \end{description}}
 \renewcommand{\bibfont}{\normalfont\footnotesize}
 %
