@@ -1,0 +1,107 @@
+%
+%
+\subsection{Núcleos}
+%
+Un núcleo, denominado también por su nombre en inglés \eng{kernel}, es
+una función $k:X\times{}X\rightarrow{}\RR$ \cite{stewart} que
+generaliza el concepto de métrica.  Dado un par de vectores
+$\xx_1,\xx_2\in{}X$, un núcleo permite comparar la similaridad entre
+los vectores $\BPhi(\xx_1),\BPhi(\xx_1)$ \e{transformados} a un
+espacio vectorial inducido $Z$, sin necesidad de calcular la
+transformación $\BPhi$ de forma explícita.
+%
+\begin{definicion}[Núcleo]
+  Una función $k:X\times{}X\rightarrow{}\R{R}$ se dice un núcleo
+  en el conjunto $X$ si cumple con las siguientes propiedades:
+  %
+  \begin{enumerate}
+  \item $k(\xx_1,\xx_2)=k(\xx_2,\xx_1)$ para todo $\xx_1,\xx_2\in{}X$
+  \item Para cada $n\in\R{N}$ y para todos los puntos
+    $(\xx_1,\ldots,\xx_\ell)\in{}X^\ell$, la matriz de Gram
+    $K\in\R{R}^{\ell\times\ell}$ definida como
+    $K_{ij}=k(\xx_i,\xx_j),\,i,j\in\{1,\ldots,\ell\}$ es semidefinida
+    positiva.
+  \end{enumerate}
+  %
+\end{definicion}
+%
+Para un núcleo $k$, el teorema de Mercer \cite{mercer} asegura la
+existencia de un espacio de Hilbert $Z$ y una transformación
+$\BPhi:X\rightarrow{}Z$ tal que, para cualquier par de vectores
+$\xx_i,\xx_j\in{}X$, el núcleo calcula el producto interno de los
+mismos en el espacio imagen:
+$k(\xx_i,\xx_j)=\langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle$.
+%% Es importante tener en cuenta que ni el espacio $F$ ni la
+%% transformación $\BPhi$ son únicos.
+
+El teorema de Mercer puede aplicarse directamente a la función
+objetivo del problema dual de la SVM (\ref{e2:svm-problem-dual2}),
+reemplazando los productos internos
+$\left\langle\BPhi(\xx_i),\BPhi(\xx_j)\right\rangle$, por la función
+núcleo $k(\xx_i,\xx_j)$. Esto se llama comúnmente como el ``truco del
+núcleo'', del inglés \e{kernel trick}, y da como resultado el problema
+%
+\begin{align}
+  \begin{split}
+    \max_\alpha &\quad
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    k(\xx_i,\xx_j) + \sum_{i=1}^{\ell} \alpha_i \\
+    \T{sujeto a} &\quad \yy^T\Balpha = 0, \\
+    &\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}.
+  \end{split}
+  \label{e2:svm-problem-kernel}
+\end{align}
+%
+En este problema, las operaciones de producto interno en el espacio
+imagen $Z$ se efectúan a través de la función núcleo $k$, sin
+necesidad de calcular la transformación $\BPhi$ en forma explícita.
+
+Desde un punto de vista puramente matemático, la utilización del truco
+del núcleo no aporta ninguna ventaja, ya que los algoritmos son
+equivalentes. Desde un punto de vista computacional, sin embargo, la
+diferencia es decisiva: utilizando el truco del núcleo, se pueden
+calcular productos internos en espacios vectoriales de alta
+dimensionalidad --incluso infinita--, sin necesidad de efectuar la
+transformación $\BPhi$, cuyo cálculo directo muchas veces resulta
+prohibitivo o incluso imposible en un ordenador.
+
+%% Es intuitivamente claro que la elección de un núcleo que represente
+%% una métrica específica al problema puede mejorar el rendimiento de las
+%% máquinas de aprendizaje. Por ejemplo, en una tarea de clasificación es
+%% conveniente elegir una métrica que agrupa las diferentes clases.
+
+Algunos de los núcleos comúnmente utilizados con
+las máquinas de vectores de soporte son:
+%
+\begin{description}
+\item[Núcleo lineal]
+  \begin{align}
+    k(\uu,\vv)=\langle \uu, \vv\rangle=\uu^T\vv
+  \end{align}
+  Calcula simplemente el producto interno entre sus argumentos. Aquí,
+  el espacio imagen es el mismo que el espacio de entrada, $X$,
+  correspondiente a la transformación identidad $\BPhi(\xx)=\xx$.
+\item[Núcleo polinómico]
+  \begin{align}
+    k(x,x')=\left(\langle{}x,x'\rangle+\theta\right)^d,
+  \end{align}
+  con grado $d\in\R{N}$ y desvío $\theta\in\RR$.
+  Este núcleo es una generalización del núcleo lineal, el cual se
+  obtiene para $d=1$ y $\theta=0$. Su espacio imagen es el espacio de
+  los polinomios de grado $d$ sobre el espacio $X$, con la notable
+  propiedad de que el cálculo del núcleo toma sólo $\C{O}(\dim{}X)$
+  operaciones, mientras que el cálculo explícito de la transformación
+  lleva $\C{O}\left((\dim{}X)^d\right)$ operaciones.
+\item[Función de base radial (RBF)]
+  \begin{align}
+    k(x,x')=\exp\left(-\frac{\|x-x'\|^2}{2\sigma^2}\right)
+    =\exp\left(-\gamma\|x-x'\|^2\right)
+  \end{align}
+  Este es el núcleo más utilizado. También llamado núcleo gaussiano,
+  su nombre proviene del inglés \eng{Radial basis function}.  El
+  parámetro de amplitud $\sigma$ en la primera forma, o con el
+  parámetro de concentración $\gamma$ en la segunda forma. Corresponde
+  a un espacio imagen de dimensión infinita, que no permite una
+  representación directa de la transformación $\BPhi$.  El núcleo RBF
+  se puede calcular en $\C{O}(\dim{}X)$ operaciones.
+\end{description}

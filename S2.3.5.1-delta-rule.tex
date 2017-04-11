@@ -1,0 +1,20 @@
+%
+\subsubsection{Ajuste de los pesos de la red}
+%
+En cada paso del entrenamiento $n$, se calcula la salida de la red
+$\B{s}(n)$ como respuesta a la entrada $\xx(n)$ y el gradiente
+$\dpar{\C{E}(n)}{w_{ij}}{}$. A partir de la información del gradiente,
+el algoritmo aplica una corrección $\Delta{}w_{ij}(n)$ sobre el peso
+$w_{ij}(n)$ que viene dada por la ``regla delta''
+%
+\begin{align}\label{e2:delta-rule}
+  \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}(n)}{w_{ij}}{},
+\end{align}
+%
+en donde $\eta$ es el parámetro \e{velocidad de aprendizaje} del
+algoritmo de retropropagación. La utilización del signo menos en la
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w}
+\else\autoref{e2:deriv-E-wrt-w}\fi indica el \e{descenso por
+  gradiente} en el espacio de los pesos $w_{ij}$. Esto implica que el
+ajuste efectuado modifica los pesos en la dirección que reduce el
+valor de $\C{E}(n)$.
