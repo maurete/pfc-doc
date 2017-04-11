@@ -50,5 +50,5 @@ figures/triplet/triplete.png
 307030-svm.tex
 307032-entrenamiento.tex
 307034-soporte.tex
-305010-implementacion.tex
+307040-clasificacion.tex
 308000-documentacion.tex
