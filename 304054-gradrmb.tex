@@ -3,10 +3,11 @@
 %
 El cálculo de las derivadas de $\rho$ se basa en resultados de
 análisis de perturbación de problemas de optimización, ya que tanto
-$\rho_R$ como $\rho_M$ son soluciones a problemas de este tipo \cite{chung}.
+$\rho_R$ como $\rho_M$ son soluciones a problemas de este tipo
+\cite{chung}.
 
-Las derivadas de $R^2$ respecto de los hiperparámetros $C$ y $\gamma$ vienen
-dadas por
+Las derivadas de $R^2$ respecto de los hiperparámetros $C$ y $\gamma$
+vienen dadas por
 %
 \begin{align}
   \dpar{R^2}{C}{} &= \dpar{(1-\Bbeta^T\KK\Bbeta)}{C}{}
@@ -15,21 +16,22 @@ dadas por
   = -\Bbeta^T \dpar{\KK}{\gamma}{}\Bbeta.
 \end{align}
 %
-Luego
+Luego,
 %
 \begin{align}
   \dpar{\rho_R}{C}{} &= -\frac{1}{C^2}, \\
   \dpar{\rho_R}{\gamma}{} &= -\Bbeta^T \dpar{\KK}{\gamma}{}\Bbeta.
 \end{align}
 %
-La existencia de estas derivadas viene garantizada por el Teorema 4.1 de
-\cite{bonnans-shapiro}, siempre que las restricciones del problema de optimización no dependan de
-los hiperparámetros. En el caso $\rho_M$ este teorema no aplica, ya que
-la restricción $\alpha_i\leq{}C$ depende del hiperparámetro $C$.
-Para salvar este inconveniente, se efectúa el cambio de
-variable $\bar{\Balpha}=\Balpha/C$ en el problema dual
-(\ref{svmprob-dual-soft}) de modo que las restricciones sean
-independientes del hiperparámetro $C$:
+La existencia de estas está garantizada siempre que las restricciones
+del problema de optimización no dependan de los hiperparámetros
+\cite{chung}.
+Ahora bien, en la forma dual del problema SVM
+(\iflatexml\autoref{svmprob-dual-soft}\else{}Ecuación~\ref{svmprob-dual-soft}\fi)
+esta condición no se cumple, ya que la restricción $\alpha_i\leq{}C$
+depende del hiperparámetro $C$.
+Para salvar este inconveniente, se observa que el problema
+(\ref{svmprob-dual-soft}) es equivalente a
 %
 \begin{align}
 \begin{split}
@@ -38,10 +40,12 @@ independientes del hiperparámetro $C$:
     -\frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right)\\
     \T{sujeto a}\quad & \yy^T\bar{\Balpha} = 0, \\
     & 0\leq\bar{\alpha}_i\leq 1,
-    \T{ para todo } i\in {1,\ldots,\ell }.
-\end{split}\end{align}
+    \T{ para todo } i\in {1,\ldots,\ell }
+\end{split}
+\end{align}
 %
-Reemplazando $\Balpha$ por $\bar{Balpha}$, $\rho_M$ se escribe
+donde se efectuó el cambio de variable $\bar{\Balpha}=\Balpha/C$.
+Aplicando el mismo cambio de variables en $\rho_M$ se tiene:
 %
 \begin{align}
   \label{eq:rmb-alpha-equiv}
@@ -50,9 +54,8 @@ Reemplazando $\Balpha$ por $\bar{Balpha}$, $\rho_M$ se escribe
   \frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right).
 \end{align}
 %
-Con estos resultados se está en condiciones de calcular las derivadas de
-$\rho$ respecto de los hiperparámetros $C$ y $\gamma$:
-Las derivadas respecto a $C$ vienen dadas por
+Entonces, se está en condiciones de calcular las derivadas
+de $\rho_M$ respecto a $C$ y $\gamma$:
 %
 \begin{align}
     \dpar{\rho_M}{C}{}
@@ -60,18 +63,20 @@ Las derivadas respecto a $C$ vienen dadas por
     \frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right)
     \right) \\
     &= 4C \left(\frac{\B{1}^T\bar{\Balpha}}{C} -
-    \frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right) - 2C^2 \left(\frac{\B{1}^T\bar{\Balpha}}{C^2} \right) \\
-    &= 2\left(\B{1}^T\bar{\Balpha} - C \bar{\Balpha}^T\QQ\bar{\Balpha}\right) \\
-    &= \frac{2}{C} \left(\B{1}^T\Balpha - \Balpha^T\QQ\Balpha\right)
+    \frac{1}{2}\bar{\Balpha}^T\QQ\bar{\Balpha}\right)
+    - 2C^2 \left(\frac{\B{1}^T\bar{\Balpha}}{C^2} \right) \\
+    &= 2\left(\B{1}^T\bar{\Balpha}
+    - C \bar{\Balpha}^T\QQ\bar{\Balpha}\right) \\
+    &= \frac{2}{C} \left(\B{1}^T\Balpha - \Balpha^T\QQ\Balpha\right),
 \end{align}
 %
-Las derivadas respecto del hiperparámetro $\gamma$ vienen dadas por
 %
 \begin{align}
     \dpar{\rho_M}{\gamma}{}
-    &= \dpar{}{\gamma}{} 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right) \\
+    &= \dpar{}{\gamma}{}
+    2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right) \\
     &= - \Balpha^T \dpar{\QQ}{\gamma}{}\Balpha \\
-    & = - \Balpha^T \left(\yy^T \dpar{\KK}{\gamma}{}\yy\right) \Balpha
+    & = - \Balpha^T \left(\yy^T \dpar{\KK}{\gamma}{}\yy\right) \Balpha.
     %% \\
     %% & = \sum_{i,j=1}^\ell \alpha_i\alpha_j y_i y_j \dpar{k(\xx_i,\xx_j)}{\gamma}{}, \\[0.2em]
 \end{align}
@@ -83,33 +88,28 @@ vienen dados por
   \dpar{k_{ij}}{\gamma}{}
   = \dpar{}{\gamma}{}k(\xx_i,\xx_j)
   = \dpar{}{\gamma}{} \left(e^{-\gamma\|\xx_i-\xx_j\|}\right)
-  = -k_{ij}\|\xx_i-\xx_j\|
+  = -k_{ij}\|\xx_i-\xx_j\|.
 \end{align}
 %
-Con todo esto, las derivadas de la función $\rho$ respecto de los
-hiperparámetros vienen dadas por
+Con estos resultados, se calculan las derivadas de la función $\rho$
+respecto de $C$ y $\gamma$ según
 %
-\begin{align*}
+\begin{align}
     \dpar{\rho}{C}{} &= \dpar{\rho_M}{C}{} \rho_R + \rho_M \dpar{\rho_R}{C}{} \\
     &= \frac{2}{C} \left(\B{1}^T\Balpha - \Balpha^T\QQ\Balpha\right) \left( R^2 + \frac{1}{C} \right)
     - 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right)
-    \left( \frac{1}{C^2} \right)\\
-    &=
-  \\[2em]
+    \left( \frac{1}{C^2} \right)  \\[2em]
     \dpar{\rho}{\gamma}{} &= \dpar{\rho_M}{\gamma}{} \rho_R + \rho_M \dpar{\rho_R}{\gamma}{}\\
     &= \left( - \Balpha^T \left(\yy^T \dpar{\KK}{\gamma}{}\yy\right) \Balpha \right)
     \left( R^2 + \frac{1}{C} \right)
     - 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right)
     \left( \Bbeta^T \dpar{\KK}{\gamma}{} \Bbeta \right)
-\end{align*}
-%
-donde
-%
-\begin{align}
-  k_{ij}&=k(x_i,x_j)=e^{-\gamma||x_i-x_j||},\,\, \T{y} \\
-  \dpar{k_{ij}}{\gamma}{}&=-k_{ij}||x_i-x_j||
 \end{align}
 %
-son la función kernel RBF y su derivada respecto del hiperparámetro $\gamma$,
-respectivamente.
-
+donde los elementos de las matrices $\QQ$ y $\dpar{\KK}{\gamma}{}$ son
+%
+\begin{align}
+  q_{ij}&=y_i y_j k(\xx_i,\xx_j)= y_i y_j e^{-\gamma\|\xx_i-\xx_j\|}, \\
+  \dpar{k_{ij}}{\gamma}{}&=-k_{ij}\|\xx_i-\xx_j\| = -\|\xx_i-\xx_j\|e^{-\gamma\|\xx_i-\xx_j\|}.
+\end{align}
+%

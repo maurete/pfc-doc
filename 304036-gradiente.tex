@@ -1,47 +1,50 @@
 %
 \subsubsection{Cálculo del gradiente $\grad{E}$}
+\label{se:gradE}
 %
-Para poder utilizar un método de descenso por gradiente, se calculan
-las derivadas de $E$ respecto de los \hparam{s}. En primer lugar, se tiene
+Para poder utilizar un método de descenso por gradiente en el espacio
+de los \hparam{s} se considera un vector genérico de \hparam{s}
+$\Btheta$ de modo que $E=E(\Btheta)$, y se calculan las derivadas de
+$E$ respecto de los mismos.
+En primer lugar, se tiene
 %
 \begin{align}
 \label{gradE}
-  \grad{E} = \sum_{j=1}^{\ell^V} \grad{E_j} =
-  \sum_{ \{i:t_j=0\}  } \grad{\hat{p}_i}
-  - \sum_{ \{k:t_j=1\}  } \grad{\hat{p}_k}
-  = \sum_{j=1}^{\ell^V} y_j \grad{\hat{p}_j}
+  \grad{E} = \sum_{k=1}^{\ell^V} \grad{E_k} =
+  \sum_{ \{i:t_k=0\}  } \grad{\hat{p}_i}
+  - \sum_{ \{j:t_k=1\}  } \grad{\hat{p}_j}
+  = \sum_{k=1}^{\ell^V} y_k \grad{\hat{p}_k}
 \end{align}
 %
-Por la regla de la cadena, la derivada
-$\grad{\hat{p}_j}=\dpar{\hat{p}_j}{\theta_i}{}$ respecto de un
-hiperparámetro ${\theta_i}$ es
+Por la regla de la cadena, la derivada $\grad{\hat{p}_k}$ respecto de
+un hiperparámetro ${\theta_j}$ es
 %
 \begin{align}
-  \dpar{\hat{p}_j}{\theta_i}{} =
-  \dpar{\hat{p}_j}{f_j}{}\dpar{f_j}{\theta_i}{} =
-  -A\hat{p}_j(1-\hat{p}_j)\dpar{f_j}{\theta_i}{}.
+  \grad{\hat{p}_k}=\dpar{\hat{p}_k}{\theta_i}{} =
+  \dpar{\hat{p}_k}{f_k}{}\dpar{f_k}{\theta_i}{} =
+  -A\hat{p}_k(1-\hat{p}_k)\dpar{f_k}{\theta_i}{}.
   \label{eq:deriv-pk-thetak}
 \end{align}
 %
-Para la determinación de $\dpar{f_j}{\theta_i}{}$ se sigue el
+Para la determinación de $\dpar{f_k}{\theta_j}{}$ se sigue el
 procedimiento propuesto en \cite{keerthi,glasmachers} e implementado
-en \cite{shark}. En primer lugar, se observa que $f_j$ viene dado por
+en \cite{shark}. En primer lugar, se observa que $f_k$ viene dado por
 %
 \begin{align}
-  f_j = \langle \ww,\Phi(\xx_j)\rangle+b = \sum_{i=1}^\ell \alpha_i y_i k(\xx_i,\xx_j) + b,
+  f_k = \langle \ww,\Phi(\xx_k)\rangle+b = \sum_{i=1}^\ell \alpha_i y_i k(\xx_i,\xx_k) + b,
   \label{fk}
 \end{align}
 %
 en donde $((\xx_i,y_i)),i=1,\ldots,\ell$ son los ejemplos del conjunto
 utilizado para entrenamiento, $k(\cdot,\cdot)$ es la función
 núcleo, y $(\alpha_i, b)$ son los parámetros del modelo SVM $h$.
-La derivada de $f_j$ respecto de algún hiperparámetro $\theta_k$ viene
+La derivada de $f_k$ respecto de algún hiperparámetro $\theta_j$ viene
 dada por
 %g
 \begin{align}
-  \dpar{f_j}{\theta_k}{} = \sum_{i=1}^\ell y_i
-  \left[\dpar{\alpha_i}{\theta_k}{} k(\xx_i,\xx_j) + \alpha_i
-    \dpar{k(\xx_i,\xx_j)}{\theta_k}{} \right].
+  \dpar{f_k}{\theta_j}{} = \sum_{i=1}^\ell y_i
+  \left[\dpar{\alpha_i}{\theta_j}{} k(\xx_i,\xx_k) + \alpha_i
+    \dpar{k(\xx_i,\xx_k)}{\theta_j}{} \right].
 \end{align}
 %
 Según sea el valor de $\alpha_i$ (el multiplicador correspondiente al
@@ -58,15 +61,15 @@ vector de entrenamiento $\xx_i$), se definen los conjuntos de índices
 Mediante interpretación geométrica de la solución al problema de la
 SVM, se sabe que para aquellos vectores $\xx_i$ que no son de soporte,
 se cumple que $\alpha_i=0$, luego las derivadas
-$\dpar{\alpha_n}{\theta_k}{}$ son nulas. Cuando
+$\dpar{\alpha_n}{\theta_j}{}$ son nulas. Cuando
 $\alpha_i=\pm{}C$, el valor de $\alpha_g$ viene limitado (en valor absoluto) por el
-parámetro $C$, y las derivadas $\dpar{\alpha_g}{\theta_k}{}$ son entonces
+parámetro $C$, y las derivadas $\dpar{\alpha_g}{\theta_j}{}$ son entonces
 %
 \begin{align}
-  \dpar{\alpha_g}{C}{} \tab= y_g, \tabs \dpar{\alpha_g}{{\theta}^K_k}{} \tab= 0.
+  \dpar{\alpha_g}{C}{} \tab= y_g, \tabs \dpar{\alpha_g}{{\theta}^K_j}{} \tab= 0.
 \end{align}
 %
-Aquí, $\theta_k^K$ denota un hiperparámetro específico del núcleo.
+Aquí, $\theta_j^K$ denota un hiperparámetro específico del núcleo.
 Para simplificar el cálculo de las derivadas de $\alpha_u$ y $b$ se
 plantea el problema en forma matricial. Sea la \e{matriz del núcleo}
 %
@@ -95,14 +98,14 @@ de índices $u, g, n$ definidos anteriormente.  Sea la matriz
 %
 con $\B{1}_u$ un vector columna de $|u|$ elementos iguales a 1,
 entonces la derivada de $(\B{\alpha}_u,b)^T$ respecto del
-hiperparámetro $\theta_k$ viene dada por
+hiperparámetro $\theta_j$ viene dada por
 %
 \begin{align}
-  \dpar{}{\theta^K_k}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=
+  \dpar{}{\theta^K_j}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=
     -H^{-1} \left[
-      \dpar{H}{\theta^K_k}{}
+      \dpar{H}{\theta^K_j}{}
       \begin{pmatrix}\alpha_{u}\\b\end{pmatrix}
-        +C \begin{pmatrix}\dpar{K_{gu}}{\theta^K_k}{}\\0\end{pmatrix}
+        +C \begin{pmatrix}\dpar{K_{gu}}{\theta^K_j}{}\\0\end{pmatrix}
           y_g
           \right], \\
   \dpar{}{C}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=

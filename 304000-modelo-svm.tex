@@ -2,29 +2,36 @@
 %
 \section{Construcción del modelo del clasificador SVM}
 %
-AL igual que para el caso del clasificador MLP, la construcción
-del modelo SVM es un proceso de dos etapas: en primer lugar se determinan
-valores óptimos para los hiperparámetros, y una vez encontrados, se procede a
-entrenar el modelo ``hiperparametrizado''.
+Tal como en el caso del perceptrón multicapa, la construcción del
+modelo SVM es un proceso de dos etapas: en primer lugar se determinan
+valores óptimos para los \hparam{s}, y una vez encontrados, se procede
+a entrenar el modelo final con los datos de entrenamiento y los
+\hparam{s} óptimos encontrados.
+%% A diferencia del caso MLP, sin embargo, en una máquina de vectores de
+%% soporte puede haber más de un \hparam{}, y en general éstos se trata
+%% de variables continuas.
 
-A diferencia del caso MLP, sin embargo, en una máquina de vectores de soporte
-los \hparam{s} pueden ser más de uno, y se trata de variables continuas.
-
-Esto junto a las propiedades analíticas de la SVM permite aplicar estrategias
-de selección de hiperparámetros más complejas que aprovechan mejor la información
-del modelo SVM. Incluso, se puede aplicar optimización mediante descenso por gradiente.
+Las propiedades analíticas de la SVM permiten aplicar estrategias de
+selección de hiperparámetros más complejas que en el caso del MLP, que
+en general resultan computacionalmente más eficientes.
+Las cuatro estrategias de selección de \hparam{s} aplicables al
+clasificador SVM son:
 %
-\begin{description}
-\item[Estrategia trivial:] Consiste en seleccionar hiperparámetros
-  preestablecidos, sin entrenamiento. Se utiliza como estrategia
-  ``básica'' para comparación de los métodos.
-\item[Estrategia de búsqueda en la grilla:] Efectúa una búsqueda
-  exhaustiva de los hiperparámetros maximizando la tasa de
-  clasificación de validación cruzada.
-\item[Estrategia de minimización del error empírico:] Realiza una
-  búsqueda por gradiente en el espacio de los hiperparámetros de la
-  tasa de clasificación de validación cruzada.
-\item[Estrategia de minimización de la cota RMB]: Minimiza una función de derivación teórica
-  intentando maximizar la tasa de clasificación.
-\end{description}
+\begin{itemize}
+\item
+  Selección trivial: Retorna valores preestablecidospara los
+  \hparam{s}, sin efectuar entrenamiento alguno.
+\item
+  Búsqueda en la grilla: Efectúa una búsqueda exhaustiva de los
+  hiperparámetros, maximizando la tasa de clasificación de validación
+  cruzada.
+\item
+  Minimización del error empírico: Minimiza, mediante descenso por
+  gradiente en el espacio de los \hparam{s}, una función que representa
+  el error de clasificación de validación cruzada.
+\item
+  Minimización de la cota radio-margen: Minimiza mediante descenso por
+  gradiente en el espacio de los \hparam{s} una función de derivación
+  teórica que se relaciona con el error de clasificación.
+\end{itemize}
 %

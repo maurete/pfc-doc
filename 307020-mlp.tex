@@ -1,0 +1,39 @@
+%
+%
+\subsection{Generación del modelo MLP}
+%
+La selección del número óptimo de neuronas en la capa oculta se
+efectúa mediante la función \func{select\_model\_mlp}, que implementa
+las estrategias de selección trivial y de búsqueda exhaustiva.
+El entrenamiento del perceptrón multicapa se efectúa mediante la
+función \func{mlp\_xtrain}.
+%
+\funcentry
+    {select\_model\_mlp}
+    {Datos de entrenamiento, criterio de selección (por defecto:
+      $G_m$), opción ``trivial''}
+    {Cantidad óptima de neuronas en la capa oculta}
+    {Calcula el número óptimo $h^*$ de neuronas en la capa oculta del
+      perceptrón multicapa, seleccionando aquel maximiza el criterio
+      (por defecto $G_m$) de validación cruzada.
+      Si se selecciona la opción ``trivial'', retorna simplemente
+      $h^*=0$, sin efectuar entrenamiento.}
+%
+\funcentry
+    {mlp\_xtrain}
+    {Datos de entrenamiento, datos de validación (opcional), número de
+      neuronas en la capa oculta (por defecto: ninguna), método de
+      entrenamiento (por defecto: Rprop)}
+    {Modelo MLP entrenado}
+    {Efectúa entrenamiento del clasificador MLP mediante el método
+      indicado (por defecto se utiliza Rprop) con regularización por
+      corte prematuro, según la tasa de clasificación de un conjunto
+      de validación. Este conjunto de validación puede ser
+      suministrado de forma explícita, o bien se utiliza el 20\% de
+      los datos suministrados en el conjunto de entrenamiento mediante
+      selección aleatoria.
+      La función es una interfaz común (\e{wrapper}) para las
+      implementaciones soportadas del paquete ``Neural Network Toolbox''
+      de Matlab y de \e{libFANN}, una biblioteca libre que implementa
+      redes neuronales en un entorno Matlab.}
+%

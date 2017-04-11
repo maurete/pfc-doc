@@ -1,21 +1,25 @@
+%
 \subsubsection{Algoritmo de optimización}
+%
 Partiendo de un punto inicial $(C^0,\gamma^0)$ la búsqueda procede
 en cada punto $(C^k,\gamma^k)$ evaluando $\rho^k$ y determinando
 un nuevo punto $(C^{k+1},\gamma^{k+1})$ en la dirección del
-negativo del gradiente $\nabla\rho^k$ tal que $\rho^{k+1}<\rho^k$
+negativo del gradiente $\nabla\rho^k$ tal que $\rho^{k+1}<\rho^k$.
 La optimización de la función $\rho$ se efectúa mediante el algoritmo
-BFGS \cite{bfgs} en el espacio logarítmico de los hiperparámetros
-$(\ln(C),\ln(\gamma))$. Este cambio de coordenadas se traduce en un
-incremento de la estabilidad numérica y evita tener que verificar en
-cada iteración la no-negatividad de $C$ y $\gamma$.
-
+BFGS \cite{nocedal} en el espacio logarítmico de los hiperparámetros
+$(\ln(C),\ln(\gamma))$.
+Este cambio de coordenadas se traduce en un incremento de la
+estabilidad numérica y evita tener que verificar en cada iteración la
+no-negatividad de $C$ y $\gamma$.
+%
 \begin{align}
   \dpar{\rho}{\ln C}{}= C \dpar{\rho}{C}{}, &&
   \dpar{\rho}{\ln \gamma}{}= \gamma \dpar{\rho}{\gamma}{}
 \end{align}
+%
 Para un conjunto de entrenamiento $D=((\xx_i,y_i),i=1,\ldots,\ell)$
 cada evaluación de $\rho(\Btheta_k)$ consta de los siguientes pasos
-
+%
 \begin{enumerate}
 \item Entrenar una máquina de vectores de soporte con núcleo RBF
   con hiperparámetros $\Btheta_k=(C_k,\gamma_k)$ sobre el conjunto
@@ -25,3 +29,5 @@ cada evaluación de $\rho(\Btheta_k)$ consta de los siguientes pasos
   $\rho_M$ (\ref{rho_m}) y $\rho_r$ según (\ref{rho_r})
 \item Calcular el gradiente $\nabla\rho$.
 \end{enumerate}
+%
+

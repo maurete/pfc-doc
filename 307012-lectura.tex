@@ -1,0 +1,42 @@
+%
+\subsubsection{Lectura de archivos}
+%
+La lectura de los archivos de texto se implementa en la función
+\func{load\_fasta}.
+Cuando la información de estructura secundaria no se encuentra
+disponible, \func{load\_fasta} invoca a la función auxiliar
+\func{myrnafold}, encargada del cálculo de esta información.
+%
+\funcentry{load\_fasta}
+          {Nombre de archivo a leer}
+          {Representacion de los datos leídos como un
+            arreglo de datos en memoria}
+          {Lee el archivo indicado como argumento, y aplicando reglas
+            de correspondencia de expresiones regulares genera un
+            arreglo de ejemplos con las siguientes propiedades:
+            %
+            \begin{itemize}
+            \item Número de línea de comienzo y de fin del ejemplo
+            \item Línea de descripción
+            \item Secuencia
+            \item Estructura secundaria (si está presente)
+            \item Mínima energía libre (número al final de la
+              estructura secundaria)
+            \item Identificador (primera ``palabra'' de la línea de
+              descripción)
+            \end{itemize}
+            %
+            Para los ejemplos donde no haya información de
+            estructura secundaria, se intenta efectuar el ``plegado''
+            invocando la función \func{myrnafold}.
+          }
+%
+\funcentry{myrnafold}
+          {Secuencia en formato textual}
+          {Estructura secundaria y mínima energía libre}
+          {Calcula la información de estructura secundaria y de mínima
+            energía libre para la secuencia dada mediante un llamado
+            al comando de sistema \func{RNAfold}. Si esta invocación
+            falla, recurre a la función de Matlab \func{rnafold},
+            provista por el paquete ``Bioinformatics Toolbox''.}
+%

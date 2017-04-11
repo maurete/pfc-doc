@@ -1,0 +1,28 @@
+%
+\subsubsection{Normalización}
+%
+Las funciones \func{scale\_data} y \func{scale\_sym} permiten normalizar
+las columnas de una matriz de datos llevándolas al rango $[0,1]$ y
+$[-1,+1]$, respectivamente.
+%
+\funcentry
+    {scale\_data}
+    {Matriz de características ($N$ filas, $F$ columnas), datos de
+      normalización (opcional)}
+    {Matriz de $N\times{}F$ normalizada al rango $[0,1]$, datos de
+      normalización}
+    {Si se proveen los datos de normalización, normaliza la matriz de
+      \caract{s} aplicando el desplazamiento y escalado pasados como
+      argumento.
+      Si los datos de normalización no están presentes, se calculan a
+      partir de la matriz de datos y se retornan a la salida junto a la
+      matriz normalizada al rango $[0,1]$.}
+%
+\funcentry
+    {scale\_sym}
+    {Matriz de características ($N$ filas, $F$ columnas), datos de
+      normalización (opcional)}
+    {Matriz de $N\times{}F$ normalizada al rango $[-1,+1]$, datos de
+      normalización}
+    {Análoga a \func{scale\_data} para el rango normalizado $[-1,+1]$.}
+%

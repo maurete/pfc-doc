@@ -1,0 +1,42 @@
+%
+%
+%
+\section{Preprocesamiento}
+%
+El preprocesamiento es el conjunto de pasos efectuados para
+transformar los datos de entrada a un formato tratable por la máquina
+de aprendizaje.  Los datos de entrada al sistema vienen dados como
+archivos en formato FASTA, un formato de texto que contiene secuencias
+``anotadas'' con información complementaria.
+Los distintos pasos llevados a cabo en el preprocesamiento son:
+%
+\begin{enumerate}
+\item
+  Análisis sintáctico (\e{parsing}): se trata de interpretar el
+  texto de entrada identificando las líneas de descripción
+  (anotaciones), de secuencia, y de estructura secundaria si las
+  hubiera.
+\item
+  Plegado: consiste en calcular la información de estructura
+  secundaria para todas las secuencias, mediante la invocación de
+  software externo.
+\item
+  Extracción de \caract{s}: es el proceso de generar vectores
+  numéricos de longitud fija que representan cada ejemplo a partir de
+  la información de secuencia y de estructura secundaria.
+\item
+  Normalización: ajusta el rango de las componentes del vector de
+  características de modo que se ajusten a un intervalo
+  preestablecido.
+\item
+  Generación de conjuntos de datos y de validación cruzada:
+  agrupa los ejemplos en conjuntos de entrenamiento y prueba, y genera
+  particiones de validación cruzada, según sea el propósito con el que
+  se utilizarán los datos: generar un modelo de clasificador o
+  predicción de pertenencia clase.
+\end{enumerate}
+%
+En adelante se presenta una descripción de cada uno de estos pasos,
+que generan una representación de los ejemplos en forma de
+vectores numéricos normalizados utilizables directamente por la
+máquina de aprendizaje.
