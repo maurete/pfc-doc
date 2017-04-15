@@ -1,0 +1,29 @@
+%
+%
+\subsection{Problema Triplet-SVM}
+%
+Este problema replica los datos utilizador por los autores de
+\e{Triplet-SVM} \cite{xue} para la evaluación del método.
+Este método fue uno de los primeros métodos de predicción de
+pre-miRNAs mediante máquinas de vectores de soporte.
+En el trabajo original, los autores utilizan vectores con
+características de tripletes como entrada al clasificador SVM.
+
+Los ejemplos de clase positiva son tomados de la versión 5.0 (de
+septiembre de 2004) de miRBase.
+De los 207 ejemplos de \premirna{s} de la especie humana (clase
+positiva) presentes en esta versión, se eliminan aquellos que
+contienen ramificaciones en la estructura secundaria, resultando en
+193 ejemplos con estructura secundaria en forma de horquilla.
+De estos ejemplos, se utilizan 163 para componer el conjunto de
+entrenamiento y los 30 restantes para el conjunto de prueba.
+Los ejemplos de clase negativa se obtienen de la base de datos
+\dataset{coding}, utilizando 168 ejemplos para el conjunto de
+entrenamiento y 1000 para el armado del conjunto de prueba.
+
+La composición de los conjuntos de entrenamiento y prueba se resumen
+en la \autoref{tbl:mainxue}.
+Los ejemplos que componen los conjuntos de entrenamiento y de prueba
+son exactamente los mismos que aquellos utilizados en el trabajo
+original, ya que los autores publicaron ambos conjuntos por separado
+en el material suplementario.

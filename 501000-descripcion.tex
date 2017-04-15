@@ -1,0 +1,29 @@
+%
+%
+%
+\section{Descripción de los problemas de clasificación}
+%
+A partir de la bibliografía, se generaron tres \e{problemas} de
+clasificación, denominados \sbs{Triplet-SVM}, \sbs{miPred} y
+\sbs{microPred}, que reproducen con mayor o menor exactitud los datos
+de entrenamiento y prueba utilizados por los autores de
+\e{Triplet-SVM} \cite{xue}, \e{miPred} \cite{ng}, y \e{microPred}
+\cite{batuwita} para las pruebas de los respectivos métodos.
+
+En los tres problemas definidos se utilizan pre-miRNAs de la especie
+humana experimentalmente validados como ejemplos de clase positiva.
+Estos \premirna{s} se obtienen de diferentes versiones de la base de
+datos \dataset{miRBase} \cite{mirbase1, mirbase2, mirbase3} un repositorio
+en línea de referencia que es mantenido por el laboratorio
+Griffiths-Jones en la Universidad de Manchester, Reino Unido.
+Diferentes versiones de miRBase se publican periódicamente con nuevos
+pre-miRNAs descubiertos para diferentes organismos.
+
+Los ejemplos de clase negativa provienen principalmente de un conjunto
+de datos artificial denominado \dataset{coding}.
+Este conjunto de ``pseudo \premirna{s}'' fue creado por los autores de
+\e{Triplet-SVM}, y contiene 8494 ejemplos negativos generados a partir
+de segmentos de secuencia extraídos de regiones genómicas para las que
+no se ha reportado la presencia de ningún \premirna{}.
+El armado del conjunto de datos \dataset{coding} se detalla en
+\cite{xue}.
