@@ -3,27 +3,30 @@
 %
 \section{Descripción de los problemas de clasificación}
 %
-A partir de la bibliografía, se generaron tres \e{problemas} de
-clasificación, denominados \sbs{Triplet-SVM}, \sbs{miPred} y
-\sbs{microPred}, que reproducen con mayor o menor exactitud los datos
-de entrenamiento y prueba utilizados por los autores de
-\e{Triplet-SVM} \cite{xue}, \e{miPred} \cite{ng}, y \e{microPred}
-\cite{batuwita} para las pruebas de los respectivos métodos.
+Se generaron tres {problemas} de clasificación: \prob\tripletsvm{},
+\prob{\mipred} y \prob\micropred{}, que reproducen con mayor o menor
+exactitud los datos de entrenamiento y prueba utilizados por los
+autores de \work{\tripletsvm} \cite{xue}, \work{\mipred} \cite{ng}, y
+\work{\micropred} \cite{batuwita} para las pruebas de los respectivos
+métodos.
 
-En los tres problemas definidos se utilizan pre-miRNAs de la especie
-humana experimentalmente validados como ejemplos de clase positiva.
-Estos \premirna{s} se obtienen de diferentes versiones de la base de
-datos \dataset{miRBase} \cite{mirbase1, mirbase2, mirbase3} un repositorio
-en línea de referencia que es mantenido por el laboratorio
-Griffiths-Jones en la Universidad de Manchester, Reino Unido.
-Diferentes versiones de miRBase se publican periódicamente con nuevos
-pre-miRNAs descubiertos para diferentes organismos.
+En los tres problemas definidos, los ejemplos de clase positiva
+son \premirna{s} de la especie humana experimentalmente validados.
+Estos ejemplos se obtienen de diferentes versiones de la base de datos
+\work{\mirbase}, el repositorio de referencia de \premirna{s}
+experimentalmente validados, mantenido por el laboratorio
+Griffiths-Jones de la Universidad de Manchester, Reino Unido
+\cite{mirbase1, mirbase2, mirbase3}.
+Diferentes versiones de \work\mirbase{} se publican regularmente con
+los nuevos \premirna{s} descubiertos para diferentes organismos.
 
 Los ejemplos de clase negativa provienen principalmente de un conjunto
-de datos artificial denominado \dataset{coding}.
+de datos artificial denominado \dset{coding}.
 Este conjunto de ``pseudo \premirna{s}'' fue creado por los autores de
-\e{Triplet-SVM}, y contiene 8494 ejemplos negativos generados a partir
-de segmentos de secuencia extraídos de regiones genómicas para las que
-no se ha reportado la presencia de ningún \premirna{}.
-El armado del conjunto de datos \dataset{coding} se detalla en
+\work{\tripletsvm}, y contiene 8494 ejemplos negativos generados a
+partir de segmentos de secuencia con la estructura secundaria de
+horquilla característica de los \premirna{s}, pero extraídos de
+regiones genómicas para las que no se ha reportado la presencia de
+ningún \premirna{}.
+El armado del conjunto de datos \dset{coding} se detalla en
 \cite{xue}.

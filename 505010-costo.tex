@@ -1,23 +1,27 @@
+%
+%
 \subsection{Costo computacional}
+%
 Al utilizar el núcleo de base radial (RBF) con el clasificador SVM se
-incorpora un hiperparámetro a optimizar $\gamma$ a optimizar, lo que
-resulta en un incremento del tiempo requerido por los métodos de
-optimización de hiperparámetros.
+agregaa un hiperparámetro $\gamma$ a optimizar, lo que resulta en un
+incremento del tiempo requerido por las estrategias de optimización
+de hiperparámetros.
 
 Este incremento se hace patente en la estrategia de búsqueda
 exhaustiva, en la que el número de entrenammientos efectuados aumenta
-en casi un orden de magnitud.  Afortunadamente, este incremento en el
-número de entrenamientos no se refleja proporcionalmente en el tiempo
-requerido de ejecución, probablemente debido al hecho que el
-clasificador es más ``flexible'' y se adapta más rápidamente (en menos
-iteraciones) al problema en cuestión.
+en casi un orden de magnitud.
+Afortunadamente, este incremento en el número de entrenamientos no se
+refleja proporcionalmente en el tiempo requerido de ejecución,
+probablemente debido al hecho que el clasificador es más ``flexible''
+y se adapta más rápidamente (en menos iteraciones) al problema en
+cuestión.
 
-Al utilizar el criterio del error empírico se observa un costo computacional
-(en tiempo y número de entrenamientos) que está en línea con
-aquel del clasificador SVM-lineal.
+Al utilizar el criterio del error empírico se observa un costo
+computacional (en tiempo y número de entrenamientos) que está en línea
+con aquel del clasificador SVM-lineal.
 
-Mención aparte merece la estrategia RMB, el cual logra conseguir tasas
-de clasificación satisfactorias requiriendo un número de
-entrenamientos soreprendentemente bajo y un tiempo de ejecución que
-para el problema \tripletsvm{} resulta prácticamente indistinguible de
-la estrategia trivial.
+Mención aparte merece la estrategia RMB, que logra conseguir tasas de
+clasificación satisfactorias requiriendo un número de entrenamientos
+soreprendentemente bajo y un tiempo de ejecución que para los
+problemas \tripletsvm{} y \mipred{} resulta prácticamente
+indistinguible de la estrategia trivial.

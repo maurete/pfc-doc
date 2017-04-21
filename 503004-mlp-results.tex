@@ -1,45 +1,59 @@
-Para el problema \tripletsvm{} se obtienen las mejores tasas de
-clasificación.  En particular, para los conjuntos de caracteríesticas
-E y S-E ambas estrategias de selección de hiperparámetros obtienen
-resultados superiores al 96\% en sensibilidad y especificidad.  Para
-el conjunto de características de tripletes (T), utilizado en el
-trabajo original, los resultados obtenidos con ambas estrategias son
-menores a las tasas reportadas por los autores de \tripletsvm{}.
 
-Para los problemas \mipred{} y \micropred{}, se observa una diferencia
-notable entre la sensibilidad (SE) y espeficificad (SP). Este
-resultado es consecuencia del desbalance de clases en el conjunto de
-entrenamiento, ya que el MLP es más sensible a un desbalance que el
-clasificador SVM.
+En la Tabla se observa que las mejores tasas de clasificación se
+obtuvieron para el problema \tripletsvm{}, con una $G_m$ superior al
+96\% utilizando \caract{s} de estructura secundaria (E) y de secuencia
+y estructura secundaria (S-E).
+En el trabajo de referencia para este problema \cite{xue}, los autores
+obtienen una $G_m$ de \hl{93.3} utilizando las \caract{s} de tripletes
+(T).
+Considerando este conjunto de \caract{s}, se observa que el desempeño
+del clasificador MLP resultó menor al reportado por los autores.
 
-La desviación estándar obtenida en el problema \tripletsvm{} es
-mínima, ya que las particiones entrenamiento/prueba son fijas tal como
-especificadas por los autores.  El origen de la variación en los
-resultados en cada prueba puede atribuirse a la inicialización
-aleatoria de los pesos en el MLP y las variaciones en las particiones
-de validación cruzada para las diferentes semillas aleatorias,
-modificando el curso del algoritmo de entrenamiento.
+En el caso de los problemas \mipred{} y \micropred{}, no se probaron
+las \caract{s} de tripletes dado que ambos presentan ejemplos con bucles
+múltiples en su estructura secundaria. 
+En el caso \mipred{} se obtuvo una $G_m$ máxima de alrededor de 92\%,
+mientras que para el problema \micropred{} se obtuvo una tasa $G_m$ de
+88\%.
+Para ambos problemas se obtuvo una especificidad (SP) sensiblemente
+mayor a la sensibilidad (SE), resultado atribuible al desbalance de
+clases en los respectivos conjuntos de entrenamiento, de 2 ejemplos
+negativos por cada ejemplo positivo.
 
-Asimismo, se tiene que para \tripletsvm{} ambas estrategias de
-delección automática de hiperparámetros obtienen prácticamente las
-mismas tasas de clasificación.  Una interpretación de este resultado
-es que, para este problema, la separación máxima alcanzable por un MLP
-con una capa oculta es equivalente a un hiperplano en el espacio
-inducido, tal como aquel generado por un perceptrón simple (estrategia
-trivial).  Para los problemas \mipred{} y \micropred{}, en cambio, se
-ve que la estrategia de búsqueda exhaustiva resulta en mejores tasas
-$G_m$ y una reducción de la diferencia SP-SE respecto de la estrategia
-trivial.
+%% Para el problema \tripletsvm{} se obtienen las mejores tasas de
+%% clasificación.  En particular, para los conjuntos de caracteríesticas
+%% E y S-E ambas estrategias de selección de hiperparámetros obtienen
+%% resultados superiores al 96\% en sensibilidad y especificidad.  Para
+%% el conjunto de características de tripletes (T), utilizado en el
+%% trabajo original, los resultados obtenidos con ambas estrategias son
+%% menores a las tasas reportadas por los autores de \tripletsvm{}.
 
-El problema \micropred{} resultó el más difícil de clasificar, con
-tasa Gm de 88\%. El problema \mipred{} en cambio se obtuvo una Gm
-máxima de 92\%.
+Respecto a las estrategias de selección del número de neuronas
+ocultas, se observa que ambas obtuvieron tasas similares sobre el
+problema \tripletsvm{}.
+Una interpretación de este resultado podría ser que, para este
+problema, los datos de entrenamiento son linealmente separables.
+Para los problemas \mipred{} y \micropred{}, en cambio, la estrategia
+de búsqueda exhaustiva resultó en mejores tasas de clasificación $G_m$
+junto con una reducción de la diferencia SP-SE respecto de la
+estrategia trivial.
 
-Respecto de los conjuntos de características, se observa que se
-obtienen resultados levemente mejores con el conjunto de
-características E que el S-E.
+La variabilidad de los resultados fue mínima para el problema
+\tripletsvm{}, dado que las particiones de entrenamiento y prueba
+en este problema son fijas independientemente de la semilla aleatoria.
+En los problemas \mipred{} y \micropred{} se obtuvo una mayor
+variabilidad, que resulta esperable dado que la composición de los
+conjuntos de entrenamiento y prueba cambia para estos problemas según
+la semilla aleatoria especificada.
 
+Respecto a los conjuntos de características, se puede ver que los
+mejores resultados se obtuvieron para los conjuntos E y S-E, mientras
+que las \caract{s} de secuencia obtuvieron tasas significativamente
+más bajas.
+%
+%
 \subsection{Costo computacional}
+%
 El ``costo computacional'' se define de manera \hl{vaga} a partir el
 número de entrenamientos del clasificador requeridos para la selección
 automática de hiperparámetros, así como el tiempo total requerido para

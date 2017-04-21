@@ -1,0 +1,20 @@
+%
+%
+\subsection{Costo computacional}
+%
+Se midió el ``costo computacional'' del algoritmo en términos del
+tiempo y el número de entrenamientos requeridos para la obtención del
+modelo del clasificador.
+En la \iflatexml{}Figura~\ref{tbl:cost-mlp}\else\autoref{tbl:cost-mlp}\fi{}
+se presentan los resultados obtenidos. Tal como en las pruebas de
+clasificación, los valores presentados son el promedio de efectuar la
+misma prueba 5 veces con semillas aleatorias diferentes.
+
+Si bien en la implementación de la búsqueda exhaustiva efectúa 20
+entrenamientos en todos los casos, puede verse que el tiempo de
+entrenamiento varía según el conjunto de características utilizado.
+Para las \caract{s} de la estructura secundaria (E) se obtuvieron
+menores tiempos de entrenamiento, mientras que las de la secuencia
+obtuvieron los peores resultados.
+Asimismo, puede observarse que el tiempo de entrenamiento requerido
+aumenta con el número de ejemplos en el conjunto de entrenamiento.

@@ -1,26 +1,33 @@
+%
+%
+%
 \section{Pruebas del clasificador SVM con núcleo lineal}
-Se probaron las tres estrategias de selección de hiperparámetros
-disponibles para el clasificador SVM con núcleo lineal: selección
-trivial, búsqueda exhaustiva y criterio del error empírico. En este
-clasificador, el hiperparámetro a ajustar es la variable de
-regularización $C$.  En la \autoref{tbl:linear-results} se muestran
-los resultados de clasificación obtenidos para los conjuntos de prueba
-de cada problema caracterizados según el valor medio $E$ y la
-desviación estándar $\sigma$ para las 5 repeticiones de cada prueba
-con semillas aleatorias diferentes.
+%
+Se probó el clasificador SVM con núcleo lineal sobre los tres
+problemas definidos, aplicando las estrategias de selección trivial,
+de búsqueda exhaustiva y del criterio del error empírico para
+determinar el valor óptimo del hiperparámetro $C$.
+En la \autoref{tbl:linear-results} se muestran los resultados de
+obtenidos de clasificar los conjuntos de prueba de cada problema
+caracterizados según el valor medio $E$ y la desviación estándar
+$\sigma$ para las 5 repeticiones de cada prueba con semillas
+aleatorias diferentes.
 
 En líneas generales, los resultados muestran que para las tres
 estrategias de selección de hiperparámetros se obtienen tasas de
-clasificación similares.  Para el problema \tripletsvm{}, las tasas
-obtenidas con el clasificador SVM-lineal resultan similares a aquellas
-conseguidas aplicando el clasificador MLP. Para los problemas
-\mipred{} y \micropred{}, en cambio, se observa una leve mejora en los
-resultados. En particular, se observa una reducción de la diferencia
-SP-SE, lo que indica que este clasificador es menos sensible a un
-desbalance de clases.
+clasificación similares.
+Para el problema \tripletsvm{}, las tasas obtenidas con el
+clasificador SVM-lineal resultan similares a aquellas conseguidas
+aplicando el clasificador MLP.
+Para los problemas \mipred{} y \micropred{}, en cambio, se observa una
+leve mejora en los resultados respecto de aquellos opbtenidos para el
+clasificador MLP.
+En particular, se observa una reducción de la diferencia SP-SE, lo que
+indica que este clasificador es menos sensible al desbalance de
+clases.
 
 Tal como en el caso del clasificador MLP, la utilización del conjunto
 de características S-E por sobre E trae consigo una leve mejora en los
-resultados otenidos. Similarmente, la utilización de las
-caractarísticas de secuencia (en forma única) resulta en tasas de
-clasificación subóptimas.
+resultados otenidos.
+Similarmente, la utilización de las caractarísticas de secuencia (en
+forma única) resulta en tasas de clasificación subóptimas.

@@ -1,0 +1,40 @@
+%
+%
+%
+\section{Pruebas adicionales}
+%
+En la presente sección se describen las pruebas complementarias
+efectuadas con el propósito de obtener una idea general del
+comportamiento del método codificado ante distintos tipos de problemas
+de clasificación.
+
+Algunos de los problemas generados se basan en las pruebas
+suplementarias de los trabajos de referencia \cite{xue,ng}.
+Por otra parte, se generaron problemas que clasifican los ejemplos de
+la especie humana disponibles en la última versión de miRBase (21.0,
+\hl{FECHA}) entrenando con los conjuntos de entrenamiento de los
+problemas principales \tripletsvm{}, \mipred{} y \micropred{}.
+El problema llamado \deltamirbase{} prueba la capacidad del método de
+predecir correctamente los nuevos ejemplos de la especie humana
+incorporados a la base de datos miRBase en la última actualización.
+
+Considerando los resultados obtenidos en las pruebas principales, se
+utilizó en todos los casos el conjunto de características S-E
+aplicando las cuatro variantes del método:
+%
+\begin{itemize}
+\item
+  \sbs{MLP-B}: Clasificador MLP, estrategia de búsqueda
+  exhaustiva
+\item
+  \sbs{SVM-LE}: Clasificador SVM, núcleo lineal, estrategia de
+  selección de hiperparámetros mediante minimización del criterio del error
+  empírico
+\item
+  \sbs{SVM-RE}: Clasificador SVM, núcleo de base radial (RBF), selección de
+  hiperparámetros mediante minimización del criterio del error empírico,
+\item
+  \sbs{SVM-RR}: Clasificador SVM con núcleo RBF y estrategia de
+  selección de hiperparámetros minimizando la cota radio-margen.
+\end{itemize}
+%
