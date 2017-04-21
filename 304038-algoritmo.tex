@@ -1,0 +1,39 @@
+%
+\subsubsection{Algoritmo de optimización}
+%
+Dado el conjunto de entrenamiento $D$, en cada punto de evaluación
+$\Btheta$ el error empírico $E(\Btheta)$ se calcula del siguiente modo
+%
+\begin{enumerate}
+\item
+  Aplicando validación cruzada, se entrena un modelo SVM para cada
+  conjunto de estimación.
+\item
+  Se calculan las salidas $f_k$
+  (\iflatexml{}Ecuación~\ref{fk}\else\autoref{fk}\fi) de los modelos
+  para todos los ejemplos $\xx_k$ en las respectivas particiones de
+  validación.
+\item
+  Se determinan los valores óptimos de los parámetros $A$ y $B$,
+  minimizando el Problema~\ref{abproblem}, partiendo de los
+  valores iniciales $A_0=1$, $B_0=0$.
+\item
+  Se calculan las probabilidades estimadas $\hat{p}_k$ y con ellas, el
+  error empírico de cada ejemplo $E_k$ y global $E$.
+\item
+  Se calcula el gradiente $\nabla{}E$.
+\end{enumerate}
+%
+Partiendo de un punto inicial $\Btheta^0$, la búsqueda procede en cada
+punto $\Btheta^i$ evaluando la función objetivo y determinando un
+nuevo punto $\Btheta^{i+1}$ a partir del valor $E^i=E(\Btheta^i)$ y la
+información disponible en el gradiente $\nabla{}E^i$ hasta satisfacer
+algún criterio de corte, por ejemplo
+%
+\begin{align*}
+  |E^i-E^{i-1}|&<\eta, & \|\nabla E^i\| < \nu,
+\end{align*}
+%
+donde $\eta$ y $\nu$ son números pequeños.
+El esquema utilizado para descenso por gradiente es el algoritmo de
+optimización BFGS \cite{nocedal}.

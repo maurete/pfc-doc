@@ -1,0 +1,85 @@
+%
+%
+%
+\section{Descripción general}
+%
+El software presenta dos modos de funcionamiento principales:
+%
+\begin{enumerate}
+\item
+  La generación del modelo del clasificador tiene como objetivo
+  obtener un modelo óptimo de clasificador para un conjunto de datos
+  de entrenamiento particular.
+\item
+  La clasificación recibe a su entrada datos de prueba junto a un
+  modelo de clasificador, y retorna a la salida predicciones de clase
+  para cada uno de los ejemplos.
+\end{enumerate}
+%
+%
+%
+\subsection{Generación del modelo del clasificador}
+%
+En este modo de funcionamiento, las entradas al sistema son archivos
+de texto con secuencias de ejemplo para conformar el conjunto de
+entrenamiento. Para cada archivo se especifica una clase, que indica
+el tipo de secuencias contenidas: \e{positiva} (+1) cuando se trata de
+ejemplos de \premirna{s} verdaderos, o \e{negativa} (-1) cuando el
+archivo contiene ``pseudo'' \premirna{s}. Se requiere la
+especificación de al menos un archivo de cada clase.
+Se permite establecer opciones que regulan el comportamiento
+de la generación del modelo tales como
+%
+\begin{itemize}
+\item Tipo de máquina de aprendizaje a entrenar (MLP o SVM).
+\item Parámetros de validación cruzada.
+\item Conjuntos de \caract{s} sobre los que trabajar.
+\item Estrategia de selección de hiperparámetros.
+\end{itemize}
+%
+
+La generación del modelo del clasificador es un proceso de tres pasos
+%
+\begin{enumerate}
+\item El preprocesamiento interpreta los archivos de entrada y
+  genera el conjunto de datos de entrenamiento y las particiones de
+  validación cruzada.
+\item La selección de hiperparámetros es el proceso de determinar
+  hiperparámetros óptimos de la máquina de aprendizaje para
+  el conjunto de entrenamiento dado. A grandes rasgos, consiste en
+  generar modelos ``desechables'' probando diferentes configuraciones
+  mediante validación cruzada hasta obtener un óptimo.
+\item El entrenamiento es el paso final, que entrena un modelo del
+  clasificador con el conjunto completo y los hiperparámetros
+  óptimos encontrados en el paso anterior.
+\end{enumerate}
+%
+La salida del sistema es el modelo del clasificador, que
+puede ser utilizado para la predicción de la pertenencia de clase de
+nuevas secuencias.
+%
+%
+\subsection{Clasificación}
+%
+En este modo de funcionamiento, el sistema recibe en la entrada un
+modelo de clasificador junto a uno o más archivos de secuencias a
+clasificar.  A diferencia del modo de generación del modelo, no se
+requiere especificar la clase de los archivos, ni tampoco se requiere
+la especificación de parámetros adicionales por parte del usuario, ya
+que el modelo contiene toda la información necesaria para la
+clasificación. Los pasos efectuados para la obtención de las
+predicciones de clase son
+%
+\begin{enumerate}
+\item Mediante el preprocesamiento, se interpretan los archivos de
+  secuencias y se genera el conjunto de datos de ``prueba'' con los
+  ejemplos a clasificar. Utilizando la información del modelo recibido
+  en la entrada, se aplica la misma normalización que la efectuada al
+  momento del entrenamiento.
+\item La clasificación se aplica sobre el conjunto de prueba obtenido
+  del preprocesamiento, obteniendo una predicción de pertenencia de
+  clase para cada ejemplo.
+\end{enumerate}
+%
+La salida del sistema en este caso son predicciones de clase para cada
+una de las secuencias leídas en la entrada.

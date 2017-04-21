@@ -1,0 +1,42 @@
+%
+\subsubsection{Extracción de características}
+%
+La extracción de \caract{s} se implementa en 4 funciones que reciben a
+su entrada la estructura de datos producida por la función
+\func{load\_fasta}, y retornan vectores con las respectivas
+\caract{s}, dispuestos como filas en una matriz.
+%
+\funcentry{feats\_sequence}
+          {Salida de load\_fasta ($N$ ejemplos)}
+          {Matriz de $N$ filas con 23 características}
+          {Lee la popiedad ``secuencia'' de cada ejemplo y devuelve
+            una matriz con $N$ filas y 23 columnas con las
+            características de la secuencia: longitud, cuenta de
+            nucleótidos y dinucleótidos.}
+%
+\funcheader{feats\_triplet}
+           {Salida de load\_fasta ($N$ ejemplos)}
+           {Matriz de $N$ filas con 32 características}
+           {Lee la información de secuencia y estructura secundaria de
+             cada ejemplo para calcular la cuenta de ``tripletes'' en
+             la zona del tallo del pre-miRNA. Cuando un ejemplo
+             contiene múltiples bucles, la fila correspondiente se
+             completa con valores ``NaN'' (\eng{Not a Number}).}
+%
+\funcheader{feats\_extra}
+           {Salida de load\_fasta ($N$ ejemplos)}
+           {Matriz de $N$ filas con 4 características}
+           {Lee la información de estructura secundaria y calcula las
+             4 características''auxiliares'' de tripletes: longitud
+             del tallo $L_3$, número de pares de bases $P$, $L_3/P$, y
+             cuenta de bases \ntG y \ntC en el tallo $GC$.  Tal como
+             \func{feats\_triplet}, se completan con ``NaN'' en las
+             filas correspondientes a ejemplos con múltiples bucles.}
+%
+\funcheader{feats\_structure}
+           {Salida de load\_fasta ($N$ ejemplos)}
+           {Matriz de $N$ filas con 7 características}
+           {Procesa la estructura secundaria y la mínima energía libre
+             de cada ejemplo, calculando las 7 características de
+             estructura secundaria para cada ejemplo.}
+%
