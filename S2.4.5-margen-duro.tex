@@ -3,12 +3,12 @@
 \subsection{SVM de margen duro}
 %
 La máquina de vectores de soporte más simple es aquella llamada ``de
-margen duro'', y consiste en un clasificador lineal de máximo margen
-que incorpora el ``truco del núcleo'': dado un núcleo
-$k:X\times{}X\rightarrow\RR$, se asume que el conjunto de datos
-transformado $\left((\zz_1,y_1)),\ldots,(\zz_\ell,y_\ell)\right)$,
-$\zz_i=\BPhi(\xx_i)$, es linealmente separable en el espacio inducido
-$Z$. El entrenamiento de la SVM de margen duro consiste en resolver el
+margen duro'', y es en un clasificador de margen máximo que incorpora
+el ``truco del núcleo''. Dado un núcleo $k:X\times{}X\rightarrow\RR$,
+se asume que el conjunto de datos transformado
+$\left((\BPhi(\xx_1),y_1)),\ldots,(\BPhi(\xx_\ell),y_\ell)\right)$ es
+linealmente separable en el espacio inducido $Z$.
+El entrenamiento consiste en resolver el
 problema de optimización (\ref{e2:svm-problem-kernel}), que en
 notación vectorial se escribe
 %
@@ -37,26 +37,29 @@ duro viene dado por
 %
 \begin{align}
   \begin{split}
-    h(\xx) &= \T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right),
+    h(\xx) &= \T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right).
   \end{split}
 \label{e2:svm-model-hard0}
 \end{align}
 %
-donde $(\ww^*,b^*)$ (solución al problema primal) viene dada por las
-Ecuaciones \ref{e2:w-from-alpha} y \ref{e2:b-from-alpha}.
-Incorporando el truco del núcleo, se tiene
+Para el cálculo de $h(\xx)$, se utiliza la función núcleo $k$ y se
+observa que
 %
 \begin{align}
   \langle\ww^*,\BPhi(\xx)\rangle \tab=
   \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx),\\
-  b^* \tab= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j),
+  b^* \tab= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j).
+  \label{e2:svm-model-b-kernel}
 \end{align}
 %
-donde el subíndice $j$ es aquel para el cual se cumple $\alpha_j>0$.
-Incorporando estos resultados al modelo $h(\xx)$, se tiene
+El subíndice $j$ de la
+\iflatexml{}Ecuación~\ref{e2:svm-model-b-kernel}\else\autoref{e2:svm-model-b-kernel}\fi{}
+es cualquiera que cumpla con la condición $\alpha_j>0$.  Con estos
+resultados, el modelo $h(\xx)$ se escribe
 %
 \begin{align}
-  h(\xx) &= \T{signo}\left(\sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx)+b^*\right).
+  h(\xx) &=
+  \T{signo}\left(\sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx)+b^*\right).
 \label{e2:svm-model-hard}
 \end{align}
 %

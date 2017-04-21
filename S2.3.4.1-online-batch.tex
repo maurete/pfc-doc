@@ -2,24 +2,31 @@
 \subsubsection{Aprendizaje en línea y aprendizaje por época}
 %
 El aprendizaje en línea y el aprendizaje por época hacen referencia
-al momento en que se efectúa la actualización de los pesos de la
+a dos estrategias de entrenamiento que difieren según
+el momento en que se efectúa la actualización de los pesos de la
 red:
 %
 \begin{itemize}
 \item En el aprendizaje en línea, o aprendizaje por patrón, se efectúa una
-  actualización de los pesos de la red luego de calcular la salida y el
-  error instantáneo de cada ejemplo del conjunto de aprendizaje.  Este
-  método se denomina también aprendizaje estocástico, y busca
-  minimizar la energía de error promedio minimizando el error
-  instantáneo de cada patrón.  Este método funciona especialmente bien
+  actualización de los pesos de la red inmediatamente
+  luego de calcular la salida y el
+  error instantáneo de cada ejemplo del conjunto de aprendizaje.
+  Esto implica que se efecúan tantas actualizaciones como ejemplos haya
+  en el conjunto de entrenamiento.
+  Este método funciona especialmente bien
   para grandes conjuntos de entrenamiento que contengan información
   redundante.
-\item En el aprendizaje por época, la actualización de los pesos de la red
+\item En el aprendizaje por época (\e{batch learning}),
+  la actualización de los pesos de la red
   se efectúa una vez que han sido calculadas las salidas de todos los
   patrones en el conjunto de entrenamiento, minimizando la función de
-  error promedio $\C{E}_{\T{av}}(\ell)$.
+  error promedio $\C{E}_{\T{av}}$.
 \end{itemize}
 %
+Mientras que el aprendizaje en línea resulta idóneo para situaciones en donde
+se requiere una adaptación continua de la máquina de aprendizaje, el
+aprendizaje por época redunda en superficies de error más estables, ya que
+se promedia todo el conjunto de datos.
 En el presente trabajo, se considera en todos los casos el aprendizaje
 por época.
 

@@ -2,13 +2,13 @@
 %
 \subsection{Formulación dual}
 %
-El problema (\ref{e2:svm-problem-basic}) intenta encontrar el mínimo
-de una función cuadrática simple con restricciones ``complejas''
-${y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$.  Utilizando la técnica de los
-multiplicadores de Lagrange \cite{bottou,kkt}, resulta posible obtener
-una fomulación alternativa del problema, con restricciones simples,
-cuya conveniencia será aparente con la introducción del concepto de
-núcleos.
+En el problema (\ref{e2:svm-problem-basic}) se minimiza una función
+cuadrática simple con restricciones relativamente complejas
+${y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$. Utilizando la técnica de los
+multiplicadores de Lagrange \cite{bottou,kuhntucker}, resulta posible
+obtener una fomulación alternativa del problema con restricciones
+simples, cuya conveniencia será aparente con la introducción del
+concepto de núcleos.
 
 La técnica de los multiplicadores de Lagrange permite incorporar las
 restricciones del problema dentro de la función a optimizar.  En
@@ -20,8 +20,8 @@ primer lugar, se define el funcional lagrangiano
 \end{align}
 %
 Como se puede ver, el funcional $\C{L}$ es la función a optimizar más
-las restricciones ${y}_if_i\geq{}1$ en forma normalizada $g(\xx)\leq0$
-y multiplicadas por las ``variables de holgura'' $\alpha_i$,
+las restricciones ${y}_if_i\geq{}1$, expresadas en la forma $g(\xx)\leq0$,
+y multiplicadas por las variables de holgura $\alpha_i$,
 denominadas \e{multiplicadores de Lagrange}. A partir del lagrangiano
 se plantea la formulación \emph{dual} del problema
 %
@@ -38,20 +38,20 @@ Dado que $\frac{1}{2}\|\ww\|^2$ es una función continuamente derivable
 y convexa, y dado que $\C{L}$ es continuamente derivable respecto de
 sus argumentos en las cercanías del punto óptimo
 $(\ww^*,b^*,\Balpha^*)$, las condiciones de Karush-Kuhn-Tucker
-\cite{kkt} garantizan la existencia de una solución
+\cite{kuhntucker} garantizan la existencia de una solución
 $(\ww^*,b^*,\Balpha^*)$ al problema dual
 (\iflatexml{}Ecuación~\ref{e2:svm-problem-dual}\else\autoref{e2:svm-problem-dual}\fi)
 tal que $(\ww^*,b^*)$ también es solución al problema primal
 (\iflatexml{}Ecuación~\ref{e2:svm-problem-basic}\else\autoref{e2:svm-problem-basic}\fi).
 
-Al ser el punto ``silla'' $(\ww^*,b^*,\Balpha^*)$ solución del
-problema dual (\ref{e2:svm-problem-dual}), sus respectivas derivadas
-parciales se anulan:
+Dado que la solución $(\ww^*,b^*,\Balpha^*)$ del problema dual
+(\ref{e2:svm-problem-dual}) es un punto de ``silla'', sus respectivas
+derivadas parciales se anulan. Esto implica que
 %
 \begin{align}\label{e2:lagrangian-w}
   \evalen{\ww=\ww^*}{\dpar{\C{L}(\ww,b,\Balpha)}{\ww}{}}
     &=\ww^*-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
-    &\Rightarrow \ww^* = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i)
+    &\Rightarrow \ww^* = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i),
   \\
   \label{e2:lagrangian-sum-yalpha}
   \evalen{b=b^*}{\dpar{\C{L}(\ww,b,\Balpha)}{b}{}}
@@ -59,7 +59,7 @@ parciales se anulan:
       &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0.
 \end{align}
 %
-Reemplazando los resultados (\ref{e2:lagrangian-w}) y
+Incorporando los resultados (\ref{e2:lagrangian-w}) y
 (\ref{e2:lagrangian-sum-yalpha}) en la
 \iflatexml{}Ecuación~\ref{e2:lagrangian}\else\autoref{e2:lagrangian}\fi,
 el lagrangiano puede escribirse
@@ -98,8 +98,9 @@ multiplicadores de Lagrange $\alpha_i$:
   \label{e2:svm-problem-dual2}
 \end{align}
 %
-Este problema se resuelve directamente, resultando en una solución
-$\Balpha^*$.  El vector solución $\ww^*$ al problema original
+Este problema se resuelve directamente para las variables de holgura
+$\alpha_i$, resultando en una solución
+$\Balpha^*$. El vector solución $\ww^*$ al problema original
 (\ref{e2:svm-problem-basic}) se obtiene por la
  \iflatexml{}Ecuación~\ref{e2:lagrangian-w}\else\autoref{e2:lagrangian-w}\fi:
 %
@@ -108,7 +109,7 @@ $\Balpha^*$.  El vector solución $\ww^*$ al problema original
 \end{align}
 %
 El cálculo de $b^*$ óptimo se deriva de las condiciones de
-complementariedad de Karush-Kuhn-Tucker \cite{kkt,bottou}, que
+complementariedad de Karush-Kuhn-Tucker \cite{kuhntucker,bottou}, que
 establecen que para todo $i\in\{1,\ldots,\ell\}$, se cumple
 $\alpha^*_i(1-y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*))=0$. Entonces,
 para algún $\alpha^*_i\neq0$, se tiene

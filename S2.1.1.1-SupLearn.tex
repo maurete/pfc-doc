@@ -1,0 +1,21 @@
+%
+\subsubsection{Aprendizaje supervisado}
+%
+Sean $X$ e $Y$ espacios vectoriales, y sea $(\xx,\yy)\in{}X\times{}Y$
+un \e{ejemplo} (correspondiente a una observación) que relaciona una
+entrada $\xx\in{}X$ con la salida correspondiente $\yy\in{}Y$.
+%
+Se asume que existe una distribución de probabilidades fija y
+desconcida $\nu$ sobre el producto $X\times Y$, llamada
+\e{distribución generadora} de los datos.  El aprendizaje supervisado
+trata la extracción de propiedades de esta distribución a partir de un
+número finito de variables aleatorias, denominadas \e{ejemplos}, que
+conforman el conjunto de datos de entrenamiento
+%
+\begin{align}
+  D = \left((\B{x}_1,\yy_1),\ldots,(\B{x}_\ell,\yy_\ell)\right) \in
+  \mathcal{D}=\bigcup_{\ell=1}^\infty (X\times Y)^\ell,
+\end{align}
+%
+que se considera como una muestra independiente e idénticamente
+distribuida de $\nu$, esto es, $D\sim\nu$.

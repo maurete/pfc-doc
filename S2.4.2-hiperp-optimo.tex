@@ -6,17 +6,14 @@ Dado un conjunto de entrenamiento
 $D=\left((\xx_1,y_1),\ldots,(\xx_\ell,y_\ell)\right)$, se dice que
 éste es linealmente separable en el espacio imagen $Z$ cuando existe
 una función discriminante lineal $f(\xx)=\ww^T\BPhi(\xx)+b$ tal que su
-signo permite determinar, sin errores, la clase de todos los elementos
-del conjunto.
-Cuando el conjunto $D$ es linealmente separable en $Z$, se sabe que
-existen infinitas funciones discriminantes lineales capaces de
-clasificar correctamente todos los elementos, y por ende, existen
-infinitos hiperplanos de separación de clases.
+signo permite determinar sin errores la clase de todos los elementos
+del conjunto. Cuando el conjunto $D$ es linealmente separable en $Z$,
+se sabe que existen infinitas funciones discriminantes lineales
+capaces de clasificar correctamente todos los elementos.
 
-La característica saliente de la máquina de vectores de soporte por
-sobre el clasificador lineal básico es que, durante el entrenamiento,
-ésta trata de encontrar un hiperplano de separación $\ww^T\zz+b=0$
-\e{óptimo}, que maximiza la distancia a los puntos
+La característica saliente de la máquina de vectores de soporte es
+que, durante el entrenamiento, determina un hiperplano de separación
+$\ww^T\zz+b=0$ \e{óptimo}, que maximiza la distancia a los puntos
 $\zz_i=\BPhi(\xx_i)$ más cercanos. Esto se expresa a través del
 problema de optimización
 %
@@ -46,7 +43,6 @@ problema puede leerse
 La distancia de un vector $\zz_i=\BPhi(\xx_i)$ al hiperplano
 $\ww^T\zz+b=0$ viene dada por $d_i=\frac{\ww}{\|w\|}\cdot\zz_i+b$, por
 ello, minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.
-
 Puede demostrarse que el vector solución $\ww_*$ al problema
 (\ref{e2:svm-problem-basic}) es una combinación lineal de aquellos
 vectores $\zz_i$ para los cuales $|\ww^T\zz_i+b|=1$. Estos $\zz_i$ se
