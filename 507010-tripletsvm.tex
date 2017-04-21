@@ -1,0 +1,41 @@
+%
+%
+\subsection{Conjuntos de prueba de Triplet-SVM}
+%
+En el trabajo \cite{xue} los autores definen tres conjuntos de prueba
+suplementarios para el método Triplet-SVM denominados \ssf{updated},
+\ssf{conserved-hairpin} y \ssf{cross-species}.
+
+Para estas pruebas se generaron tres problemas de clasificación que
+replican los casos probados en el trabajo de referencia.
+Tal como en el problema \tripletsvm{}, el entrenamiento se efectúa con
+163 ejemplos de clase positiva tomados de \dset{mirbase50} y 168
+ejemplos de clase negativa provenientes del conjunto \dset{coding}.
+Con el modelo obtenido, se clasifican los tres conjuntos de prueba:
+%
+\begin{description}
+  \item{updated}
+  Consiste en 39 pre-miRNAs experimentalmente validados pertenecientes a
+  la especie humana, que fueron publicados durante el desarrollo del
+  método Triplet-SVM.
+%
+  \item{conserved-hairpin}
+  Este conjunto de prueba consta de 2444 secuencias conservadas con
+  estructura secundaria de horquilla, extraídas del cromosoma humano
+  19. En su mayoría, estas secuencias son pseudo pre-miRNAs (clase
+  negativa), aunque se conoce que algunas de ellas son
+  pre-miRNAs verdaderos.
+%
+  \item{cross-species}
+  Contiene 581 secuencias de pre-miRNAs experimentalmente validadas
+  pertenecientes a diversas especies no humanas, tales como animales,
+  plantas y virus, extraídas de la versión 5.0 de miRBase.
+\end{description}
+%
+Los resultados de clasificación de presentan en la
+\autoref{tbl:suppl-xue}.
+En general, se encontró que el método propuesto obtuvo mejores tasas
+de clasificación que el método \tripletsvm{}, a excepción del caso
+\dset{cross-species}, donde el método propio en sus variantes
+\ssf{SVM-RR} y \ssf{MLP-B} resultó inferior al resultado reportado por
+los autores de \cite{xue}.

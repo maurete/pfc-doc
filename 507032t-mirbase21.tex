@@ -20,7 +20,12 @@
   \sisetup{
     table-format = 2.1(2),
     table-number-alignment = right,
-    uncertainty-separator = \,\smaller
+    % si es true, separa com \pm #.#. si no, escribe ()
+    separate-uncertainty = true,
+    % las siguientes solo funcionan en separate-uncertainty=false
+    uncertainty-separator = \smaller\pm,
+    output-open-uncertainty = \smaller\smaller,
+    output-close-uncertainty = ,
   }
   \begin{tabular}{lSSSS}
     \toprule

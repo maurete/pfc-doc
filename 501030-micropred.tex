@@ -1,0 +1,44 @@
+%
+%
+\subsection{Problema microPred}
+%
+Este problema se basa en los datos utilizados en \cite{batuwita} para
+entrenamiento y prueba del método \work{\micropred}.
+Los ejemplos de clase positiva se obtienen de la versión 12.0 de la
+base de datos \work{\mirbase}.
+Para los ejemplos de clase negativa se utilizan dos fuentes: la base
+de datos \dset{coding} y una base de datos curada por los autores,
+denominada \dset{other human ncRNAs}, que contiene en total 754
+ejemplos de \ncrna{s} (excluyendo \premirna{s}) de la especie humana.
+
+En el trabajo original, los autores no especifican una separación
+en conjuntos de entrenamiento y prueba, sino que utilizan todos los
+ejemplos contenidos en las bases de datos positivas y negativas para
+entrenamiento, y reportan las medidas de rendimiento del método
+a partir de los resultados obtenidos en la validación cruzada.
+Este esquema contrasta con la forma de efectuar las pruebas en el
+presente trabajo, en donde los resultados se obtienen de clasificar un
+conjunto de prueba especificado y separado de los datos de
+entrenamiento.
+
+El armado de los conjuntos de datos de entrenamiento y prueba del
+problema \prob\micropred{} se efectuó según el procedimiento
+siguiente: Se incluyó el 85\% (587/691) de los ejemplos positivos en
+el conjunto de entrenamiento entrenamiento, reservando el 15\%
+restante (104 ejemplos) para el conjunto de prueba.
+Tal como en el problema \prob{\mipred}, se mantuvo una
+proporcionalidad de 1:2 entre ejemplos positivos y negativos,
+destinando 1174 ejemplos negativos al conjunto de entrenamiento.
+De ellos, se utilizaron 1078 de la base de datos \dataset{coding} y 96
+de \dset{human other \ncrna{s}}, respetando la proporcionalidad de
+8494:754 entre ambas bases de datos.
+
+El conjunto de prueba incorpora todos los ejemplos de las bases de
+datos positivas y negativas no utilizados para entrenamiento: 104
+ejemplos de \dset{miRBase} (clase positiva), 7416 ejemplos de
+\dset{coding} (clase negativa), y 658 ejemplos de \dset{human other
+  \ncrna{s}} (clase negativa).
+
+En la \iflatexml{}Tabla~\ref{tbl:problembtw}\else\autoref{tbl:problembtw}\fi{}
+se resume la composición de los conjuntos de entrenamiento y prueba
+que integran el problema \prob\micropred.

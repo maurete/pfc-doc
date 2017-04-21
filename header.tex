@@ -22,7 +22,7 @@
 \usepackage{libertine}
 
 % TeX Gyre Heros
-\usepackage[scale=0.96]{tgheros}
+%\usepackage[scale=0.96]{tgheros}
 
 % Inconsolata
 \usepackage[scaled=0.9]{zi4}
@@ -32,6 +32,9 @@
 
 % Source Sans Pro
 % \usepackage{sourcesanspro}
+
+% Roboto
+\usepackage{roboto}
 
 % Bitstream charter en modo math
 % \usepackage[bitstream-charter]{mathdesign}
@@ -228,15 +231,19 @@
 \newcommand{\rowSKIP}{\addlinespace[2pt]}
 \newcommand{\ti}{\textsmaller}
 \newcommand{\func}[1]{{\texttt{#1}}}
+\newcommand{\dataset}[1]{{\texttt{#1}}}
 \newcommand{\Gm}{\scriptsize $G_m$}
 \newcommand{\Ft}[1]{\mrow{2}{*}{#1}}
 \newcommand{\tbmean}{\smaller{2} $\bar{x}$}
 \newcommand{\tbstd}{\smaller $\sigma$}
-\newcommand{\tripletsvm}{\sbsf{Triplet-SVM}}
-\newcommand{\mipred}{\sbsf{miPred}}
-\newcommand{\micropred}{\sbsf{microPred}}
-\newcommand{\deltamirbase}{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
+\newcommand{\mirbase}{{miRBase}}
+\newcommand{\rfam}{{Rfam}}
+\newcommand{\tripletsvm}{{Triplet-SVM}}
+\newcommand{\mipred}{{miPred}}
+\newcommand{\micropred}{{microPred}}
+\newcommand{\deltamirbase}{{$\mathbf{\mathsf{\Delta}}$miRBase}}
 \newcommand{\premirna}[1]{pre-miRNA#1}
+\newcommand{\ncrna}[1]{ncRNA#1}
 \newcommand{\caract}[1]{característica#1}
 \newcommand{\hparam}[1]{hiperparámetro#1}
 \newcommand{\rowMEANN}[2]{&
@@ -495,3 +502,22 @@
 \usepackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \fi
+
+
+%%%%%%%%%%%%%%%%%% estilos de ``caracter''
+
+% dataset
+\newcommand{\dset}[1]{
+\iflatexml\else\ifpdf\ssf{#1}\fi\fi
+}
+
+% work
+\newcommand{\work}[1]{
+\iflatexml\else\ifpdf\e{#1}\fi\fi
+}
+
+% problem
+\newcommand{\prob}[1]{
+\iflatexml\else\ifpdf\sbsf{#1}\fi\fi
+}
+

@@ -1,10 +1,3 @@
-Los resultados obtenidos indican que a mayor número de ejemplos de
-entrenamiento y mayor versión de la base de datos utilizada en el
-problema de entrenamiento, mayor es la tasa obtenida al clasificar los
-pre-miRNAs humanos presentes en la versión 21 de miRBase.  Asimismo,
-se observa un bajo desempeño de la estrategia RMB, lo que coincide con
-los resultados anteriores, en los que se obtuvo una baja sensibilidad
-para esta estrategia.
 
 \subsection{Problema $\mathbf{\mathsf{\Delta}}$miRBase}
 La base de datos miRBase se publica periódicamente, con números de
@@ -31,3 +24,18 @@ Como ejemplos negativos, se utilizaron elementos de la base de datos CODING \cit
 así como de \ssf{human other ncRNAs} presentada en \cite{batuwita}.
 La composición de los conjuntos de entrenamiento y prueba se detalla en
 la \autoref{tbl:problem-deltamirbase}.
+
+Los resultados de clasificación del conjunto de prueba, consistente en
+25 nuevos pre-miRNAs de la especie humana incorporados en la versión
+21 de miRBase, son mostrados en la \autoref{tbl:suppl-deltamirbase21}.
+Allí se observa que la tasa máxima obtenida es del 88\%, y se da para
+el clasificador SVM-RE, seguido por la estrategia RMB con una tasa del
+84\%. Los clasificadores MLP y SVM con núcleo lineal obtienen un menor
+rendimiento con tasas alredeor del 70\%.
+
+Estos resultados de clasificación coinciden con la idea que el
+clasificador SVM con núcleo RBF es capaz de generar funciones de
+decisión más complejas, y por ende más ``ajustables'' a problemas
+complejos. Asimismo, se confirma el hecho que la estrategia RMB tiende
+a resultar en un clasificador con mayor especificidad que
+sensibilidad.
