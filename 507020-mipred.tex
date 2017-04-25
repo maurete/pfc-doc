@@ -2,27 +2,32 @@
 %
 \subsection{Conjuntos de prueba de miPred}
 %
-En el trabajo de \citeauthor{ng} \cite{ng} se prueba el método
-\mipred{} con dos conjuntos de prueba suplementarios denominados
-\ssf{IE-NH} e \ssf{IE-NC}.
-\paragraph{IE-NH}
-Comparable al conjunto \ssf{cross-species} de \cite{xue}, incluye
-1918 pre-miRNAs de especies no humanas publicadas en la versión 8.2 de
-miRBase.
-\paragraph{IE-NC}
-Contiene 12.387 ejemplos de ncRNAs funcionales obtenidos de la versión
-7.0 de la base de datos Rfam \cite{rfam}, eliminando los ejemplos
-correspondientes a pre-miRNAs. En un clasificador ideal este conjunto
-de datos debería ser clasificado como de clase negativa.
+En \cite{ng} se prueba el método \work\mipred{} con dos conjuntos de
+prueba suplementarios denominados \dset{IE-NH} e \dset{IE-NC}:
+%
+\begin{description}
+\item{\dset{IE-NC}}
+  Contiene 12.387 ejemplos de \ncrna{s} funcionales obtenidos de la
+  versión 7.0 de la base de datos \work{Rfam} \cite{rfam}, eliminando
+  aquellos ejemplos que son \premirna{s}.
+\item{\dset{IE-NH}}
+  Comparable al conjunto \dset{cross-species} de \cite{xue}, incluye
+  1918 \premirna{s} de especies no humanas publicadas en la versión 8.2
+  de \work{\mirbase}.
+\end{description}
+%
+Las pruebas consistieron en entrenar el clasificador con el conjunto
+de entrenamiento definido en el problema \prob\mipred{}, clasificando
+los conjuntos de prueba suplementarios con el modelo obtenido.
+Resulta necesario aclarar que, a diferencia de lo que ocurre con los
+conjuntos de prueba de \work\tripletsvm{}, los resultados de estas
+pruebas no son directamente comparables, ya que no se garantiza
+garantizar que los conjuntos de entrenamiento y prueba contengan los
+mismos elementos que aquellos utilizados por los autores en el trabajo
+original.
 
-Las pruebas efectuadas consistieron en entrenar el clasificador con el
-conjunto de entrenamiento definido en el problema \mipred{},
-clasificando luego los conjuntos de prueba enumerados.  Se debe
-destacar que, a diferencia del caso \tripletsvm{}, los resultados no
-son directamente comparables, ya que no existe forma de garantizar que
-los conjuntos de entrenamiento y prueba contengan los mismos elementos
-que aquellos utilizados por los autores en el trabajo original.
-
-A partir de los resultados obtenidos, se puede observar que la estrategia
-RMB resulta en un clasificador con mayor especificidad, aunque menor
-sensibilidad que las demás estrategias de selección de hiperparámetros.
+Los resultados de estas pruebas se muestran en la
+\iflatexml{}Tabla~\ref{tbl:suppl-ng}\else\autoref{tbl:suppl-ng}\fi.
+Allí se puede observar que el clasificador \sbs{SVM-RR} obtiene un
+modelo algo diferente del resto, con mayor especificidad y menor
+capacidad de generalización a otras especies.

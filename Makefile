@@ -1,7 +1,7 @@
 header = documentclass.tex header.tex
 layout = layout.md
 title = begindocument.tex
-contents = $(shell egrep -v "^figures/" ${layout}) enddocument.tex
+contents = $(shell egrep -v -e "^figures/" -e "^[\#%]" ${layout}) enddocument.tex
 figures = $(shell ls figures/*/figure.tex) $(shell ls figures/*/caption.tex)
 output = output.tex
 revision = revision.tex
@@ -38,7 +38,7 @@ temp: $(header) $(contents)
 	echo '\\include{header}' >> $(output)
 	echo '\\include{revision}' >> $(output)
 	echo '\\input{begindocument}' >> $(output)
-	cat $(layout) | sed 's/^/\\includeFileOrFigure\{/g ; s/$$/}/g ;' >> $(output)
+	egrep -v '^[#%]' $(layout) | sed 's/^/\\includeFileOrFigure\{/g ; s/$$/}/g ;' >> $(output)
 	echo '\\include{enddocument}' >> $(output)
 
 pdf: rev temp

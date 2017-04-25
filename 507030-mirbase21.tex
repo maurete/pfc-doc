@@ -1,19 +1,28 @@
+%
+%
+\subsection{Última versión de \mirbase}
+%
+La base de datos \work\mirbase{} se actualiza periódicamente
+incorporando en cada nueva versión nuevos \premirna{s}
+experimentalmente validados.
+La última versión disponible es la versión 21, de junio de 2014.
 
-\subsection{Base de datos miRBase, versión 21}
-Esta prueba complementaria consistió en entrenar el clasificador con
-los problemas principales \tripletsvm{}, \mipred{} y \micropred{}, y
-luego clasificar con cada modelo obtenido los ejemplos de pre-miRNAs
-humanos presentes en la última versión disponible de miRBase
-\cite{mirbase3}. La versión 21 de miRBase contiene XXXXX ejemplos de
-pre-miRNAs pertenecientes a la especie humana.  En la tabla
-\autoref{tbl:suppl-mirbase21} se presentan los resultados de esta
-prueba.
+La prueba consistió en clasificar los 1881 ejemplos de \premirna{s} de
+la especie humana publicados en la versión 21 de \work\mirbase{}
+con tres modelos generados a partir de los datos de entrenamiento de
+los problemas principales \prob\tripletsvm{}, \prob\mipred{} y
+\prob\micropred{}.
 
-Los resultados obtenidos indican que a mayor número de ejemplos de
-entrenamiento y mayor versión de la base de datos utilizada en el
-problema de entrenamiento, mayor es la tasa obtenida al clasificar los
-pre-miRNAs humanos presentes en la versión 21 de miRBase.  Asimismo,
-se observa un bajo desempeño de la estrategia RMB, lo que coincide con
-los resultados anteriores, en los que se obtuvo una baja sensibilidad
-para esta estrategia.
+En la \iflatexml{}Tabla~\ref{tbl:suppl-mirbase21}\else\autoref{tbl:suppl-mirbase21}\fi{}
+se presentan los resultados obtenidos.
+A partir de estos resultados se observa que la tasa de clasificación
+resultante es similar para los modelos obtenidos con los problemas
+\prob\tripletsvm{} y \prob\mipred{}.
+Al entrenar con el problema \prob\micropred{}, la tasa de aciertos
+mejoró notoriamente, lo que puede atribuirse al mayor número y
+variedad de ejemplos presentes en en el conjunto de entrenamiento.
 
+La estrategia de selección de \hparam{s} de minimización del error
+empírico obtuvo los mejores resultados, mientras que la minimización
+de la cota RM obtuvo un buen desempeño sólo para el modelo generado a
+partir del problema \prob\micropred{}.

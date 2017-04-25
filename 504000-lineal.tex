@@ -5,29 +5,42 @@
 %
 Se probó el clasificador SVM con núcleo lineal sobre los tres
 problemas definidos, aplicando las estrategias de selección trivial,
-de búsqueda exhaustiva y del criterio del error empírico para
-determinar el valor óptimo del hiperparámetro $C$.
-En la \autoref{tbl:linear-results} se muestran los resultados de
-obtenidos de clasificar los conjuntos de prueba de cada problema
-caracterizados según el valor medio $E$ y la desviación estándar
-$\sigma$ para las 5 repeticiones de cada prueba con semillas
-aleatorias diferentes.
+de búsqueda exhaustiva y de minimización del criterio del error
+empírico para determinar el valor óptimo del hiperparámetro $C$.
+En la \iflatexml{}Tabla~\ref{tbl:linear-results}\else\autoref{tbl:linear-results}\fi{}
+se presentan los resultados de clasificar el conjunto de prueba de
+cada problema con un modelo generados a partir del conjunto de
+entrenamiento del mismo problema.
 
-En líneas generales, los resultados muestran que para las tres
-estrategias de selección de hiperparámetros se obtienen tasas de
-clasificación similares.
-Para el problema \tripletsvm{}, las tasas obtenidas con el
-clasificador SVM-lineal resultan similares a aquellas conseguidas
-aplicando el clasificador MLP.
-Para los problemas \mipred{} y \micropred{}, en cambio, se observa una
-leve mejora en los resultados respecto de aquellos opbtenidos para el
-clasificador MLP.
-En particular, se observa una reducción de la diferencia SP-SE, lo que
-indica que este clasificador es menos sensible al desbalance de
-clases.
+Los resultados obtenidos con las tres estrategias de selección del
+hiperparámetro $C$ resultaron similares en todos los casos.
+\hl{Interpretar porque pasa esto?}
 
-Tal como en el caso del clasificador MLP, la utilización del conjunto
-de características S-E por sobre E trae consigo una leve mejora en los
-resultados otenidos.
-Similarmente, la utilización de las caractarísticas de secuencia (en
-forma única) resulta en tasas de clasificación subóptimas.
+Los conjuntos de \caract{s} que incluyen la estructura secundaria
+(\dset{E} y \dset{S-E}) obtuvieron las mejores tasas de clasificación,
+tal como se observó en el caso del clasificador MLP.
+
+La desviación estándar resultó nula en el problema \prob{\tripletsvm}
+utilizando la estrategia de selección trivial, lo que resulta
+esperable dado que el algoritmo de entrenamiento SMO utilizado al
+entrenar una SVM es determinístico.
+Asimismo, la variabilidad observada en esta estrategia es atribuible
+exclusivamente a la variación en la composición de las particiones de
+entrenamiento y prueba.
+
+Considerando el caso del problema \prob\tripletsvm{} y \caract{s} de
+tripletes (\dset{T}), se obtuvieron resultados similares a los
+reportados por los autores, aunque con una \SP{} levemente inferior.
+Tal como con el clasificador MLP, la utilización de los conjuntos de
+\caract{s} \dset{E} y \dset{S-E} mejoró significativamente los
+resultados obtenidos con las \caract{s} de tripletes.
+
+En el caso de los problemas \prob\mipred{} y \prob\micropred{}, se
+observó que la diferencia entre la especificidad (\SP) y la
+sensibilidad (\SE) fue menor a la obtenida con el clasificador MLP.
+Esto es un indicio de que el clasificador SVM es menos sensible al
+``desbalance de clases'' en los datos de entrenamiento.
+Al comparar las tasas obtenidas por el clasificador SVM-lineal
+contra aquellas del clasificador MLP, se observa una leve mejora en
+los resultados obtenidos para igual conjunto de \caract{s} para los
+problemas los problemas \mipred{} y \micropred{}.

@@ -1,35 +1,36 @@
+%
 \begin{table}[h]
   \tableStyle
-  \begin{tabular}{lrScScScS}
-    \toprule
-    {Problema de entrenamiento}
-                         && {MLP-B} && {SVM-LE} && {SVM-RE} && {SVM-RR} \\
-    \midrule
-    \mrow{2}{*}{\tripletsvm{}}
-    & {\smaller $E$}      &  73.7   &&     74.9 &&     71.9 &&     64.1 \\
-    & {\smaller $\sigma$} &   1.6   &&      0.1 &&      1.4 &&      0.0 \\
-    \mrow{2}{*}{\mipred{}}
-    & {\smaller $E$}      &    71.7 &&     75.7 &&     73.6 &&     63.6 \\
-    & {\smaller $\sigma$} &     1.8 &&      1.7 &&      1.6 &&      2.4 \\
-    \mrow{2}{*}{\micropred{}}
-    & {\smaller $E$}      &    76.4 &&     82.3 &&     83.6 &&     82.6 \\
-    & {\smaller $\sigma$} &     1.8 &&      0.6 &&      0.4 &&      0.3 \\
-    \bottomrule
-    \\
-  \end{tabular}
+  %% \begin{tabular}{lrScScScS}
+  %%   \toprule
+  %%   {Problema de entrenamiento}
+  %%                        && {MLP-B} && {SVM-LE} && {SVM-RE} && {SVM-RR} \\
+  %%   \midrule
+  %%   \mrow{2}{*}{\tripletsvm{}}
+  %%   & {\smaller $E$}      &  73.7   &&     74.9 &&     71.9 &&     64.1 \\
+  %%   & {\smaller $\sigma$} &   1.6   &&      0.1 &&      1.4 &&      0.0 \\
+  %%   \mrow{2}{*}{\mipred{}}
+  %%   & {\smaller $E$}      &    71.7 &&     75.7 &&     73.6 &&     63.6 \\
+  %%   & {\smaller $\sigma$} &     1.8 &&      1.7 &&      1.6 &&      2.4 \\
+  %%   \mrow{2}{*}{\micropred{}}
+  %%   & {\smaller $E$}      &    76.4 &&     82.3 &&     83.6 &&     82.6 \\
+  %%   & {\smaller $\sigma$} &     1.8 &&      0.6 &&      0.4 &&      0.3 \\
+  %%   \bottomrule
+  %%   \\
+  %% \end{tabular}
   \sisetup{
     table-format = 2.1(2),
     table-number-alignment = right,
     % si es true, separa com \pm #.#. si no, escribe ()
-    separate-uncertainty = true,
+    separate-uncertainty = false,
     % las siguientes solo funcionan en separate-uncertainty=false
-    uncertainty-separator = \smaller\pm,
-    output-open-uncertainty = \smaller\smaller,
-    output-close-uncertainty = ,
+    %    output-open-uncertainty = \smaller\smaller,
+    %    output-close-uncertainty = ,
+    uncertainty-separator = \,\smaller
   }
   \begin{tabular}{lSSSS}
     \toprule
-    {Problema de entrenamiento} & {MLP-B}  & {SVM-LE} & {SVM-RE} & {SVM-RR} \\
+    {Datos de entrenamiento} & {MLP-B}  & {SVM-LE} & {SVM-RE} & {SVM-RR} \\
     \midrule
     \tripletsvm{}               & 73.7(16) & 74.9(01) & 71.9(14) & 64.1(00) \\
     \mipred{}                   & 71.7(18) & 75.7(17) & 73.6(16) & 63.6(24) \\
@@ -37,9 +38,12 @@
     \bottomrule
     \\
   \end{tabular}
-  \caption{\captionStyle Tasa de clasificación del conjunto completo
-    de pre-miRNAs de la especie humana para los clasificadores
-    entrenados con los problemas de las pruebas principales.}
+  \caption{\captionStyle Tasa de aciertos al clasificar los
+    ejemplos de la especie humana presentes en la versión 21 de
+    \work\mirbase{}, para modelos generados a partir de los tres
+    problemas principales \sbs\tripletsvm{}, \sbs\mipred{}, y
+    \sbs\micropred{}.
+    }
   \label{tbl:suppl-mirbase21}
-
 \end{table}
+%
