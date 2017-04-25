@@ -1,41 +1,41 @@
+%
+%
+\subsection{Problema $\mathbf{\mathsf{\Delta}}$\mirbase}
+%
+Una de las tareas más comunes para un clasificador de secuencias de
+\premirna{s} es la predicción de nuevos ejemplos de clase positiva,
+proponiendo al usuario nuevos {candidatos} para validar en forma
+experimental.
 
-\subsection{Problema $\mathbf{\mathsf{\Delta}}$miRBase}
-La base de datos miRBase se publica periódicamente, con números de
-versión incrementales, incorporando en cada nueva versión nuevos
-pre-miRNAs experimentalmente validados.  Si se contara con un
-clasificador de secuencias de pre-miRNAs ideal, al entrenarlo con la
-versión $X$ de miRBase, éste sería capaz de predecir con una
-sensibilidad del 100\% todas las nuevas secuencias incorporadas en la
-versión $Y>X$.
+La naturaleza periódica de las publicaciones de \work\mirbase{}
+permite generar un problema que brinda una idea de la capacidad de
+predicción del método sobre los nuevos ejemplos de clase positiva
+incorporados entre dos versiones sucesivas.
+Tomando como base la versión 20 de \work\mirbase, la versión siguiente
+(21) contiene 25 nuevos ejemplos de \premirna{s} experimentalmente
+validados de la especie humana.
+Las pruebas se basan en entrenar con los ejemplos positivos de la
+versión 20 y clasificar los nuevos ejemplos incorporados a la versión
+21.
 
-El razonamiento anterior no es del todo válido, ya que se sabe por
-ejemplo, que dentro de miRBase existen secuencias consideradas
-erróneamente como pre-miRNAs.  Sin embargo, la propuesta de clasificar
-las nuevas secuencias entre dos versiones sucesivas de miRBase resulta
-interesante en el sentido que brinda una idea del comportamiento del
-método en problemas ``del mundo real''.
-
-Para esta prueba se generó un problema \deltamirbase{} en el cual el conjunto de entrenamiento
-contiene como ejemplos positivos \e{todas} las entradas correspondientes
-a la especie humana presentes en la versión 20 de miRBase,
-y el conjunto de prueba contiene únicamente las nuevas incorporaciones
-en la versión 21 de miRBase, también de la especie humana.
-Como ejemplos negativos, se utilizaron elementos de la base de datos CODING \cite{xue},
-así como de \ssf{human other ncRNAs} presentada en \cite{batuwita}.
+El problema \deltamirbase{} representa este caso de prueba
+incorporando en el conjunto de entrenamiento \e{todos} los ejemplos de
+la especie humana presentes en \work\mirbase{} 20.
+Como ejemplos negativos de entrenamiento, se utilizaron elementos de
+las bases de datos \dset{coding} \cite{xue} y \dset{human other ncRNAs}
+\cite{batuwita}.
+El conjunto de prueba los 25 nuevos ejemplos de la especie humana
+publicados en \work\mirbase 21.
 La composición de los conjuntos de entrenamiento y prueba se detalla en
-la \autoref{tbl:problem-deltamirbase}.
+la \iflatexml{}Tabla~\ref{tbl:problem-deltamirbase}\else\autoref{tbl:problem-deltamirbase}\fi.
 
-Los resultados de clasificación del conjunto de prueba, consistente en
-25 nuevos pre-miRNAs de la especie humana incorporados en la versión
-21 de miRBase, son mostrados en la \autoref{tbl:suppl-deltamirbase21}.
-Allí se observa que la tasa máxima obtenida es del 88\%, y se da para
-el clasificador SVM-RE, seguido por la estrategia RMB con una tasa del
-84\%. Los clasificadores MLP y SVM con núcleo lineal obtienen un menor
-rendimiento con tasas alredeor del 70\%.
-
-Estos resultados de clasificación coinciden con la idea que el
-clasificador SVM con núcleo RBF es capaz de generar funciones de
-decisión más complejas, y por ende más ``ajustables'' a problemas
-complejos. Asimismo, se confirma el hecho que la estrategia RMB tiende
-a resultar en un clasificador con mayor especificidad que
-sensibilidad.
+Los resultados de clasificar el conjunto de prueba del problema
+\prob\deltamirbase{} son mostrados en la
+\iflatexml{}Tabla~\ref{tbl:suppl-deltamirbase21}\else\autoref{tbl:suppl-deltamirbase21}\fi.
+La tasa máxima se obtuvo para el clasificador SVM-RE con el 88\%
+(22/25) de ejemplos correctamente clasificados, seguido por SVM-RR con
+una tasa del 84\% (21/25).
+Los clasificadores SVM-RE y MLP-B obtuvieron una menor exactitud que
+rondó el 70\% de aciertos.
+Estos resultados muestran la mayor generalidad del clasificador SVM
+con núcleo RBF ante problemas de clasificación más complejos.

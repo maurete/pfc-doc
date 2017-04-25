@@ -3,24 +3,14 @@
 %
 \section{Pruebas adicionales}
 %
-En la presente sección se describen las pruebas complementarias
-efectuadas con el propósito de obtener una idea general del
-comportamiento del método codificado ante distintos tipos de problemas
-de clasificación.
+Además de las pruebas sobre los tres problemas de clasificación
+principales, se realizaron pruebas complementarias con el propósito de
+obtener una idea general del comportamiento del método ante distintos
+tipos de problemas de clasificación.
 
-Algunos de los problemas generados se basan en las pruebas
-suplementarias de los trabajos de referencia \cite{xue,ng}.
-Por otra parte, se generaron problemas que clasifican los ejemplos de
-la especie humana disponibles en la última versión de miRBase (21.0,
-\hl{FECHA}) entrenando con los conjuntos de entrenamiento de los
-problemas principales \tripletsvm{}, \mipred{} y \micropred{}.
-El problema llamado \deltamirbase{} prueba la capacidad del método de
-predecir correctamente los nuevos ejemplos de la especie humana
-incorporados a la base de datos miRBase en la última actualización.
-
-Considerando los resultados obtenidos en las pruebas principales, se
-utilizó en todos los casos el conjunto de características S-E
-aplicando las cuatro variantes del método:
+En las pruebas complementarias se trabajó únicamente con el conjunto
+de características S-E y se probaron cuatro combinaciones de
+clasificadores y estrategias de selección de \hparam{s}:
 %
 \begin{itemize}
 \item
@@ -38,3 +28,17 @@ aplicando las cuatro variantes del método:
   selección de hiperparámetros minimizando la cota radio-margen.
 \end{itemize}
 %
+Este criterio de selección se basa en los resultados obtenidos
+de las pruebas principales.
+
+Algunos de los problemas generados se basan en las pruebas
+suplementarias de los trabajos de referencia \cite{xue,ng}.
+Por otra parte, se generaron problemas que clasifican los ejemplos de
+la especie humana disponibles en la última versión de \dset\mirbase
+(21.0, {junio de 2014}) entrenando con los conjuntos de entrenamiento
+de los problemas principales \prob\tripletsvm{}, \prob\mipred{} y
+\prob\micropred{}.
+Por úlrimo, el problema llamado \prob\deltamirbase{} prueba la
+capacidad del método de predecir los nuevos ejemplos de la especie
+humana incorporados a la base de datos \dset\mirbase en la última
+actualización.

@@ -1,22 +1,27 @@
+%
 \begin{table}[h]
   \tableStyle
-  \begin{tabular}{llScS}
+  \sisetup{
+    table-number-alignment = right
+  }
+  \begin{tabular}{llS[table-format = +1.0]cS[table-format = 4.0]}
     \toprule
-    Utlización & Fuente & {Clase} & Especie & {Cant. elementos} \\
+    Uso & Fuente & {Clase} & Especie & {Cant. elementos} \\
     \midrule
     \mrow{3}{*}{Entrenamiento}
-    &  miRBase, v.20      & +1    & humana    & 1872              \\
-    & CODING             & -1    & humana    & 2990              \\
-    & human other ncRNAs & -1    & humano    &  754              \\
+    & \mirbase, v.20        & +1    & humana    & 1872              \\
+    & coding                & -1    & humana    & 2990              \\
+    & human other \ncrna{s} & -1    & humana    &  754              \\
     \midrule
-    {Prueba} &  miRBase, $\mathbf{\mathsf{\Delta}}(\T{v.20},\T{v.21})$
-                          & +1    & humano    & 25                \\
+    {Prueba} &  \mirbase, $\mathbf{\mathsf{\Delta}}(\T{v.20},\T{v.21})$
+                          & +1    & humana    & 25                \\
     \bottomrule
     \\
   \end{tabular}
-  \caption{\captionStyle Composición de los conjuntos de entrenamiento
-    y prueba utilizados en el problema
-    \sbs{$\mathbf{\mathsf{\Delta}}$miRBase}.}
+  \caption{\captionStyle
+    Composición de los conjuntos de entrenamiento y prueba del
+    problema \sbs{$\mathbf{\mathsf{\Delta}}$\mirbase}.
+  }
   \label{tbl:problem-deltamirbase}
-
 \end{table}
+%

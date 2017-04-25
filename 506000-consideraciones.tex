@@ -1,47 +1,34 @@
 %
 %
 %
-\section{Consideraciones generales}
+\section{Discusión}
 %
-Al analizar los resultados, se encontró que la elección del conjunto
-de características resultó determinante para el desempeño del
-clasificador.
-La utilización del conjunto de características S-E resultó en las
-mayores tasas de clasificación, mientras que el conjunto de
-características E, compuesto únicamente por 7 características, obtuvo
-el menor tiempo de ejecución con tasas de clasificación
-satisfactorias.
-Por el contrario, la utilización del conjunto de características S
-resultó en las tasas de clasificación más bajas, además de un
-incremento considerable en el tiempo de entrenamiento para todos los
-métodos, incluso provocando la divergencia del método RMB en el
-problema \mipred{}.
+Los resultados obtenidos en las pruebas muestran que la elección del
+conjunto de \caract{s} resultó determinante para el desempeño de los
+clasificadores.
+La utilización del conjunto de \caract{s} \dset{S-E} obtuvo las
+mejores tasas de clasificación, mientras que el conjunto de \caract{s}
+\dset{E} obtuvo muy buenos resultados considerando que se trata de un
+vector de sólo 7 \caract{s}.
+Por el contrario, la utilización del conjunto de \caract{s} \dset{S}
+resultó en las tasas de clasificación más bajas, incluso provocando la
+divergencia de la estrategia de minimización de la cota RM en el
+problema \prob\mipred{}.
+La recomendación general es entonces utilizar los conjuntos de \caract{s}
+\dset{S-E} o \dset{E}.
+Se deberá evitar utilizar el conjunto \dset{S}, ya que obtiene tasas
+de clasificación no satisfactorias y puede provocar inestabilidad.
+Se recomienda asimismo no utilizar las \caract{s} de tripletes
+\dset{T}, \dset{X} y \dset{T-X} para evitar potenciales problemas
+cuando los ejemplos presenten bucles múltiples.
 
-La recomendación al considerar los conjuntos de características es
-utilizar el conjunto S-E, que obtiene los mejores valores de $G_m$ y
-como segunda opción el conjunto E, que resulta en tiempos reducidos de
-entrenamiento.
-La utilización de estos conjuntos de características resulta además en
-clasificadores más generales, sin restricciones en el número de bucles
-en la estructura secundaria, restricciones que sí se presentan al
-considerar las características T y X.
-Se recomienda asimismo descartar de plano el conjunto de
-características S.
-
-Considerando los diferentes clasificadores, se obtuvieron resultados
-comparables tanto para MLP como para SVM con kernel RBF y lineal.
-Se destacaron en particular los resultados obtenidos al utilizar los
-métodos de selección de parámetros de error empírico y RMB: la
-estrategia de error empírico obtuvo los mejores resultados para los
-problemas \mipred{} y \micropred{} (núcleo RBF), para el problema
-\tripletsvm{} los mejores resultados se obtuvieron con la estrategia
-RMB.
-
-Respecto a los tiempos de ejecución de las diferentes estrategias no
-triviales, se pudo observar que la a estrategia RMB resultó la más
-rápida por un amplio margen.
-Para la estrategia del criterio del error empírico se obtuvo un buen
-compromiso entre la velocidad de ejecución y los resultados obtenidos:
-aunque en varias ocasiones redunda en más entrenamientos que la
-búsqueda exhaustiva, el entrenamiento resulta más rápido dado que se
-entrena ``con valores más correctos'' que en una búsqueda exhaustiva.
+Respecto a los diferentes clasificadores, se obtuvieron resultados
+comparables tanto para MLP como para SVM con núcleos RBF y lineal.
+Se destacaron en particular los resultados obtenidos al utilizar las
+estrategias de minimización del error empírico en el caso de los
+problemas \prob\mipred{} y \prob\micropred{} y la cota radio-margen
+para el problema \prob\micropred{}.
+En general, se recomienda utilizar el clasificador SVM en alguna de
+sus dos variantes, ya que en la práctica los resultados obtenidos con
+el clasificador MLP varían en función de la inicialización aleatoria
+de la red.
