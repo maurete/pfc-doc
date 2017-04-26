@@ -33,7 +33,7 @@ se plantea la formulación \emph{dual} del problema
 \end{align}
 %
 En este problema las restricciones son más sencillas y
-aplican únicamente a los multiplicadores de Lagrange. 
+aplican únicamente a los multiplicadores de Lagrange.
 Dado que $\frac{1}{2}\|\ww\|^2$ es una función continuamente derivable
 y convexa, y dado que $\C{L}$ es continuamente derivable respecto de
 sus argumentos en las cercanías del punto óptimo
@@ -66,18 +66,18 @@ el lagrangiano puede escribirse
 %
 \begin{align*}
   \C{L}(\ww,b,\Balpha)
-  & = 
+  & =
     \frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
     \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle \\
     &\qquad\qquad +
     \sum_{i=1}^{\ell} \alpha_i \left(1-y_i\left(\left\langle
     \sum_{j=1}^\ell y_j\alpha_j\BPhi(\xx_j) ,\BPhi(\xx_i)\right\rangle
     +b\right)\right)\\
-  & = 
+  & =
     -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
     \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
     \sum_{i=1}^{\ell} \alpha_i  - b \sum_{i=1}^\ell y_i\alpha_i \\
- & = 
+ & =
     -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
     \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
     \sum_{i=1}^{\ell} \alpha_i  .

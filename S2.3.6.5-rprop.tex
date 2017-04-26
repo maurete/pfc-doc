@@ -12,7 +12,7 @@ específico $\Delta{}w_{ij}$ según la siguiente regla basada en el
 signo de la derivada parcial
 %
 \begin{align}
-  \Delta{}w_{ij}(t) = 
+  \Delta{}w_{ij}(t) =
   \begin{cases}
     -\Delta_{ij}^{(t)}, & \T{si}\,\,\,\dpar{\C{E}}{w_{ij}}{}(t) > 0, \\
     +\Delta_{ij}^{(t)}, & \T{si}\,\,\,\dpar{\C{E}}{w_{ij}}{}(t) < 0, \\
@@ -27,7 +27,7 @@ permitida para cada $\Delta_{ij}$.  Los valores de cada $\Delta_{ij}$
 se modifican en cada iteración según la regla
 %
 \begin{align}
-  \Delta{}_{ij}^{(t)} \tab = 
+  \Delta{}_{ij}^{(t)} \tab =
   \begin{cases}
     \eta^+\,\Delta_{ij}^{(t-1)}, & \T{si}\,\,\,\dpar{\C{E}}{w_{ij}}{} {(t-1)}
       \dpar{\C{E}}{w_{ij}}{} {(t)} > 0, \\

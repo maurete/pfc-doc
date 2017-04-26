@@ -3,8 +3,10 @@
 %
 Para un ejemplo $(\xx,\yy)\in{}X\times{}Y$, la función de pérdida mide
 la cantidad de error del modelo $\hat{\yy}=h(\xx)$ mediante la
-transformación $L(\xx,\yy,\hat{\yy})$.  Si la predicción resultante
-del modelo $\hat{\yy}$ es correcta, el error es nulo. En la práctica,
+transformación $L(\xx,\yy,\hat{\yy})$.
+Si la predicción resultante
+del modelo $\hat{\yy}$ es correcta, el error es nulo.
+En la práctica,
 la mayoría de las funciones de pérdida no dependen de la entrada
 $\xx$, sino sólo de la predicción $\hat{\yy}$ y la clase $\yy$.
 Algunas de las funciones de pérdida más comunes son:
@@ -20,3 +22,4 @@ Algunas de las funciones de pérdida más comunes son:
   \T{Error cuadrático:} \tab\tabs
     L(\yy,\hat{\yy})=(\yy-\hat{\yy})^2.
 \end{align}
+%
