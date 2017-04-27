@@ -17,10 +17,28 @@
 %
 \iflatexml\else
 \usepackage[T1]{fontenc}
+
+% Linux Libertine
 \usepackage{libertine}
-\usepackage[scale=0.96]{tgheros}
+
+% TeX Gyre Heros
+%\usepackage[scale=0.96]{tgheros}
+
+% Inconsolata
 \usepackage[scaled=0.9]{zi4}
-\renewcommand{\tt}{\mathtt} % evitar clash de euler con koma-script
+
+% Para evitar clash de euler con koma-script
+\renewcommand{\tt}{\mathtt}
+
+% Source Sans Pro
+% \usepackage{sourcesanspro}
+
+% Roboto
+\usepackage{roboto}
+
+% Bitstream charter en modo math
+% \usepackage[bitstream-charter]{mathdesign}
+
 \fi
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -212,16 +230,20 @@
 \newcommand{\rowSTD}{&&{\smaller $\sigma$}}
 \newcommand{\rowSKIP}{\addlinespace[2pt]}
 \newcommand{\ti}{\textsmaller}
-\newcommand{\func}[1]{\emph{#1}}
+\newcommand{\func}[1]{{\texttt{#1}}}
+\newcommand{\dataset}[1]{{\texttt{#1}}}
 \newcommand{\Gm}{\scriptsize $G_m$}
 \newcommand{\Ft}[1]{\mrow{2}{*}{#1}}
 \newcommand{\tbmean}{\smaller{2} $\bar{x}$}
 \newcommand{\tbstd}{\smaller $\sigma$}
-\newcommand{\tripletsvm}{\sbsf{Triplet-SVM}}
-\newcommand{\mipred}{\sbsf{miPred}}
-\newcommand{\micropred}{\sbsf{microPred}}
-\newcommand{\deltamirbase}{\sbsf{$\mathbf{\mathsf{\Delta}}$miRBase}}
+\newcommand{\mirbase}{{miRBase}}
+\newcommand{\rfam}{{Rfam}}
+\newcommand{\tripletsvm}{{Triplet-SVM}}
+\newcommand{\mipred}{{miPred}}
+\newcommand{\micropred}{{microPred}}
+\newcommand{\deltamirbase}{{$\mathbf{\mathsf{\Delta}}$miRBase}}
 \newcommand{\premirna}[1]{pre-miRNA#1}
+\newcommand{\ncrna}[1]{ncRNA#1}
 \newcommand{\caract}[1]{característica#1}
 \newcommand{\hparam}[1]{hiperparámetro#1}
 \newcommand{\rowMEANN}[2]{&
@@ -230,15 +252,18 @@
            {\smaller $\bar{x}$}}
 \newcommand{\rowSTDN}{&&&{\smaller $\sigma$}}
 
-\newcommand{\VP}{\T{\slshape VP}}
-\newcommand{\VN}{\T{\slshape VN}}
-\newcommand{\FP}{\T{\slshape FP}}
-\newcommand{\FN}{\T{\slshape FN}}
-\newcommand{\SE}{\T{\slshape SE}}
-\newcommand{\SP}{\T{\slshape SP}}
-\newcommand{\GM}{\T{\slshape Gm}}
-\newcommand{\PR}{\T{\slshape Pr}}
-\newcommand{\AC}{\T{\slshape Ac}}
+\newcommand{\VP}{\T{\slshape{}VP}}
+\newcommand{\VN}{\T{\slshape{}VN}}
+\newcommand{\FP}{\T{\slshape{}FP}}
+\newcommand{\FN}{\T{\slshape{}FN}}
+\newcommand{\SE}{\T{\slshape{}SE}}
+\newcommand{\SP}{\T{\slshape{}SP}}
+\newcommand{\GM}{\T{\slshape{}Gm}}
+\newcommand{\PR}{\T{\slshape{}Pr}}
+\newcommand{\AC}{\T{\slshape{}Ac}}
+\newcommand{\avg}{\T{$\bar{x}$}}
+\newcommand{\std}{\T{$\sigma$}}
+
 
 \newcounter{FeatureCounter}
 \newcommand{\headRow}{  \sfbf{\footnotesize Pos.} &
@@ -249,6 +274,12 @@
 \newcommand{\feedforward}{con propagación hacia adelante}
 \newcommand{\funcheader}[3]{\begin{description}%
   \item[Función]{#1}\item[Entradas]{#2}\item[Salidas]{#3}%
+\end{description}}
+\newcommand{\funcentry}[4]{\begin{description}%
+  \item[Función]{#1}
+  \item[Entradas]{#2}
+  \item[Salidas]{#3}
+  \item[Descripción]{#4}
 \end{description}}
 \renewcommand{\bibfont}{\normalfont\footnotesize}
 %
@@ -474,3 +505,23 @@
 \usepackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \fi
+
+
+%%%%%%%%%%%%%%%%%% estilos de ``caracter''
+
+% dataset
+\newcommand{\dset}[1]{%
+\iflatexml\else\ifpdf\ssf{#1}\fi\fi
+}
+
+% work
+\newcommand{\work}[1]{%
+\iflatexml\else\ifpdf\e{#1}\fi\fi
+}
+
+% problem
+\newcommand{\prob}[1]{%
+\iflatexml\else\ifpdf\sbsf{#1}\fi\fi
+}
+
+\usepackage{tabu}

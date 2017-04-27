@@ -1,0 +1,32 @@
+%
+%
+\subsection{Problema miPred}
+%
+El problema \mipred{} se basa en los datos utilizados en \cite{ng}
+para el entrenamiento y prueba del método \work\mipred.
+
+Si bien en \cite{ng} se describen los pasos efectuados para el armado
+de los conjuntos de entrenamiento y prueba, no se dispone de
+información de los ejemplos que los componen.
+Esto significa que si bien se mantiene el origen de los datos y el
+número de ejemplos de clase positiva y negativa en cada conjunto,
+resulta imposible replicarlos de manera exacta.
+
+Los ejemplos de clase positiva se obtienen de la versión 8.2 (de julio
+de 2006) de la base de datos \work{\mirbase}.
+Se utilizan los 323 \premirna{s} de la especie humana disponibles en
+esta versión, incluyendo aquellos con estructura secundaria tipo
+horquilla, con bucle central único, y ramificada, con bucles
+múltiples.
+Los ejemplos de clase negativa se obtienen de la base de datos
+\dset{coding}, al igual que en el problema \prob\tripletsvm.
+
+Respetando el procedimiento descripto en \cite{ng}, para el armado del
+conjunto de entrenamiento \dset{TR-H} se seleccionaron al azar 200
+ejemplos de clase positiva y 400 de clase negativa.
+El conjunto de prueba \dset{TE-H} se armó con los 123 ejemplos
+restantes de clase positiva y 246 ejemplos de clase negativa
+seleccionados al azar, excluyendo los ya utilizados para
+entrenamiento.
+La composición de los conjuntos de entrenamiento y prueba se detalla
+en \iflatexml{}Tabla~\ref{tbl:pruebasng}\else\autoref{tbl:pruebasng}\fi.

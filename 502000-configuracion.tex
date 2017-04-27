@@ -1,0 +1,44 @@
+%
+%
+%
+\section{Configuración de las pruebas}
+%
+Una prueba es un experimento que consiste en generar un modelo de
+clasificador y luego evaluar su desempeño clasificando un conjunto de
+prueba.
+Cada prueba se parametriza con un \e{problema} de clasificación, que
+determina los datos utilizados como conjuntos de entrenamiento y de
+prueba, un \e{conjunto de \caract{s}} que establece las componentes de
+los vectores de \caract{s}, y una estrategia de selección de \hparam{s}.
+
+\paragraph{Semillas pseudoaleatorias.}
+La inicialización de los algoritmos pseudoaleatorios utilizados para
+particionar los datos influye en la composición de los problemas,
+generando particiones de datos más o menos complejas de modelar y/o
+clasificar.
+Para lograr que las pruebas efectuadas fueran reproducibles, se
+utilizaron cinco ``semillas'' para inicializar los algoritmos
+pseudoaleatorios, y se repitió cada prueba para las cinco
+inicializaciones.
+
+\paragraph{Características.}
+Para todos los problemas, se efectuaron pruebas para las
+características de secuencia (S), de estructura secundaria (E), y de
+secuencia y estructura secundaria en conjunto (S-E).
+Para aquellos problemas que contienen únicamente ejemplos con
+estructura secundaria tipo horquilla (bucle único), se probaron las
+características de tripletes (T), auxiliares de tripletes (X), y de
+tripletes y auxiliares en conjunto (T-X).
+
+\paragraph{Entorno.}
+Las pruebas del software se efectuaron en entorno Matlab versión
+R2012b, en un ordenador personal de escritorio con 8\si{\giga b} de
+RAM, procesador Intel Core i5-4440 de 4 núcleos de 3.10\si{\giga Hz},
+y sistema operativo Debian GNU/Linux versión 8.
+La configuración del sistema permite el cómputo paralelo con los 4
+núcleos del sistema.
+
+%% \paragraph{Validación cruzada.}
+%% En todos los casos que se aplicó validación cruzada se utilizaron 10
+%% particiones, el valor por defecto definido en la implementación del
+%% método propuesto.

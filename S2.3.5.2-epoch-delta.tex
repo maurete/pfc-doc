@@ -1,29 +1,28 @@
 %
 \subsubsection{Entrenamiento por época}
 %
-La aplicación del algoritmo de retropropagación se adapta a una
-estrategia de ajuste por época deriva de manera sencilla. Dada de la
-definición de la energía de error promedio $\C{E}_{\T{av}}$ para la
-época (\iflatexml{}Ecuación~\ref{e2:average-energy-net}\else\autoref{e2:average-energy-net}\fi),
-se calculan las salidas $s(n)$ y los gradientes de error instantáneo
-$\dpar{\C{E}(n)}{w_{ij}}{}$ para cada ejemplo $(\xx(n),\yy(n))$ en el
-conjunto de entrenamiento. Entonces, el gradiente de error promedio
-para la época viene dado por
+En una estrategia de entrenamiento por época, en cada iteración $t$
+se propagan hacia adelante todos los vectores $\xx(n)$ del conjunto
+de entrenamiento $D$, y a partir de los respectivos
+gradientes de error instantáneo $\dpar{\C{E}(n)}{w_{ij}}{}$
+se obtiene la energía de error promedio $\C{E}_{\T{av}}$
+(\iflatexml{}Ecuación~\ref{e2:average-energy-net}\else\autoref{e2:average-energy-net}\fi)
+para la época $t$.
+
+El gradiente de error promedio para la época viene dado por
 %
 \begin{align}\label{e2:deriv-Eav-wrt-w}
-  \dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}\tab=
+  \dpar{\C{E}_{\T{av}}(t)}{w_{ij}}{}\tab=
   \frac{1}{\ell}\sum_{n=1}^\ell\dpar{\C{E}(n)}{w_{ij}}{},
 \end{align}
 %
 y la corrección a aplicar a los pesos viene dada por
 %
 \begin{align}\label{e2:delta-rule-epoch}
-  \Delta w_{ij}(n)\tab=-\eta\dpar{\C{E}_{\T{av}}(\ell)}{w_{ij}}{}.
+  \Delta w_{ij}(t)\tab=-\eta\dpar{\C{E}_{\T{av}}(t)}{w_{ij}}{}.
 \end{align}
 %
-A diferencia del entrenamiento en línea, este ajuste se efectúa una
-única vez al final de cada época. Dado que la función $\C{E}_{\T{av}}$
-promedia todos los patrones de la época, la superficie de la función
-de error probablemente será más ``suave'', y por lo tanto el gradiente
-$\nabla\C{E}_{\T{av}}$ será numéricamente más estable, que en el caso
-del error intantáneo.
+Dado que la función $\C{E}_{\T{av}}$ promedia todos los patrones de la
+época, la superficie de la función de error resultante es más
+``suave'' y el gradiente $\nabla\C{E}_{\T{av}}$ es numéricamente más
+estable que en el caso del error intantáneo.

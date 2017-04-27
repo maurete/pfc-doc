@@ -1,0 +1,41 @@
+%
+%
+\subsection{Problema $\mathbf{\mathsf{\Delta}}$\mirbase}
+%
+Una de las tareas más comunes para un clasificador de secuencias de
+\premirna{s} es la predicción de nuevos ejemplos de clase positiva,
+proponiendo al usuario nuevos {candidatos} para validar en forma
+experimental.
+
+La naturaleza periódica de las publicaciones de \work\mirbase{}
+permite generar un problema que brinda una idea de la capacidad de
+predicción del método sobre los nuevos ejemplos de clase positiva
+incorporados entre dos versiones sucesivas.
+Tomando como base la versión 20 de \work\mirbase, la versión siguiente
+(21) contiene 25 nuevos ejemplos de \premirna{s} experimentalmente
+validados de la especie humana.
+Las pruebas se basan en entrenar con los ejemplos positivos de la
+versión 20 y clasificar los nuevos ejemplos incorporados a la versión
+21.
+
+El problema \deltamirbase{} representa este caso de prueba
+incorporando en el conjunto de entrenamiento \e{todos} los ejemplos de
+la especie humana presentes en \work\mirbase{} 20.
+Como ejemplos negativos de entrenamiento, se utilizaron elementos de
+las bases de datos \dset{coding} \cite{xue} y \dset{human other ncRNAs}
+\cite{batuwita}.
+El conjunto de prueba los 25 nuevos ejemplos de la especie humana
+publicados en \work\mirbase 21.
+La composición de los conjuntos de entrenamiento y prueba se detalla en
+la \iflatexml{}Tabla~\ref{tbl:problem-deltamirbase}\else\autoref{tbl:problem-deltamirbase}\fi.
+
+Los resultados de clasificar el conjunto de prueba del problema
+\prob\deltamirbase{} son mostrados en la
+\iflatexml{}Tabla~\ref{tbl:suppl-deltamirbase21}\else\autoref{tbl:suppl-deltamirbase21}\fi.
+La tasa máxima se obtuvo para el clasificador SVM-RE con el 88\%
+(22/25) de ejemplos correctamente clasificados, seguido por SVM-RR con
+una tasa del 84\% (21/25).
+Los clasificadores SVM-RE y MLP-B obtuvieron una menor exactitud que
+rondó el 70\% de aciertos.
+Estos resultados muestran la mayor generalidad del clasificador SVM
+con núcleo RBF ante problemas de clasificación más complejos.

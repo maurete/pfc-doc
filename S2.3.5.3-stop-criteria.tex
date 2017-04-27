@@ -1,8 +1,7 @@
 %
 \subsubsection{Criterio de corte}
 %
-En general, la convergencia del algoritmo de retropropagación no está
-garantizada, y no existe un criterio de corte bien definido para
+En general, no existe un criterio de corte bien definido para
 detener el entrenamiento. Algunos criterios razonables para establecer
 la convergencia pueden ser:
 %
@@ -21,15 +20,10 @@ convergencia serán siempre dependientes del problema, y una elección
 incorrecta puede llevar ya sea a un corte prematuro del entrenamiento,
 o bien a que el algoritmo nunca converja.
 
-Existe sin embargo un criterio de convergencia que tiene a la vez un
-fundamento teórico y es independiente del conjunto de datos de
-entrenamiento: luego de cada iteración de entrenamiento, se clasifica
-un conjunto de prueba $T$
-(\iflatexml{}Ecuación~\ref{eq:conj-prueba}\else\autoref{eq:conj-prueba}\fi),
-obteniendo una estimación de error de generalización, y se detiene el
-entrenamiento cuando se observa que este error es adecuado, o bien
-cuando resulta evidente que ha alcanzado su mínimo. Esta estrategia es
-la que se utiliza prácticamente en todas las implementaciones: incluso
-cuando no se provee un conjunto de prueba separado, resulta común
-reservar parte del conjunto de entrenamiento para estimar el error de
-generalización.
+Un criterio de convergencia alternativo, ampliamente utilizado, se
+basa en la aplicación del método de retención sobre el conjunto de
+entrenamiento $D$, entrenando sobre un conjunto de estimación $E$ y
+evaluando en cada iteración el error sobre un conjunto de validación
+$V$ que estima el error de generalización.  El entrenamiento se
+detiene cuando se observa que este error es adecuado, o bien cuando
+resulta evidente que ha alcanzado su mínimo.

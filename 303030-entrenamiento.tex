@@ -1,0 +1,19 @@
+%
+\subsection{Entrenamiento}
+%
+El modelo generado por el entrenamiento consta de 5 redes con la
+topología especificada, inicializadas aleatoriamente.
+El ajuste de los pesos de las redes se efectúa mediante el método de
+retropropagación Rprop con los datos del conjunto de entrenamiento.
+
+La inicialización aleatoria del perceptrón multicapa precondiciona el
+algoritmo de entrenamiento haciendo que en muchos casos éste converja
+a soluciones subóptimas.
+Es por esto que el modelo generado contiene 5 redes, intentando
+contrarrestar este efecto.
+A la hora de clasificar, la predicción de clase del modelo se
+determina como la \e{moda} de las salidas de las 5 redes.
+
+La regularización de la red se efectúa separando un 20\% de los
+ejemplos seleccionados al azar, deteniento el entrenamiento cuando el
+error de clasificación alcanza su valor mínimo.

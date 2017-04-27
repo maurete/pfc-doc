@@ -1,0 +1,21 @@
+%
+%
+\subsection{Selección automática de hiperparámetros}
+%
+La selección automática de hiperparámetros se efectúa antes del
+entrenamiento del modelo, mediante estrategias específicas para el
+tipo de clasificador y el tipo de hiperparámetro que se desea
+determinar.
+
+En general, esta selección se efectúa mediante técnicas de prueba y
+error, que entrenan un
+modelo preliminar sobre un conjunto de estimación y lo prueban contra
+un conjunto de validación, seleccionando los hiperparámetros que
+obtienen los mejores resultados según alguna métrica estadística.
+
+Para algunos clasificadores y tipos de hiperparámetros específicos,
+resulta posible la utilización de estrategias más ``informadas'' de
+selección de hiperparámetros, que aprovechan alguna propiedad teórica
+del tipo de modelo considerado y efectúan una búsqueda mediante
+descenso de gradiente minimizando una función derivable llamada
+``función objetivo''.

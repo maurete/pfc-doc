@@ -1,0 +1,40 @@
+%
+%
+\subsection{Extracción de \caract{s}}
+%
+La extracción de \caract{s} es el proceso que construye, para cada
+ejemplo, un vector numérico que lo representa.
+Cada elemento del vector es una \e{\caract{}}, un atributo o medida
+que se toma sobre el dato original y se trata como variable aleatoria.
+El objetivo de la extracción de \caract{s} es alcanzar una mejor
+representación de los datos desde el punto de vista de la máquina de
+aprendizaje, que sea al mismo tiempo más informativa (menos
+redundante) y numéricamente tratable.
+
+La construcción del conjunto de características conforma toda una
+disciplina en sí misma, y excede el alcance del presente trabajo.
+En el presente desarrollo se adopta un enfoque simple, que consiste en
+construir un vector de 66 \caract{s} tomando como referencia los
+trabajos \cite{xue,ng,batuwita}.
+
+Las 66 \caract{s} seleccionadas cumplen los siguientes criterios:
+%
+\begin{enumerate}
+\item
+  La forma de cálculo de la \caract{} está bien explicada en la
+  publicación o en sus documentos suplementarios.
+\item
+  El cálculo de la \caract{} no requiere de herramientas de software
+  adicionales.
+\item
+  Los autores publicaron bases de datos con la representación en forma
+  textual de los ejemplos y las \caract{s} calculadas, que permiten
+  validar la implementación propia.
+\end{enumerate}
+%
+
+Las 66 medidas que componen el vector de \caract{s} se distinguen,
+según el tipo de dato que representan, en 36 \caract{s} de tripletes,
+23 \caract{s} de la secuencia, y 7 de la estructura secundaria.
+A continuación, se describe la composición del vector de \caract{s}
+en este orden.

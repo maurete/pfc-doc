@@ -1,28 +1,28 @@
 %
 \subsubsection{Descenso más pronunciado}
 %
-En la ``regla delta'' básica
-(\iflatexml{}Ecuación~\ref{e2:delta-rule}\else\autoref{e2:delta-rule}\fi),
-la dirección de búsqueda del mínimo
-viene dada por el negativo del gradiente
-$-\nabla\C{E}(n)=-\dpar{\C{E}(n)}{w_{ij}}{}$, mientras que la
-velocidad de aprendizaje $\eta$ determina la magnitud del paso a
-efectuar.
+%% En la ``regla delta'' básica
+%% (\iflatexml{}Ecuación~\ref{e2:delta-rule}\else\autoref{e2:delta-rule}\fi),
+%% la dirección de búsqueda del mínimo
+%% viene dada por el negativo del gradiente
+%% $-\nabla\C{E}(n)=-\dpar{\C{E}(n)}{w_{ij}}{}$, mientras que la
+%% velocidad de aprendizaje $\eta$ determina la magnitud del paso a
+%% efectuar.
 La regla llamada del \e{descenso más pronunciado} consiste
 en buscar, en cada iteración, una velocidad de aprendizaje óptima
-$\eta(n)$ mediante una estrategia iterativa denominada \e{búsqueda en
-  la línea}.  Básicamente, la búsqueda en la línea consiste en evaluar
+$\eta(t)$ mediante una estrategia iterativa denominada \e{búsqueda en
+  la línea}.
+Básicamente, la búsqueda en la línea consiste en evaluar
 la función de error resultante para distintos $\eta$ hasta encontrar
-el óptimo.  La ``regla delta'' del descenso más pronunciado resulta
-entonces
+el óptimo.
+La regla de actualización de los pesos para esta estrategia es
 %
 \begin{align}\label{e2:delta-rule-steepest}
-  \Delta w_{ij}(n)\tab=-\eta(n)\nabla{\C{E}(n)}.
+  \Delta w_{ij}(t)\tab=-\eta(t)\nabla{\C{E}(t)}.
 \end{align}
 %
-La búsqueda de $\eta(n)$ mediante búsqueda en la línea añade
-complejidad computacional a cada iteración del algoritmo, aunque en
-general redunda en una reducción del número de iteraciones necesarias
-hasta alcanzar la convergencia.  Desde el punto de vista del usuario,
-evita la necesidad de determinar el parámetro de entrenamiento $\eta$
-mediante prueba y error.
+La optimización de $\eta(t)$ añade complejidad computacional a cada
+iteración, aunque en general resulta en una reducción del número de
+iteraciones necesarias hasta alcanzar la convergencia.
+Desde el punto de vista del usuario, evita la necesidad de determinar
+el parámetro de entrenamiento $\eta$ mediante prueba y error.

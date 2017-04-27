@@ -11,9 +11,3 @@ revision.tex
 *.run.xml
 *.toc
 \#*\#
-/S*.tex
-/T*.tex
-/C*.tex
-!S1*.tex
-!C1*.tex
-!T1*.tex

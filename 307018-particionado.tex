@@ -1,0 +1,32 @@
+%
+\subsubsection{Particionado y sobremuestreo}
+%
+La separación en conjuntos de entrenamiento y prueba se implementa en
+la función \func{problem\_gen}, una función de interfaz de usuario que
+efectúa prácticamente todas la tareas de preprocesamiento: lectura de
+los archivos, extracción de \caract{s}, normalización, y partición de
+los datos.
+Las funciones \func{balance\_dataset} y \func{stpart} implementan el
+sobremuestreo y la generación de particiones de validación cruzada,
+respectivamente.
+%
+\funcentry
+    {balance\_dataset}
+    {Matriz con conjunto de datos de entrenamiento}
+    {Matriz con conjunto de datos con sobremuestreo de
+      la clase minoritaria}
+    {Efectúa sobremuestreo sobre la clase minoritaria, repitiendo
+      elementos seleccionados aleatoriamente.}
+%
+\funcheader
+    {stpart}
+    {Número de elementos $\ell^E$, número de particiones $k$ (valor
+      por defecto: $10$), proporción de datos para validación (por
+      defecto: $1/k$)}
+    {Índices de estimación (matriz de $k\times\ell^E$), índices de
+      validación (matriz de $k\times\ell^E$)}
+    {Genera conjuntos de índices de validación cruzada.  Cada columna
+      $j$ de las matrices de salida puede ser aplicada a un conjunto
+      de entrenamiento de $\ell^E$ elementos para generar la $j$-ésima
+      partición de estimación y validación, respectivamente.}
+%

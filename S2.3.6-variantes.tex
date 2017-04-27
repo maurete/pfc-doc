@@ -1,16 +1,11 @@
 %
 \subsection{Variantes del algoritmo de retropropagación}
 %
-Si bien el algoritmo de retropropagación resulta fundamental en el
-problema de calcular el gradiente de error $\nabla{\C{E}(n)}$ respecto
-de los pesos $w_{ij}$, muchas veces la estrategia de ajuste de los
-pesos de descenso por gradiente no resulta satisfactoria.  Como
-ejemplo, la elección del parámetro velocidad de aprendizaje depende de
-la forma de la función de error $\C{E}$, la cual a su vez depende de
-los datos de entrenamiento.  Con frecuencia, se encuentra que la
-velocidad de aprendizaje elegida es demasiado baja, añadiendo tiempo
-innecesario al entrenamiento, o demasiado alta, generando oscilaciones
-alrededor del mínimo local que impiden la convergencia.  Por ello, se
-han desarrollado algoritmos alternativos que intentan salvar las
-limitaciones del descenso por gradiente en el algoritmo de
-retropropagación clásico.
+Las técnicas descriptas a continuación son variantes del algoritmo de
+retropropagación que intentan sortear algunas de las dificultades
+inherentes al descenso por gradiente de la función de error mediante
+la utilización de reglas alternativas para la actualización de los
+pesos de la red.
+En adelante, se utiliza la notación $\C{E}(t)$ para indicar la función
+de error, y se observa que para el caso del entrenamiento por época
+$\C{E}(t)$ refiere simplemente a $\C{E}_{av}(t)$.
