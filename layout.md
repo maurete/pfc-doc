@@ -1,10 +1,10 @@
 abstract.tex
 titlepage.tex
-C1-Introduccion.tex
-S1.1-miRNAs.tex
+100000-introduccion.tex
+101000-mirnas.tex
 figures/hsa-mir-299_ss/hsa-mir-299_ss.png
-S1.1-miRNAs2.tex
-S1.2-Clasificacion.tex
-S1.3-Motivacion.tex
-S1.4-Objetivos.tex
-S1.5-Alcances.tex
+101002-mirnas.tex
+102000-clasificacion.tex
+103000-motivacion.tex
+104000-objetivos.tex
+105000-alcances.tex
