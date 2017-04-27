@@ -11,17 +11,18 @@
 La regla llamada del \e{descenso más pronunciado} consiste
 en buscar, en cada iteración, una velocidad de aprendizaje óptima
 $\eta(t)$ mediante una estrategia iterativa denominada \e{búsqueda en
-  la línea}.  Básicamente, la búsqueda en la línea consiste en evaluar
+  la línea}.
+Básicamente, la búsqueda en la línea consiste en evaluar
 la función de error resultante para distintos $\eta$ hasta encontrar
-el óptimo.  La regla de actualización de los pesos
-para esta estrategia es
+el óptimo.
+La regla de actualización de los pesos para esta estrategia es
 %
 \begin{align}\label{e2:delta-rule-steepest}
   \Delta w_{ij}(t)\tab=-\eta(t)\nabla{\C{E}(t)}.
 \end{align}
 %
 La optimización de $\eta(t)$ añade complejidad computacional a cada
-iteración, aunque en general redunda en una reducción del número de
-iteraciones necesarias hasta alcanzar la convergencia.  Desde el punto
-de vista del usuario, evita la necesidad de determinar el parámetro de
-entrenamiento $\eta$ mediante prueba y error.
+iteración, aunque en general resulta en una reducción del número de
+iteraciones necesarias hasta alcanzar la convergencia.
+Desde el punto de vista del usuario, evita la necesidad de determinar
+el parámetro de entrenamiento $\eta$ mediante prueba y error.
