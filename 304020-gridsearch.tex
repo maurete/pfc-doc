@@ -1,0 +1,62 @@
+%
+%
+\subsection{Búsqueda en la grilla}
+%
+La \e{búsqueda en la grilla} propuesta en \cite{hsu}, permite
+optimizar los hiperparámetros de regularización $C$ y $\gamma$ cuando
+se utiliza un núcleo RBF.
+La idea general de esta estrategia es considerar cada combinación de
+hiperparámetros $(C,\gamma)$ como puntos en el plano $C\gamma$.
+Comenzando por una serie de puntos espaciados regularmente
+en espacio logarítmico $(\log C,\log\gamma)$, que determinan la
+``grilla'' inicial, se entrena y evalúa el clasificador sobre cada
+punto (cada combinación de hiperparámetros), para luego interpolar
+(``refinar la grilla'') en las cercanías de los puntos donde se
+obtiene la mayor tasa de clacificación $G_m$.
+La búsqueda continúa repitiendo el procedimiento sobre los puntos no
+evaluados hasta satisfacer un criterio de corte.
+
+La grilla inicial viene dada por combinaciones de los siguientes
+puntos de muestreo para los hiperparámetros
+%
+\begin{align}
+  \label{initial-grid}
+  \log_2 C     \tab= -5, -3, -1, 1, \ldots, 15, \tabs
+  \log_2\gamma \tab= -15,-13, -11, \ldots, 3.
+\end{align}
+%
+Para cada punto $(C_i,\gamma_j)$, se entrena y prueba el clasificador
+SVM, obteniendo un ${G_m}_{ij}$ promedio de validación cruzada.
+
+En etapas sucesivas, se interpola la grilla alrededor de los puntos
+donde se obtuvieron los mejores valores $G_m$. Se definen tres
+algoritmos heurísticos que determinan cuáles puntos interpolar:
+%
+\begin{itemize}
+\item
+  \e{Zoom}: En un primer paso, se convoluciona la grilla con una
+  ventana cuadrada uniforme de valor unitario, obteniendo una versión
+  ``suavizada'' de la grilla. Se interpolan puntos en una región
+  cuadrada centrada en el punto con mayor valor $G_m$ ``suavizado''.
+\item
+  \e{Umbral}: A partir de un umbral $G_m$ definido por el usuario,
+  por defecto el percentil 90, se interpola en cada dimensión
+  alrededor de los puntos por encima del umbral.
+\item
+  \e{$n$-mejores}: Similar al umbral, se seleccionan $n$ puntos
+  con los mayores valores de $G_m$. Se interpola la grilla en ambas
+  dimensiones alrededor de estos puntos.
+\end{itemize}
+%
+Una vez interpolada la grilla, se calcula el valor $G_m$ promedio de
+validación cruzada para los puntos interpolados. El procedimiento de
+refinamiento se repite hasta un máximo de $N$ iteraciones o hasta
+satisfacer un criterio de corte.
+
+La búsqueda en la grilla tiene la ventaja de ser conceptualmente
+simple, sin embargo, se torna inviable cuando el vector de parámetros
+$\B{\theta}$ contiene más de 2 elementos.
+Dado que se trata de un método de búsqueda exhaustiva, resulta
+generalmente lento.
+Cuando se trabaja con un clasificador SVM con núcleo lineal, la grilla
+tiene una única dimensión: la del hiperparámetro $\log C$.

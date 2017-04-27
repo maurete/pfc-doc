@@ -1,10 +1,11 @@
 %
 \subsection{Variantes del algoritmo de retropropagación}
 %
-Las estrategias descriptas a continuación son basadas en el algoritmo
-de retropropagación, aunque utilizan reglas alternativas para
-actualización de los pesos, salvando algunas de las dificultades
-inherentes al descenso por gradiente del error.  En adelante, se
-utiliza la notación $\C{E}(t)$ para denotar la función de error, y se
-observa que para el entrenamiento por época simplemente se reemplaza
-$\C{E}(t)$ por $\C{E}_{av}(t)$.
+Las técnicas descriptas a continuación son variantes del algoritmo de
+retropropagación que intentan sortear algunas de las dificultades
+inherentes al descenso por gradiente de la función de error mediante
+la utilización de reglas alternativas para la actualización de los
+pesos de la red.
+En adelante, se utiliza la notación $\C{E}(t)$ para indicar la función
+de error, y se observa que para el caso del entrenamiento por época
+$\C{E}(t)$ refiere simplemente a $\C{E}_{av}(t)$.

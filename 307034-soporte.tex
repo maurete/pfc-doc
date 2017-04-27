@@ -1,0 +1,77 @@
+%
+\subsubsection{Funciones de soporte para la generación del modelo}
+%
+A continuación se listan algunas de las funciones de soporte más
+relevantes que son invocadas por las estrategias de selección de
+hiperparámetros.
+%
+\funcentry
+    {opt\_bfgs}
+    {Función objetivo y derivada, punto inicial,
+      tolerancia de corte, número de iteraciones máximas}
+    {Punto óptimo que minimiza la función objetivo}
+    {Implementa el algoritmo de optimización BFGS.
+      Dada la función objetivo, la derivada, y un punto inicial,
+      calcula sucesivamente el valor de la función y una dirección de
+      búsqueda a partir del gradiente.
+      En cada punto de evaluación, intenta minimizar la función
+      objetivo en la dirección de búsqueda mediante búsqueda en la
+      línea.
+      La búsqueda finaliza cuando la norma del gradiente es menor a la
+      tolerancia de corte.
+      Es una reimplementación en Matlab de la función ``optimize.py''
+      distribuida como parte de SciPy \cite{scipy}.}
+%
+\funcentry
+    {error\_empirical\_cv}
+    {Datos de entrenamiento, hiperparámetros, particiones de
+      validación cruzada}
+    {Error empírico promedio de validación cruzada, derivada
+      del error empírico respecto a los hiperparámetros.}
+    {Función objetivo que calcula el error empírico de validación
+      cruzada y la derivada respecto a los hiperparámetros.
+      Para cada partición de estimación-validación, entrena un modelo
+      SVM y calcula las salidas continuas $f$ y sus derivadas mediante
+      \func{model\_csvm}.
+      Finalmente, ajusta un modelo de sigmoidea invocando a
+      \func{model\_sigmoid\_train} y calcula el error empírico y sus
+      derivadas respecto a los \hparam{s}.}
+%
+\funcentry
+    {model\_sigmoid\_train}
+    {Salidas $f_i$, valores deseados $d_i$}
+    {Parámetros óptimos $A$, $B$ de la sigmoidea}
+    {Determina los valores óptimos $A$ y $B$ de la función sigmoidea
+      \cite{abproblem}, optimizando la función sigmoidea mediante el
+      algoritmo iRprop+ \cite{irpropplus}.}
+%
+\funcentry
+    {model\_csvm}
+    {Modelo SVM entrenado, ejemplos}
+    {Salida $f_k$ para cada ejemplo y derivadas respecto de los
+      hiperparámetros}
+    {Calcula la salida continua $f$ de la SVM (antes de aplicar la
+      función signo) y sus derivadas repecto de los hiperparámetros,
+      siguiendo el procedimiento descripto en la
+      \iflatexml{}Sección~\ref{se:gradE}\else\autoref{se:gradE}\fi{}.}
+%
+\funcentry
+    {error\_rmb\_csvm}
+    {Datos de entrenamiento, $C$, $\gamma$}
+    {Valor de la función $\rho$, derivadas de $\rho$ respecto a los
+      hiperparámetros $C$, $\gamma$.}
+    {Calcula el valor de la cota radio-margen y sus derivadas, para un
+      modelo SVM-RBF entrenado con el conjunto de entrenamiento dado y
+      parametrizado con $C$, $\gamma$.
+      Invoca la función \func{opt\_rsquared} para el cálculo del valor
+      $R^2$.}
+%
+\funcentry
+    {opt\_rsquared}
+    {Matriz del núcleo RBF $\KK$}
+    {Vector óptimo $\Bbeta$, valor $R^2$}
+    {Resuelve el problema de SVM de una clase
+      (\iflatexml{}Ecuación~\ref{one-class-svm}\else\autoref{one-class-svm}\fi{}),
+      haciendo uso de las funciones disponibles en la biblioteca
+      LibSVM \cite{libsvm}.}
+%

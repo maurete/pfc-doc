@@ -1,0 +1,65 @@
+%
+\subsubsection{Salida probabilística del modelo SVM}
+%
+La salida del modelo $h$ de la máquina de vectores de soporte
+(\iflatexml{}Ecuación~\ref{eq:svm-model-hard}\else\autoref{eq:svm-model-hard}\fi)
+puede entenderse como el resultado de aplicar la operación signo sobre
+una salida real $f$:
+%
+\begin{align}
+\label{e3:svm-model-as-sign-f}
+  h(\xx) \tab= \T{signo}(f),\tabs
+  f\tab=\langle\ww,\BPhi(\xx)\rangle+b.
+\end{align}
+%
+Aplicando el método propuesto por {Platt} en \cite{platt}, se
+calcula a partir de la salida $f$ un estimador
+$\hat{p}$ para la probabilidad real $p=P(h=+1|\xx)$:
+%
+\begin{align}
+\label{e3:p-hat}
+  \hat{p}\tab=\frac{1}{1+e^{Af+B}} \tabs\approx\,{}p.%P(h=+1|\xx).
+\end{align}
+%
+Los valores $A$ y $B$ se ajustan a partir del conjunto de
+validación $V$ resolviendo el problema de
+optimización
+%
+\begin{align}
+  \arg\min_{A,B} \tabs -\sum_{j=1}^{\ell^V} t_k\log(\hat{p}_k)+(1-t_k)\log(1-\hat{p}_k),
+  \label{abproblem}
+\end{align}
+%
+en donde $\hat{p}_k$ viene dado por la
+\iflatexml{}Ecuación~\ref{e3:p-hat}\else\autoref{e3:p-hat}\fi{}, y
+$t_k=\frac{y_k+1}{2}$.
+%
+
+Las derivadas de $\hat{p}_k$ respecto de $A$ y $B$ vienen dadas por
+%
+\begin{align}
+  \begin{split}
+    \dpar{\hat{p}_k}{A}{}&=-f_k e^{Af_k+B}\frac{1}{(1+e^{Af_k+B})^2}
+    =-f_k\hat{p}_k(1-\hat{p}_k),\\
+    \dpar{\hat{p}_k}{B}{}&=    -e^{Af_k+B}\frac{1}{(1+e^{Af_k+B})^2}
+    =-   \hat{p}_k(1-\hat{p}_k).
+  \end{split}
+\label{e3:deriv-pk-wrt-AB}
+\end{align}
+%
+Utilizando estas derivadas, el cálculo de la solución al problema
+(\ref{abproblem}) se efectúa mediante un algoritmo de descenso por
+gradiente.
+
+%% La elección de una función logística como $\hat{p}_k$ se basa en la
+%% presunción de que las salidas $f_k$ para las entradas $\{\xx_k\}$ de
+%% clase positiva tienen una distribución gaussiana en $f$.
+
+%% Una interpretación intuitiva de $\hat{p}_k$ es que, para una salida
+%% $f_k$ de gran magnitud, que se ubica lejos del hiperplano de separación
+%% en el espacio inducido por el núcleo, el clasificador SVM tiene amplia
+%% certeza de su decisión.  Asimismo, se tendrá que cuando el valor de
+%% $f_k=0$, $x_k$ recae exactamente en el plano de separación y se
+%% obtiene la peor predicción posible $\hat{p}_k=0.5$ y, similarmente,
+%% cuanto más ancho sea el margen de separación, más suave deberá ser la
+%% pendiente de $\hat{p}_k$.

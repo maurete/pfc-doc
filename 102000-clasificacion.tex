@@ -1,0 +1,46 @@
+%
+%
+%
+\section{Clasificación de \premirna{s}}
+%
+los métodos computacionales para clasificación de \premirna{s} se basan
+en técnicas de \e{aprendizaje supervisado}, una disciplina
+de la Inteligencia Computacional.
+En general, estas técnicas permiten generar un \e{modelo} o
+representación interna que caracteriza los \premirna{s}, extrayendo
+información a partir de un conjunto de datos de ejemplo denominado
+\e{conjunto de entrenamiento}.
+El modelo generado puede ser aplicado a nuevos datos, generando de
+esta manera un \e{clasificador} con capacidad de
+\e{generalización}, que es capaz de discriminar nuevos ejemplos en dos
+clases: \e{positiva}, asociada a \premirna{s} ``reales'', y
+\e{negativa} asociada a los ejemplos que no se corresponden
+con\premirna{s}.
+
+En el presente trabajo se utilizan dos técnicas de aprendizaje
+supervisado para la generación de clasificadores de \premirna{s}: el
+\e{Perceptrón Multicapa} \cite{mlp1,mlp2} y la \e{Máquina de
+  Vectores de Soporte} \cite{svm}.
+
+El Preceptrón Multicapa (\e{MLP}, del inglés \eng{Multilayer
+  Perceptron}) es un tipo de red neuronal artificial con propagación
+hacia adelante, en la que se disponen las neuronas (nodos
+computadores) en \e{capas}.
+La salida de cada neurona se determina al
+aplicar una \e{función de activación}, de tipo sigmoidea, a la suma
+ponderada de las salidas en la capa anterior.
+Durante el entrenamiento
+del MLP, se ajustan progresivamente los pesos (ponderaciones) de la
+entrada de cada neurona mediante un algoritmo de aprendizaje basado en
+la \e{propagación hacia atrás} del error de clasificación, hasta
+obtener una tasa de clasificación satisfactoria \cite{jain}.
+
+La Máquina de Vectores de Soporte (\e{SVM}, de su nombre en inglés
+\eng{Support Vector Machine}) es un algoritmo de clasificación que se
+basa en transformar, mediante una función llamada \e{núcleo}, el
+espacio $N$-dimensional de los datos de entrada en otro espacio de
+dimensión $M: M\gg N$, donde se espera que los datos sean linealmente
+separables mediante un hiperplano.
+El entrenamiento consiste en
+encontrar el hiperplano óptimo de separación para el conjunto de datos
+presentado \cite{bottou}.

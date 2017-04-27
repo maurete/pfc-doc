@@ -1,0 +1,18 @@
+%
+\subsubsection{Sobremuestreo de la clase minoritaria}
+%
+Algunos clasificadores, como el perceptrón multicapa, son sensibles
+al \e{desbalance} de clases en el conjunto de entrenamiento.
+Esto es, cuando el conjunto de entrenamiento posee muchos más ejemplos
+de una clase que de la otra, el modelo del clasificador generado
+tiende a cometer muchos errores al clasificar la clase minoritaria.
+
+El sobremuestreo de la clase minoritaria consiste simplemente en
+agregar ejemplos al conjunto de entrnamiento repitiendo ejemplos de la
+clase minoritaria seleccionados al azar, hasta igualar en número a la
+clase mayoritaria.
+Con el uso de esta técnica, se evita el desbalance de clases que
+pudiera provocar un \e{sesgo} en el clasificador MLP.
+Debe tenerse en cuenta asimismo que la repetición de ejemplos deriva
+en problemas mal condicionados para los clasificadores SVM, por lo que
+no se recomienda aplicar sobremuestreo en estos casos.

@@ -1,0 +1,37 @@
+%
+%
+\section{Construcción del modelo del clasificador SVM}
+%
+Tal como en el caso del perceptrón multicapa, la construcción del
+modelo SVM es un proceso de dos etapas: en primer lugar se determinan
+valores óptimos para los \hparam{s}, y una vez encontrados, se procede
+a entrenar el modelo final con los datos de entrenamiento y los
+\hparam{s} óptimos encontrados.
+%% A diferencia del caso MLP, sin embargo, en una máquina de vectores de
+%% soporte puede haber más de un \hparam{}, y en general éstos se trata
+%% de variables continuas.
+
+Las propiedades analíticas de la SVM permiten aplicar estrategias de
+selección de hiperparámetros más complejas que en el caso del MLP, que
+en general resultan computacionalmente más eficientes.
+Las cuatro estrategias de selección de \hparam{s} aplicables al
+clasificador SVM son:
+%
+\begin{itemize}
+\item
+  Selección trivial: Retorna valores preestablecidospara los
+  \hparam{s}, sin efectuar entrenamiento alguno.
+\item
+  Búsqueda en la grilla: Efectúa una búsqueda exhaustiva de los
+  hiperparámetros, maximizando la tasa de clasificación de validación
+  cruzada.
+\item
+  Minimización del error empírico: Minimiza, mediante descenso por
+  gradiente en el espacio de los \hparam{s}, una función que representa
+  el error de clasificación de validación cruzada.
+\item
+  Minimización de la cota radio-margen: Minimiza mediante descenso por
+  gradiente en el espacio de los \hparam{s} una función de derivación
+  teórica que se relaciona con el error de clasificación.
+\end{itemize}
+%
