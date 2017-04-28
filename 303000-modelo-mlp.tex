@@ -4,15 +4,15 @@
 \section{Construcción del modelo del clasificador MLP}
 %
 El primer paso para la construcción de un modelo MLP es determinar el
-número óptimo de neuronas en la capa oculta aplicando una estrategia
-que busca maximizar la tasa de clasificación $G_m$ promedio de
+número óptimo de neuronas en la capa oculta mediante una estrategia
+de búsqueda exhaustiva que maximiza la tasa \GM promedio de
 validación cruzada.
 %% Para ello, se utiliza una estrategia de prueba y error, que prueba
 %% distintos modelos mediante validación cruzada, y selecciona como
 %% número óptimo de neuronas el de aquel modelo que obtiene la mejor tasa
 %% $G_m$ en promedio sobre el conjunto de validación.
 Alternativamente, se define una estrategia de selección trivial que
-simplemente selecciona 0 neuronas en la capa oculta, resultando en un
+siempre selecciona 0 neuronas en la capa oculta, resultando en un
 clasificador lineal.
 
 Una vez determinado el número óptimo de neuronas en la capa oculta,

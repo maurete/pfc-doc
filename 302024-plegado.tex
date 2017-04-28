@@ -3,11 +3,11 @@
 %
 En principio, la información de estructura secundaria de los ejemplos
 se obtiene de los archivos leídos en la entrada.
-Cuando no se encuentra disponible, esta información se calcula
-invocando herramientas externas.
-El cálculo de la estructura secundaria se efectúa mediante la
-herramienta ``RNAfold'', parte del paquete de software ``Vienna RNA''
+Cuando ésta no se encuentra disponible se calcula invocando a
+herramientas externas.
+El cálculo de la estructura secundaria se efectúa preferentemente mediante
+la herramienta ``RNAfold'', parte del paquete de software ``Vienna RNA''
 \cite{vienna}.
-Cuando RNAfold no se encuentra disponible, se invoca la función de
-Matlab \mono{rnafold}, distribuida como parte del paquete
-``Bioinformatics Toolbox'' de dicho software.
+Alternativamente, cuando \func{RNAFold} no se encuentra disponible, el
+cálculo se efectúa con la función de Matlab \func{rnafold}, parte del
+paquete ``Bioinformatics Toolbox'' de dicho software.
