@@ -21,14 +21,15 @@ El software presenta dos modos de funcionamiento principales:
 \subsection{Generación del modelo del clasificador}
 %
 En este modo de funcionamiento, las entradas al sistema son archivos
-de texto con secuencias de ejemplo para conformar el conjunto de
-entrenamiento. Para cada archivo se especifica una clase, que indica
+de texto con secuencias de ejemplo que se utiizan para armar el
+conjunto de entrenamiento.
+Para cada archivo se especifica una clase, que indica
 el tipo de secuencias contenidas: \e{positiva} (+1) cuando se trata de
 ejemplos de \premirna{s} verdaderos, o \e{negativa} (-1) cuando el
-archivo contiene ``pseudo'' \premirna{s}. Se requiere la
-especificación de al menos un archivo de cada clase.
-Se permite establecer opciones que regulan el comportamiento
-de la generación del modelo tales como
+archivo contiene ``pseudo'' \premirna{s}.
+Se requiere la especificación de al menos un archivo de cada clase.
+Se permite establecer opciones que regulan el comportamiento de la
+generación del modelo tales como
 %
 \begin{itemize}
 \item Tipo de máquina de aprendizaje a entrenar (MLP o SVM).
@@ -38,7 +39,7 @@ de la generación del modelo tales como
 \end{itemize}
 %
 
-La generación del modelo del clasificador es un proceso de tres pasos
+La generación del modelo del clasificador es un proceso de tres pasos:
 %
 \begin{enumerate}
 \item El preprocesamiento interpreta los archivos de entrada y
