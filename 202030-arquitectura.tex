@@ -1,0 +1,45 @@
+%
+%
+\subsection{Arquitectura de una red neuronal}
+%
+Una red neuronal es
+una arquitectura paralela en la que la unidad de cómputo
+básica es la neurona artifical.
+Desde un punto de vista matemático,
+la red se representa como un grafo orientado, donde los nodos son
+neuronas y las aristas, que tienen un sentido y una ponderación (peso)
+asociados, conectan las salidas de una neurona con la entrada de otra.
+
+Según la topología del grafo, se dice que una red neuronal es
+\e{acíclica} o \e{con propagación hacia adelante} cuando no existen
+bucles dentro de la red. Similarmente, se dice que una red es
+\e{recurrente} cuando contiene bucles de {retroalimentación} en su
+topología.
+En una red recurrente, resulta posible encontrar al menos
+un camino que conduce al mismo punto de partida.
+%
+%
+\subsection{El perceptrón multicapa}
+%
+El perceptrón multicapa tiene una arquitectura acíclica organizada en
+\e{capas}. La primer capa se denomina \e{capa de entrada} y contiene,
+en lugar de neuronas, nodos sensores que ``leen'' el vector presentado
+como entrada a la red. Los valores de las salidas de esta capa equivalen
+a los componentes del vector. Las capas subsiguientes contienen
+neuronas, cada una de las cuales recibe como entrada \e{todas} las
+salidas de la capa anterior.  Para el cálculo de las salidas de cada
+capa se requiere conocer los valores de las salidas de la capa anterior,
+por lo que se dice que el vector de entrada se \e{propaga hacia
+  adelante} a través de la red.
+
+%% Dentro de una misma capa, las neuronas no se conectan entre sí.
+
+La salida global de la red se compone por las salidas de las neuronas en la
+última capa, denominada simplemente \e{capa de salida}. Las capas que no son ni de
+entrada ni de salida se denominan \e{capas ocultas}.
+
+En la \iflatexml{}Figura~\ref{fig:mlp}\else\autoref{fig:mlp}\fi{} se
+representa un perceptrón multicapa de 2 capas, que lee a su entrada un vector de 3
+elementos. Este vector es propagado a través de una capa oculta de 4
+neuronas hasta alcanzar las 2 neuronas en la capa de
+salida, que determinan la salida de la red.

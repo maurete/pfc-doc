@@ -1,0 +1,50 @@
+
+En líneas generales, se observa que la aplicación de la estrategia de
+búsqueda exhaustiva para determinar el número de neuronas en la capa
+oculta obtuvo una pequeña mejora en los resultados respecto a los
+obtenidos mediante la estrategia trivial.
+
+Con respecto a los conjuntos de \caract{s}, los mejores resultados se
+obtuvieron con aquellos que incluyen las características de estructura
+secundaria \dset{E} y \dset{S-E}.
+Asimismo, el uso exclusivo del conjunto de \caract{s} de la secuencia
+derivó en tasas de clasificación subóptimas en todos los casos.
+
+La variabilidad observada en los resultados proviene de dos fuentes:
+la inicialización aleatoria de la red y la partición pseudoaleatoria de
+los datos en la generación del problema, regulada por una ``semilla''.
+En el problema \prob\tripletsvm{}, las particiones de entrenamiento y
+prueba son fijas e independientes de la semilla pseudoaleatoria,
+razón por la cual se observa una menor desviación estándar en los
+resultados obtenidos para este problema.
+
+%% En el problema \prob\tripletsvm{} se observa una mayor paridad entre
+%% los resultados obtenidos por las estrategias trivial y de búsqueda
+%% exhaustiva para determinar el número de neuronas en la capa oculta.
+%% Una interpretación de este resultado podría ser que, para este
+%% problema, los datos de entrenamiento son linealmente separables.
+En \cite{xue}, los autores reportan una $\SE=93.3\%$ y una
+$\SP=88.1\%$ para el método \work\tripletsvm{} sobre el mismo conjunto
+de prueba de \prob\tripletsvm{}, utilizando el conjunto de \caract{s}
+de tripletes (\dset{T}).
+Estos resultados son superiores a los obtenidos con el clasificador
+MLP.
+Sin embargo, la utilización de las \caract{s} de la estructura
+secundaria (\dset{E} y \dset{S-E} mejoró significativamente los estos
+resultados, superando el 96\% tanto en la \SE{} como el la \SP.
+
+En el caso de los problemas \prob\mipred{} y \prob\micropred{}, no se
+probaron las \caract{s} de tripletes dado que ambos presentan ejemplos
+con bucles múltiples en su estructura secundaria.
+En ambos casos se observó que la especificidad (\SP) resultó
+sensiblemente mayor a la sensibilidad (\SE).
+Esto se atribuye al ``desbalance de clases'' presente en los
+respectivos conjuntos de entrenamiento, que incluyen 2 ejemplos de
+clase negativa por cada ejemplo de clase positiva.
+
+Según \cite{ng} el método \work{\mipred} obtiene una $\SE=84.5\%$ y
+una $\SP=98.0\%$ sobre un conjunto de prueba similar al del problema
+\prob\mipred{}.
+Este resultado está en línea con el obtenido por el clasificador MLP
+utilizando \caract{s} \dset{S-E}.
+

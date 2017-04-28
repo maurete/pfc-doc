@@ -1,0 +1,20 @@
+%
+\subsubsection{Término de momento}
+%
+Una estrategia para incrementar la velocidad de aprendizaje y mejorar
+la estabilidad del algoritmo de retropropagación consiste en modificar la
+regla delta
+(\iflatexml{}Ecuación~\ref{e2:delta-rule}\else\autoref{e2:delta-rule}\fi)
+añadiendo un \e{término de momento}
+%
+\begin{align}\label{e2:momentum-term}
+  \Delta w_{ij}(t)\tab=-\eta\dpar{\C{E}(t)}{w_{ij}}{} +\mu\Delta
+  w_{ij}(t-1).
+\end{align}
+%
+El término de momento simplemente añade una fracción $\mu$ del paso
+anterior $t-1$ al paso actual $t$: si el gradiente mantiene su
+orientación, el efecto del término de momento es aumentar la velocidad
+de aprendizaje; si en cambio el gradiente cambia de dirección, el
+momento ``suaviza'' las oscilaciones. El hiperparámetro de momento
+$0<\mu<1$ se determina mediante prueba y error para cada problema.

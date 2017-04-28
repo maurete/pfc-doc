@@ -1,0 +1,89 @@
+%
+%
+\subsection{Aprendizaje}
+%
+%% En el contexto de las redes neuronales artificiales, el aprendizaje
+%% puede ser visto como el problema de efectuar actualizaciones de los
+%% pesos en las conexiones de la red de modo que ésta efectúe una tarea
+%% deseada.
+
+%% La red debe ``aprender'' los pesos en sus conexiones a partir de los
+%% patrones de entrenamiento. El rendimiento en la clasificación mejora
+%% progresivamente a medida que se van actualizando los pesos.
+
+%% La habilidad de las redes neuronales de aprender de manera autoomática
+%% a partir de ejemplos es quizá la caracteríßtica que hace a su
+%% éxito. En lugar de seguir un conjunto de reglas especificadas por
+%% expertos humanos, las redes neuronales artificiales ...
+
+El objetivo del entrenamiento en el perceptrón multicapa es ajustar
+los pesos de la red de forma que ésta efectúe una transformación de
+las entradas a las salidas deseadas. Esta transformación viene dada
+por el conjunto de entrenamiento $D$, compuesto por $\ell$ ejemplos
+denotados por $(\xx(n),\yy(n))$, $n=1,\ldots,\ell$.
+La discusión presentada a continuación sigue de cerca aquella
+presentada en \cite[Capítulo~4]{haykin}.
+
+%% La distancia entre la salida deseada y la salida efectiva de
+%% la red se mide con la función de energía (o de costo) $E$:
+%% %
+%% \begin{align}\label{e2:energy-function}
+%%   E = \frac{1}{2}\sum_{j=1}^{\ell}\|\yy_j-\hat{\yy}_j\|,
+%% \end{align}
+%% %
+%% en donde el vector $\hat{\yy}_j$ es el vector compuesto por las
+%% salidas de cada neurona en la capa de salida. La función $E$ puede
+%% interpretarse como una medida de \e{aptitud} de los pesos de la red al
+%% conjunto $D$, de modo que satisfacer el objetivo del aprendizaje es
+%% equivalente a encontrar un mínimo global de $E$.
+
+Considerando una neurona $i$ en la capa de salida, sea $s_i(n)$ la
+salida de la misma en respuesta al estímulo $\xx(n)$ aplicado en la
+capa de entrada.
+La
+\e{señal de error} producida en la salida de esta neurona viene dada
+por
+%
+\begin{align}\label{e2:error-signal-neuron} %4.2
+  e_i(n)=y_{k}(n)-s_{i}(n)
+\end{align}
+%
+en donde $y_k(n)$ es la componente del vector de respuesta deseada
+$\yy(n)$ correspondiente a la posición de la neurona $i$ en la capa de
+salida.
+%% en donde $y_{i}$ es el $i$-ésimo elemento del vector de respuesta
+%% deseada $\yy$.
+La \e{energía de error instantáneo} de la neurona $i$ se define según
+%
+\begin{align}\label{e2:error-energy-neuron} %4.3
+  \C{E}_i(n)=\frac{1}{2}e^2_i(n).
+\end{align}
+%
+Sumando las contribuciones error-energía de todas las neuronas en la
+capa de salida, se expresa la \e{energía total de error instantáneo}
+de la red como
+%
+\begin{align}\label{e2:error-energy-net} %4.4
+  \C{E}(n)&=\sum_{i\in C}\C{E}_i(n) \\
+  &=\frac{1}{2}\sum_{i\in C}e^2_i(n).
+\end{align}
+%
+Aquí, el conjunto $C$ contiene los subíndices de las
+neuronas en la capa de salida. La energía de error promedio sobre el
+conjunto de entrenamiento
+viene dada por
+%
+\begin{align}\label{e2:average-energy-net} %4.5
+  \C{E}_{\T{av}}&=\frac{1}{\ell}\sum_{n=1}^\ell\C{E}(n) \\
+  \tab=\frac{1}{2\ell} \sum_{n=1}^\ell \sum_{i\in C}e^2_i(n).
+\end{align}
+%
+Naturalmente, tanto la energía de error instantáneo como la energía de
+error promedio son funciones de todos los pesos sinápticos del
+perceptrón multicapa. Esta dependencia funcional no fue incluida de
+forma explícita en la definición de $\C{E}(n)$ y
+$\C{E}_{\T{av}}$ en pos de simplificar la notación.
+
+En general, el entrenamiento del perceptrón multicapa consiste
+en un procedimiento gradual, en el cual se actualizan los
+pesos de la red buscando minimizar alguna función de energía del error.

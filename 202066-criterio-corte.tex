@@ -1,0 +1,29 @@
+%
+\subsubsection{Criterio de corte}
+%
+En general, no existe un criterio de corte bien definido para
+detener el entrenamiento. Algunos criterios razonables para establecer
+la convergencia pueden ser:
+%
+\begin{itemize}
+\item Cuando la norma del gradiente es muy pequeña
+  ($\|\nabla\C{E}\|\leq\epsilon$), probablemente se deba a que se
+  alcanzó un mínimo local de la función de error.
+\item Cuando la función de energía promedio $\C{E}_{\T{av}}$ varía muy
+  poco entre épocas, también podría significar que se alcanzó un
+  mínimo local, indicando convergencia.
+\end{itemize}
+%
+El problema de estos criterios es similar al de la velocidad de
+aprendizaje: los valores de tolerancia a considerar para la
+convergencia serán siempre dependientes del problema, y una elección
+incorrecta puede llevar ya sea a un corte prematuro del entrenamiento,
+o bien a que el algoritmo nunca converja.
+
+Un criterio de convergencia alternativo, ampliamente utilizado, se
+basa en la aplicación del método de retención sobre el conjunto de
+entrenamiento $D$, entrenando sobre un conjunto de estimación $E$ y
+evaluando en cada iteración el error sobre un conjunto de validación
+$V$ que estima el error de generalización.  El entrenamiento se
+detiene cuando se observa que este error es adecuado, o bien cuando
+resulta evidente que ha alcanzado su mínimo.
