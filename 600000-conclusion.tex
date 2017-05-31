@@ -4,9 +4,45 @@
 %
 \chapter{Conclusión}
 %
-Como se puede observar en las pruebas de validación,
-así como también en las pruebas detalladas en la Sección 3,
-el método propio obtuvo resultados comparables
-a aquellos presentes en la bibliografía.
-En particular, se pudo determinar la importancia de una correcta
-selección de características y de los parámetros del clasificador.
+En este trabajo se presentó el desarrollo de un clasificador de
+secuencias de \premirna{s} utilizando técnicas de Inteligencia
+Computacional.
+Uno de los desafíos principales en un desarrollo de este tipo
+recae sobre la extracción de características de los datos.
+Si bien éste no ha sido el enfoque principal del presente trabajo, se
+ha podido observar el efecto determinante de un buen conjunto de
+características.
+El otro aspecto fundamental sobre el que sí se trabajó fue la correcta
+selección de hiperparametros del clasificador.
+La incorporación de técnicas automáticas para la selección de
+\hparam{s} en el clasificador SVM presenta una ventaja notable del
+software desarrollado frente a otros métodos preexistentes.
+Adicionalmente, esto se traduce en simplicidad de uso para el usuario
+final, ahorrándole el tiempo requerido por la estrategia clásica de
+búsqueda exhaustiva y reduciendo su procedimiento de ``prueba y
+error'' a unas pocas combinaciones de clasificadores y estrategias
+automáticas.
+%
+%
+%
+\section{Trabajos futuros}
+%
+Como ideas para trabajos futuros, se proponen
+%
+\begin{enumerate}
+\item
+  Modularizar/generalizar el proceso de extracción de \caract{s},
+  ofreciendo mayor granularidad en la selección de las mismas y
+  permitiendo la incorporar nuevas \caract{s} mediante llamados a
+  funciones externas.
+\item
+  Incorporar algún método automático de selección de \caract{s},
+  simplificando la experiencia del usuario en este aspecto.
+\item
+  Permitir la optimización específica de la sensibilidad (\SE) y la
+  especificidad (\SP) por seperado, permitiendo la generación de modelos
+  con requerimientos específicos.
+  Este aspecto está actualmente soportado, aunque no ha sido validado
+  con rigurosidad.
+\end{enumerate}
+%

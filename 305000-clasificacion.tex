@@ -21,15 +21,14 @@ para cada ejemplo $\xx_i$:
   \hat{y}_i = h(\xx_i).
 \end{align*}
 %
-Se debe notar que las etiquetas toda vez que el conjunto $P$ sea
-utilizado para clasificación, el valor de las etiquetas
-$y_i,\,i=1,\ldots,\ell$ es ignorado.
+Se debe notar que las etiquetas $y_i,\,i=1,\ldots,\ell$ presentes en
+el conjunto $P$ son ignoradas.
 
-En el caso particular del MLP, el modelo $h$ es en realidad un arreglo
-$\B{h}$ con $n$ modelos $(h_1,\ldots,h_n)$, y la pertenencia de clase
-para un ejemplo $\xx$ se establece según
+Para el caso del clasificador MLP, el modelo $h$ es en realidad un
+arreglo $\B{h}$ con $n$ modelos $(h_1,\ldots,h_n)$, y la pertenencia
+de clase para un ejemplo $\xx$ se establece según
 %
 \begin{align}
-  y = \T{moda}( h_1(\xx), h_2(\xx), h_3(\xx), h_4(\xx), h_5(\xx)).
+  y = \T{moda}( h_1(\xx), \ldots, h_n(\xx)).
 \end{align}
 %
