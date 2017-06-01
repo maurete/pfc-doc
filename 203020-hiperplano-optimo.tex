@@ -17,12 +17,11 @@ $\ww^T\zz+b=0$ \e{óptimo}, que maximiza la distancia a los puntos
 $\zz_i=\BPhi(\xx_i)$ más cercanos. Esto se expresa a través del
 problema de optimización
 %
-\begin{equation}
+\begin{equation}\label{e2:svm-problem-basic}
   \begin{aligned}
     \min_{\ww,b} \quad\tabs \frac{1}{2}\|\ww\|^2, \\
     \T{sujeto a}\quad\tabs y_i f_i\geq1,\,i=1,\ldots,\ell\,.
   \end{aligned}
-  \label{e2:svm-problem-basic}
 \end{equation}
 %
 Aquí, $f_i=f(\xx_i)=\ww^T\BPhi(\xx_i)+b$ es la función discriminante
@@ -41,17 +40,18 @@ problema puede leerse
 La distancia de un vector $\zz_i=\BPhi(\xx_i)$ al hiperplano
 $\ww^T\zz+b=0$ viene dada por $d_i=\frac{\ww}{\|w\|}\cdot\zz_i+b$, por
 ello, minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.
-Puede demostrarse que el vector solución $\ww_*$ al Problema
-\ref{e2:svm-problem-basic} es una combinación lineal de aquellos
-vectores $\zz_i$ para los cuales $|\ww^T\zz_i+b|=1$. Estos $\zz_i$ se
-denominan \e{vectores de soporte}, lo que da el nombre al
-clasificador.  Asimismo, los hiperplanos $\ww^T\zz+b=\pm1$ que
-contienen los vectores de soporte conforman el llamado \e{margen} del
-clasificador. El Problema \ref{e2:svm-problem-basic} también puede
-entenderse como la maximización de la distancia del hiperplano
-$\ww^T\zz+b=0$ al margen $\ww^T\zz+b=\pm1$. Esto da origen al nombre
-alternativo de la máquina de vectores de soporte: \e{clasificador de
-  margen máximo}.
+Puede demostrarse que el vector solución $\ww_*$ al
+Problema~\ref{e2:svm-problem-basic} es una combinación lineal de
+aquellos vectores $\zz_i$ para los cuales $|\ww^T\zz_i+b|=1$. Estos
+$\zz_i$ se denominan \e{vectores de soporte}, lo que da el nombre al
+clasificador.
+Asimismo, los hiperplanos $\ww^T\zz+b=\pm1$ que contienen los vectores
+de soporte conforman el llamado \e{margen} del clasificador.
+El Problema~\ref{e2:svm-problem-basic} también puede entenderse como
+la maximización de la distancia del hiperplano $\ww^T\zz+b=0$ al
+margen $\ww^T\zz+b=\pm1$.
+Esto explica el nombre alternativo por el cual se conoce a la máquina
+de vectores de soporte: \e{clasificador de margen máximo}.
 
 %% Desde el punto de vista numérico, el problema
 %% (\ref{e2:svm-problem-basic}) es un problema de optimización cuadrático
