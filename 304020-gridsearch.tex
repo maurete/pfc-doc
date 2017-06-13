@@ -2,9 +2,9 @@
 %
 \subsection{Búsqueda en la grilla}
 %
-La \e{búsqueda en la grilla} se basa en la propuesta de \cite{hsu} y
-permite optimizar el hiperparámetro de regularización $C$ así como el
-valor $\gamma$ del núcleo RBF.
+La \e{búsqueda en la grilla} se basa en la estrategia propuesta por
+\cite{hsu} y permite optimizar el hiperparámetro de regularización $C$
+así como el valor $\gamma$ del núcleo RBF.
 La idea general de esta estrategia es considerar cada combinación de
 hiperparámetros $(C,\gamma)$ como puntos en el plano.
 Comenzando por una serie de puntos espaciados regularmente
@@ -54,13 +54,13 @@ interpolar:
 %
 Una vez interpolada la grilla, se calcula el valor $P$ promedio de
 validación cruzada para los nuevos puntos interpolados.
-El procedimiento de refinamiento se repite hasta un máximo de $N$
-iteraciones o hasta satisfacer un criterio de corte.
+El procedimiento de refinamiento se repite $N$ iteraciones (por
+defecto, $N=3$).
 
 La búsqueda en la grilla tiene la ventaja de ser conceptualmente
 simple, sin embargo, se torna inviable cuando el vector de parámetros
 $\B{\theta}$ contiene más de 2 elementos.
 Dado que se trata de un método de búsqueda exhaustiva, resulta
-generalmente lento.
+comparativamente lento.
 Cuando se trabaja con un clasificador SVM con núcleo lineal, la grilla
 tiene una única dimensión: la del hiperparámetro $\log C$.

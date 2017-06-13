@@ -2,28 +2,29 @@
 %
 \subsection{Minimización del error empírico}
 %
-La función \e{error empírico} mide el error de
-validación cruzada sobre el conjunto de entrenamiento, adaptando un
-modelo probabilístico a la salida del clasificador.
-Utilizando este modelo probabilístico,
-resulta posible calcular derivadas para el modelo SVM respecto de sus
-hiperparámetros, lo que deriva en la estrategia de minimización del
-error empírico mediante descenso por gradiente.
+La función \e{error empírico} mide el error de validación cruzada
+sobre el conjunto de entrenamiento aplicando un modelo probabilístico
+que se acopla a la salida del clasificador.
+Este modelo probabilístico permite calcular las derivadas del modelo
+respecto de los hiperparámetros, permitiendo la aplicación de una
+estrategia de minimización del error mediante descenso por gradiente.
 
-La implementación se basa en la propuesta de \cite{ayat}, incorporando
-el cálculo del gradiente del modelo SVM respecto del hiperparámetro de
-regularización $C$ \cite{keerthi,glasmachers}, tal como se implementa
-en \cite{shark}.
+La estrategia de minimización del error empírico se basa en la
+propuesta presentada en \cite{ayat}, e incorpora una técnica para el
+cálculo del gradiente del modelo SVM respecto del hiperparámetro $C$
+tal como es explicada en los trabajos \cite{keerthi} y
+\cite{glasmachers} e implementada en \cite{shark}.
 %
 \begin{quote}
   \sbs{Terminología.}
   El lector experto encontrará ambigua la denominación de la función
-  ``error empírico''.  En la disciplina este nombre se utiliza como
-  equivalente de ``error de entrenamiento''.  En este trabajo, se
-  mantiene la denominación de los autores \cite{ayat}, diferenciando
-  entre ``error de entrenamiento'' como la tasa de error del modelo
-  sobre el conjunto de entrenamiento, y ``error empírico'', que se
-  trata de una interpretación probabilística del error de validación
-  cruzada sobre el conjunto de entrenamiento.
+  ``error empírico'', ya que en la disciplina este nombre se utiliza
+  como equivalente de ``error de entrenamiento''.
+  En este trabajo, se mantiene la denominación de los autores
+  \cite{ayat}, diferenciando entre ``error de entrenamiento'' como la
+  tasa de error del modelo sobre el conjunto de entrenamiento, y
+  ``error empírico'', que se trata de una interpretación
+  probabilística del error de validación cruzada sobre el conjunto de
+  entrenamiento.
 \end{quote}
 %

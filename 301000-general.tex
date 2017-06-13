@@ -9,87 +9,56 @@ tres tareas principales:
 \begin{enumerate}
 \item
   \e{Preprocesamiento}:
-  transforma los datos de entrada desde su forma original (cadenas de
-  texto) a un formato utilizable por la máquina de aprendizaje.
+  transforma los datos de entrada desde su forma original de cadenas
+  de caracteres a un formato numérico tratable por la máquina de
+  aprendizaje.
 \item
   \e{Generación del modelo del clasificador}:
-  aplica estrategias de selección de \hparam{s} y efectúa
+  aplica estrategias de selección de \hparam{s} y efectúa el
   entrenamiento de la máquina de aprendizaje para obtener un modelo
   de clasificador óptimo.
 \item
   \e{Clasificación}:
-  obtiene predicciones de clase aplicando un modelo generado
-  previamente.
+  obtiene predicciones de clase sobre nuevos ejemplos aplicando un
+  modelo generado previamente.
 \end{enumerate}
 %
-Las entradas y salidas del sistema son diferentes según sea el
-objetivo de la invocación: generar un modelo de clasificador o aplicar
-un modelo preexistente para obtener predicciones sobre nuevos datos.
+El preprocesamiento abarca la lectura e interpretación de los archivos
+de entrada y las demás tareas efectuadas para la preparación de los
+datos previo a la aplicación de la máquina de aprendizaje, ya sea para
+la generación del modelo o para clasificación.
 
-En la generación del modelo de clasificador, las entradas al sistema
-son archivos de texto con secuencias de ejemplo, que se utilizan para
-armar el conjunto de entrenamiento.
-Por cada archivo se especifica una clase, que indica el tipo de
-secuencias que contiene: \e{positiva} (+1) cuando se trata de ejemplos
-de \premirna{s} verdaderos, o \e{negativa} (-1) cuando el archivo
-contiene ``pseudo'' \premirna{s}.
-Se requiere la especificación de al menos un archivo de cada clase.
-%% Se permite establecer opciones que regulan el comportamiento de la
-%% generación del modelo tales como
-%% %
-%% \begin{itemize}
-%% \item Tipo de máquina de aprendizaje a entrenar (MLP o SVM).
-%% \item Parámetros de validación cruzada.
-%% \item Conjuntos de \caract{s} sobre los que trabajar.
-%% \item Estrategia de selección de hiperparámetros.
-%% \end{itemize}
-%% %
-%%
-La generación del modelo del clasificador es un proceso de tres pasos:
-%
-\begin{enumerate}
-\item
-  El preprocesamiento interpreta los archivos de entrada y
-  genera el conjunto de datos de entrenamiento y las particiones de
-  validación cruzada.
-\item
-  La selección de hiperparámetros es el proceso de determinar
-  hiperparámetros óptimos de la máquina de aprendizaje para
-  el conjunto de entrenamiento dado. A grandes rasgos, consiste en
-  generar modelos ``desechables'' probando diferentes configuraciones
-  mediante validación cruzada hasta obtener un óptimo.
-\item
-  El entrenamiento es el paso final, que entrena un modelo del
-  clasificador con el conjunto completo y los hiperparámetros
-  óptimos encontrados en el paso anterior.
-\end{enumerate}
-%
-La salida del sistema es el modelo del clasificador, que
-puede ser utilizado para la predicción de la pertenencia de clase de
-nuevas secuencias.
+%% El preprocesamiento lee a su entrada archivos en un formato de texto
+%% estándar denominado FASTA, y aplicando un proceso denominado
+%% extracción de características, convierte los datos leídos a matrices
+%% numéricas.
+%% Los datos numéricos son luego reagrupados en nuevas matrices que
+%% representan los conjuntos de datos utilizados por la máquina de
+%% aprendizaje.
 
-En el caso de la clasificación, el sistema recibe en la entrada un
-modelo de clasificador junto a uno o más archivos de secuencias.
-A diferencia del modo de generación del modelo, no se
-requiere especificar la clase de los archivos. %% , ni tampoco se requiere
-%% la especificación de parámetros adicionales por parte del usuario, ya
-%% que el modelo contiene toda la información necesaria para la
-%% clasificación.
-Los pasos efectuados para la obtención de las predicciones de clase
-son
-%
-\begin{enumerate}
-\item
-  Mediante el preprocesamiento, se interpretan los archivos de
-  secuencias y se genera el conjunto de datos de ``prueba'' con los
-  ejemplos a clasificar. Utilizando la información del modelo recibido
-  en la entrada, se aplica la misma normalización que la efectuada al
-  momento del entrenamiento.
-\item
-  La clasificación se aplica sobre el conjunto de prueba obtenido
-  del preprocesamiento, obteniendo una predicción de pertenencia de
-  clase para cada ejemplo.
-\end{enumerate}
-%
-La salida del sistema en este caso son predicciones de clase para cada
-una de las secuencias leídas en la entrada.
+La generación del modelo del clasificador recibe los datos del
+preprocesamiento y procede en dos pasos:
+en primer lugar, aplica alguna estrategia para determinar los
+hiperparámetros óptimos de entrenamiento de la máquina de aprendizaje
+a partir de los datos de entrenamiento.
+Una vez fijados los hiperparámetros efectúa el entrenamiento,
+generando en la salida un modelo de clasificador que puede ser
+utilizado para la predicción de clase de nuevas secuencias.
+
+%% Cuando el objetivo es la generación de un modelo de clasificador, la
+%% entrada al sistema consiste en archivos de texto con secuencias de
+%% ejemplo.
+%% Por cada archivo, se especifica una clase, indicando que el mismo
+%% contiene ejemplos de \premirna{s} validados (clase positiva) o bien
+%% ejemplos de ``pseudo'' \premirna{s} (clase negativa).
+%% Se requiere la especificación de al menos un archivo de cada clase.
+%% Aplicando preprocesamiento, estos archivos se utilizan para el armado
+%% del conjunto de entrenamiento.
+
+Para la obtención de predicciones de clase, se debe contar con un
+modelo de clasificador generado previamente, además de archivos de
+secuencias para clasificar.
+El primer paso es aplicar el preprocesamiento sobre los archivos de
+entrada, generando un conjunto de datos denominado ``de prueba''.
+Luego se aplica el modelo sobre este conjunto, obteniendo a la salida
+las predicciones de clase correspondientes.

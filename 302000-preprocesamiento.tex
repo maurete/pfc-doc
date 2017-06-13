@@ -3,40 +3,39 @@
 %
 \section{Preprocesamiento}
 %
-El preprocesamiento es el conjunto de pasos efectuados para
-transformar los datos de entrada a un formato tratable por la máquina
-de aprendizaje.  Los datos de entrada al sistema vienen dados como
-archivos en formato FASTA, un formato de texto que contiene secuencias
-``anotadas'' con información complementaria.
-Los distintos pasos llevados a cabo en el preprocesamiento son:
+El preprocesamiento es el conjunto de tareas efectuadas para
+transformar los datos de entrada, que viene dados en forma de archivos
+de texto, a un formato tratable por la máquina de aprendizaje.
+%% Los datos de entrada al sistema vienen dados como archivos en formato
+%% FASTA, un formato de texto que contiene secuencias \e{anotadas} con
+%% información complementaria de identificación.
+Las tareas efectuadas en la etapa de preprocesamiento son:
 %
 \begin{enumerate}
 \item
-  Análisis sintáctico (\e{parsing}): se trata de interpretar el
-  texto de entrada identificando las líneas de descripción
-  (anotaciones), de secuencia, y de estructura secundaria si las
-  hubiera.
+  \e{Análisis sintáctico (\e{parsing})}: se trata de interpretar el texto
+  en los archivos de entrada identificando las líneas de descripción,
+  de secuencia, y de estructura secundaria.
 \item
-  Plegado: consiste en calcular la información de estructura
-  secundaria para todas las secuencias, mediante la invocación de
-  software externo.
+  \e{Plegado}: consiste en calcular la información de estructura
+  secundaria invocando herramientas de software externas.
 \item
-  Extracción de \caract{s}: es el proceso de generar vectores
-  numéricos de longitud fija que representan cada ejemplo a partir de
-  la información de secuencia y de estructura secundaria.
+  \e{Extracción de \caract{s}}: es el proceso de generar vectores
+  numéricos de longitud fija que representan cada ejemplo, a partir de
+  información extraída de la secuencia y de la estructura secundaria.
 \item
-  Normalización: ajusta el rango de las componentes del vector de
-  características de modo que se ajusten a un intervalo
+  \e{Normalización}: modifica el rango de los vectores de
+  características de modo que sus elementos se ajusten a un intervalo
   preestablecido.
 \item
-  Generación de conjuntos de datos y de validación cruzada:
-  agrupa los ejemplos en conjuntos de entrenamiento y prueba, y genera
-  particiones de validación cruzada, según sea el propósito con el que
-  se utilizarán los datos: generar un modelo de clasificador o
-  predicción de pertenencia clase.
+  \e{Generación de conjuntos de datos}: reagrupa los ejemplos en
+  conjuntos de entrenamiento y de prueba, y genera particiones de
+  validación cruzada, a partir de la especificación por parte del
+  usuario del uso que se dará a los datos: generar un modelo de
+  clasificador o predicción de pertenencia de clase.
 \end{enumerate}
 %
-En adelante se presenta una descripción de cada uno de estos pasos,
-que generan una representación de los ejemplos en forma de
-vectores numéricos normalizados utilizables directamente por la
+Aplicando estos pasos, se obtiene una representación de los datos en
+forma matricial, agrupados en conjuntos de ``entrenamiento'' y de
+``prueba''. Estos conjuntos son utilizables directamente por la
 máquina de aprendizaje.
