@@ -2,16 +2,11 @@
 %
 \subsection{Entrenamiento}
 %
-El entrenamiento es el proceso de construir un modelo $h(\xx)$ a
-partir de los ejemplos del conjunto de entrenamiento
+El entrenamiento de la máquina de aprendizaje es el proceso de
+construcción del modelo a partir de observaciones efectuadas 
+sobre el conjunto de entrenamiento
 $D=\left((\xx_1,\yy_1),\ldots,(\xx_\ell,\yy_\ell)\right)$.
-Este conjunto es una muestra, de probabilidad desconocida, de la
-distribución generadora de los datos $\nu$, y determina una
-distribución \e{empírica}
-%
-\begin{align}
-  \hat{\nu}=\frac{1}{\ell}\sum_{i=1}^{\ell}\delta_{(\xx_i,\yy_i)}(\xx,\yy),
-\end{align}
-%
-en donde $\delta_{(\xx,\yy)}$ es la distribución delta de Dirac
-centrada en el punto $(\xx,\yy)$.
+En términos generales, el entrenamiento es un algoritmo que
+adapta progresivamente el modelo buscando reducir una medida
+relacionada con el error sobre el conjunto de entrenamiento $D$.
+
