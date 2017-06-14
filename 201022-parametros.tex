@@ -1,11 +1,10 @@
 %
 \subsubsection{Parámetros del modelo}
 %
-Comúnmente, el modelo $h$ deriva de una función más general
-$H(\xx,\B{p})$, en donde $\B{p}$ es un conjunto de \e{parámetros} que
-modifican la respuesta (salida) de $H$ ante determinados estímulos
-(entrada) $\xx$.
-Entendido desde esta perspectiva, el {entrenamiento} es el proceso de
-selección de los parámetros $\B{p}$ a partir del conjunto de datos
-$D$, obteniendo un modelo $h(\xx)=H(\xx,\B{p})$ que ``ajusta'' los
-datos en $D$ minimizando una medida de error $E=f(\xx,h(\xx))$.
+En un caso típico, el modelo $h(\xx)$ es una instancia \e{parametrizada}
+de una familia de funciones más general $H(\xx,\B{p})$, 
+en donde $\B{p}$ es un vector de \e{parámetros} que regulan la salida de 
+$H$ ante una entrada $\xx$.
+Desde este punto de vista, puede entenderse el {entrenamiento} como el
+proceso de determinar los parámetros $\B{p}$ que minimizan el error
+promedio de la función $H$ sobre el conjunto de datos $D$.
