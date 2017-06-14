@@ -1,0 +1,22 @@
+%
+\subsubsection{Error de entrenamiento}
+%
+La distribución empírica $\hat{\nu}$ conduce a la definición del
+\e{error de entrenamiento} como el error del modelo $h$ sobre los
+datos de entrenamiento en $D$:
+%
+\begin{align}
+  \hat{\C{R}}_D(h)=E_\T{entrenamiento}=\R{E}_{\hat{\nu}}[L(\xx,\yy,h(\xx))]
+  =\frac{1}{\ell}\sum_{i=1}^\ell L(\xx_i, \yy_i, h(\xx_i)),
+\end{align}
+%
+en donde $L$ es una función de pérdida.
+Una forma de entrenamiento básica de la máquina de aprendizaje consiste en
+seleccionar el modelo con el mínimo error de entrenamiento
+%
+\begin{align}
+  \hat{h}:=\arg \min \left\{ \hat{\C{R}}_D(h)\middle|h \in H\right\}.
+\end{align}
+%
+Este procedimiento se conoce también como la minimización del riesgo
+empírico sobre el conjunto de entrenamiento.
