@@ -1,15 +1,18 @@
 %
 \subsubsection{Hiperparámetros}
 %
-Los \e{hiperparámetros} son aquellos parámetros que regulan el proceso de
-aprendizaje, y que no pueden determinarse directamente a partir de
-los datos.
-Se denominan de este modo porque en general se relacionan
-con conceptos de más alto nivel que los parámetros del modelo, tales
-como la complejidad de la solución o la velocidad de aprendizaje.
-Los \hparam{s} no pueden ser determinados durante el entrenamiento, sino
-que deben ser elegidos antes de efectuar el mismo.
-En general, se seleccionan de manera manual en una estrategia de
-prueba y error.
-Sin embargo, para ciertos tipos de máquinas de aprendizaje
-existen técnicas automáticas para su determinación.
+Se denomina \e{hiperparámetros} a aquellos parámetros que regulan el 
+proceso de entrenamiento, que sin formar parte del modelo influyen en
+la generación del mismo.
+En general, los \hparam{s} determinan el comportamiento de ``alto nivel''
+del algoritmo de entrenamiento, tal como la cantidad de ajuste aplicado al
+modelo en cada iteración, el grado de tolerancia a los errores, o la
+complejidad de la solución.
+
+Al actuar como reguladores del proceso de entrenamiento, los \hparam{s}
+deben ser establecidos antes de comenzar el mismo.
+En general, la selección de los hiperparámetros se efectúa mediante prueba
+y error sobre modelos desechables, ya sea en forma manual o mediante un
+algoritmo automático.
+Para ciertos tipos específicos de máquina de aprendizaje, existen técnicas
+automáticas que configuran los \hparam{s} de manera eficiente.
