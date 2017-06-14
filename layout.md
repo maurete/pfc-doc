@@ -19,9 +19,9 @@ figures/hsa-mir-299_ss/hsa-mir-299_ss.png
 201015-funcion-perdida.tex
 201016-error-generalizacion.tex
 201020-entrenamiento.tex
-201021-errentrenamiento.tex
 201022-parametros.tex
 201023-hiperparametros.tex
+201021-errentrenamiento.tex
 201024-sobreajuste.tex
 201026-sesgo-varianza.tex
 201030-generalizacion.tex
