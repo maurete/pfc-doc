@@ -1,17 +1,17 @@
 %
 \subsubsection{Error de entrenamiento}
 %
-El conjunto de entrenamiento $D$ es una muestra de la
-distribución generadora de los datos $\nu$ de probabilidad es desconocida.
-Se dice que el conjunto $D$ determina una distribución \e{empírica}
+El conjunto de entrenamiento $D$ es una muestra (de probabilidad
+desconocida) de la distribución generadora de los datos $\nu$.
+Esta muestra determina una distribución \e{empírica}
 %
 \begin{align}
   \hat{\nu}=\frac{1}{\ell}\sum_{i=1}^{\ell}\delta_{(\xx_i,\yy_i)}(\xx,\yy),
 \end{align}
 %
-en donde $\delta_{(\xx,\yy)}$ es la distribución delta de Dirac
-centrada en el punto $(\xx,\yy)$.
-La distribución empírica $\hat{\nu}$ conduce a la definición del
+en donde $\delta_{(\xx,\yy)}$ es la delta de Dirac centrada en el
+punto $(\xx,\yy)$.
+La distribución $\hat{\nu}$ conduce a la definición del
 \e{error de entrenamiento} como el error del modelo $h$ sobre los
 datos de entrenamiento en $D$:
 %
@@ -21,8 +21,9 @@ datos de entrenamiento en $D$:
 \end{align}
 %
 en donde $L$ es una función de pérdida.
-Una forma de entrenamiento básica de la máquina de aprendizaje consiste en
-seleccionar el modelo con el mínimo error de entrenamiento
+La forma de entrenamiento más básica e importante de una máquina
+de aprendizaje consiste en seleccionar el modelo que minimiza el
+error de entrenamiento
 %
 \begin{align}
   \hat{h}:=\arg \min \left\{ \hat{\C{R}}_D(h)\middle|h \in H\right\}.
