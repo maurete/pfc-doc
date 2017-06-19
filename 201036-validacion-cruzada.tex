@@ -9,9 +9,9 @@ En un procedimiento de \e{validación cruzada de $k$ iteraciones}
 conjuntos disjuntos $V_1,\ldots,V_k$ de tamaños similares, denominados
 \e{particiones de validación}.
 Para cada $i=1,\ldots,k$, se efectúa el entrenamiento sobre un
-conjunto $D_i=D\setminus{}V_i$ excluyendo a $V_i$, y se evalúa el
-modelo obtenido con los datos de $V_i$.
-Una vez completado el proceso se habrán validado todos los ejemplos en
+conjunto $D_i=D\setminus{}V_i$ que excluye a $V_i$, y se evalúa el
+modelo obtenido con los ejemplos de $V_i$.
+Una vez completado el proceso, se habrán validado todos los ejemplos en
 el conjunto $D$ con modelos diferentes, aunque entrenados con conjuntos
 de estimación similares.
 Tal como en el caso de la validación ``simple'', la validación cruzada
