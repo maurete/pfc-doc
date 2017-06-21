@@ -33,6 +33,7 @@ figures/hsa-mir-299_ss/hsa-mir-299_ss.png
 201050-seleccion-auto-hiper.tex
 201060-medidas.tex
 201062-se-sp.tex
+201064-gm.tex
 202000-mlp.tex
 202010-redes-biologicas.tex
 202020-modelo-neurona-artificial.tex
