@@ -13,21 +13,20 @@ confiables que los complicados.
 La \e{regularización} consiste en forzar la simplicidad del modelo,
 buscando evitar el sobreajuste en el modelo generado por la máquina
 de aprendizaje.
-En principio, existen dos formas para incorporar simplicidad en el
-modelo:
+Existen diversas formas para incorporar simplicidad en el
+modelo, tales como:
 %
 \begin{itemize}
 \item Limitar el modelo a una familia de funciones simples.
 \item Añadir un término de penalización por complejidad al objetivo
   de entrenamiento.
+\item Estimar el error de generalización durante el entrenamiento,
+  interrumpiendo el proceso cuando se detecta que el mismo alcanza
+  su valor mínimo.
 \end{itemize}
 %
-Ambos procedimientos regularizan el proceso de aprendizaje, ya
-que favorecen las hipótesis más simples.
-Cuando el entrenamiento es un proceso gradual, una tercera
-alternativa para incorporar regularización consiste en
-interrumpir el entrenamiento cuando se detecta
-que el error de generalización empieza a incrementarse.
+Cualquiera de estos procedimientos regularizan el proceso de
+aprendizaje, ya que favorecen los modelos más simples.
 
 Se debe notar que, por definición, la regularización entra en conflicto con
 la minimización del error de entrenamiento, y un modelo regularizado
