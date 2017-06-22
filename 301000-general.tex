@@ -3,30 +3,38 @@
 %
 \section{Descripción general}
 %
-La arquitectura del software codificado puede describirse en torno a
-tres tareas principales:
-%
-\begin{enumerate}
-\item
-  \e{Preprocesamiento}:
-  transforma los datos de entrada desde su forma original de cadenas
-  de caracteres a un formato numérico tratable por la máquina de
-  aprendizaje.
-\item
-  \e{Generación del modelo del clasificador}:
-  aplica estrategias de selección de \hparam{s} y efectúa el
-  entrenamiento de la máquina de aprendizaje para obtener un modelo
-  de clasificador óptimo.
-\item
-  \e{Clasificación}:
-  obtiene predicciones de clase sobre nuevos ejemplos aplicando un
-  modelo generado previamente.
-\end{enumerate}
-%
-El preprocesamiento abarca la lectura e interpretación de los archivos
-de entrada y las demás tareas efectuadas para la preparación de los
-datos previo a la aplicación de la máquina de aprendizaje, ya sea para
-la generación del modelo o para clasificación.
+La arquitectura del software codificado se describe en torno a
+tres componentes principales: \e{preprocesamiento}, \e{generación
+del modelo del clasificador}, y \e{clasificación}. 
+
+El preprocesamiento transforma los datos de entrada desde su forma
+original de cadenas de caracteres a un formato numérico tratable por
+la máquina de aprendizaje.
+Abarca la lectura e interpretación de los archivos de entrada, la
+extracción de \caract{s}, y otras tareas de preparación de los datos,
+generando una representación interna de los datos que se utiliza como
+entrada a la máquina de aprendizaje, ya sea para la generación del
+modelo o para clasificación.
+
+La generación del modelo del clasificador aplica estrategias de
+selección de \hparam{s} y efectúa el entrenamiento
+para obtener un modelo de clasificador óptimo.
+Como entrada, recibe los datos del preprocesamiento y procede en dos
+pasos: en primer lugar, aplica alguna estrategia para determinar los
+hiperparámetros óptimos, y luego efectúa el entrenamiento propiamente
+dicho.
+A la salida devuelve un modelo de clasificador que puede ser
+utilizado para la predicción de clase de nuevas secuencias.
+
+La clasificación obtiene predicciones de clase sobre nuevos ejemplos
+aplicando un modelo generado previamente.
+Para la obtención de predicciones de clase, se debe contar con un
+modelo de clasificador generado previamente, además de archivos de
+secuencias para clasificar.
+El primer paso es aplicar el preprocesamiento sobre los archivos de
+entrada, generando un conjunto de datos denominado ``de prueba''.
+Luego se aplica el modelo sobre este conjunto, obteniendo a la salida
+las predicciones de clase correspondientes.
 
 %% El preprocesamiento lee a su entrada archivos en un formato de texto
 %% estándar denominado FASTA, y aplicando un proceso denominado
@@ -35,15 +43,6 @@ la generación del modelo o para clasificación.
 %% Los datos numéricos son luego reagrupados en nuevas matrices que
 %% representan los conjuntos de datos utilizados por la máquina de
 %% aprendizaje.
-
-La generación del modelo del clasificador recibe los datos del
-preprocesamiento y procede en dos pasos:
-en primer lugar, aplica alguna estrategia para determinar los
-hiperparámetros óptimos de entrenamiento de la máquina de aprendizaje
-a partir de los datos de entrenamiento.
-Una vez fijados los hiperparámetros efectúa el entrenamiento,
-generando en la salida un modelo de clasificador que puede ser
-utilizado para la predicción de clase de nuevas secuencias.
 
 %% Cuando el objetivo es la generación de un modelo de clasificador, la
 %% entrada al sistema consiste en archivos de texto con secuencias de
@@ -54,11 +53,3 @@ utilizado para la predicción de clase de nuevas secuencias.
 %% Se requiere la especificación de al menos un archivo de cada clase.
 %% Aplicando preprocesamiento, estos archivos se utilizan para el armado
 %% del conjunto de entrenamiento.
-
-Para la obtención de predicciones de clase, se debe contar con un
-modelo de clasificador generado previamente, además de archivos de
-secuencias para clasificar.
-El primer paso es aplicar el preprocesamiento sobre los archivos de
-entrada, generando un conjunto de datos denominado ``de prueba''.
-Luego se aplica el modelo sobre este conjunto, obteniendo a la salida
-las predicciones de clase correspondientes.
