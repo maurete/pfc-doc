@@ -1,10 +1,14 @@
 \begin{table}
   \tableStyle
   \smaller
+  \iflatexml%
+  \begin{tabular}{ccrrrcrrrrcrrrrrr}
+  \else%
   \sisetup{
     table-format = 2.0
   }
   \begin{tabular}{ccrSScS[table-format = 3.0]SSScS[table-format=3.0]S[table-format=3.0]SSS[table-format=1.0]S}
+  \fi%
   \toprule
   \mrow{4}{*}{Prob.} & \mrow{4}{*}{Caract.} & &
   \mcol{2}{c}{MLP} &&
