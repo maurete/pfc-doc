@@ -1,10 +1,14 @@
 %
 \begin{table}[h]
   \tableStyle
+  \iflatexml%
+  \begin{tabular}{llrcr}%
+  \else%
   \sisetup{
     table-format = 4.0,
   }
-  \begin{tabular}{llScr}
+  \begin{tabular}{llScS}%
+  \fi
     \toprule
     Uso & Fuente  &{Clase}& Especie & Cant. elementos \\
     \midrule
