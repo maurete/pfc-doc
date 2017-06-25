@@ -3,23 +3,24 @@
 %
 \section{Configuración de las pruebas}
 %
-Una ``prueba'' es un experimento que consiste en generar un modelo de
-clasificador y luego evaluar su desempeño clasificando un conjunto de
-prueba.
-Cada prueba se parametriza con un \e{problema} de clasificación, que
+Cada ``prueba'' refiere a un experimento consistente en generar un
+modelo de clasificador y luego evaluar su desempeño al clasificar
+un conjunto de prueba.
+Para cada prueba, se establece un {problema} de clasificación, que
 determina los datos utilizados como conjuntos de entrenamiento y de
-prueba, un \e{conjunto de \caract{s}} que establece las componentes de
-los vectores de \caract{s}, y una estrategia de selección de \hparam{s}.
+prueba, un \e{conjunto de \caract{s}}, que regula las componentes de
+los vectores de \caract{s} a utilizar, y una estrategia de selección
+de \hparam{s}.
 
 \paragraph{Semillas pseudoaleatorias.}
-La inicialización de los algoritmos pseudoaleatorios utilizados para
-particionar los datos influye en la composición de los problemas,
-generando particiones de datos más o menos complejas de modelar y/o
-clasificar.
+La inicialización de los algoritmos pseudoaleatorios que particionan
+los datos influye en la composición de los problemas,
+generando particiones más o menos ``complejas'' para la máquina
+de aprendizaje según los ejemplos que contengan.
 Para lograr que las pruebas efectuadas fueran reproducibles, se
-utilizaron cinco ``semillas'' diferentes para inicializar los
-algoritmos pseudoaleatorios, repitiendo cada prueba para las cinco
-inicializaciones.
+fijaron cinco números arbitrarios que se utilizaron como ``semillas''
+para inicializar los algoritmos pseudoaleatorios, y se repitió cada
+prueba para cada semilla.
 
 \paragraph{Características.}
 Para todos los problemas, se efectuaron pruebas para las
@@ -32,8 +33,8 @@ tripletes y auxiliares en conjunto (T-X).
 
 \paragraph{Entorno.}
 Las pruebas del software se efectuaron en entorno Matlab versión
-R2012b, en un ordenador personal de escritorio con 8\si{\giga b} de
-RAM, procesador Intel Core i5-4440 de 4 núcleos de 3.10\si{\giga Hz},
+R2012b, en un ordenador personal de escritorio con 8\iflatexml{}Gb\else\si{\giga b}\fi{} de
+RAM, procesador Intel Core i5-4440 de 4 núcleos de 3.10\iflatexml{}GHz\else\si{\giga Hz}\fi{},
 y sistema operativo Debian GNU/Linux versión 8.
 La configuración del sistema permite el cómputo paralelo con los 4
 núcleos del sistema.
