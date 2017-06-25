@@ -27,7 +27,11 @@
   {\ti{$t$}} & {\ti{$N$}} & {\ti{$t$}} & {\ti{$N$}} & {\ti{$t$}} & {\ti{$N$}}
   \\
   \midrule\rowSKIP
-  \mrow{6}{*}{{\rotatebox[origin=c]{90}{\tripletsvm}}}
+  \mrow{6}{*}{%
+  \iflatexml\tripletsvm{}%
+  \else\rotatebox[origin=c]{90}{\tripletsvm{}}%
+  \fi%
+  }
   & { S } && 15 & 20 && 194 & 41 & 11 &  12 &&   87 & 269 &  11 & 68 & 0 & 12 \\\rowSKIP\rowSKIP
   & { E } && 10 & 20 &&   7 & 41 &  4 &  53 &&   13 & 277 &   7 & 87 & 0 & 11 \\\rowSKIP\rowSKIP
   & {S-E} && 11 & 20 &&  12 & 41 &  9 & 106 &&   16 & 274 &   8 & 85 & 0 & 17 \\\rowSKIP\rowSKIP
