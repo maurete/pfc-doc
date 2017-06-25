@@ -2,10 +2,14 @@
 \begin{table}[h]
   \tableStyle
   \smaller
+  \iflatexml%
+  \begin{tabular}{ccrrrrcrrr}%
+  \else%
   \sisetup{
     table-format = 2.1
   }
   \begin{tabular}{ccrSSScSSS}
+  \fi
     \toprule
     \mrow{2}{*}{Problema} & \mrow{2}{*}{Caracts.} & &
     \mcol{3}{c}{Trivial} && \mcol{3}{c}{Exhaustiva}
