@@ -1,8 +1,15 @@
 %
 \begin{table}[h]
   \tableStyle
-  \begin{tabular}{llScr}
-    \toprule
+  \iflatexml%
+  \begin{tabular}{llrcr}%
+  \else%
+  \sisetup{
+    table-format = 4.0,
+  }
+  \begin{tabular}{llScS}%
+  \fi
+  \toprule
      Tipo & Fuente & {Clase} & Especie & Cant. elementos \\
     \midrule
     \mrow{3}{*}{Entrenamiento}
