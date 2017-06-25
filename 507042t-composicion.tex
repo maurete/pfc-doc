@@ -1,10 +1,14 @@
 %
 \begin{table}[h]
   \tableStyle
+  \iflatexml%
+  \begin{tabular}{llrcr}
+  \else%
   \sisetup{
     table-number-alignment = right
   }
   \begin{tabular}{llS[table-format = +1.0]cS[table-format = 4.0]}
+  \fi%
     \toprule
     Uso & Fuente & {Clase} & Especie & {Cant. elementos} \\
     \midrule
