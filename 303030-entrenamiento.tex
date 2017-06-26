@@ -1,19 +1,21 @@
 %
 \subsection{Entrenamiento}
 %
-El modelo generado por el entrenamiento consta de 5 redes con la
-topología especificada, inicializadas aleatoriamente.
-El ajuste de los pesos de las redes se efectúa mediante el método de
-retropropagación Rprop con los datos del conjunto de entrenamiento.
+Una vez determinado el número óptimo de neuronas en la capa oculta,
+se inicializa aleatoriamente una red MLP con la topología especificada.
+Por defecto, el entrenamiento se efectúa mediante el método de
+retropropagación Rprop, utilizando las rutinas propias de Matlab.
+La regularización del entrenamiento se efectúa separando un 20\% de
+los ejemplos, y deteniendo el entrenamiento cuando el error de
+clasificación sobre estos ejemplos alcanza su valor mínimo.
 
-La inicialización aleatoria del perceptrón multicapa precondiciona el
-algoritmo de entrenamiento haciendo que en muchos casos éste converja
-a soluciones subóptimas.
-Es por esto que el modelo generado contiene 5 redes, intentando
-contrarrestar este efecto.
-A la hora de clasificar, la predicción de clase del modelo se
-determina como la \e{moda} de las salidas de las 5 redes.
-
-La regularización de la red se efectúa separando un 20\% de los
-ejemplos seleccionados al azar, deteniento el entrenamiento cuando el
-error de clasificación alcanza su valor mínimo.
+La inicialización aleatoria del perceptrón multicapa condiciona el
+algoritmo de retropropagación, lo que en algunos casos deriva en
+soluciones subóptimas.
+Para contrarrestar este efecto, se soporta el entrenamiento de
+múltiples redes MLP en paralelo con inicializaciones aleatorias
+diferentes.
+En este caso, el modelo obtenido es en realidad un arreglo de modelos:
+para obtener predicciones de clase, la salida global se determina a
+partir de la \e{moda} de las salidas de los modelos contenidos en el
+arreglo.

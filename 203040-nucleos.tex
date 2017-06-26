@@ -3,19 +3,19 @@
 \subsection{Núcleos}
 %
 Un núcleo, denominado también por su nombre en inglés \eng{kernel}, es
-una función $k:X\times{}X\rightarrow{}\RR$ \cite{stewart} que
-generaliza el concepto de métrica.  Dado un par de vectores
-$\xx_1,\xx_2\in{}X$, un núcleo permite comparar la similaridad entre
-los vectores $\BPhi(\xx_1),\BPhi(\xx_2)$ \e{transformados} a un
-espacio vectorial inducido $Z$, sin necesidad de calcular la
-transformación $\BPhi$ de forma explícita.
+una función $k:X\times{}X\rightarrow{}\RR$ que generaliza el concepto
+de métrica \cite{stewart}.
+Dado un par de vectores $\xx_1,\xx_2\in{}X$, un núcleo permite
+comparar la similaridad entre los vectores $\BPhi(\xx_1),\BPhi(\xx_2)$
+\e{transformados} a un espacio vectorial inducido $Z$, sin necesidad
+de calcular la transformación $\BPhi$ de forma explícita.
 %
 \begin{definicion}[Núcleo]
   Una función $k:X\times{}X\rightarrow{}\R{R}$ se dice un núcleo
   en el conjunto $X$ si cumple con las siguientes propiedades:
   %
   \begin{enumerate}
-  \item $k(\xx_1,\xx_2)=k(\xx_2,\xx_1)$ para todo $\xx_1,\xx_2\in{}X$
+  \item $k(\xx_1,\xx_2)=k(\xx_2,\xx_1)$ para todo $\xx_1,\xx_2\in{}X$.
   \item Para cada $n\in\R{N}$ y para todos los puntos
     $(\xx_1,\ldots,\xx_\ell)\in{}X^\ell$, la matriz de Gram
     $K\in\R{R}^{\ell\times\ell}$ definida como
@@ -38,8 +38,9 @@ El teorema de Mercer puede aplicarse directamente a la función
 objetivo del problema dual de la SVM (\ref{e2:svm-problem-dual2}),
 reemplazando los productos internos
 $\left\langle\BPhi(\xx_i),\BPhi(\xx_j)\right\rangle$, por la función
-núcleo $k(\xx_i,\xx_j)$. Esto se llama comúnmente como el ``truco del
-núcleo'', del inglés \e{kernel trick}, y da como resultado el problema
+núcleo $k(\xx_i,\xx_j)$.
+Esto se llama comúnmente como el ``truco del núcleo'', del inglés
+\e{kernel trick}, y da como resultado el problema
 %
 \begin{align}
   \begin{split}
@@ -58,7 +59,8 @@ necesidad de calcular la transformación $\BPhi$ en forma explícita.
 
 Desde un punto de vista puramente matemático, la utilización del truco
 del núcleo no aporta ninguna ventaja, ya que los algoritmos son
-equivalentes. Desde un punto de vista computacional, sin embargo, la
+equivalentes.
+Desde un punto de vista computacional, sin embargo, la
 diferencia es decisiva: utilizando el truco del núcleo, se pueden
 calcular productos internos en espacios vectoriales de alta
 dimensionalidad --incluso infinita--, sin necesidad de efectuar la
@@ -70,7 +72,7 @@ prohibitivo o incluso imposible en un ordenador.
 %% máquinas de aprendizaje. Por ejemplo, en una tarea de clasificación es
 %% conveniente elegir una métrica que agrupa las diferentes clases.
 
-A continuación, se presentan algunos núcleos comúnmente
+A continuación, se presentan algunos núcleos más
 utilizados con las máquinas de vectores de soporte.
 %
 \begin{description}
@@ -81,9 +83,9 @@ utilizados con las máquinas de vectores de soporte.
     k(\xx_1,\xx_2)=\langle \xx_1, \xx_2\rangle=\xx_1^T\xx_2
   \end{align}
   %
-  Calcula simplemente el producto interno entre sus argumentos. Aquí,
-  el espacio imagen $Z$ es el mismo que el espacio de entrada, $X$,
-  correspondiente a la transformación identidad $\BPhi(\xx)=\xx$.
+  Calcula simplemente el producto interno entre sus argumentos.
+  Aquí, el espacio imagen $Z$ es el mismo que el espacio de entrada,
+  $X$, correspondiente a la transformación identidad $\BPhi(\xx)=\xx$.
 %
 \item[Núcleo polinómico]
   %
@@ -91,11 +93,13 @@ utilizados con las máquinas de vectores de soporte.
     k(\xx_1,\xx_2)=\left(\langle{}\xx_1,\xx_2\rangle+\theta\right)^d,
   \end{align}
   %
-  con grado $d\in\R{N}$ y desvío $\theta\in\RR$.  Este núcleo es una
-  generalización del núcleo lineal (el caso $d=1$ y $\theta=0$). Su
-  espacio imagen es el espacio de los polinomios de grado $d$ sobre el
-  espacio $X$.  El cálculo del producto interno aplicando el núcleo
-  requiere $\C{O}(\dim{}X)$ operaciones, contrastando con las
+  con grado $d\in\R{N}$ y desvío $\theta\in\RR$.
+  Este núcleo es una generalización del núcleo lineal (el caso $d=1$ y
+  $\theta=0$).
+  Su espacio imagen es el espacio de los polinomios de grado $d$ sobre
+  el espacio $X$.
+  El cálculo del producto interno aplicando el núcleo requiere
+  $\C{O}(\dim{}X)$ operaciones, contrastando con las
   $\C{O}\left((\dim{}X)^d\right)$ necesarias para el cálculo de la
   transformación $\BPhi$.
 %
@@ -107,13 +111,16 @@ utilizados con las máquinas de vectores de soporte.
   \end{align}
   %
   También llamado núcleo gaussiano, o \eng{Radial Basis Function} en
-  inglés, es el núcleo más utilizado.  En la primer forma, el
-  hiperparámetro $\sigma$ se llama parámetro de amplitud. En la
-  segunda forma el hiperparámetro $\gamma$ se llama de concentración.
+  inglés, es el núcleo más utilizado.
+  En la primer forma, el hiperparámetro $\sigma$ se llama parámetro de
+  amplitud.
+  En la segunda forma el hiperparámetro $\gamma$ se llama de
+  concentración.
   La transformación $\BPhi$ correspondiente a este núcleo genera un
   espacio imagen de dimensión infinita, imposible de calcular
-  directamente. El producto interno mediante este núcleo se puede
-  calcular en $\C{O}(\dim{}X)$ operaciones.
+  directamente.
+  El producto interno mediante este núcleo se puede calcular en
+  $\C{O}(\dim{}X)$ operaciones.
   %
 \end{description}
 %

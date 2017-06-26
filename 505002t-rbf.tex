@@ -1,11 +1,15 @@
 \begin{table}[h]
   \tableStyle
   \smaller
+  \iflatexml%
+  \begin{tabular}{ccrrrrcrrrcrrrcrrr}
+  \else%
   \sisetup{
     table-format = 2.1,
   }
   \setlength{\tabcolsep}{5.1pt}
   \begin{tabular}{ccrSSScSSScSSScSSS}
+  \fi%
     \toprule
     \mrow{2}{*}{P.} & \mrow{2}{*}{Car.} & &
     \mcol{3}{c}{Selección trivial} &&

@@ -2,44 +2,46 @@
 \subsubsection{Cálculo del gradiente $\grad{E}$}
 \label{se:gradE}
 %
-Para poder utilizar un método de descenso por gradiente en el espacio
-de los \hparam{s} se considera un vector genérico de \hparam{s}
-$\Btheta$ de modo que $E=E(\Btheta)$, y se calculan las derivadas de
-$E$ respecto de los mismos.
+Considerando al error empírico como función de los hiperparámetros:
+$E=E(\Btheta)$, en donde $\Btheta=(\theta_1,\theta_2,\ldots)$ es un
+vector genérico de \hparam{s}, el objetivo es determinar las derivadas
+$\dpar{E}{\theta_j}{}$.
 En primer lugar, se tiene
 %
 \begin{align}
 \label{gradE}
-  \grad{E} = \sum_{k=1}^{\ell^V} \grad{E_k} =
-  \sum_{ \{i:t_k=0\}  } \grad{\hat{p}_i}
-  - \sum_{ \{j:t_k=1\}  } \grad{\hat{p}_j}
-  = \sum_{k=1}^{\ell^V} y_k \grad{\hat{p}_k}
+  \dpar{E}{\theta_j}{} = \sum_{k=1}^{\ell^V} \dpar{E_k}{\theta_j}{} =
+  \sum_{ \{m:t_k=0\}  } \dpar{\hat{p}_m}{\theta_j}{}
+  - \sum_{ \{n:t_k=1\}  } \dpar{\hat{p}_n}{\theta_j}{}
+  = \sum_{k=1}^{\ell^V} y_k \dpar{\hat{p}_k}{\theta_j}{}.
 \end{align}
 %
-Por la regla de la cadena, la derivada $\grad{\hat{p}_k}$ respecto de
-un hiperparámetro ${\theta_j}$ es
+Aplicando la regla de la cadena y calculando la derivada
+$\dpar{\hat{p}_k}{f_k}{}$, se tiene
 %
 \begin{align}
-  \grad{\hat{p}_k}=\dpar{\hat{p}_k}{\theta_i}{} =
-  \dpar{\hat{p}_k}{f_k}{}\dpar{f_k}{\theta_i}{} =
-  -A\hat{p}_k(1-\hat{p}_k)\dpar{f_k}{\theta_i}{}.
-  \label{eq:deriv-pk-thetak}
+  \dpar{\hat{p}_k}{\theta_j}{} =
+  \dpar{\hat{p}_k}{f_k}{}\dpar{f_k}{\theta_j}{} =
+  -A\hat{p}_k(1-\hat{p}_k)\dpar{f_k}{\theta_j}{}.
+  \label{eq:deriv-pk-thetaj}
 \end{align}
 %
-Para la determinación de $\dpar{f_k}{\theta_j}{}$ se sigue el
-procedimiento propuesto en \cite{keerthi,glasmachers} e implementado
-en \cite{shark}. En primer lugar, se observa que $f_k$ viene dado por
+El cálculo de $\dpar{f_k}{\theta_j}{}$ a continuación se efectúa
+aplicando una interpretación geométrica del modelo SVM regularizado
+\cite{keerthi,glasmachers,shark}.
+En primer lugar, se observa que $f_k$ viene dado por
 %
 \begin{align}
-  f_k = \langle \ww,\Phi(\xx_k)\rangle+b = \sum_{i=1}^\ell \alpha_i y_i k(\xx_i,\xx_k) + b,
+  f_k = \langle \ww,\Phi(\xx_k)\rangle+b
+      = \sum_{i=1}^\ell \alpha_i y_i k(\xx_i,\xx_k) + b,
   \label{fk}
 \end{align}
 %
-en donde $((\xx_i,y_i)),i=1,\ldots,\ell$ son los ejemplos del conjunto
-utilizado para entrenamiento, $k(\cdot,\cdot)$ es la función
+en donde $((\xx_i,y_i)),\,i=1,\ldots,\ell$ son los ejemplos del
+conjunto utilizado para entrenamiento, $k(\cdot,\cdot)$ es la función
 núcleo, y $(\alpha_i, b)$ son los parámetros del modelo SVM $h$.
-La derivada de $f_k$ respecto de algún hiperparámetro $\theta_j$ viene
-dada por
+Aplicando la regla de la derivada de un producto,
+$\dpar{f_k}{\theta_j}{}$ viene dada por
 %g
 \begin{align}
   \dpar{f_k}{\theta_j}{} = \sum_{i=1}^\ell y_i
@@ -47,8 +49,8 @@ dada por
     \dpar{k(\xx_i,\xx_k)}{\theta_j}{} \right].
 \end{align}
 %
-Según sea el valor de $\alpha_i$ (el multiplicador correspondiente al
-vector de entrenamiento $\xx_i$), se definen los conjuntos de índices
+Según sea el valor de $\alpha_i$, el multiplicador correspondiente al
+vector de entrenamiento $\xx_i$, se definen los conjuntos de índices
 %
 \begin{align}
   \label{unbounded-sv-set}
@@ -58,20 +60,23 @@ vector de entrenamiento $\xx_i$), se definen los conjuntos de índices
   n &= \left\{i\in\{1,\ldots,\ell\}: \alpha_i=0 \right\}.
 \end{align}
 %
-Mediante interpretación geométrica de la solución al problema de la
-SVM, se sabe que para aquellos vectores $\xx_i$ que no son de soporte,
-se cumple que $\alpha_i=0$, luego las derivadas
-$\dpar{\alpha_n}{\theta_j}{}$ son nulas. Cuando
-$\alpha_i=\pm{}C$, el valor de $\alpha_g$ viene limitado (en valor absoluto) por el
-parámetro $C$, y las derivadas $\dpar{\alpha_g}{\theta_j}{}$ son entonces
+Efectuando una interpretación geométrica de la solución al problema de la
+SVM \cite{CITARMODELOSVM}, se sabe que para aquellos vectores $\xx_i$
+que no son de soporte, se cumple que $\alpha_i=0$, luego las derivadas
+$\dpar{\alpha_n}{\theta_j}{}$ son nulas.
+Cuando $\alpha_i=\pm{}C$, el valor de $\alpha_g$ viene limitado (en
+valor absoluto) por el \hparam{} $C$, y las derivadas
+$\dpar{\alpha_g}{\theta_j}{}$ son entonces
 %
 \begin{align}
-  \dpar{\alpha_g}{C}{} \tab= y_g, \tabs \dpar{\alpha_g}{{\theta}^K_j}{} \tab= 0.
+  \dpar{\alpha_g}{C}{} \tab= y_g, \tabs
+  \dpar{\alpha_g}{{\theta}^K_j}{} \tab= 0,
 \end{align}
 %
-Aquí, $\theta_j^K$ denota un hiperparámetro específico del núcleo.
-Para simplificar el cálculo de las derivadas de $\alpha_u$ y $b$ se
-plantea el problema en forma matricial. Sea la \e{matriz del núcleo}
+en donde $\theta_j^K$ es un hiperparámetro del núcleo.
+Para simplificar el cálculo de las derivadas de $\alpha_u$ y $b$, se
+plantea el problema en forma matricial.
+Sea la \e{matriz del núcleo}
 %
 \begin{align}
   K = \begin{pmatrix} k(\xx_1,\xx_1) & k(\xx_1,\xx_2) & \cdots & k(\xx_1,\xx_\ell)
@@ -89,16 +94,17 @@ plantea el problema en forma matricial. Sea la \e{matriz del núcleo}
 %
 donde en la matriz de la derecha los elementos de $K$ han sido
 reordenados en submatrices $K_{uu},K_{ug},\ldots$ según los conjuntos
-de índices $u, g, n$ definidos anteriormente.  Sea la matriz
+de índices $u, g, n$ definidos anteriormente.
+Sea la matriz
 %
 \begin{align}
   H=\begin{pmatrix} K_{uu} & \B{1}_u \\ \B{1}_u^T & 0
-  \end{pmatrix}
+  \end{pmatrix},
 \end{align}
 %
-con $\B{1}_u$ un vector columna de $|u|$ elementos iguales a 1,
-entonces la derivada de $(\B{\alpha}_u,b)^T$ respecto del
-hiperparámetro $\theta_j$ viene dada por
+en donde $\B{1}_u$ es un vector columna de $|u|$ elementos iguales a 1.
+Entonces, la derivada de $(\B{\alpha}_u,b)^T$ respecto de un \hparam{}
+$\theta_j$ viene dada por
 %
 \begin{align}
   \dpar{}{\theta^K_j}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=
@@ -107,31 +113,39 @@ hiperparámetro $\theta_j$ viene dada por
       \begin{pmatrix}\alpha_{u}\\b\end{pmatrix}
         +C \begin{pmatrix}\dpar{K_{gu}}{\theta^K_j}{}\\0\end{pmatrix}
           y_g
-          \right], \\
+          \right],
+\end{align}
+%
+donde $\B{1}_g$ es un vector columna de $|g|$ elementos iguales a 1 y
+$\B{y}_g$ es el vector de clases correspondientes a los elementos en
+$g$.
+Cuando $\theta_j = C$, se tiene
+%
+\begin{align}
   \dpar{}{C}{} \begin{pmatrix}\alpha_{u}\\b\end{pmatrix} &=
     -H^{-1} \left[
       \begin{pmatrix}{K_{gu}}\\\B{1_g^T}\end{pmatrix} y_g
-      \right],
+      \right].
 \end{align}
 %
-donde $\B{1}_g$ un vector columna de $|g|$ elementos iguales a 1 y
-$\B{y}_g$ el vector de clases correspondientes a los elementos en
-$g$. Para los detalles de este resultado se refiere al lector a
+Para los detalles de este resultado, se refiere al lector a
 \cite{glasmachers} y \cite{keerthi}.
-
-Una vez obtenidas las derivadas de $({\B{\alpha},b})^T$ respecto de
-los hiperparámetros $\B{\theta}$, la derivada de $f$  respecto
-de los mismos se calcula simplemente según
+Una vez conocidas las derivadas
+$\dpar{({\B{\alpha},b})^T}{\theta_j}{}$, la derivada
+$\dpar{f}{\theta_j}{}$ se calcula según
 %
 \begin{align}
-  \dpar{f_k}{C}{} &=  \sum_{i=1}^l y_i\left[
-    \dpar{\alpha_i}{C}{} k(x_i,x_k) \right]
-  + \dpar{b}{C}{} ,\\
   \dpar{f_k}{\theta^K_j}{} &=  \sum_{i=1}^l y_i \left[
     \dpar{\alpha_i}{\theta^K_j}{} k(x_i,x_k) +
     \dpar{k(x_i,x_k)}{\theta^K_j}{} \alpha_i \right]
-  + \dpar{b}{\theta^K_j}{}.
+  + \dpar{b}{\theta^K_j}{}, \\
+    \dpar{f_k}{C}{} &=  \sum_{i=1}^l y_i\left[
+    \dpar{\alpha_i}{C}{} k(x_i,x_k) \right]
+  + \dpar{b}{C}{}.
 \end{align}
 %
-Reemplazando estos resultados en (\ref{eq:deriv-pk-thetak}), el cálculo
-del gradiente $\nabla{}E$ (\ref{gradE}) se efectúa directamente.
+Reemplazando estos resultados en la
+\iflatexml{}Ecuación~\ref{eq:deriv-pk-thetaj}\else\autoref{eq:deriv-pk-thetaj}\fi{},
+el gradiente $\nabla{}E=\left(\dpar{E}{\theta_j}{}\right)$
+(\iflatexml{}Ecuación~\ref{gradE}\else\autoref{gradE}\fi{}) se calcula
+directamente.

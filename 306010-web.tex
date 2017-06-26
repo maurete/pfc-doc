@@ -2,18 +2,54 @@
 %
 \subsection{Interfaz de usuario web}
 %
-Para la creación de la interfaz de usuario web se utilizó la
-herramienta \eng{Web-demo builder} \cite{webdemobuilder}, desarrollado
-en el laboratorio \eng{sinc(i)} de la Facultad de Ingeniería y
-Ciencias Hídricas.
-Se codificó una función específica \func{webif} para la utilización
-del software a través de una interfaz web, y un archivo
-\eng{Makefile} que permite la generación del archivo empaquetado
-requerido por el software Web-demo builder.
+La función \func{webif} permite la utilización del sistema a través
+una interfaz web provista por el software \eng{\webdemo{}}
+\cite{webdemobuilder}, un desarrollo propio del laboratorio
+\eng{sinc(i)} de la Facultad de Ingeniería y Ciencias Hídricas.
+Esta función abarca toda la funcionalidad del sistema, aunque presenta
+menor flexibilidad que la interfaz de línea de comandos.
+Recibe un número fijo de argumentos, que son presentados al usuario en
+el formulario web generado por \eng{\webdemo{}}:
+%
+\begin{itemize}
+\item
+  Para la generación del modelo del clasificador:
+  %
+  \begin{itemize}
+  \item
+    Tipo de clasificador requerido,
+  \item
+    Conjunto de características consideradas,
+  \item
+    Estrategia de selección de hiperparámetros,
+  \item
+    Archivo FASTA con datos de entrenamiento de clase positiva,
+  \item
+    Archivo FASTA con datos de entrenamiento de clase negativa.
+  \end{itemize}
+  %
+\item
+  Para clasificación con un modelo generado previamente:
+  %
+  \begin{itemize}
+  \item
+    Archivo con el modelo de clasificador,
+  \item
+    Archivo FASTA con datos de prueba,
+  \item
+    Clase de los ejemplos contenidos en el conjunto de prueba (opcional).
+  \end{itemize}
+  %
+\end{itemize}
+%
+La función está diseñada para ser invocada en modo no interactivo, y
+en caso de éxito genera un reporte en formato HTML que incluye el
+modelo de clasificador incorporado.
+El archivo HTML puede ser guardado y utilizado posteriormente por el
+usuario como modelo para clasificar nuevos datos a través de la
+interfaz web.
+En caso de encontrarse errores, la función \func{webif} escribe un
+archivo \e{log} que es presentado al usuario informando del error
+encontrado.
 
-Finalmente, se procedió a la puesta en servicio de una interfaz web de
-demostración en el servidor de pruebas provisto por los creadores de
-Web-demo builder, la cual está disponible en la siguiente URL:
-
-\url{http://ec2-52-5-194-68.compute-1.amazonaws.com/scripts/57769864/webif/}
-\hl{Esta URL no anda, cambiar!!!}
+\hl{Agregar/publicar web de demostración.}

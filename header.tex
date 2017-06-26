@@ -243,6 +243,7 @@
 \newcommand{\micropred}{{microPred}}
 \newcommand{\deltamirbase}{{$\mathbf{\mathsf{\Delta}}$miRBase}}
 \newcommand{\premirna}[1]{pre-miRNA#1}
+\newcommand{\webdemo}{Web-demo builder}
 \newcommand{\ncrna}[1]{ncRNA#1}
 \newcommand{\caract}[1]{característica#1}
 \newcommand{\hparam}[1]{hiperparámetro#1}
@@ -252,15 +253,15 @@
            {\smaller $\bar{x}$}}
 \newcommand{\rowSTDN}{&&&{\smaller $\sigma$}}
 
-\newcommand{\VP}{\T{\slshape{}VP}}
-\newcommand{\VN}{\T{\slshape{}VN}}
-\newcommand{\FP}{\T{\slshape{}FP}}
-\newcommand{\FN}{\T{\slshape{}FN}}
-\newcommand{\SE}{\T{\slshape{}SE}}
-\newcommand{\SP}{\T{\slshape{}SP}}
-\newcommand{\GM}{\T{\slshape{}Gm}}
-\newcommand{\PR}{\T{\slshape{}Pr}}
-\newcommand{\AC}{\T{\slshape{}Ac}}
+\newcommand{\VP}{\T{\slshape VP}}
+\newcommand{\VN}{\T{\slshape VN}}
+\newcommand{\FP}{\T{\slshape FP}}
+\newcommand{\FN}{\T{\slshape FN}}
+\newcommand{\SE}{\T{\slshape SE}}
+\newcommand{\SP}{\T{\slshape SP}}
+\newcommand{\GM}{\T{\slshape Gm}}
+\newcommand{\PR}{\T{\slshape Pr}}
+\newcommand{\AC}{\T{\slshape Ac}}
 \newcommand{\avg}{\T{$\bar{x}$}}
 \newcommand{\std}{\T{$\sigma$}}
 
@@ -511,17 +512,17 @@
 
 % dataset
 \newcommand{\dset}[1]{%
-\iflatexml\else\ifpdf\ssf{#1}\fi\fi
+\iflatexml{\bfseries #1}\else\ifpdf\ssf{#1}\fi\fi
 }
 
 % work
 \newcommand{\work}[1]{%
-\iflatexml\else\ifpdf\e{#1}\fi\fi
+\iflatexml\textsl{#1}\else\ifpdf\e{#1}\fi\fi
 }
 
 % problem
 \newcommand{\prob}[1]{%
-\iflatexml\else\ifpdf\sbsf{#1}\fi\fi
+\iflatexml\textsl{#1}\else\ifpdf\sbsf{#1}\fi\fi
 }
 
 \usepackage{tabu}

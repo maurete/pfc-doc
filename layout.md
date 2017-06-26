@@ -12,6 +12,7 @@ titlepage.tex
 201020-entrenamiento.tex
 201022-parametros.tex
 201023-hiperparametros.tex
+201021-errentrenamiento.tex
 201024-sobreajuste.tex
 201026-sesgo-varianza.tex
 201030-generalizacion.tex
@@ -23,6 +24,8 @@ titlepage.tex
 201050-seleccion-auto-hiper.tex
 201060-medidas.tex
 201062-se-sp.tex
+201064-gm.tex
+201066-otras.tex
 202000-mlp.tex
 202010-redes-biologicas.tex
 202020-modelo-neurona-artificial.tex
