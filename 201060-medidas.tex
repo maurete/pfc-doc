@@ -2,16 +2,14 @@
 %
 \subsection{Medidas de evaluación de un clasificador binario}
 %
-Los clasificadores binarios generan modelos cuya salida alterna
-entre dos valores posibles, que se interpretan en forma genérica
-como ``clase positiva'' y ``clase negativa''.
-Para este tipo especialmente
-importante de clasificadores, se utilizan una serie de métricas que
-relacionan la pertenencia de clase de los datos con el
-error de clasificación.
+En el análisis del comportamiento de los clasificadores binarios se
+utiliza una serie de métricas que relacionan la pertenencia de clase
+de los datos con el error de clasificación.
 
-Dado un modelo $h$ de salida binaria, se definen las siguientes
-medidas que caracterizan el resultado de clasificar un conjunto $T$:
+Dado un modelo $h$ de salida binaria, que se interpreta en términos
+genéricos como ``clase positiva'' o ``clase negativa'', las 
+siguientes medidas caracterizan el resultado de clasificar un 
+conjunto $T$:
 %
 \iflatexml\begin{itemize}\else\begin{itemize}[style=nextline]\fi
   \item\e{Verdaderos positivos ($\VP$)}: número de elementos de clase

@@ -2,40 +2,48 @@
 %
 \subsubsection{Especificación del formato de entrada}
 %
-Los archivos son interpretados con formato de texto plano, y cada uno
+Los archivos vienen dados en formato de texto plano, y cada uno
 contiene uno o más ejemplos contiguos.
 Cada ejemplo se describe por una línea de descripción, una o más
 líneas de secuencia, y opcionalmente una o más líneas de estructura
 secundaria:
-
-La línea de descripción comienza con el carácter ``mayor que''
-(\mono{>}) seguido de un identificador (``número de acceso'') de la
-secuencia. Continúa con una descripción del ejemplo que puede
-contener, por ejemplo, el nombre científico de la especie o la
-posición de la secuencia dentro del genoma de la especie. Tanto el
-nombre identificador como la descripción son opcionales.
-Cada línea de descripción indica el comienzo de un nuevo ejemplo.
-
-Las líneas de secuencia siguen a la de descripción, y consisten en
-caracteres contiguos que representan nucleótidos. En el ácido
-ribonucleico (RNA), un nucleótido contiene una de las bases adenina
-(\mono{A}), citosina (\mono{C}), guanina (\mono{G}), o uracilo
-(\mono{U}), luego, los caracteres permitidos en la secuencia son
-\mono{ACGU} y sus variantes en minúsculas \mono{acgu}. También se
-permiten caracteres de fin de línea, que son ignorados. La secuencia
-termina cuando se encuentra el comienzo de una línea de descripción o
-de estructura secundaria.
-
-Las líneas de estructura secundaria vienen dadas en notación
-``punto-paréntesis'' compuesta por caracteres \mono{.}, \mono{(}, y
-\mono{)}, indicando que el nucleótido correspondiente está suelto (no
-acoplado), o es primero o segundo dentro de un par de bases,
-respectivamente.  Opcionalmente, la línea finaliza por un número entre
-paréntesis que indica la denominada ``mínima energía libre''
-resultante del cálculo de la estructura secundaria. La estructura
-secundaria termina cuando se encuentra el comienzo de una línea de
-descripción, que indica el comienzo de un nuevo ejemplo.
-
+%
+\begin{itemize}
+\item
+  La línea de descripción comienza con el carácter ``mayor que''
+  (\mono{>}) seguido de un identificador (llamado ``número de
+  acceso'') de la secuencia.
+  Continúa con una descripción del ejemplo que puede contener, por
+  ejemplo, el nombre científico de la especie o la posición de la
+  secuencia dentro del genoma de la especie.
+  Tanto el nombre identificador como la descripción son opcionales.
+  Cada línea de descripción leída indica el comienzo de un nuevo
+  ejemplo.
+\item
+  Las líneas de secuencia siguen a la de descripción, y consisten en
+  caracteres contiguos que representan las bases de los nucleótidos.
+  En el ácido ribonucleico (RNA), un nucleótido contiene una de las
+  bases adenina (\mono{A}), citosina (\mono{C}), guanina (\mono{G}), o
+  uracilo (\mono{U}), luego, los caracteres permitidos en la secuencia
+  son \mono{ACGU} y sus variantes en minúsculas \mono{acgu}.
+  También se permiten caracteres de fin de línea, que son ignorados
+  cuando se encuentran en medio de la secuencia.
+  La secuencia termina cuando se encuentra el comienzo de una línea de
+  descripción o de estructura secundaria.
+\item
+  Las líneas de estructura secundaria vienen dadas en notación
+  ``punto-paréntesis'' compuesta por caracteres \mono{.}, \mono{(}, y
+  \mono{)}, indicando que el nucleótido correspondiente está suelto
+  (no acoplado), o es primero o segundo dentro de un par de bases,
+  respectivamente.
+  Opcionalmente, la línea finaliza por un número entre paréntesis que
+  indica la denominada ``mínima energía libre'' resultante del cálculo
+  de la estructura secundaria.
+  La estructura secundaria termina cuando se encuentra el comienzo de
+  una línea de descripción, que indica el comienzo de un nuevo
+  ejemplo.
+\end{itemize}
+%
 En la \iflatexml{}Figura~\ref{fastafmt}\else\autoref{fastafmt}\fi{} se
 muestra un fragmento de archivo FASTA con 3 ejemplos de pre-miRNAs de
 la especie \e{Caenorhabditis elegans}, y en la

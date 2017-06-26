@@ -4,38 +4,23 @@
 %
 \chapter{Descripción del software}
 %
-El software desarrollado es un sistema completo de reconocimiento de
-\premirna{s} cuya funcionalidad puede describirse en torno a tres
-tareas principales:
-%
-\begin{enumerate}
-\item \e{Preprocesamiento}: abarca la funcionalidad necesaria para
-  transformar los datos de entrada a un formato utilizable por la
-  máquina de aprendizaje.
-\item \e{Generación del modelo del clasificador}: efectúa el
-  entrenamiento de la máquina de aprendizaje seleccionando
-  aquellos \hparam{s} que maximicen el desempeño del clasificador.
-\item \e{Clasificación}: aplica el modelo sobre datos
-  nuevos para obtener predicciones de clase.
-\end{enumerate}
-%
-Como punto de partida se consideraron los trabajos previos
-\cite{xue,ng,batuwita,sheng,sewer,ding}, donde se presentan
-herramientas de software con propósito similar al del método
-desarrollado en el presente trabajo. En particular, se utilizaron
-conjuntos de datos y técnicas de extracción de \caract{s} de
-\cite{xue,ng,batuwita} debido a la disponibilidad de los datos
-suplementarios.
+El software desarrollado consiste en un sistema completo de
+reconocimiento de \premirna{s}, con funcionalidad para la obtención de
+un modelo de clasificador así como su posterior aplicación sobre
+nuevos datos.
 
-La implementación se efectuó en lenguaje Matlab versión R2012b y hace
-uso de los módulos adicionales ``Neural Network Toolbox'' y
-``Bioinformatics Toolbox'' del mismo software. Además, integra
-funcionalidad con las herramientas ``libSVM'' \cite{libsvm} y RNAFold
-del paquete ``Vienna RNA'' \cite{vienna}. Se utilizó el software
-``Web-demo Builder''\cite{webdemobuilder} para la creación de la
-interfaz web.
+Como punto de partida se consideraron los trabajos
+\cite{xue,ng,batuwita,sheng,sewer,ding}, en los que se presentan
+herramientas de software con propósito similar al del presente
+desarrollo.
+En particular, debido a la disponibilidad de datos suplementarios,
+se utilizaron los conjuntos de datos y se implementaron técnicas de
+extracción de \caract{s} de los trabajos \cite{xue,ng,batuwita}.
 
-En adelante, se describen la tres tareas principales de
-preprocesamiento, generación del modelo del clasificador y
-clasificación, precedidas por una descripción general del
-funcionamiento del software.
+La implementación se efectuó en lenguaje Matlab versión R2012b,
+haciendo uso uso de los módulos adicionales ``Neural Network Toolbox''
+y ``Bioinformatics Toolbox''.
+Además, se integraron las herramientas de software \work{libSVM}
+\cite{libsvm} y \work{RNAFold} \cite{vienna}.
+Se utilizó el software \work\webdemo{} \cite{webdemobuilder} para
+la creación de la interfaz web.

@@ -7,17 +7,17 @@ archivos de entrada.
 La lectura se efectúa en modo secuencial, línea por línea, y aplicando
 análisis sintáctico se identifican las líneas de descripción,
 secuencia y estructura secundaria.
-El procesamiento en esta etapa genera un arreglo en memoria con
-información estructurada de los ejemplos, que contiene la secuencia,
-estructura secundaria, y descripción de cada ejemplo.
-Este arreglo es utilizado en la etapa de extracción de características
-para continuar el procesamiento.
+En esta etapa se genera un arreglo en memoria con información
+estructurada de los ejemplos, que contiene la secuencia, estructura
+secundaria, y descripción leídas para cada ejemplo.
+Este arreglo es utilizado en la tarea posterior de extracción de
+\caract{s} para la generación de los vectores de \caract{s}.
 
 El formato aceptado por el sistema es una extensión del formato FASTA,
-un formato originado en un software de igual nombre \cite{fasta} muy
+un formato originado en un software de igual nombre \cite{fasta}, muy
 difundido dentro de la disciplina.
 El software RNAfold \cite{vienna}, utilizado para el cálculo de la
 estructura secundaria, produce archivos con formato similar a FASTA
 incorporando información de estructura secundaria.
 La especificación del formato aceptado por el sistema es compatible
-con el formato FASTA estándar y la variante RNAfold.
+tanto con el formato FASTA estándar así como la variante RNAfold.

@@ -3,51 +3,70 @@
 %
 \section{Interfaz de usuario}
 %
-Se codificaron funciones de alto nivel como una interfaz de usuario
-de línea de comandos amigable. Esta interfaz consiste en
-tres funciones principales que permiten al usuario cargar los datos del disco,
-generar el modelo del clasificador, y clasificar nuevos datos.
+El sistema incluye una interfaz de usuario de línea de comandos de
+``alto nivel'', común para los distintos tipos de clasificadores
+soportados.
+Esta interfaz de usuario consiste en tres funciones específicas que
+permiten al usuario cargar los datos del disco, generar el modelo del
+clasificador, y clasificar nuevos datos.
 %
 \begin{enumerate}
 \item
-  La función \func{problem\_gen} carga del disco los datos de
-  entrenamiento y prueba según la especificación del usuario, y
-  retorna una estructura en memoria que representa un ``problema''
-  sobre el cual trabajar.
+  La función \func{problem\_gen} carga datos de entrenamiento y de
+  prueba según la especificación del usuario, y retorna una estructura
+  en memoria denominada ``problema'', que puede utilizarse como
+  entrada a las funciones de obtención del modelo y de clasificación.
+  A grandes rasgos, esta función lleva a cabo la etapa de
+  preprocesamiento de los datos.
 \item
-  La función \func{select\_model} permite al usuario elegir la
-  estrategia de selección de hiperparámetros a seguir.
-  Recibe como argumento el problema (con datos de entrenamiento)
-  generado por \func{problem\_gen}, y retorna un clasificador
-  entrenado con los hiperparámetros óptimos encontrados.
-  La función incluye soporte tanto para clasificadores MLP así como SVM.
+  La función \func{select\_model} permite obtener el modelo del
+  clasificador a partir de los datos de entrenamiento.
+  Recibe como argumento un problema generado con \func{problem\_gen},
+  y retorna un modelo de clasificador óptimo según las opciones
+  especificadas como parámetros.
+  La función ofrece la funcionalidad de construcción del modelo del
+  clasificador tanto MLP como SVM, con sus respectivas estrategias de
+  selección de hiperparámetros.
 \item
-  La función \func{problem\_classify} permite clasificar los datos de prueba
-  especificados dentro de un problema.
+  La función \func{problem\_classify} permite clasificar los datos de
+  prueba especificados dentro de un problema generado con
+  \func{problem\_gen}.
   Recibe como argumento el modelo entrenado y el problema que se desea
   clasificar, y retorna una estructura en memoria con las predicciones
-  para todos los elementos incluidos en el conjunto de prueba del
-  problema.
+  para todos los elementos incluidos en el conjunto de prueba
+  definidos en el problema.
 \end{enumerate}
 %
-Los pasos a seguir para entrenar un nuevo modelo de clasificador
-son:
-%
-\begin{enumerate}
-\item Generar un problema de clasificación mediante la función
-  \func{problem\_gen} que contenga datos de entrenamiento de clase
-  positiva así como negativa.
-\item Entrenar un clasificador invocando a la función
-  \func{select\_model}.
-\end{enumerate}
-%
-Cuando se requiere obtener predicciones de clase, el procedimiento
-en la línea de comandos es el siguiente:
-%
-\begin{enumerate}
-\item Generar un problema de clasificación mediante la función
-  \func{problem\_gen} que contenga datos de prueba para clasificar.
-\item Invocar la función \func{problem\_classify} pasándole como argumentos
-  el modelo generado previamente y el problema con datos de prueba.
-\end{enumerate}
+Los casos de uso típicos del sistema son la generación de un modelo de
+clasificador y la obtención de predicciones de clase.
+Utilizando las funciones de interfaz de usuario, estas tareas pueden
+efectuarse según los siguientes pasos
+\begin{itemize}
+\item
+  Obtener un nuevo modelo de clasificador:
+  %
+  \begin{enumerate}
+  \item
+    Generar un problema de clasificación mediante la función
+    \func{problem\_gen} que contenga datos de entrenamiento de clase
+    positiva así como negativa.
+  \item
+    Entrenar un clasificador invocando a la función
+    \func{select\_model}.
+  \end{enumerate}
+  %
+\item
+  Obtener predicciones de clase:
+  %
+  \begin{enumerate}
+  \item
+    Generar un problema de clasificación mediante la función
+    \func{problem\_gen} que contenga datos de prueba para clasificar.
+  \item
+    Invocar la función \func{problem\_classify}, pasándole como
+    argumentos el problema y un modelo obtenido mediante
+    \func{select\_model}.
+  \end{enumerate}
+  %
+\end{itemize}
 %

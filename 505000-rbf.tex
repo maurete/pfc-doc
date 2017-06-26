@@ -3,23 +3,20 @@
 %
 \section{Pruebas del clasificador SVM con núcleo RBF}
 %
-Los resultados de aplicar el clasificador SVM-RBF sobre los tres
-problemas definidos se presentan en la
-\iflatexml{}Tabla~\ref{tbl:rbf-results}\else\autoref{tbl:rbf-results}\fi.
+En la
+\iflatexml{}Tabla~\ref{tbl:rbf-results}\else\autoref{tbl:rbf-results}\fi
+se observa que los resultados obtenidos para los tres problemas de
+clasificación resultaron comparables a los obtenidos con el
+clasificador SVM con núcleo lineal.
+Mientras que para el problema \prob\tripletsvm{} las tasas de
+clasificación superaron las obtenidas con el núcleo lineal, para los
+problemas \prob\mipred{} y \prob\micropred{} se observaron tasas
+generalmente inferiores.
 
-Los resultados obtenidos para los tres problemas de clasificación
-resultaron comparables a los obtenidos con el clasificador SVM con
-núcleo lineal.
-En el caso del problema \prob\tripletsvm{}, los resultados de las
-pruebas arrojaron mejores tasas de clasificación, para los problemas
-\prob\mipred{} y \prob\micropred{} las tasas obtenidas en general
-resultaron inferiores que las obtenidas con el clasificador SVM-lineal.
-
-La utilización del conjunto de \caract{s} \dset{S-E} obtuvo los mejores
-resultados de clasificación para todas las pruebas efectuadas con este
-clasificador.
-Estos resultados superan además los obtenidos con los clasificadores
-MLP y SVM-lineal.
+Para todos los problemas, la utilización del conjunto de \caract{s}
+\dset{S-E} resultó en las mayores tasas de clasificación, superando
+además las tasas obtenidas con los clasificadores MLP y SVM con núcleo
+lineal.
 
 La estrategia de selección de \hparam{s} mediante minimización de la
 cota RM obtuvo muy buenos resultados de clasificación, especialmente
@@ -27,6 +24,6 @@ teniendo en cuenta su bajo coste computacional, que se analiza más
 adelante.
 Resulta prudente sospechar que el modelo generado con esta estrategia
 presenta sobreajuste en el caso del problema \prob\tripletsvm{}.
-Asimismo, se observa que la estrategia divirgió al utilizar el
-conjunto de \caract{s} de secuencia \dset{S} para el problema
-\prob\mipred{}.
+Asimismo, se observa que la estrategia presentó divergencia al
+utilizar el conjunto de \caract{s} de secuencia \dset{S} para el
+problema \prob\mipred{}.

@@ -3,43 +3,40 @@
 \subsection{SVM de margen duro}
 %
 La máquina de vectores de soporte más simple es aquella llamada ``de
-margen duro'', y es en un clasificador de margen máximo que incorpora
-el ``truco del núcleo''. Dado un núcleo $k:X\times{}X\rightarrow\RR$,
-se asume que el conjunto de datos transformado
+margen duro'', y consiste en un clasificador de margen máximo que
+incorpora el ``truco del núcleo''.
+Dado un núcleo $k:X\times{}X\rightarrow\RR$, se asume que el conjunto
+de datos transformado
 $\left((\BPhi(\xx_1),y_1)),\ldots,(\BPhi(\xx_\ell),y_\ell)\right)$ es
 linealmente separable en el espacio inducido $Z$.
 El entrenamiento consiste en resolver el
-problema de optimización (\ref{e2:svm-problem-kernel}), que en
-notación vectorial se escribe
+Problema~\ref{e2:svm-problem-kernel}), que en notación vectorial se
+escribe
 %
-\begin{align}
-  \label{e2:svm-hard-margin}
-  \begin{split}
+\begin{equation}\label{e2:svm-hard-margin}
+  \begin{aligned}
     \max_{\Balpha}\quad\tabs
       \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
     \T{sujeto a} \quad\tabs
       \yy^T\Balpha = 0, \\
       \tabs \alpha_i\geq 0,  i\in {1,\ldots,\ell }.
-  \end{split}
-\end{align}
+  \end{aligned}
+\end{equation}
 %
 La matriz $\QQ$ es semidefinida positiva con elementos por
 $Q_{ij}=y_iy_jk(\xx_i,\xx_j)$, y $\B{1}$ es un vector columna de
-$\ell$ elementos iguales a $1$.  El entrenamiento de este problema se
-efectúa comúnmente mediante el algoritmo denominado SMO
-(\eng{Sequential Minimal Optimization}, Optimización Mínima
-Secuencial) \cite{smo} específicamente diseñado para la SVM, aunque
-puede ser resuelto mediante cualquier algoritmo capaz de resolver un
-problema de optimización cuadrático.
+$\ell$ elementos iguales a $1$.
+El entrenamiento de este problema se efectúa comúnmente mediante el
+algoritmo denominado SMO (\eng{Sequential Minimal Optimization},
+Optimización Mínima Secuencial) \cite{smo} específicamente diseñado
+para la SVM, aunque puede ser resuelto mediante cualquier algoritmo
+capaz de resolver un problema de optimización cuadrático.
 
 El modelo de la máquina de vectores de soporte de margen
 duro viene dado por
 %
-\begin{align}
-  \begin{split}
+\begin{align}\label{e2:svm-model-hard0}
     h(\xx) &= \T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right).
-  \end{split}
-\label{e2:svm-model-hard0}
 \end{align}
 %
 Para el cálculo de $h(\xx)$, se utiliza la función núcleo $k$ y se
@@ -54,8 +51,8 @@ observa que
 %
 El subíndice $j$ de la
 \iflatexml{}Ecuación~\ref{e2:svm-model-b-kernel}\else\autoref{e2:svm-model-b-kernel}\fi{}
-es cualquiera que cumpla con la condición $\alpha_j>0$.  Con estos
-resultados, el modelo $h(\xx)$ se escribe
+es cualquiera que cumpla con la condición $\alpha_j>0$.
+Con estos resultados, el modelo $h(\xx)$ se escribe
 %
 \begin{align}
   h(\xx) &=

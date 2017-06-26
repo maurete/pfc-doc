@@ -1,24 +1,25 @@
 %
 \subsubsection{La función error empírico}
 %
-El error de validación del modelo $h$ sobre un conjunto
-$V=((\xx_k,y_k))\,i=1,\ldots,\ell^V$ puede escribirse
+La función error empírico es la función objetivo a minimizar, y se
+basa en una interpretación probabilística del error del modelo.
+Para explicarla, considérese en primer lugar que el error de del
+modelo $h$ sobre un conjunto de validación
+$V=((\xx_k,y_k)),\,i=1,\ldots,\ell^V$ puede escribirse
 %
 \begin{align}
 \label{e3:error-test-alt}
-  E^V &= \frac{1}{\ell^V}\sum_{k=1}^{\ell^V} H(-{y}_k {h}(\xx_k))
+  E^V &= \frac{1}{\ell^V}\sum_{k=1}^{\ell^V} H(-{y}_k {h}(\xx_k)),
 \end{align}
 %
-donde $H(\cdot)$ es la función escalón de Heaviside. Esta formulación
-del error con la función escalón $H$ en lugar de la pérdida $0-1$
-equivalente pone de relieve el hecho que el error $E^V$ es una función
-discontinua, al ser suma de discontinuas, y por tanto no derivable.
-La función ``error empírico'' \cite{ayat} se construye a partir de una
-interpretación bayesiana del concepto de error, y posee las
-características deseables de continuidad y derivabilidad que permiten
-su utilización como función objetivo en un esquema de minimización por
-descenso por gradiente.
-
+donde $H(\cdot)$ es la función escalón unitario de Heaviside.
+Esta formulación del error con la función $H$, en lugar de la pérdida
+$0-1$ equivalente, pone de relieve el hecho que $E^V$ es una función
+discontinua (por ser suma de discontinuas), y por tanto no derivable.
+La función error empírico, en cambio, se construye a partir de una
+interpretación probabilística del error \cite{ayat}, y posee las
+propiedades deseables de continuidad y derivabilidad que permiten
+su minimización mediante descenso por gradiente.
 Si se conoce la \e{probabilidad a posteriori} $p_k$ de que el ejemplo
 $\xx_k$ pertenezca a la clase positiva
 %
@@ -38,18 +39,18 @@ clasificar el ejemplo $\xx_k$ según
   \end{cases}
 \end{align}
 %
-donde $t_k=\frac{y_k+1}{2}$ es un ``valor deseado'' calculado a partir
-de la clase conocida $y_k$. La probabilidad de error para el conjunto
-completo $V$ puede escribirse
+donde $t_k=\frac{1}{2}({y_k+1})$ es un ``valor deseado'' calculado a
+partir de la clase conocida $y_k$.
+La función error empírico es simplemente la probabilidad de error
+promedio para el conjunto completo $V$:
 %
 \begin{align}
 \label{Err1}
   E = \frac{1}{\ell^V}\sum_{j=1}^{\ell^V} E_k.
 \end{align}
 %
-Ésta es la función \e{error empírico}.
 Para el cálculo de $E$ se requiere conocer la probabilidad $p_k$
-(\iflatexml{}Ecuación~\ref{e3:pk}\else\autoref{e3:pk}\fi), la cual no
+(\iflatexml{}Ecuación~\ref{e3:pk}\else\autoref{e3:pk}\fi), que no
 puede determinarse a partir de la salida binaria del modelo SVM.
-En su lugar, se utiliza un estimador $\hat{p}_k$ de la probabilidad
-real $p_k$.
+En su lugar, se utiliza un estimador $\hat{p}_k$, que se obtiene
+ajustando un modelo probabilístico a la salida del modelo.

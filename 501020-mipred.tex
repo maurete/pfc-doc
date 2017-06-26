@@ -2,12 +2,12 @@
 %
 \subsection{Problema miPred}
 %
-El problema \mipred{} se basa en los datos utilizados en \cite{ng}
+El problema \prob\mipred{} se basa en los datos utilizados en \cite{ng}
 para el entrenamiento y prueba del método \work\mipred.
 
 Si bien en \cite{ng} se describen los pasos efectuados para el armado
 de los conjuntos de entrenamiento y prueba, no se dispone de
-información de los ejemplos que los componen.
+información de los ejemplos específicos que los componen.
 Esto significa que si bien se mantiene el origen de los datos y el
 número de ejemplos de clase positiva y negativa en cada conjunto,
 resulta imposible replicarlos de manera exacta.
@@ -22,10 +22,10 @@ Los ejemplos de clase negativa se obtienen de la base de datos
 \dset{coding}, al igual que en el problema \prob\tripletsvm.
 
 Respetando el procedimiento descripto en \cite{ng}, para el armado del
-conjunto de entrenamiento \dset{TR-H} se seleccionaron al azar 200
+conjunto de entrenamiento \dset{TR-H} se seleccionan al azar 200
 ejemplos de clase positiva y 400 de clase negativa.
-El conjunto de prueba \dset{TE-H} se armó con los 123 ejemplos
-restantes de clase positiva y 246 ejemplos de clase negativa
+El conjunto de prueba \dset{TE-H} se conforma con los 123 ejemplos
+restantes de clase positiva, y con 246 ejemplos de clase negativa
 seleccionados al azar, excluyendo los ya utilizados para
 entrenamiento.
 La composición de los conjuntos de entrenamiento y prueba se detalla

@@ -23,7 +23,7 @@ Luego,
   \dpar{\rho_R}{\gamma}{} &= -\Bbeta^T \dpar{\KK}{\gamma}{}\Bbeta.
 \end{align}
 %
-La existencia de estas está garantizada siempre que las restricciones
+La existencia de éstas está garantizada siempre que las restricciones
 del problema de optimización no dependan de los hiperparámetros
 \cite{chung}.
 Ahora bien, en la forma dual del problema SVM
@@ -98,12 +98,12 @@ respecto de $C$ y $\gamma$ según
     \dpar{\rho}{C}{} &= \dpar{\rho_M}{C}{} \rho_R + \rho_M \dpar{\rho_R}{C}{} \\
     &= \frac{2}{C} \left(\B{1}^T\Balpha - \Balpha^T\QQ\Balpha\right) \left( R^2 + \frac{1}{C} \right)
     - 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right)
-    \left( \frac{1}{C^2} \right)  \\[2em]
+    \left( \frac{1}{C^2} \right) \label{drho-dc} \\[2em]
     \dpar{\rho}{\gamma}{} &= \dpar{\rho_M}{\gamma}{} \rho_R + \rho_M \dpar{\rho_R}{\gamma}{}\\
     &= \left( - \Balpha^T \left(\yy^T \dpar{\KK}{\gamma}{}\yy\right) \Balpha \right)
     \left( R^2 + \frac{1}{C} \right)
     - 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right)
-    \left( \Bbeta^T \dpar{\KK}{\gamma}{} \Bbeta \right)
+    \left( \Bbeta^T \dpar{\KK}{\gamma}{} \Bbeta \right) \label{drho-dgamma}
 \end{align}
 %
 donde los elementos de las matrices $\QQ$ y $\dpar{\KK}{\gamma}{}$ son

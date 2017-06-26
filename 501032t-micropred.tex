@@ -1,9 +1,16 @@
 %
 \begin{table}[h]
   \tableStyle
-  \begin{tabular}{llScr}
-    \toprule
-     Tipo & Fuente & {Clase} & Especie & Cant. elementos \\
+  \iflatexml%
+  \begin{tabular}{llrcr}
+  \else%
+  \sisetup{
+    table-format = 4.0,
+  }
+  \begin{tabular}{llScS}
+  \fi%
+  \toprule
+    {Uso} & {Fuente}      &{Clase}& {Especie} &{Cant. elementos} \\
     \midrule
     \mrow{3}{*}{Entrenamiento}
     &  \mirbase{} 12.0    & +1    & humana    & 587              \\
