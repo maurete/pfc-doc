@@ -1,12 +1,16 @@
 %
 \begin{table}[h]
   \tableStyle
+  \iflatexml%
+  \begin{tabular}{llrcr}
+  \else%
   \sisetup{
     table-format = 4.0,
   }
-  \begin{tabular}{llScr}
+  \begin{tabular}{llScS}
+  \fi%
     \toprule
-    Uso & Fuente  &{Clase}& Especie & Cant. elementos \\
+    {Uso} & {Fuente} &{Clase}&{Especie}&{Cant. elementos}\\
     \midrule
     \mrow{2}{*}{Entrenamiento}
     & \mirbase{} 5.0 &    +1 & humana  &             163 \\

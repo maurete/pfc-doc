@@ -1,6 +1,9 @@
 %
 \begin{table}[h]
   \tableStyle
+  \iflatexml%
+  \begin{tabular}{lrrrrrrr}
+  \else%
   \sisetup{
     table-format = 2.1(2),
     table-number-alignment = right,
@@ -8,6 +11,7 @@
   }
   \begin{tabular}{lS[table-format=2.0]
       S[table-format=4.0]SSSSS[table-format=2.1]}
+  \fi%
     \toprule
     {Problema} & {Clase} & {Elems.} &
     {MLP-B}    & {SVM-LE}   & {SVM-RE}   & {SVM-RR}   & \cite{xue}\\

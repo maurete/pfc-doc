@@ -26,23 +26,23 @@ variable de holgura no negativa $\xi_i$, que es la función de pérdida
 %
 La variable $\xi_i$ mide la violación funcional del margen para cada
 ejemplo $(\xx_i,y_i)$, indicada por la distancia al hiperplano de
-separación. Por definición, $\xi_i$ es mayor a cero sólo cuando el
-modelo clasifica incorrectamente el ejemplo, esto es, cuando
+separación.
+Por definición, $\xi_i$ es mayor a cero sólo cuando el modelo
+clasifica incorrectamente el ejemplo, esto es, cuando
 $h(\xx_i)\neq{}y_i$.
 
 Se introduce un hiperparámetro de regularización $C>0$ que ajusta el
 balance entre complejidad del modelo y la cantidad de error, lo que deriva
 en el problema de optimización \emph{primal}
 %
-\begin{align}
-  \label{svm-primal-blando}
-  \begin{split}
+\begin{equation}\label{svm-primal-blando}
+  \begin{aligned}
     \min_{(\ww,b,\xi)} \quad & \frac{1}{2}\|\ww\|^2+C\sum_{i=1}^{\ell}\xi_i\\
     \T{sujeto a} \quad &
     y_i\left(\langle{}\ww,\BPhi(\xx_i)\rangle+b\right) \geq 1-\xi_i, i=1,\ldots,\ell, \\
     & \xi_i \geq 0, i=1,\ldots,\ell.
-  \end{split}
-\end{align}
+  \end{aligned}
+\end{equation}
 %
 
 %% La SVM de margen blando (con regularización ``L1'' o ``de norma 1'')
@@ -73,12 +73,12 @@ en el problema de optimización \emph{primal}
 Para obtener la forma dual de este problema, en primer lugar se
 calcula el funcional lagrangiano
 %
-\begin{align}
-  \begin{split}
+\begin{equation}
+  \begin{aligned}
   \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta) &= \frac{1}{2} \|\ww\|^2 + C \sum_{i=1}^{\ell} \xi_i \\
   &+ \sum_{i=1}^{\ell} \alpha_i (1-\xi_i-y_i(\langle\ww,\BPhi(\xx_i)\rangle+b)) - \sum_{i=1}^{\ell} \beta_i\xi_i
-  \end{split}
-\end{align}
+  \end{aligned}
+\end{equation}
 %
 En el mínimo, se establecen las derivadas respecto de las variables
 $\ww$, $b$, $\Bxi$ a cero y se obtiene
@@ -98,29 +98,31 @@ $\ww$, $b$, $\Bxi$ a cero y se obtiene
 %
 Reescribiendo estos resultados en el problema dual, se tiene
 %
-\begin{align}
-\begin{split}\label{svmprob-dual-soft}
+\begin{equation}
+\begin{aligned}\label{svmprob-dual-soft}
     \max_{\Balpha} \quad
     & f(\Balpha) = \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
     \T{sujeto a}\quad & \yy^T\Balpha = 0, \\
                       & 0\leq\alpha_i\leq C, \T{ para todo } i\in {1,\ldots,\ell }.
-\end{split}\end{align}
+\end{aligned}\end{equation}
 %
-Este problema es el mismo que aquel de la SVM de magen duro, salvo por la restricción
-$\alpha_i\leq C$.
+Este problema es el mismo que aquel de la SVM de magen duro, salvo por
+la restricción $\alpha_i\leq C$.
 
-El problema \ref{svmprob-dual-soft} es el tipo de clasificador SVM más utilizado,
-y se denomina también SVM ``de norma 1'' o ``con regularización L1''. Esto
-se debe a que la variable holgura $\xi_i$ se incorpora con potencia 1.
-Una variante de la SVM de margen blando es aquella que utiliza la norma dos del
-vector holgura $\B{\xi}=(\xi_1,\ldots,\xi_\ell)^T$, correspondiente
-a la pérdida de bisagra al cuadrado. En este caso, el objetivo primal
-se define como
+El problema \ref{svmprob-dual-soft} es el tipo de clasificador SVM más
+utilizado, y se denomina también SVM ``de norma 1'' o ``con
+regularización L1''.
+Esto se debe a que la variable holgura $\xi_i$ se incorpora con
+potencia 1.
+Una variante de la SVM de margen blando es aquella que utiliza la
+norma dos del vector holgura $\B{\xi}=(\xi_1,\ldots,\xi_\ell)^T$,
+correspondiente a la pérdida de bisagra al cuadrado.
+En este caso, el objetivo primal se define como
 %
-\begin{align}
-  \label{svm-l2}
+\begin{align}\label{svm-l2}
   \frac{1}{2}\|w\|^2+\frac{C}{2}\sum_{n=1}^{\ell}\xi_n^2,
 \end{align}
 %
 con las mismas restricciones que el problema anterior.
-La forma resultante se denomina ``SVM de margen blando con regularización L2''.
+La forma resultante se denomina ``SVM de margen blando con
+regularización L2''.

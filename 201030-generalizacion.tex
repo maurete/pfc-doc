@@ -2,10 +2,8 @@
 %
 \subsection{Estimación del error de generalización}
 %
-El problema del sobreajuste existe debido a la imposibilidad de
-conocer el error de generalización del modelo, que es en definitiva la
-medida que se busca minimizar durante el entrenamiento.
-Un buen algoritmo de entrenamiento deberá ser capaz de estimar el
-error de generalización con la mayor precisión posible.
-Las medidas enumeradas a continuación son diferentes estimadores del
-error de generalización, cada una con sus ventajas y desventajas.
+Un buen algoritmo de entrenamiento debe ser capaz de minimizar el
+error de generalización del modelo tanto como sea posible.
+Dado que el mismo resulta imposible de calcular sin conocer la
+distribución generadora de los datos $\nu$, se recurre a otras
+medidas para estimarlo.

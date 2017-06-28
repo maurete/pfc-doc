@@ -5,25 +5,26 @@
 En el trabajo \cite{xue} los autores definen tres conjuntos de prueba
 suplementarios para el método \work\tripletsvm{} denominados
 \dset{updated}, \dset{conserved-hairpin} y \dset{cross-species}.
-Tal como en el problema \tripletsvm{}, el entrenamiento se efectúa con
-163 ejemplos de clase positiva tomados de \dset{mirbase50} y 168
-ejemplos de clase negativa provenientes del conjunto \dset{coding}.
+Tal como en el problema \prob\tripletsvm{}, el entrenamiento se
+efectúa con 163 ejemplos de clase positiva tomados de \dset{mirbase50}
+y 168 ejemplos de clase negativa provenientes del conjunto
+\dset{coding}.
 Con el modelo obtenido, se clasifican los tres conjuntos de prueba:
 %
 \begin{description}
-  \item{\dset{updated}}
+  \item{\dset{updated}}\\
   Consiste en 39 pre-miRNAs experimentalmente validados pertenecientes a
   la especie humana, que fueron publicados durante el desarrollo del
   método Triplet-SVM.
 %
-  \item{\dset{conserved-hairpin}}
+  \item{\dset{conserved-hairpin}}\\
   Este conjunto de prueba consta de 2444 secuencias conservadas con
   estructura secundaria de horquilla, extraídas del cromosoma humano
   19. En su mayoría, estas secuencias son pseudo pre-miRNAs (clase
   negativa), aunque se conoce que algunas de ellas son
   pre-miRNAs verdaderos.
 %
-  \item{\dset{cross-species}}
+  \item{\dset{cross-species}}\\
   Contiene 581 secuencias de pre-miRNAs experimentalmente validadas
   pertenecientes a diversas especies no humanas, tales como animales,
   plantas y virus, extraídas de la versión 5.0 de miRBase.
