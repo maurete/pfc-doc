@@ -2,37 +2,47 @@
 %
 \subsection{El clasificador lineal}
 %
-El clasificador lineal es una máquina de aprendizaje \cite{nilsson}
-que sirve como fundamento de la máquina de vectores de soporte. De
-hecho, la SVM es en sí misma un tipo particular de
-clasificador lineal.
-
-En primer lugar, sea $\BPhi:X\rightarrow{}Z$ una función que
-transforma el denominado \e{espacio de entrada} $X$ a otro espacio
-vectorial inducido $Z$, denominado \e{espacio imagen}.
-A partir del
-conocimiento previo del problema, se pretende que la transformación
-$\BPhi$ sea tal que los \e{vectores imagen} $\zz=\BPhi(\xx)$ se
-ubiquen, según su clase $\yy$, en regiones del espacio $Z$ bien
-diferenciadas entre sí.
-
-Entonces, dado un patrón de entrada $\xx\in{}X$, el clasificador
-lineal calcula primero el vector imagen $\zz=\BPhi(\xx)$, para luego
-asignarle una clase de salida $\hat{y}=\pm{}1$ según sea el signo de
-la función discriminante lineal $f=\ww^T\zz+b$. Los valores de $\ww$
-y $b$ se determinan en el entrenamiento del clasificador, cuyos detalles
-se omiten de la presente descripción.
-
-Por último, se observa que la ecuación $\ww^T\zz+b=0$ define un
-hiperplano en el espacio inducido $Z$. Dicho hiperplano determina una
-frontera de decisión entre las clases $\hat{\yy}=+1$ e
-$\hat{\yy}=-1$. Para visualizarlo, obsérvese que, desde el punto de
-vista geométrico, el signo de $\ww^T\zz+b$ determina de qué lado del
-plano se encuentra el punto $\zz$.
+Las máquinas de vectores de soporte se basan en un clasificador simple
+llamado clasificador lineal \cite{nilsson}.
+Dado un vector de entrada $\xx\in{}X$, el clasificador lineal
+determina la clase de $\xx$ según
+%
+\begin{align*}
+  y = \T{signo}(\langle\vv,\xx\rangle+b)
+\end{align*}
+%
+en donde $\vv$ y $b$ son los parámetros del modelo obtenidos mediante
+un algoritmo de entrenamiento.
+%
+\subsubsection{Espacio imagen}
+%
+La primera adición de la SVM al clasificador lineal básico es una
+transformación de los vectores de entrada a un \e{espacio imagen}.
+Esto se logra aplicando una función $\BPhi:X\rightarrow{}Z$, que
+transforma el \e{espacio de entrada} $X$ a otro espacio vectorial
+inducido $Z$, llamado \e{espacio imagen}.
+La elección de la función $\BPhi$ es tal que los datos transformados
+sean separables en el espacio $Z$.
+Dada una entrada $\xx\in{}X$, la máquina de vectores de soporte
+calcula un vector imagen $\zz=\BPhi(\xx)$ y le asigna una clase de
+salida $\hat{y}=\pm{}1$ según
+%
+\begin{align*}
+  y = \T{signo}(\ww^T \BPhi(\xx)+b)
+\end{align*}
+%
+Los valores de $\ww$ y $b$ se obtienen del algoritmo de entrenamiento,
+que se explicará más adelante.
+La ecuación $\ww^T\BPhi(\xx)+b=0$ define un hiperplano en el espacio
+imagen $Z$, que actúa como frontera de decisión entre las clases
+$\hat{\yy}=+1$ e $\hat{\yy}=-1$.
+Para visualizarlo, obsérvese que, desde el punto de vista geométrico,
+el signo de $\ww^T\BPhi(\xx)+b$ indica de qué lado del plano se
+encuentra el punto $\zz$.
 %
 \begin{quote}
   {\bfseries Notación.}\quad{}En la literatura, resulta común
-  encontrar que el vector $\zz$ se denomina \e{vector de
+  encontrar que el vector $\BPhi(\xx)$ se denomina \e{vector de
     características} (\e{feature vector}) y el espacio vectorial $Z$
   como \e{espacio de las características} (\e{feature space}).  En
   este trabajo se prefiere denominarlos con los nombres alternativos

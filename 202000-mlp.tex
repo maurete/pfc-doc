@@ -3,83 +3,25 @@
 %
 \section{Perceptrón multicapa}
 %
-%% El perceptrón multicapa (\eng{MultiLayer Perceptron}, MLP)
-%% \cite{mlp2,mlp1} es una red neuronal \feedforward{}
-%% (\eng{feedforward}), consistente en una serie de {unidades} o
-%% neuronas organizadas en \e{capas} y conectadas por ``enlaces''
-%% denominados \e{pesos sinápticos}.  Las capas se diferencian en
-%% una capa \e{de entrada}, una o más capas \e{ocultas} y una capa
-%% \e{de salida}.
-
-%% La capa de entrada contiene nodos sensores que ``leen'' un vector
-%% de entrada externo, y lo transmiten a través de los enlaces sinápticos
-%% a la primer capa oculta. Las capas ocultas reciben como entrada las
-%% salidas de la capa anterior, determinan su valor de salida aplicando
-%% una \e{función de activación} a la suma ponderada sus entradas, y
-%% transmiten su valor de salida a la capa siguiente. Este proceso
-%% continúa capa por capa hasta alcanzar la capa de salida.
-
-%% Desde un punto de vista global, un vector arbitrario es propagado
-%% \e{hacia adelante} a través de la red, para finalmente obtener un
-%% vector de activación en la capa de salida.  La función generada por la
-%% red, que transforma un vector de entrada en uno de salida, se
-%% determina completamente por los pesos sinápticos de todos los enlaces
-%% de la red.  En la \refer{fig:mlp} se puede observar una representación
-%% esquemática de un perceptrón multicapa con 3 entradas, 4 neuronas en
-%% la capa oculta y 2 valores de salida.
-
-%% --------------
-
 El perceptrón multicapa (\eng{MultiLayer Perceptron}, MLP)
-\cite{mlp2,mlp1} es una máquina de aprendizaje basada en una red
-neuronal artificial compuesta por {unidades} o neuronas
-organizadas según una arquitectura de \e{capas}.
+\cite{mlp2,mlp1} es un tipo de red neuronal artificial que se utiliza
+como máquina de aprendizaje de propósito general.
 
-%% y conectadas por ``enlaces''
-%% denominados \e{pesos sinápticos}
-%% con una arquitectura organizada en capas.
-%% Cada nodo se conecta mediante enlaces ponderados denominados
-%% ``pesos sinápticos'' a todos los nodos en las capas adyacentes.
+Las redes neuronales artificiales (\eng{ANNs}) son algoritmos de
+cómputo paralelo basados en una arquitectura de \e{unidades}
+interconectadas denominadas \e{neuronas}.
+Una red neuronal se representa como un grafo orientado, donde los
+nodos son las neuronas y las aristas conectan las salidas de una
+neurona con la entrada de otra, asociándole a cada conexión una
+ponderación o peso.
+El perceptrón multicapa combina una topología \e{acíclica} o \e{con
+  propagación hacia adelante} con un algoritmo de entrenamiento basado
+en la \e{retropropagación}, que ajusta los \e{pesos} de las conexiones
+entre neuronas reduciendo el error en la salida.
 
-%% La primer capa, denominada capa de entrada, contiene nodos sensores
-%% que ``leen'' un vector de entrada externo, y lo transmiten a través
-%% de los enlaces sinápticos a la primer capa oculta.
-%% Las capas subsiguientes se componen de ``neuronas'', nodos computadores
-%% que determinan su valor de salida a partir de las salidas de los nodos en
-%% la capa anterior y los valores de los pesos sinápticos que los conectan.
-
-%% Las capas ocultas reciben como entrada las
-%% salidas de la capa anterior, determinan su valor de salida aplicando
-%% una \e{función de activación} a la suma ponderada sus entradas, y
-%% transmiten su valor de salida a la capa siguiente. Este proceso
-%% continúa capa por capa hasta alcanzar la capa de salida.
-
-%% El MLP utiliza para su entrenamiento un algoritmo denominado de
-%% ``retropropagación'', que entrena la red propagando una señal de error
-%% a través de la misma, ajustando los ``pesos'' de las conexiones entre
-%% neuronas a fin de lograr que la red efectúe una transformación deseada
-%% de los datos de entrada leídos en la primer capa a valores de salida
-%% apropiados en la última capa.
-
-%% ----------- historia
-
-%% - perceptrón simple, adaline, madaline
-%% - retropropagación > mlp
-
-%% ----------- neurona
-
-%% - unidad computadora; suma ponderada (pesos), umbral, campo de activación
-%% - función de activación: derivable, no lineal
-%% - señales de error, ajuste pesos
-
-%% ----------- arquitectura
-
-%% - capas
-%% - completamente conectadas
-%% - propagacion del error
-
-%% ----------- retropropagación
-
-%% - propagacion del error, ajuste de los pesos
-%% - derivadas
-%% - variantes: rprop, scg
+A continuación, se presenta una descripción del perceptrón multicapa,
+comenzando por una reseña de su inspiración biológica y continuando
+con una descripción del modelo computacional de una neurona.
+Más adelante se describe la arquitectura de la red, y finalmente se
+explican diferentes algoritmos de entrenamiento mediante
+retropropagación.
