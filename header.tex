@@ -141,8 +141,11 @@
 %% \setlist[itemize]{noitemsep}
 
 \usepackage{tikz}
+\iflatexml
+\else
 \usetikzlibrary{external}
 \tikzexternalize % genera PDFs con las figuras embebidas
+\fi
 %% \usepackage{pgfkeys}
 %% \usepackage{pgfgantt}
 %% \usetikzlibrary{babel}
