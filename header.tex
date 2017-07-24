@@ -1,3 +1,7 @@
+%
+% opciones para el compilador rubber
+% rubber: shell_escape
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ../pfc/doc/conf/preconfig.tex
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -20,6 +24,9 @@
 
 % Linux Libertine
 \usepackage{libertine}
+
+% Linux Libertine
+\usepackage{libertinust1math}
 
 % TeX Gyre Heros
 %\usepackage[scale=0.96]{tgheros}
@@ -133,7 +140,12 @@
 %% \setlist[enumerate]{noitemsep}
 %% \setlist[itemize]{noitemsep}
 
-%% \usepackage{tikz}
+\usepackage{tikz}
+\iflatexml
+\else
+\usetikzlibrary{external}
+\tikzexternalize % genera PDFs con las figuras embebidas
+\fi
 %% \usepackage{pgfkeys}
 %% \usepackage{pgfgantt}
 %% \usetikzlibrary{babel}

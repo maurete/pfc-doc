@@ -2,22 +2,23 @@
 %
 \subsection{Extracción de \caract{s}}
 %
-La extracción de \caract{s} es la tarea que construye para cada
-ejemplo un vector numérico que lo representa.
-Cada elemento del vector es una \e{\caract{}}, un atributo o medida
-que se toma sobre el dato original y se trata como variable aleatoria.
+La extracción de \caract{s} es el proceso de construir un vector
+numérico que representa cada ejemplo.
+Las componentes de este vector, llamadas \e{\caract{s}}, son
+medidas calculadas a partir del dato original.
 El objetivo de la extracción de \caract{s} es alcanzar una mejor
 representación de los datos desde el punto de vista de la máquina de
 aprendizaje, que sea al mismo tiempo más informativa (menos
 redundante) y numéricamente tratable.
 
-La construcción del conjunto de características conforma toda una
-disciplina en sí misma, que excede el alcance del presente trabajo.
-En cambio se adopta un enfoque simple, que consiste en construir un
-vector de 66 \caract{s} tomando como referencia los trabajos
+La construcción del vector de características conforma toda una
+disciplina en sí misma, y su estudio excede el alcance del presente
+trabajo.
+En cambio, se adoptó un enfoque simple que consiste en construir un
+vector de $66$ \caract{s} basado en aquellas de los trabajos
 \cite{xue,ng,batuwita}.
-La elección de las 66 \caract{s} se justifica en que cada una de ellas
-cumple con los siguientes criterios:
+Las características calculadas fueron seleccionadas en base a los
+siguientes criterios:
 %
 \begin{enumerate}
 \item
@@ -32,8 +33,12 @@ cumple con los siguientes criterios:
   validar la implementación propia.
 \end{enumerate}
 %
-Las 66 medidas que componen el vector de \caract{s} se distinguen,
-según el tipo de dato que representan, en 36 \caract{s} de tripletes,
-23 \caract{s} de la secuencia, y 7 de la estructura secundaria.
-A continuación, se describe la composición del vector de \caract{s}
-sguiendo este orden.
+Según el tipo de dato que representan, las $66$ \caract{s} calculadas
+se agrupan en: $36$ \caract{s} de \e{tripletes}, $23$ \caract{s} de la
+\e{secuencia}, y $7$ de la \e{estructura secundaria}.
+En adelante, se describen estas \caract{s} en detalle siguiendo este
+orden.
+Para una mejor comprensión de la terminología, en la
+\iflatexml{}Figura~\ref{fig:hairpin-parts}\else\autoref{fig:hairpin-parts}\fi{}
+se ilustran las diferentes partes que componen una estructura
+secundaria típica en forma de horquilla.

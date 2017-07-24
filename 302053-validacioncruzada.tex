@@ -2,20 +2,23 @@
 %
 \subsubsection{Generación de particiones para validación cruzada}
 %
-La generación de las particiones de validación cruzada se lleva a cabo
-una vez armado el conjunto de entrenamiento con $\ell^E$ elementos.
-En lugar de replicar los datos del conjunto de entrenamiento, las
-particiones de validación cruzada se generan simplemente como vectores
-de índices que apuntan a los ejemplos correspondientes del conjunto de
-entrenamiento $D^E$. Partiendo de un vector de índices en orden
-aleatorio entre 1 y $\ell^E$, se separan los primeros $p\cdot\ell^E$
-elementos para la partición de validación, utilizando los restantes
-para la partición de estimación correspondiente. Esta operación se
-repite para cada $j=1,\ldots,k$, efectuando un desplazamiento circular
-del vector de índices en $\ell^E/k$ elementos entre cada iteración.
-
+%La generación de las particiones de validación cruzada se lleva a cabo
+%una vez armado el conjunto de entrenamiento con $\ell^E$ elementos.
+Las particiones de validación cruzada se generan como un conjunto de
+índices sobre el conjunto de entrenamiento.
+En primer lugar, se genera un vector de índices en orden aleatorio
+entre $1$ y $\ell^E$, el número de ejemplos en el conjunto de
+entrenamiento.
+Luego se seleccionan los primeros $p\cdot\ell^E$ elementos para la
+partición de validación, y los elementos restantes para la partición
+de estimación correspondiente.
+La operación se repite para cada $j=1,\ldots,k$, efectuando un
+desplazamiento circular del vector de índices en $\ell^E/k$ elementos
+entre iteraciones.
 El parámetro $p$ regula la proporción de elementos de entrenamiento a
 utilizar para validación, mientras que $k$ determina el número de
-iteraciones de la validación cruzada. Cuando $p=1/k$, cada ejemplo en
-el conjunto de entrenamiento será utilizado exactamente una vez para
-validación.
+iteraciones de la validación cruzada.
+Ambos parámetros pueden ser especificados por el usuario, y por
+defecto se utilizan los valores $k=10$ $p=1/$.
+Cuando $p=1/k$, cada ejemplo del conjunto de entrenamiento será
+utilizado exactamente una vez para validación.
