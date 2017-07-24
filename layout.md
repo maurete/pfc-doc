@@ -11,6 +11,7 @@ figures/rnafoldfmt/rnafold.png
 302030-caracteristicas.tex
 figures/hairpin_cel-lsy-6/hairpin.png
 302031-tripletes.tex
+figures/triplet1/triplet1.png
 figures/triplet/triplete.png
 302032-tripletes.tex
 302033t-tripletes.tex
