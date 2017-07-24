@@ -10,13 +10,13 @@ Dado que no existe una regla general para determinar el número
 recomendado de neuronas ocultas \cite{nnfaq3}, se establece un rango
 de prueba de entre $0$ y $200$ neuronas.
 Por razones de costo computacional, en lugar de efectuar la búsqueda
-sobre todos los valores posibles, se prueban $20$ valores $h$ de
+sobre todos los valores posibles, se prueban $20$ valores $N_h$ de
 neuronas en la capa oculta, variando en una escala aproximadamente
 logarítmica:
 %
 \begin{align}
   \label{mlp-hidden-tries}
-  h=0,1,2,3,4,5,7,9,11,14,19,24,32,41,54,70,91,118,154,200.
+  N_h=0,1,2,3,4,5,7,9,11,14,19,24,32,41,54,70,91,118,154,200.
 \end{align}
 %
 Una vez entrenados y probados los $20$ modelos mediante validación

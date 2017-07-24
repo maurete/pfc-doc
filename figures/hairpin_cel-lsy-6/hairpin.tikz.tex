@@ -48,7 +48,7 @@
 \fill[] (21) circle (1.1);
 \coordinate[label={[xshift=0,yshift=0]below:A}] (22) at (90.3837,27.5196);
 \fill[] (22) circle (1.1);
-\coordinate[label={[xshift=2,yshift=0]below:A}] (23) at (90.3837,12.5196);
+\coordinate[label={[xshift=0,yshift=0]below:A}] (23) at (90.3837,12.5196);
 \fill[] (23) circle (1.1);
 \coordinate[label={[xshift=0,yshift=0]below:A}] (24) at (90.3837,-2.4804);
 \fill[] (24) circle (1.1);
@@ -86,11 +86,11 @@
 \fill[] (40) circle (1.1);
 \coordinate[label={[xshift=0,yshift=0]above:A}] (41) at (135.1205,-124.6396);
 \fill[] (41) circle (1.1);
-\coordinate[label={[xshift=0,yshift=0]above:A}] (42) at (131.0625,-109.9258);
+\coordinate[label={[xshift=-1,yshift=-1]above:A}] (42) at (131.0625,-109.9258);
 \fill[] (42) circle (1.1);
-\coordinate[label={[xshift=0,yshift=0]above:A}] (43) at (121.0159,-98.4354);
+\coordinate[label={[xshift=-3,yshift=0]above:A}] (43) at (121.0159,-98.4354);
 \fill[] (43) circle (1.1);
-\coordinate[label={[xshift=0,yshift=0]above:A}] (44) at (106.9753,-92.4500);
+\coordinate[label={[xshift=-3,yshift=0]above:A}] (44) at (106.9753,-92.4500);
 \fill[] (44) circle (1.1);
 \coordinate[label={[xshift=0,yshift=0]above:C}] (45) at (106.3387,-77.4635);
 \fill[] (45) circle (1.1);
@@ -114,7 +114,7 @@
 \fill[] (54) circle (1.1);
 \coordinate[label={[xshift=0,yshift=0]above:A}] (55) at (106.3387,72.5027);
 \fill[] (55) circle (1.1);
-\coordinate[label={[xshift=0,yshift=0]above:U}] (56) at (106.9753,87.4892);
+\coordinate[label={[xshift=1,yshift=0]above:U}] (56) at (106.9753,87.4892);
 \fill[] (56) circle (1.1);
 \coordinate[label={[xshift=0,yshift=0]above:G}] (57) at (114.3110,99.3921);
 \fill[] (57) circle (1.1);
@@ -136,11 +136,11 @@
 \fill[] (65) circle (1.1);
 \coordinate[label={[xshift=0,yshift=0]above:U}] (66) at (113.1041,231.7661);
 \fill[] (66) circle (1.1);
-\coordinate[label={[xshift=0,yshift=0]above:U}] (67) at (113.7407,246.7525);
+\coordinate[label={[xshift=1,yshift=0]above:U}] (67) at (113.7407,246.7525);
 \fill[] (67) circle (1.1);
-\coordinate[label={[xshift=0,yshift=0]above:C}] (68) at (117.3198,255.4922);
+\coordinate[label={[xshift=0,yshift=2]above:C}] (68) at (117.3198,255.4922);
 \fill[] (68) circle (1.1);
-\coordinate[label={[xshift=0,yshift=0]above:G}] (69) at (114.0726,262.3858);
+\coordinate[label={[xshift=-2,yshift=0]above:G}] (69) at (114.0726,262.3858);
 \fill[] (69) circle (1.1);
 \coordinate[label={[xshift=0,yshift=0]above:A}] (70) at (114.0726,277.3858);
 \fill[] (70) circle (1.1);
@@ -261,22 +261,22 @@ to node [midway, label={[label distance=-20,below]:Bucle central}] {} (stemloop)
 
 \node (loose) at (40,70) {Bases sueltas};
 \node (paired) at (45,200) {Bases acopladas};
-\draw[-stealth] (loose) -- (70,50);
-\draw[-stealth] (loose) -- (70,100);
-\draw[-stealth] (paired) -- (80,160);
-\draw[-stealth] (paired) -- (82,200);
-\draw[-stealth] (paired) -- (84,230);
+\draw[-stealth] (loose) -- (68,50);
+\draw[-stealth] (loose) -- (69,102);
+\draw[-stealth] (paired) -- (78,164);
+\draw[-stealth] (paired) -- (80,208);
+\draw[-stealth] (paired) -- (82,236);
 
-\draw[dotted] (73,-10) rectangle (125,6);
-\draw[dotted] (73,-40) rectangle (125,-24);
+\draw[] (72,-10) rectangle (128,5);
+\draw[] (72,-40) rectangle (128,-25);
 \node (par) at (160,00) {Pares de bases};
 \draw[-stealth] (par) -- (130,-2);
 \draw[-stealth] (par) -- (130,-32);
 
 \node (e5) at (45,320) {Extremo 5'};
 \node (e3) at (170,320) {Extremo 3'};
-\draw[-stealth] (e5) -- (75,330);
-\draw[-stealth] (e3) -- (145,330);
+\draw[-stealth] (e5) -- (75,332);
+\draw[-stealth] (e3) -- (145,332);
 
 
 \end{tikzpicture}
