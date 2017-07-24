@@ -3,60 +3,64 @@
 %
 \subsection{Normalización de los vectores de características}
 %
-Las distintas variables que componen el vector de \caract{s}
-poseen rangos numéricos diferentes, dada su naturaleza diversa.
-Esto implica que algunos componentes del vector de \caract{s}
-tendrán magnitudes mayores que otros, generando una ponderación
-implícita de algunas variables por sobre otras.
-La normalización de los vectores de características permite evitar
-este problema modificando el rango de cada variable a un intervalo
-preestablecido, por ejemplo $[0,1]$ o $[-1,+1]$.
-La normalización entonces redunda en una ponderación ``equitativa'' de
-todas las \caract{s}, generando problemas mejor condicionados, e
-incrementando la velocidad de convergencia en el entrenamiento
-\cite{nnfaq2}.
+Las \caract{s} que componen el vector de \caract{s} poseen rangos
+numéricos diferentes, ya que representan cantidades de naturaleza
+diversa.
+Esto implica que algunos componentes del vector de \caract{s} tendrán
+magnitudes mayores que otros, generando una ponderación implícita de
+algunas \caract{s} por sobre otras.
+La normalización permite evitar este problema modificando el rango de
+cada \caract{} a un intervalo preestablecido, típicamente $[0,1]$ o
+$[-1,+1]$.
+Esto deriva en problemas mejor condicionados desde el punto de vista
+numérico e incrementa la velocidad de convergencia en el
+entrenamiento \cite{nnfaq2}.
 
-El método de normalización procede del siguiente modo: en
-primer lugar, se considera un conjunto de datos representativo
-$I$, tal como aquel formado con el primer achivo leído a la entrada.
-Este conjunto de ${N}$ vectores de $F$ características, conforma una
-matriz $M^I{}_{({N}\times{}F)}$, donde cada fila $i$ corresponde
-a un ejemplo y cada columna $j$ representa una variable
-(\caract{}). Para cada columna de $M^I$, se calcula un desplazamiento
-$d_j(I)$ y un factor de escalado $s_j(I)$ que permiten transformar el
-rango de la variable $x_j$ al intervalo especificado.
+Dado un vector de características $\xx=(x_{1},x_{2},\ldots,x_{F})$, la
+versión normalizada $\xx^*$ del mismo vector se calcula según
+%
+\begin{align}
+  \label{e3:norm-op}
+  x_j^{*} = ( x_j + d_j ) s_j, \quad j=1,\ldots,F,
+\end{align}
+%
+donde $\B{s}$ es un \e{vector de escala} y $\B{d}$ es un \e{vector de
+  desplazamiento} que permiten transformar las componentes $x_j$ al
+intervalo especificado.
 
-Para llevar las variables al rango $[0,1]$, $d_j(I)$ y $s_j(I)$ se
+Cuando el objetivo es la generación de un modelo de clasificador, los
+vectores $\B{s}$ y $\B{d}$ se calculan con el primer archivo leído a
+la entrada del método.
+El primer paso es armar una matriz
+$M{}_{({N}\times{}F)}$, donde cada fila $i=1,\ldots,N$ corresponde a
+un ejemplo y cada columna $j=1,\ldots,\F$ representa una variable
+(\caract{}).
+Para cada columna $j$ de $M$, se calculan los valores $d_j$ y $s_j$
+que transforman el rango de la variable $x_j$ al intervalo deseado.
+Para llevar las variables al rango $[0,1]$, $d_j$ y $s_j$ se
 calculan según
 %
 \begin{align}
-  d_j(I) &= - \min_i m_{ij}, &
-  s_j(I) &= \frac{1}{\max_i m_{ij} - \min_i m_{ij}}.
+  d_j &= - \min_i m_{ij}, &
+  s_j &= \frac{1}{\max_i m_{ij} - \min_i m_{ij}}.
 \end{align}
 %
 Similarmente, para llevar las variables al intervalo simétrico
 $[-1,+1]$,
 %
 \begin{align}
-  d_j(I) &= -\frac{1}{2}\left(\max_i m_{ij} + \min_i m_{ij}\right), &
-  s_j(I) &= \frac{2}{\max_i m_{ij} - \min_i m_{ij}}.
+  d_j &= -\frac{1}{2}\left(\max_i m_{ij} + \min_i m_{ij}\right), &
+  s_j &= \frac{2}{\max_i m_{ij} - \min_i m_{ij}}.
 \end{align}
 %
-El desplazamiento $\B{d}(I)$ y el factor de escala $\B{s}(I)$
-calculados a partir de $I$ se aplican a todos los datos
-de entrada al clasificador, manteniendo las diferencias relativas
-entre los diferentes conjuntos de datos. La normalización de un
-vector de características $\xx=(x_{1},x_{2},\ldots,x_{F})$ se
-efectúa haciendo
-%
-\begin{align}
-  x_j^{*} = ( x_j + d_j(I) ) s_j(I), \quad j=1,\ldots,F.
-\end{align}
-%
+Una vez calculados los vectores $\B{d}$ y $\B{s}$, se aplica la
+normalización (\iflatexml{}Ecuación~\ref{e3:norm-op}\else\autoref{e3:norm-op}\fi)
+sobre todos los ejemplos leídos en la entrada.
 
-El hecho de aplicar normalización a los conjuntos de datos durante el
-entrenamiento tiene un impacto directo sobre el modelo generado, ya
-que el mismo aprende a clasificar vectores de características
-\e{normalizados}. Por ello, la información de normalización se guarda
-como parte del mismo modelo y se aplica automáticamente a cada nuevo
-ejemplo a clasificar.
+Para un modelo de clasificador entrenado con datos normalizados, es
+importante aplicar la misma normalización sobre todos los ejemplos
+futuros a clasificar.
+Por ello, los vectores $\B{d}$ y $\B{s}$ se guardan como parte del
+mismo modelo.
+Cuando se provee un modelo como entrada al método, los ejemplos se
+normalizan según la información contenida en el mismo.

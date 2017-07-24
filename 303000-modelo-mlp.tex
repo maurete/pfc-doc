@@ -3,46 +3,19 @@
 %
 \section{Construcción del modelo del clasificador MLP}
 %
-El primer paso para la construcción de un modelo MLP es determinar el
-número óptimo de neuronas en la capa oculta mediante una estrategia
-de búsqueda exhaustiva que maximiza la tasa \GM{} promedio de
-validación cruzada.
-%% Para ello, se utiliza una estrategia de prueba y error, que prueba
-%% distintos modelos mediante validación cruzada, y selecciona como
-%% número óptimo de neuronas el de aquel modelo que obtiene la mejor tasa
-%% $G_m$ en promedio sobre el conjunto de validación.
-Alternativamente, se define una estrategia de selección trivial que
-siempre selecciona 0 neuronas en la capa oculta, resultando en un
-clasificador lineal.
+La construcción del modelo del clasificador MLP consiste en generar
+una red neuronal con propagación hacia adelante con topología capa de
+entrada--capa oculta--capa de salida.
+La capa de entrada posee $F$ (número de características) nodos
+sensores, y la capa de salida una única neurona.
+El número de neuronas en la capa oculta se determina aplicando alguna
+de las dos estrategias soportadas: trivial o de búsqueda exhaustiva.
 
-Una vez determinado el número óptimo de neuronas en la capa oculta,
-se procede al entrenamiento del modelo final utilizando el conjunto
-de entrenamiento completo.
+La red se inicializa con pesos aleatorios, que luego se ajustan a
+partir de los datos del conjunto de entrenamiento mediante un
+algoritmo de retropropagación.
+La implementación hace uso de las funciones disponibles en el paquete
+\eng{Neural Network Toolbox} del software Matlab.
 
-%% uego se procede a efectuar el entrenamiento propiamente dicho, con
-%% regularización de corte prematuro cuando el error de validación
-%% cruzada alcanza su valor mínimo.
-
-%% La arquitectura de la red resultante contendrá una o ninguna capa
-%% oculta.
-
-%% En todo entrenamiento del clasificador, se promedian en realidad cinco
-%% redes inicializadas aleatoriamente, y la salida del clasificador en
-%% realidad es un voto mayoritario de la salida de estas cinco redes.
-
-%% Adicionalmente, se acepta el valor especial de 0 neuronas ocultas para
-%% representar un MLP sin capa oculta, capaz de efectuar clasificación lineal.
-
-%% Las estrategias de selección del \hparam{} de la red (el número de
-%% neuronas en la capa oculta) son
-%% %
-%% \begin{description}
-%% \item[Estrategia trivial:] Consiste en seleccionar cero neuronas
-%%   en la capa oculta, sin entrenamiento. Esto redunda en una red que es
-%%   capaz de efectuar separación lineal, y se utiliza como criterio de base para
-%%   establecer el rendimiento de la red.
-%% \item[Estrategia de búsqueda exhausiva:] Consiste en determinar, mediante prueba y error,
-%%   el número óptimo de neuronas que maximizan una tasa promedio de validación cruzada.
-%% \end{description}
-%% %
-%% Una vez encontrado el valor óptimo, se procede al entrenamiento.
+A continuación, se describen las estrategias de selección del número de
+neuronas en la capa oculta y el entrenamiento de la red.

@@ -3,19 +3,23 @@ layout = layout.md
 title = begindocument.tex
 contents = $(shell egrep -v -e "^figures/" -e "^[\#%]" ${layout}) enddocument.tex
 figures = $(shell ls figures/*/figure.tex) $(shell ls figures/*/caption.tex)
+tikzfigures = $(shell find figures -iname "*.tikz.tex")
 output = output.tex
 revision = revision.tex
 
 aux = $(output:%.tex=%.aux) $(output:%.tex=%.log) \
 $(output:%.tex=%.out) $(output:%.tex=%.toc) $(header:%.tex=%.aux) \
-$(title:%.tex=%.aux) $(contents:%.tex=%.aux) $(revision:%.tex=%.aux)
+$(title:%.tex=%.aux) $(contents:%.tex=%.aux) $(revision:%.tex=%.aux) \
+$(tikzfigures:%.tex=%.aux) $(tikzfigures:%.tikz.tex=%.run.xml) \
+$(tikzfigures:%.tikz.tex=%.log) $(tikzfigures:%.tikz.tex=%.dpth) \
+$(tikzfigures:%.tex=%.tex.annot)
 
 biber_aux = $(output:%.tex=%.bbl) $(output:%.tex=%.bcf) \
 $(output:%.tex=%.blg) $(output:%.tex=%.run.xml) \
 $(output:%.tex=%-blx.bib)
 
 # usar rubber para compilar pdf
-cc   = rubber --pdf
+cc   = rubber --pdf --unsafe
 #
 crtf = latex2rtf
 cbib = biber
@@ -44,7 +48,13 @@ temp: $(header) $(contents)
 pdf: rev temp
 	@ $(cc) $(output) || ( $(crm) $(output:%.tex=%.bcf); exit 1 )
 
+$(tikzfigures:%.tikz.tex=%.pdf): pdf
+
+%.png: %.pdf
+	convert -density 300 $(<) $(<:%.pdf=%.png)
+
+png: $(tikzfigures:%.tikz.tex=%.png)
+
 # borrar todos los compilados y auxiliares
 clean:
-	$(crm) $(output) $(output:%.tex=%.pdf) $(aux) $(biber_aux)
-
+	$(crm) $(output) $(output:%.tex=%.pdf) $(aux) $(biber_aux) $(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)
