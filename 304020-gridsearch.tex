@@ -2,23 +2,23 @@
 %
 \subsection{Búsqueda en la grilla}
 %
-La \e{búsqueda en la grilla} se basa en la estrategia propuesta por
-\cite{hsu} y permite optimizar el hiperparámetro de regularización $C$
-así como el valor $\gamma$ del núcleo RBF.
+La \e{búsqueda en la grilla} es una estrategia basada en lapropuesta por
+\cite{hsu}, y permite optimizar los \hparam{s} de regularización $C$
+y de amplitud $\gamma$ del núcleo RBF.
 La idea general de esta estrategia es considerar cada combinación de
-hiperparámetros $(C,\gamma)$ como puntos en el plano.
-Comenzando por una serie de puntos espaciados regularmente
-en espacio logarítmico $(\log C,\log\gamma)$, que determina la
-``grilla'' inicial, se entrena y evalúa el clasificador sobre cada
-punto (cada combinación de hiperparámetros).
+hiperparámetros $(C,\gamma)$ como puntos en un plano:
+comenzando por una serie de puntos espaciados regularmente en espacio
+logarítmico $(\log C,\log\gamma)$, que determina la ``grilla''
+inicial, se entrena y evalúa el clasificador en cada punto (cada
+combinación de hiperparámetros).
 Luego se interpola (``refina'') la grilla en las cercanías de los
-puntos donde se obtienen los mejores resultados según una métrica tal
-como \GM.
+puntos donde se obtienen los mejores resultados, según la métrica \GM
+de validación cruzada.
 La búsqueda continúa repitiendo el procedimiento sobre los puntos no
 evaluados hasta satisfacer un criterio de corte.
 
-La grilla inicial viene dada por combinaciones de los siguientes
-puntos de muestreo para los hiperparámetros
+La grilla inicial viene dada por las combinaciones de las
+``cooerdenadas'' de muestreo para los hiperparámetros
 %
 \begin{align}
   \label{initial-grid}
@@ -38,9 +38,9 @@ interpolar:
 \item
   \e{Zoom}: En un primer paso, se convoluciona la grilla con una
   ventana cuadrada uniforme de valor unitario, obteniendo una versión
-  ``suavizada'' de la grilla.  Se interpolan puntos en una región
-  cuadrada centrada en el punto con mayor valor $P_{ij}$
-  ``suavizado''.
+  ``suavizada'' de la grilla.
+  Se interpolan puntos en una región cuadrada centrada en el punto con
+  mayor valor $P_{ij}$ ``suavizado''.
 \item
   \e{Umbral}: A partir de un umbral del valor $P$ definido por el
   usuario, por defecto el percentil 90, se interpola en cada dimensión

@@ -3,15 +3,19 @@
 \subsection{Selección trivial}
 %
 La estrategia de selección trivial consiste en seleccionar valores
-preestablecidos (genéricos) para los hiperparámetros, apropiados para
-la mayoría de los problemas.
-El valor preestablecido para el hiperparámetro de regularización $C$
-es $1$ \cite{libsvm}.
-En el caso del hiperparámetro de amplitud del núcleo RBF, se calcula
-un valor $\gamma=\frac{1}{2F}$, donde $F$ es el número de elementos en
-el vector de características \cite{glasmachersigel}.
-
+genéricos para los \hparam{s}, razonables para la mayoría de los
+problemas:
+%
+\begin{itemize}
+\item
+  Para el \hparam{} de regularización $C$, el valor preestabecido es
+  $1$ \cite{libsvm}.
+\item
+  Para el \hparam{} $\gamma$ de amplitud para el núcleo RBF, se
+  establece $\gamma=\frac{1}{2F}$, donde $F$ es el número de elementos
+  en el vector de características \cite{glasmachersigel}.
+\end{itemize}
+%
 Es de esperar que el modelo resultante del uso de esta estrategia no
-sea óptimo, aunque sí resulta de utilidad como base para la
-comparación contra otros modelos parametrizados con estrategias más
-complejas.
+sea óptimo, aunque resulta de utilidad como base para la comparación
+frente a las otras estrategias disponibles.

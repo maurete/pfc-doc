@@ -2,36 +2,39 @@
 %
 \section{Construcción del modelo del clasificador SVM}
 %
-Tal como en el caso del perceptrón multicapa, la construcción del
-modelo SVM es un proceso de dos etapas: en primer lugar se determinan
-valores óptimos para los \hparam{s}, y luego se procede a entrenar el
-modelo final con los datos de entrenamiento y los \hparam{s} óptimos
-encontrados.
-%% A diferencia del caso MLP, sin embargo, en una máquina de vectores de
-%% soporte puede haber más de un \hparam{}, y en general éstos se trata
-%% de variables continuas.
-
-Las propiedades analíticas de la SVM permiten aplicar estrategias de
-selección de hiperparámetros más complejas que en el caso del MLP, que
-en general resultan computacionalmente más eficientes.
-Las cuatro estrategias de selección de \hparam{s} codificadas para el
-clasificador SVM son:
+El método permite la construcción de modelos de clasificador mediante
+SVMs con regularización L1, y soporta la utilización de los núcleos
+lineal y de función de base radial (también llamado gaussiano o RBF).
+Antes de efectuar el entrenamiento, se optimizan los valores de los
+\hparam{s} del clasificador a partir de los datos de entrenamiento,
+aplicando alguna de las siguientes estrategias de selección de
+\hparam{s}:
 %
 \begin{itemize}
 \item
-  \e{Selección trivial}: Retorna valores preestablecidos para los
-  \hparam{s}, sin efectuar entrenamiento.
+  \e{Selección trivial}: Retorna valores preestablecidos,
+  sin efectuar entrenamiento.
 \item
   \e{Búsqueda en la grilla}: Efectúa una búsqueda exhaustiva de los
-  hiperparámetros, maximizando la tasa \GM{} de validación cruzada.
+  \hparam{s} óptimos, maximizando la tasa \GM{} de validación cruzada
+  sobre el conjunto de entrenamiento.
 \item
-  \e{Minimización del error empírico}: Minimiza una función que
-  representa el error de clasificación de validación cruzada mediante
+  \e{Criterio del error empírico}: Minimiza una función probabilística
+  derivada del error de clasificación de validación cruzada, mediante
   descenso por gradiente en el espacio de los \hparam{s}.
 \item
   \e{Minimización de la cota radio-margen}: Minimiza mediante descenso
-  por gradiente en el espacio de los \hparam{s} una función de
-  derivación teórica que relaciona propiedades geométricas del modelo
-  con el error de clasificación.
+  por gradiente una función de derivación teórica que relaciona
+  las propiedades geométricas del modelo con el error de clasificación.
 \end{itemize}
 %
+
+En la implementación se codificó una interfaz común para las funciones
+de la biblioteca \work{libSVM} \cite{libsvm} y las funciones SVM
+disponibles en el paquete \work{Bioinformatics Toolbox} de Matlab.
+Esta interfaz funciona como una capa de abstracción que permite el uso
+indistinto de estas bibliotecas en casi todos los casos.
+
+En las sub-secciones a continuación, se describen las estrategias de
+selección de \hparam{s} y el entrenamiento del modelo del
+clasificador.
