@@ -2,11 +2,9 @@
 \subsubsection{Cálculo del gradiente $\grad{E}$}
 \label{se:gradE}
 %
-Considerando al error empírico como función de los hiperparámetros:
-$E=E(\Btheta)$, en donde $\Btheta=(\theta_1,\theta_2,\ldots)$ es un
-vector genérico de \hparam{s}, el objetivo es determinar las derivadas
-$\dpar{E}{\theta_j}{}$.
-En primer lugar, se tiene
+Considerando un vector genérico de \hparam{s}
+$\Btheta=(\theta_1,\theta_2,\ldots)$, el gradiente
+$\nabla{}E=\left(\dpar{E}{\theta}{}\right)$ se calcula según
 %
 \begin{align}
 \label{gradE}
@@ -26,9 +24,9 @@ $\dpar{\hat{p}_k}{f_k}{}$, se tiene
   \label{eq:deriv-pk-thetaj}
 \end{align}
 %
-El cálculo de $\dpar{f_k}{\theta_j}{}$ a continuación se efectúa
-aplicando una interpretación geométrica del modelo SVM regularizado
-\cite{keerthi,glasmachers,shark}.
+Para el cálculo de $\dpar{f_k}{\theta_j}{}$ a continuación se recurre
+a una interpretación geométrica del modelo SVM con regularización $L1$
+tal como en \cite{keerthi,glasmachers,shark}.
 En primer lugar, se observa que $f_k$ viene dado por
 %
 \begin{align}
@@ -60,9 +58,10 @@ vector de entrenamiento $\xx_i$, se definen los conjuntos de índices
   n &= \left\{i\in\{1,\ldots,\ell\}: \alpha_i=0 \right\}.
 \end{align}
 %
-Efectuando una interpretación geométrica de la solución al problema de la
-SVM \cite{CITARMODELOSVM}, se sabe que para aquellos vectores $\xx_i$
-que no son de soporte, se cumple que $\alpha_i=0$, luego las derivadas
+Efectuando una interpretación geométrica de la solución al problema de
+la SVM (\iflatexml{}Ecuación~\ref{svmprob-dual-soft}\else\autoref{svmprob-dual-soft}\fi),
+se sabe que para aquellos vectores $\xx_i$ que no son de soporte, se
+cumple que $\alpha_i=0$, luego las derivadas
 $\dpar{\alpha_n}{\theta_j}{}$ son nulas.
 Cuando $\alpha_i=\pm{}C$, el valor de $\alpha_g$ viene limitado (en
 valor absoluto) por el \hparam{} $C$, y las derivadas
@@ -76,7 +75,7 @@ $\dpar{\alpha_g}{\theta_j}{}$ son entonces
 en donde $\theta_j^K$ es un hiperparámetro del núcleo.
 Para simplificar el cálculo de las derivadas de $\alpha_u$ y $b$, se
 plantea el problema en forma matricial.
-Sea la \e{matriz del núcleo}
+Se plantea entonces la \e{matriz del núcleo} $K$
 %
 \begin{align}
   K = \begin{pmatrix} k(\xx_1,\xx_1) & k(\xx_1,\xx_2) & \cdots & k(\xx_1,\xx_\ell)
@@ -89,13 +88,13 @@ Sea la \e{matriz del núcleo}
     (K_{uu}) & (K_{ug}) & (K_{un}) \\
     (K_{gu}) & (K_{gg}) & (K_{gn}) \\
     (K_{nu}) & (K_{ng}) & (K_{nn})
-  \end{pmatrix}
+  \end{pmatrix}.
 \end{align}
 %
-donde en la matriz de la derecha los elementos de $K$ han sido
-reordenados en submatrices $K_{uu},K_{ug},\ldots$ según los conjuntos
-de índices $u, g, n$ definidos anteriormente.
-Sea la matriz
+En la matriz de la derecha, los elementos de $K$ han sido reordenados
+en submatrices $K_{uu},K_{ug},\ldots$ según los conjuntos de índices
+$u, g, n$ definidos anteriormente.
+Entonces, se calcula la matriz
 %
 \begin{align}
   H=\begin{pmatrix} K_{uu} & \B{1}_u \\ \B{1}_u^T & 0
@@ -103,7 +102,7 @@ Sea la matriz
 \end{align}
 %
 en donde $\B{1}_u$ es un vector columna de $|u|$ elementos iguales a 1.
-Entonces, la derivada de $(\B{\alpha}_u,b)^T$ respecto de un \hparam{}
+La derivada de $(\B{\alpha}_u,b)^T$ respecto de un \hparam{}
 $\theta_j$ viene dada por
 %
 \begin{align}

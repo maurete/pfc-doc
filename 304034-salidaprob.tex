@@ -1,7 +1,7 @@
 %
 \subsubsection{Salida probabilística del modelo SVM}
 %
-La salida del modelo $h$ de la máquina de vectores de soporte
+La salida del modelo de una máquina de vectores de soporte
 (\iflatexml{}Ecuación~\ref{eq:svm-model-hard}\else\autoref{eq:svm-model-hard}\fi)
 puede entenderse como el resultado de aplicar la operación signo sobre
 una función continua $f$:
@@ -12,9 +12,9 @@ una función continua $f$:
   f\tab=\langle\ww,\BPhi(\xx)\rangle+b.
 \end{align}
 %
-Aplicando el método propuesto por {Platt} en \cite{platt}, se puede
-calcular un estimador $\hat{p}$ para la probabilidad real
-$p=P(h=+1|\xx)$ utilizando el valor de $f$:
+Aplicando el método propuesto por {Platt} en \cite{platt}, se calcula
+un estimador $\hat{p}$ para la probabilidad real $p=P(h=+1|\xx)$
+utilizando el valor de $f$:
 %
 \begin{align}
 \label{e3:p-hat}
@@ -32,8 +32,8 @@ $V$ resolviendo el problema de optimización
 en donde $\hat{p}_k$ viene dado por la
 \iflatexml{}Ecuación~\ref{e3:p-hat}\else\autoref{e3:p-hat}\fi{}, y
 $t_k=\frac{1}{2}({y_k+1})$.
-Este problema de optimización puede resolverse mediante un algoritmo
-estándar (tal como \cite{bfgs}), observando que las derivadas de
+Este problema se resuelve mediante el algoritmo de optimización
+estándar BFGS \cite{nocedal}, observando que las derivadas de
 $\hat{p}_k$ respecto de $A$ y $B$ vienen dadas por
 %
 \begin{align}

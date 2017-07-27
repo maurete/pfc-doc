@@ -2,23 +2,21 @@
 %
 \subsection{Búsqueda en la grilla}
 %
-La \e{búsqueda en la grilla} es una estrategia basada en lapropuesta por
-\cite{hsu}, y permite optimizar los \hparam{s} de regularización $C$
-y de amplitud $\gamma$ del núcleo RBF.
-La idea general de esta estrategia es considerar cada combinación de
-hiperparámetros $(C,\gamma)$ como puntos en un plano:
-comenzando por una serie de puntos espaciados regularmente en espacio
-logarítmico $(\log C,\log\gamma)$, que determina la ``grilla''
-inicial, se entrena y evalúa el clasificador en cada punto (cada
-combinación de hiperparámetros).
-Luego se interpola (``refina'') la grilla en las cercanías de los
-puntos donde se obtienen los mejores resultados, según la métrica \GM
-de validación cruzada.
-La búsqueda continúa repitiendo el procedimiento sobre los puntos no
-evaluados hasta satisfacer un criterio de corte.
+La \e{búsqueda en la grilla} es una estrategia heurística basada en el
+método propuesto en \cite{hsu} que calcula valores óptimos para los
+\hparam{s} de regularización $C$ y de amplitud del núcleo RBF
+$\gamma$.
+La estrategia considera las combinaciones de $(C,\gamma)$ como
+``coordenadas en el espacio de los \hparam{s}''.
+En cada punto $(C,\gamma)$, se entrena el clasificador con los
+\hparam{s} correspondientes y se evalúa el resultado de validación
+cruzada.
+La búsqueda comienza con una ``grilla'' de puntos espaciados a
+intervalos regulares y continúa interpolando en las cercanías de
+aquellos puntos donde se obtuvo las mayores tasas de clasificación de
+validación cruzada.
 
-La grilla inicial viene dada por las combinaciones de las
-``cooerdenadas'' de muestreo para los hiperparámetros
+La grilla inicial viene dada por las coordenadas $C$-$\gamma$
 %
 \begin{align}
   \label{initial-grid}
@@ -26,41 +24,36 @@ La grilla inicial viene dada por las combinaciones de las
   \log_2\gamma \tab= -15,-13, -11, \ldots, 3.
 \end{align}
 %
-Para cada punto $(C_i,\gamma_j)$, se entrena y prueba el clasificador
-SVM, obteniendo un valor $P_{ij}$ promedio de validación cruzada.
-Típicamente, el valor $P_{ij}$ se establece a la medida $\GM_{ij}$.
-En etapas sucesivas, se interpola la grilla alrededor de los puntos
-donde se obtuvieron los valores máximos de $P_{ij}$.
-Los tres siguientes algoritmos heurísticos determinan los puntos a
-interpolar:
+Para cada punto $(C_i,\gamma_j)$, se entrena un modelo con los
+\hparam{s} correspondientes y se clasifican las particiones de
+validación cruzada, obteniendo una tasa $\GM_{ij}$ promedio.
+
+La interpolación de la grilla se lleva a cabo mediante alguno de los
+siguientes algoritmos heurísticos:
 %
 \begin{itemize}
 \item
-  \e{Zoom}: En un primer paso, se convoluciona la grilla con una
-  ventana cuadrada uniforme de valor unitario, obteniendo una versión
-  ``suavizada'' de la grilla.
-  Se interpolan puntos en una región cuadrada centrada en el punto con
-  mayor valor $P_{ij}$ ``suavizado''.
+  \e{Zoom}: interpola una región centrada en el punto con mayor tasa
+  de clasificación, reduciendo el área de búsqueda a $1/2$ de la
+  amplitud anterior en cada dimensión.
 \item
-  \e{Umbral}: A partir de un umbral del valor $P$ definido por el
-  usuario, por defecto el percentil 90, se interpola en cada dimensión
-  alrededor de los puntos por encima del umbral.
+  \e{Umbral}: interpola puntos intermedios alrededor de las
+  coordenadas cuyo resultado se ubica por encima de un valor
+  ``umbral'', por defecto el percentil 90 de toda la grilla.
+  Este algoritmo es el utilizado por defecto.
 \item
-  \e{$n$-mejores}: Similar al umbral, se seleccionan $n$ puntos
-  con los mayores valores de $P$.
-  Se interpola la grilla en ambas dimensiones alrededor de estos
-  puntos.
+  \e{$n$-mejores}: similar al umbral, interpola la grilla alrededor de
+  los $n$ puntos con mejores resultados de validación cruzada.
 \end{itemize}
 %
-Una vez interpolada la grilla, se calcula el valor $P$ promedio de
-validación cruzada para los nuevos puntos interpolados.
-El procedimiento de refinamiento se repite $N$ iteraciones (por
-defecto, $N=3$).
+Luego de efectuar la interpolación, se entrena y prueba el
+clasificador sobre los nuevos puntos generados.
+El procedimiento se repite $N$ iteraciones (por defecto, $N=3$).
 
 La búsqueda en la grilla tiene la ventaja de ser conceptualmente
-simple, sin embargo, se torna inviable cuando el vector de parámetros
-$\B{\theta}$ contiene más de 2 elementos.
+simple, sin embargo, no resulta escalable a más de dos dimensiones.
 Dado que se trata de un método de búsqueda exhaustiva, resulta
 comparativamente lento.
-Cuando se trabaja con un clasificador SVM con núcleo lineal, la grilla
-tiene una única dimensión: la del hiperparámetro $\log C$.
+Cuando se trabaja con un clasificador SVM con núcleo lineal, se
+establece la coordenada $\gamma=0$, y la grilla resultante tiene una
+única dimensión, la del hiperparámetro $\log C$.
