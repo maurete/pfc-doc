@@ -3,13 +3,14 @@
 \subsection{Criterio del error empírico}
 %
 El \e{criterio del error empírico} es una estrategia de selección de
-\hparam{s} basada en la propuesta presentada en \cite{ayat}, que que
-consiste en optimizar mediante descenso por gradiente una función
-denominada \e{error empírico}.
+\hparam{s} basada en la propuesta presentada en \cite{ayat}, que
+optimiza los \hparam{s} del clasificador minimizando una función
+objetivo denominada \e{error empírico}.
 Esta función mide el error de validación cruzada sobre el conjunto de
 entrenamiento acoplando un modelo probabilístico a la salida del
-clasificador, y permite el cálculo de las derivadas del modelo
-respecto de los hiperparámetros.
+clasificador, y permite su optimización mediante descenso por
+gradiente ya que sus derivadas respecto de los \hparam{s} son
+calculables.
 
 En la propuesta original \cite{ayat}, la función \e{error empírico} se
 optimiza únicamente respecto a los \hparam{s} del núcleo.
