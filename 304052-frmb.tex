@@ -1,13 +1,30 @@
 %
 \subsubsection{Cálculo de $\rho$}
 %
-El valor $R^2$, necesario para el cálculo de $\rho_R$, viene dado por
+La cota radio-margen $\rho$ es la función objetivo a minimizar, y
+se define según
+%
+\begin{align}
+  \rho = \rho_R \cdot \rho_M,
+\end{align}
+%
+donde
+%
+\begin{align}
+  \label{rho-r}
+  \rho_R &= R^2+\frac{1}{C}, \\
+  \label{rho-m}
+  \rho_M &= \|\ww\|^2+2C\sum\xi_i.
+\end{align}
+%
+El valor $R^2$ es el cuadrado del radio de la hiperesfera mínima que
+engloba a todos los vectores de soporte del modelo, y viene dado por
 %
 \begin{align}
   R^2 = 1 - \Bbeta_*^T \KK \Bbeta_*,
 \end{align}
 %
-donde $\Bbeta_*$ es la solución al problema de optimización conocido
+en donde $\Bbeta_*$ es solución al problema de optimización conocido
 como ``SVM de una clase'' \cite{scholkopf}:
 %
 \begin{align}
@@ -21,15 +38,17 @@ como ``SVM de una clase'' \cite{scholkopf}:
 %
 Aquí, $\B{1}_{\ell}$ es un vector columna con $\ell$ elementos iguales
 a 1, y $\KK$ es la matriz del núcleo con elementos
-$k_{ij}=k(\xx_i,\xx_j)$. El Problema (\ref{svm-oneclass}) se resuelve
-mediante un algoritmo de optimización estándar, y su solución es única
-siempre que no haya elementos repetidos en el conjunto de entrenamiento
-\cite{chung}.
+$k_{ij}=k(\xx_i,\xx_j)$.
+Este problema posee solución única siempre que no haya elementos
+repetidos en el conjunto de entrenamiento \cite{chung}.
+En la implementación, el cálculo de la solución se realiza invocando
+las funciones provistas por la biblioteca \e{libSVM} \cite{libsvm}.
 
 El valor ``margen'' $\rho_M$ es dos veces la solución al problema de
-optimización de la SVM (\autoref{svm-primal-blando}). La
-equivalencia primal-dual de la solución establece que, si $\Balpha$ es solución a
-la forma dual (\autoref{svmprob-dual-soft}), se tiene simplemente
+optimización de la SVM (\autoref{svm-primal-blando}).
+Dada la equivalencia de las soluciones a los problemas primal y dual
+de entrenamiento de la SVM, si $\Balpha$ es solución a la forma dual
+(\autoref{svmprob-dual-soft}), se tiene simplemente
 %
 \begin{align}
 \label{prieqdual}
@@ -38,3 +57,5 @@ la forma dual (\autoref{svmprob-dual-soft}), se tiene simplemente
 \end{align}
 %
 donde $\QQ$ es la matriz con elementos $Q_{ij}=y_iy_jk(\xx_i,\xx_j)$.
+El cálculo de $\rho_M$ es sencillo, ya que tanto $\QQ$ como $\Balpha$
+se extraen directamente a partir del modelo.

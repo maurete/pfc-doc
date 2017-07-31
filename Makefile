@@ -3,26 +3,36 @@ layout = layout.md
 title = begindocument.tex
 contents = $(shell egrep -v -e "^figures/" -e "^[\#%]" ${layout}) enddocument.tex
 figures = $(shell ls figures/*/figure.tex) $(shell ls figures/*/caption.tex)
+tikzfigures = $(shell find figures -iname "*.tikz.tex")
 output = output.tex
 revision = revision.tex
 
 aux = $(output:%.tex=%.aux) $(output:%.tex=%.log) \
 $(output:%.tex=%.out) $(output:%.tex=%.toc) $(header:%.tex=%.aux) \
-$(title:%.tex=%.aux) $(contents:%.tex=%.aux) $(revision:%.tex=%.aux)
+$(title:%.tex=%.aux) $(contents:%.tex=%.aux) $(revision:%.tex=%.aux) \
+$(tikzfigures:%.tex=%.aux) $(tikzfigures:%.tikz.tex=%.run.xml) \
+$(tikzfigures:%.tikz.tex=%.log) $(tikzfigures:%.tikz.tex=%.dpth) \
+$(tikzfigures:%.tex=%.tex.annot)
 
 biber_aux = $(output:%.tex=%.bbl) $(output:%.tex=%.bcf) \
 $(output:%.tex=%.blg) $(output:%.tex=%.run.xml) \
 $(output:%.tex=%-blx.bib)
 
+tikzfigs = $(shell ls figures/*/*.tikz.tex | sed 's/.tikz.tex//')
+
 # usar rubber para compilar pdf
-cc   = rubber --pdf
+cc   = rubber --pdf --unsafe
+
+# compilador para imagenes tikz
+tikzcc = pdflatex -halt-on-error -interaction=batchmode
+
 #
 crtf = latex2rtf
 cbib = biber
 crm  = rm -f
 
 # construir pdf
-all: pdf
+all: pdf tikzimages
 	$(crm) $(output) $(aux) $(biber_aux)
 
 rev:
@@ -44,7 +54,15 @@ temp: $(header) $(contents)
 pdf: rev temp
 	@ $(cc) $(output) || ( $(crm) $(output:%.tex=%.bcf); exit 1 )
 
+tikzimages: $(tikzfigs:%=%.png)
+
+$(tikzfigs:%=%.pdf): $(@:%.pdf=%.tikz.tex)
+	@echo All images exist now. Use make -B to re-generate them.
+	$(tikzcc) -jobname "$(@:%.pdf=%)" "\def\tikzexternalrealjob{$(output:%.tex=%)}\input{$(output:%.tex=%)}"
+
+%.png: %.pdf
+	convert -density 300 $(<) $(<:%.pdf=%.png)
+
 # borrar todos los compilados y auxiliares
 clean:
-	$(crm) $(output) $(output:%.tex=%.pdf) $(aux) $(biber_aux)
-
+	$(crm) $(output) $(output:%.tex=%.pdf) $(aux) $(biber_aux) $(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)

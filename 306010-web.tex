@@ -2,54 +2,67 @@
 %
 \subsection{Interfaz de usuario web}
 %
-La función \func{webif} permite la utilización del sistema a través
-una interfaz web provista por el software \eng{\webdemo{}}
-\cite{webdemobuilder}, un desarrollo propio del laboratorio
-\eng{sinc(i)} de la Facultad de Ingeniería y Ciencias Hídricas.
-Esta función abarca toda la funcionalidad del sistema, aunque presenta
-menor flexibilidad que la interfaz de línea de comandos.
-Recibe un número fijo de argumentos, que son presentados al usuario en
-el formulario web generado por \eng{\webdemo{}}:
+Se generó una interfaz web utilizando la herramienta \eng{\webdemo{}}
+\cite{webdemobuilder}.
+Esta interfaz interactúa con el método a través de una función
+codificada para este propósito denominada \e{webif}.
+La función está diseñada para ser invocada en una línea de comandos no
+interactiva, generando en todos los casos un archivo que es presentado
+al usuario a través de la web.
+Cuando la invocación es exitosa, genera un reporte en formato HTML que
+incorpora el modelo del clasificador generado y/o un listado con
+predicciones de clase para los ejemplos en el conjunto de prueba.
+El reporte HTML puede utilizarse sucesivamente como modelo para
+clasificar nuevos datos a través de la interfaz web.
+En caso de encontrarse errores, la función genera un reporte
+informando al usuario del error encontrado.
+
+La función \func{webif} recibe 8 argumentos en la entrada:
+%
+\begin{enumerate}
+\item Tipo de clasificador
+\item Conjunto de \caract{s}
+\item Estrategia de selección de \hparam{s}
+\item Datos de entrenamiento de clase positiva
+\item Datos de entrenamiento de clase negativa
+\item Modelo previamente generado
+\item Datos de prueba
+\item Clase de los datos de prueba (usado para estadísticas)
+\end{enumerate}
+%
+
+Según la tarea que deseeefectuar, el usuario debe cargar los
+siguientes datos en el formulario web:
 %
 \begin{itemize}
 \item
-  Para la generación del modelo del clasificador:
+  \e{Para la generación del modelo del clasificador}
   %
   \begin{itemize}
   \item
-    Tipo de clasificador requerido,
+    Tipo de clasificador
   \item
-    Conjunto de características consideradas,
+    Conjunto de características
   \item
-    Estrategia de selección de hiperparámetros,
+    Estrategia de selección de \hparam{s}
   \item
-    Archivo FASTA con datos de entrenamiento de clase positiva,
+    Archivo FASTA con datos de entrenamiento de clase positiva
   \item
-    Archivo FASTA con datos de entrenamiento de clase negativa.
+    Archivo FASTA con datos de entrenamiento de clase negativa
   \end{itemize}
   %
 \item
-  Para clasificación con un modelo generado previamente:
+  \e{Para clasificación con un modelo generado previamente}
   %
   \begin{itemize}
   \item
-    Archivo con el modelo de clasificador,
+    Archivo con el modelo de clasificador
   \item
-    Archivo FASTA con datos de prueba,
+    Archivo FASTA con datos de prueba
   \item
-    Clase de los ejemplos contenidos en el conjunto de prueba (opcional).
+    Clase de los datos de prueba: opcional, utilizado para calcular
+    una tasa de error sobre el conjunto.
   \end{itemize}
   %
 \end{itemize}
 %
-La función está diseñada para ser invocada en modo no interactivo, y
-en caso de éxito genera un reporte en formato HTML que incluye el
-modelo de clasificador incorporado.
-El archivo HTML puede ser guardado y utilizado posteriormente por el
-usuario como modelo para clasificar nuevos datos a través de la
-interfaz web.
-En caso de encontrarse errores, la función \func{webif} escribe un
-archivo \e{log} que es presentado al usuario informando del error
-encontrado.
-
-\hl{Agregar/publicar web de demostración.}

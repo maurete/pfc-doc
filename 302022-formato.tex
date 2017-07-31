@@ -2,11 +2,13 @@
 %
 \subsubsection{Especificación del formato de entrada}
 %
-Los archivos vienen dados en formato de texto plano, y cada uno
+La especificación a continuación define el formato de los archivos de
+entrada interpretados por el método.
+Los archivos de entrada son de tipo texto plano, y cada uno
 contiene uno o más ejemplos contiguos.
 Cada ejemplo se describe por una línea de descripción, una o más
 líneas de secuencia, y opcionalmente una o más líneas de estructura
-secundaria:
+secundaria, según las reglas siguientes:
 %
 \begin{itemize}
 \item
@@ -33,8 +35,8 @@ secundaria:
 \item
   Las líneas de estructura secundaria vienen dadas en notación
   ``punto-paréntesis'' compuesta por caracteres \mono{.}, \mono{(}, y
-  \mono{)}, indicando que el nucleótido correspondiente está suelto
-  (no acoplado), o es primero o segundo dentro de un par de bases,
+  \mono{)}, indicando que la base correspondiente está suelta
+  (no acoplada), o es primera o segunda dentro de un par de bases,
   respectivamente.
   Opcionalmente, la línea finaliza por un número entre paréntesis que
   indica la denominada ``mínima energía libre'' resultante del cálculo
