@@ -1,6 +1,4 @@
 %
-% opciones para el compilador rubber
-% rubber: shell_escape
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ../pfc/doc/conf/preconfig.tex
@@ -144,7 +142,7 @@
 \iflatexml
 \else
 \usetikzlibrary{external}
-\tikzexternalize % genera PDFs con las figuras embebidas
+\tikzexternalize[mode=no graphics] % generar archivos de imagenes con las figs
 \fi
 %% \usepackage{pgfkeys}
 %% \usepackage{pgfgantt}

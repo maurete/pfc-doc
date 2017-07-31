@@ -3,32 +3,24 @@
 %
 \section{Clasificación}
 %
-A partir del proceso de entrenamiento se obtiene un modelo entrenado
-$\hat{y} = h(\xx)$ que, para un patrón $\xx$, devuelve una predicción
-de pertenencia de clase positiva o negativa $\hat{y}\in\{-1,+1\}$.
+El proceso de clasificación recibe como entrada un modelo de
+clasificador $h$, obtenido mediante alguna de las funciones de
+entrenamiento, así como un conjunto de datos de prueba $T$ generado
+mediante una invocación al módulo de preprocesamiento.
 
-Dado el modelo entrenado $\hat{y} = h(\xx)$ y el conjunto de prueba
-%
-\begin{align*}
-  P = \left( (\xx_1,y_1),\ldots,(\xx_\ell,y_\ell) \right),
-\end{align*}
-%
-la clasificación consiste simplemente en aplicar el modelo a todos los
-elementos de $P$, obteniendo una predicción de clase $\hat{y}_y$
-para cada ejemplo $\xx_i$:
+La clasificación consiste en invocar la función definida en el modelo,
+pasándole como argumentos el mismo modelo del clasificador y el
+conjunto de datos de prueba recibidos como argumento.
+Cuando se trata de un modelo MLP, se invoca la función de
+clasificación del \work{Neural Network Toolbox} de Matlab; cuando se
+trata de un modelo SVM, se invoca la función correspondiente a la
+herramienta utilizada para generar el modelo.
+
+A la salida se retorna un vector $\hat{\yy}=(\hat{y}_1,\hat{y}_2,\ldots)^T$,
+que contiene las predicciones de clase para cada ejemplo
+correspondiente $\xx_i$ del conjunto de prueba $T$:
 %
 \begin{align*}
   \hat{y}_i = h(\xx_i).
 \end{align*}
-%
-Se debe notar que las etiquetas $y_i,\,i=1,\ldots,\ell$ presentes en
-el conjunto $P$ son ignoradas.
-
-Para el caso del clasificador MLP, el modelo $h$ es en realidad un
-arreglo $\B{h}$ con $n$ modelos $(h_1,\ldots,h_n)$, y la pertenencia
-de clase para un ejemplo $\xx$ se establece según
-%
-\begin{align}
-  y = \T{moda}( h_1(\xx), \ldots, h_n(\xx)).
-\end{align}
 %

@@ -1,11 +1,9 @@
 %
 \subsubsection{Algoritmo de optimización}
 %
-La estrategia de minimización del error empírico comienza la búsqueda
-estableciando el valor de todos los \hparam{s} $\theta_j=1$.
-Con el conjunto de entrenamiento $D$, en cada punto de evaluación
-$\Btheta=(\theta_1,\theta_2,\ldots)$ el error empírico
-$E(\Btheta)$ se calcula del siguiente modo:
+El algoritmo comienza la búsqueda estableciendo en $1$ el valor de
+todos los \hparam{s}: $\Btheta^0=(1,1,\ldots)$.
+En cada iteración $t$, se efectúan los siguientes pasos:
 %
 \begin{enumerate}
 \item
@@ -18,8 +16,8 @@ $E(\Btheta)$ se calcula del siguiente modo:
   validación.
 \item
   Se determinan los valores óptimos de los parámetros $A$ y $B$,
-  minimizando el Problema~\ref{abproblem}, partiendo de los
-  valores iniciales $A_0=1$, $B_0=0$.
+  minimizando el Problema~\ref{abproblem}, partiendo de los valores
+  iniciales $A_0=1$, $B_0=0$.
 \item
   Se calculan las probabilidades estimadas $\hat{p}_k$ y con ellas, el
   error empírico de cada ejemplo $E_k$ y global $E$.
@@ -28,15 +26,6 @@ $E(\Btheta)$ se calcula del siguiente modo:
 \end{enumerate}
 %
 La búsqueda procede en cada punto $\Btheta^t$ evaluando la función
-objetivo $E$ y determinando un nuevo punto $\Btheta^{t+1}$ a
-partir de la información disponible en el gradiente
-$\nabla{}E^t$ hasta satisfacer un criterio de corte%% , por ejemplo
-%% %
-%% \begin{align*}
-%%   |E^i-E^{i-1}|&<\eta, & \|\nabla E^i\| < \nu,
-%% \end{align*}
-%% %
-%% donde $\eta$ y $\nu$ son números pequeños
-.
-El esquema utilizado para descenso por gradiente es el algoritmo de
-optimización BFGS \cite{nocedal}.
+objetivo $E$ y determinando un nuevo punto $\Btheta^{t+1}$ a partir de
+la información disponible en el gradiente $\nabla{}E^t$, mediante el
+algoritmo de optimización BFGS \cite{nocedal}.
