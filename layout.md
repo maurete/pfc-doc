@@ -42,15 +42,5 @@ figures/triplet/triplet.png
 305000-clasificacion.tex
 306000-interfazusuario.tex
 306010-web.tex
-#307000-implementacion.tex
-#307010-preprocesamiento.tex
-#307012-lectura.tex
-#307014-caracts.tex
-#307016-normalizacion.tex
-#307018-particionado.tex
-#307020-mlp.tex
-#307030-svm.tex
-#307032-entrenamiento.tex
-#307034-soporte.tex
-#307040-clasificacion.tex
+306012-demo.tex
 308000-documentacion.tex
