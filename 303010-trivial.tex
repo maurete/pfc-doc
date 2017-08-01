@@ -1,21 +1,13 @@
 %
 \subsection{Estrategia trivial}
 %
-La estrategia trivial retorna siempre el valor 0 como cantidad
-``óptima'' de neuronas en la capa oculta, ignorando los datos de
-entrenamiento.
-El modelo de clasificador MLP resultante del entrenamiento siempre
-equivale a un perceptrón simple, que funciona como un clasificador
-lineal.
-Si bien resulta claro que esta estrategia no efectssss ningnnnn tipo
-de optimización, su utilidad reside en que el modelo resultante puede
-tomarse como base en la comparación de distintos modelos MLP para el
-problema dado.
-%
-%% En el caso de las
-%% máquinas de vectores de soporte, la estrategia selecciona el valor $1$
-%% para el hiperparámetro de regularización $C$ \cite{libsvm}, y un valor
-%% $\gamma=\frac{1}{2F}$ para el hiperparámetro de amplitud del núcleo
-%% RBF, donde $F$ es el número de características consideradas
-%% \cite{glasmachersigel}.
-%
+Tal como su nombre lo indica, esta estrategia es la más básica para
+determinar el número de neuronas en la capa oculta.
+Consiste simplemente en devolver siempre el valor $0$ como cantidad
+``óptima'' de neuronas en la capa oculta, sin efectuar entrenamiento
+alguno.
+El modelo resultante al utilizar esta estrategia es equivalente a un
+perceptrón simple, y funciona como un clasificador lineal.
+Si bien esta estrategia no efectúa optimización alguna, resulta útil
+para generar un modelo ``base'' para comparar el rendimiento frente a
+otros modelos generados con una estrategia más compleja.

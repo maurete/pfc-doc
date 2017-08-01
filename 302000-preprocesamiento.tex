@@ -3,13 +3,11 @@
 %
 \section{Preprocesamiento}
 %
-El preprocesamiento es el conjunto de tareas efectuadas para
-transformar los datos de entrada, que viene dados en forma de archivos
-de texto, a un formato tratable por la máquina de aprendizaje.
-%% Los datos de entrada al sistema vienen dados como archivos en formato
-%% FASTA, un formato de texto que contiene secuencias \e{anotadas} con
-%% información complementaria de identificación.
-Las tareas efectuadas en la etapa de preprocesamiento son:
+El preprocesamiento es el conjunto de pasos efectuados para
+transformar los datos de entrada, que vienen dados en forma de
+archivos de texto, a un formato numérico apto para la máquina de
+aprendizaje.
+La secuencia de pasos efectuados en la etapa de preprocesamiento son:
 %
 \begin{enumerate}
 \item
@@ -36,6 +34,8 @@ Las tareas efectuadas en la etapa de preprocesamiento son:
 \end{enumerate}
 %
 Aplicando estos pasos, se obtiene una representación de los datos en
-forma matricial, agrupados en conjuntos de ``entrenamiento'' y de
-``prueba''. Estos conjuntos son utilizables directamente por la
-máquina de aprendizaje.
+un formato numérico estandarizado, que puede utilizars como entrada a
+las funciones de entrenamiento y clasificación de la máquina de
+aprendizaje.
+En adelante, se presenta una descripción detallada de cada una de estas
+sub-tareas.

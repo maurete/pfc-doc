@@ -1,58 +1,43 @@
 %
 %
-\subsection{Minimización de la cota radio-margen}
+\subsection{Minimización de la cota radio-margen ${\rho}$}
 %
-Una cota ``radio-margen'' es una función de derivación teórica que
-sirve como límite superior al error de clasificación
-\e{dejando-uno-fuera} del modelo SVM sobre el conjunto de
-entrenamiento.
-La primera función de este tipo fue propuesta en \cite{vapnik}
-para modelos SVM con regularización $L2$ y viene dada por
-% vapnik sec. 10.7, pag 441
-\begin{align}
-  \T{RM} = 4R^2 \|\ww\|^2.
-\end{align}
-%
-Aquí, $R$ es el radio de la hiperesfera que contiene todos los
-vectores de soporte en el espacio inducido $Z$ y $\ww$ es el vector
-normal al hiperplano de separación del modelo.
-Puede mostrarse que la función RM cumple la propiedad
-%
-\begin{align}
-  E_{\T{LOO}} \leq \T{RM},
-\end{align}
-%
-donde $E_{\T{LOO}}$ es el error de validación cruzada dejando uno
-fuera.
-Esta propiedad, junto al hecho de ser derivable respecto de los
-\hparam{s}, convierte a RM en una función objetivo idónea en un
-esquema de minimización mediante descenso por gradiente.
-En \cite{chapelle} se presenta un método para selección automática de
-hiperparámetros basado en esta función.
-Sin embargo, su utilidad práctica es limitada, ya que
-la SVM con regularización $L2$ no es muy utilizada.
+Esta estrategia se basa en el método propuesto en \cite{chung}, y
+trata de encontrar los \hparam{s} óptimos para un clasificador SVM con
+núcleo gaussiano, minimizando una función llamada ``cota
+radio-margen'' que en adelante se denota con el símbolo $\rho$.
 
-En \cite{chung} se proponen formulaciones alternativas a RM,
-aplicables a una formulación SVM con regularización $L1$ y núcleo
-gaussiano (RBF).
-En particular, se considera la función
+La función $\rho$ es una adaptación heurística para los clasificadores
+SVM con regularización $L1$ de otra función {RM}, propuesta
+originalmente en \cite{vapnik} para máquinas de vectores de soporte
+con regularización $L2$.
+La función {RM} relaciona el radio de la hiperesfera que contiene a
+los vectores de soporte con la amplitud del margen del modelo, y
+cumple con la siguiente propiedad:
 %
 \begin{align}
-  \rho = \rho_R \cdot \rho_M,
+  E_{\T{LOO}} \leq \T{RM}.
 \end{align}
 %
-donde $\rho_R$ y $\rho_M$ son, respectivamente, los factores ``radio''
-y ``margen''
-%
-\begin{align}
-  \label{rho-r}
-  \rho_R &= R^2+\frac{1}{C}, \\
-  \label{rho-m}
-  \rho_M &= \|\ww\|^2+2C\sum\xi_i.
-\end{align}
-%
-A diferencia de {RM}, la función $\rho$ ajusta el error $E_{\T{LOO}}$
-con demasiada holgura, por lo que pierde el significado original de
-representar una tasa de error.
-Sin embargo, mantiene la propiedad de poseer un mínimo global cerca
-del punto que minimiza la tasa de error $E_{\T{LOO}}$.
+Aquí, $E_{\T{LOO}}$ representa el error de validación cruzada
+dejando-uno-fuera, luego la función {RM} funciona como una cota
+superior de este error.
+%% % vapnik sec. 10.7, pag 441
+%% \begin{align}
+%%   \T{RM} = 4R^2 \|\ww\|^2.
+%% \end{align}
+%% %
+Esta propiedad hace que {RM} sea atractiva como función objetivo de
+optimización, ya que minimizar {RM} implica minimizar también el error
+$E_{\T{LOO}}$ del modelo.
+%% De hecho, en \cite{chapelle} se presenta un método para selección
+%% automática de hiperparámetros basado en esta función.
+
+La función $\rho$ es una versión modificada de {RM}, que si bien no
+representa estrictamente una cota, ya que ajusta el error
+$E_{\T{LOO}}$ con demasiada holgura, posee un mínimo global cerca del
+punto que minimiza la tasa de error $E_{\T{LOO}}$.
+
+En adelante, se describe la función $\rho$ y su método de cálculo, la
+derivación del gradiente respecto a los \hparam{s} y el algoritmo de
+minimización utilizados en esta estrategia.

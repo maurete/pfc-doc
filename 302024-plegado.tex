@@ -1,12 +1,11 @@
 %
 \subsubsection{Plegado}
 %
-En principio, la información de estructura secundaria de los ejemplos
-se obtiene de los archivos leídos en la entrada.
-Cuando ésta no se encuentra disponible, se calcula invocando a
-herramientas externas.
-Por defecto, se utiliza el programa \func{RNAfold}, distribuido como
-parte del paquete de software ``Vienna RNA'' \cite{vienna}.
+Cuando la información de estructura secundaria no está presente en el
+archivo de entrada, el método invoca a herramientas externas para su
+cálculo.
+La opción por defecto es invocar al programa \func{RNAfold}, que es
+parte de la distribución ``Vienna RNA'' \cite{vienna}.
 Cuando \func{RNAfold} no se encuentra disponible en el sistema, se
-recurre a la función de Matlab \func{rnafold}, que es parte del
-paquete ``Bioinformatics Toolbox'' publicado con el mismo software.
+recurre a la función de Matlab \func{rnafold}, distribuida con el
+paquete ``Bioinformatics Toolbox''.

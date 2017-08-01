@@ -1,32 +1,31 @@
 %
 \subsubsection{Algoritmo de optimización}
 %
-Partiendo de un punto inicial $(C^0,\gamma^0)$ la búsqueda procede
-en cada punto $(C^k,\gamma^k)$ evaluando $\rho^k$ y determinando
-un nuevo punto $(C^{k+1},\gamma^{k+1})$ en la dirección del
-negativo del gradiente $\nabla\rho^k$ tal que $\rho^{k+1}<\rho^k$.
-La optimización de la función $\rho$ se efectúa mediante el algoritmo
-BFGS \cite{nocedal} en el espacio logarítmico de los hiperparámetros
+La minimización de $\rho$ se efectúa mediante el algoritmo BFGS
+\cite{nocedal} en el espacio logarítmico de los hiperparámetros
 $(\ln(C),\ln(\gamma))$, observando que
 %
 \begin{align}
-  \dpar{\rho}{\ln C}{}= C \dpar{\rho}{C}{}, &&
-  \dpar{\rho}{\ln \gamma}{}= \gamma \dpar{\rho}{\gamma}{}.
+  \dpar{\rho}{\ln C}{}\tab= C \dpar{\rho}{C}{}, \tabs
+  \dpar{\rho}{\ln \gamma}{}\tab= \gamma \dpar{\rho}{\gamma}{}.
 \end{align}
 %
 Este cambio de coordenadas se traduce en un incremento de la
 estabilidad numérica y evita tener que verificar en cada iteración la
 no-negatividad de $C$ y $\gamma$.
-Para un conjunto de entrenamiento $D=((\xx_i,y_i),i=1,\ldots,\ell)$,
-cada evaluación de $\rho(\Btheta_k)$ consta de los siguientes pasos
+Partiendo del punto inicial $(C^0,\gamma^0)=(1,1)$, en cada iteración
+$k$ se efectúan los siguientes pasos
 %
 \begin{enumerate}
 \item Entrenar una máquina de vectores de soporte con núcleo RBF
   con hiperparámetros $\Btheta_k=(C_k,\gamma_k)$ sobre el conjunto
   de entrenamiento completo $D$
 \item Calcular $\Bbeta_*$ óptimo para el problema (\ref{svm-oneclass})
-\item Calcular el valor de $\rho$ como el producto de
-  $\rho_M$ (\ref{rho-m}) y $\rho_r$ (\ref{rho-r}).
-\item Calcular el gradiente $\nabla\rho$ con (\ref{drho-dc}, \ref{drho-dgamma}).
+\item Calcular el valor de $\rho$ como el producto de $\rho_M$
+  (\ref{rho-m}) y $\rho_r$ (\ref{rho-r}).
+\item Calcular el gradiente $\nabla\rho$ con (\ref{drho-dc},
+  \ref{drho-dgamma}).
+\item Determinar un nuevo punto de evaluación $(C^{k+1},\gamma^{k+1})$
+  en la dirección del gradiente negativo ($-\nabla\rho^k$).
 \end{enumerate}
 %
