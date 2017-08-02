@@ -7,10 +7,10 @@ margen duro'', y consiste en un clasificador de margen máximo que
 incorpora el ``truco del núcleo''.
 Dado un núcleo $k:X\times{}X\rightarrow\RR$, se asume que el conjunto
 de datos transformado
-$\left((\BPhi(\xx_1),y_1)),\ldots,(\BPhi(\xx_\ell),y_\ell)\right)$ es
+$D=\left((\BPhi(\xx_1),y_1)),\ldots,(\BPhi(\xx_\ell),y_\ell)\right)$ es
 linealmente separable en el espacio inducido $Z$.
 El entrenamiento consiste en resolver el
-Problema~\ref{e2:svm-problem-kernel}), que en notación vectorial se
+Problema~\ref{e2:svm-problem-kernel}, que en notación vectorial se
 escribe
 %
 \begin{equation}\label{e2:svm-hard-margin}
@@ -23,12 +23,12 @@ escribe
   \end{aligned}
 \end{equation}
 %
-La matriz $\QQ$ es semidefinida positiva con elementos por
+Aquí, la matriz $\QQ$ es semidefinida positiva con elementos
 $Q_{ij}=y_iy_jk(\xx_i,\xx_j)$, y $\B{1}$ es un vector columna de
 $\ell$ elementos iguales a $1$.
 El entrenamiento de este problema se efectúa comúnmente mediante el
 algoritmo denominado SMO (\eng{Sequential Minimal Optimization},
-Optimización Mínima Secuencial) \cite{smo} específicamente diseñado
+Optimización mínima secuencial) \cite{smo} específicamente diseñado
 para la SVM, aunque puede ser resuelto mediante cualquier algoritmo
 capaz de resolver un problema de optimización cuadrático.
 

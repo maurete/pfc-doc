@@ -29,9 +29,9 @@ titlepage.tex
 202000-mlp.tex
 202010-redes-biologicas.tex
 202020-modelo-neurona-artificial.tex
-figures/fig_neurona/neurona.png
+figures/neurona/neurona.png
 202030-arquitectura.tex
-figures/fig_mlp/mlp.png
+figures/mlp/mlp.png
 202050-aprendizaje.tex
 202052-online-batch.tex
 202060-retropropagacion.tex
@@ -46,8 +46,10 @@ figures/fig_mlp/mlp.png
 202075-rprop.tex
 203000-svm.tex
 203010-clasif-lineal.tex
+203012-espacio-imagen.tex
 203020-hiperplano-optimo.tex
 203030-forma-dual.tex
 203040-nucleos.tex
+203042-algunos-nucleos.tex
 203050-margen-duro.tex
 203060-regularizacion.tex

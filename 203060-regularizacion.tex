@@ -76,7 +76,7 @@ calcula el funcional lagrangiano
 \begin{equation}
   \begin{aligned}
   \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta) &= \frac{1}{2} \|\ww\|^2 + C \sum_{i=1}^{\ell} \xi_i \\
-  &+ \sum_{i=1}^{\ell} \alpha_i (1-\xi_i-y_i(\langle\ww,\BPhi(\xx_i)\rangle+b)) - \sum_{i=1}^{\ell} \beta_i\xi_i
+  &\quad\quad + \sum_{i=1}^{\ell} \alpha_i (1-\xi_i-y_i(\langle\ww,\BPhi(\xx_i)\rangle+b)) - \sum_{i=1}^{\ell} \beta_i\xi_i
   \end{aligned}
 \end{equation}
 %
@@ -109,7 +109,7 @@ Reescribiendo estos resultados en el problema dual, se tiene
 Este problema es el mismo que aquel de la SVM de magen duro, salvo por
 la restricción $\alpha_i\leq C$.
 
-El problema \ref{svmprob-dual-soft} es el tipo de clasificador SVM más
+El Problema~\ref{svmprob-dual-soft} es el tipo de clasificador SVM más
 utilizado, y se denomina también SVM ``de norma 1'' o ``con
 regularización L1''.
 Esto se debe a que la variable holgura $\xi_i$ se incorpora con
