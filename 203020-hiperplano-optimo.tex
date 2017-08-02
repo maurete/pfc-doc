@@ -38,15 +38,28 @@ problema puede leerse
 \end{align*}
 %
 La distancia de un vector $\zz_i=\BPhi(\xx_i)$ al hiperplano
-$\ww^T\zz+b=0$ viene dada por $d_i=\frac{\ww}{\|w\|}\cdot\zz_i+b$, por
+$\ww^T\zz+b=0$ viene dada por
+%
+\begin{align*}
+  d_i=\frac{\ww}{\|w\|}\cdot\zz_i+b,
+\end{align*}
+%
+por
 ello, minimizar $\|w\|$ equivale a maximizar la distancia $d_i$.
+
 Puede demostrarse que el vector solución $\ww_*$ al
 Problema~\ref{e2:svm-problem-basic} es una combinación lineal de
-aquellos vectores $\zz_i$ para los cuales $|\ww^T\zz_i+b|=1$. Estos
-$\zz_i$ se denominan \e{vectores de soporte}, lo que da el nombre al
-clasificador.
-Asimismo, los hiperplanos $\ww^T\zz+b=\pm1$ que contienen los vectores
+aquellos vectores $\zz_i$ para los cuales se cumpla la condición:
+%
+\begin{align*}
+  |\ww^T\zz_i+b\,|=1.
+\end{align*}
+%
+Estos vectores se denominan \e{vectores de soporte}, lo que da el
+nombre al clasificador.
+Los hiperplanos $\ww^T\zz+b=\pm1$ que contienen los vectores
 de soporte conforman el llamado \e{margen} del clasificador.
+
 El Problema~\ref{e2:svm-problem-basic} también puede entenderse como
 la maximización de la distancia del hiperplano $\ww^T\zz+b=0$ al
 margen $\ww^T\zz+b=\pm1$.

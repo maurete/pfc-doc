@@ -1,0 +1,34 @@
+%
+\subsubsection{Espacio imagen}
+%
+La primera adición de la SVM al clasificador lineal básico es una
+transformación de los vectores de entrada a un \e{espacio imagen}.
+Esto se logra aplicando una función $\BPhi:X\rightarrow{}Z$, que
+transforma el \e{espacio de entrada} $X$ a otro espacio vectorial
+inducido $Z$, llamado \e{espacio imagen}.
+La elección de la función $\BPhi$ es tal que los datos transformados
+sean separables en el espacio $Z$.
+Dada una entrada $\xx\in{}X$, la máquina de vectores de soporte
+calcula un vector imagen $\BPhi(\xx)$ y le asigna una clase de
+salida $\hat{y}=\pm{}1$ según
+%
+\begin{align*}
+  y = \T{signo}(\ww^T \BPhi(\xx)+b)
+\end{align*}
+%
+Los valores de $\ww$ y $b$ se obtienen del algoritmo de entrenamiento,
+que se explicará más adelante.
+En este caso, la frontera de decisión se ubica en el espacio imagen
+$Z$, y viene dada por el hiperplano con ecuación
+$\ww^T\BPhi(\xx)+b=0$.
+%
+\begin{quote}
+  {\bfseries Notación.}\quad{}En la literatura, resulta común
+  encontrar que el vector $\BPhi(\xx)$ se denomina \e{vector de
+    características} (\e{feature vector}) y el espacio vectorial $Z$
+  como \e{espacio de las características} (\e{feature space}).  En
+  este trabajo se prefiere denominarlos con los nombres alternativos
+  \e{vector imagen} y \e{espacio vectorial imagen} para evitar
+  confusión con el proceso previo de extracción de características.
+\end{quote}
+%

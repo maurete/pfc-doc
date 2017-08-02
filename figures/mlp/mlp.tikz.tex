@@ -6,13 +6,16 @@
 \def\outputbegin{8}
 \def\outputend{9}
 
+\shorthandoff{<}
+\shorthandoff{>}
+\tikzsetnextfilename{figures/mlp/mlp}
 \begin{tikzpicture}[   % opciones por defecto
     shorten >=1pt,     % acortar la linea en 1pt al final
     shorten <=1pt,     % acortar la linea en 1pt al principio
     - stealth,         % estilo de flecha al final (manual pgf p~210)
     draw=black!100,    % linea negro 100%
     node distance=\layersep, % no se que hace esto
-    font=\small\sffamily
+    font=\relscale{0.9}\sffamily
   ]
 
   \tikzstyle{every pin edge}=[stealth -,shorten <=1pt]
@@ -56,3 +59,5 @@
     \node[annot,right of=hl] {Capa de salida};
     \node[annot] at (0,-4) {};
 \end{tikzpicture}
+\shorthandon{<}
+\shorthandon{>}
