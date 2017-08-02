@@ -1,0 +1,27 @@
+%
+%
+%
+%
+\setcounter{chapter}{2}
+%
+\chapter{Descripción del método}
+%
+El método desarrollado es en un sistema completo de reconocimiento de
+\premirna{s}, con funcionalidad para la generación de un modelo de
+clasificador y para su aplicación posterior sobre nuevos datos.
+
+Como punto de partida se consideraron los trabajos
+\cite{xue,ng,batuwita,sheng,sewer,ding}, en los que se presentan
+herramientas de software con propósito similar al del presente
+desarrollo.
+En particular, debido a la disponibilidad de datos suplementarios,
+se utilizaron los conjuntos de datos y se implementaron técnicas de
+extracción de \caract{s} de los trabajos \cite{xue,ng,batuwita}.
+
+La implementación se efectuó en lenguaje Matlab versión R2012b,
+haciendo uso uso de los módulos adicionales ``Neural Network Toolbox''
+y ``Bioinformatics Toolbox''.
+Además, se integraron las herramientas de software \work{libSVM}
+\cite{libsvm} y \work{RNAFold} \cite{vienna}.
+Se utilizó el software \work\webdemo{} \cite{webdemobuilder} para
+la creación de la interfaz web.

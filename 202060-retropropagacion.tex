@@ -1,0 +1,108 @@
+%
+%
+\subsection{El algoritmo de retropropagación básico}
+%
+El algoritmo de retropropagación es un algoritmo específico para el
+perceptrón multicapa que efectúa entrenamiento ajustando los pesos
+$w_{ij}$ de la red, minimizando la función de error
+$\C{E}(n)$ a partir de la información del gradiente
+$\nabla\C{E}(n)=\dpar{\C{E}(n)}{w_{ij}}{}$.
+
+Con el objetivo de simplificar la descripción, se describe en primer
+lugar el algoritmo de retropropagación para un entrenamiento ``en
+línea''.
+La idea básica es aplicar a cada peso sináptico $w_{ij}$ de la red una
+corrección $\Delta{}w_{ij}(n)$ proporcional a la derivada parcial
+$\dpar{\C{E}(n)}{w_{ij}}{}$.
+Según la regla de la cadena, esta derivada parcial puede escribirse
+%
+\begin{align}\label{e2:deriv-E-wrt-w-expanded}
+  \dpar{\C{E}(n)}{w_{ij}}{} = \dpar{\C{E}(n)}{s_i(n)}{}
+  \dpar{s_i(n)}{v_i(n)}{} \dpar{v_i(n)}{w_{ij}}{}.
+\end{align}
+%
+Diferenciando ambos lados de la
+\iflatexml{}Ecuación~\ref{e2:error-energy-neuron}\else\autoref{e2:error-energy-neuron}\fi{}
+respecto de $s_i(n)$, se tiene
+%
+\begin{align}\label{e2:deriv-E-wrt-s}
+  \dpar{\C{E}(n)}{s_i(n)}{} = -e_i(n).
+\end{align}
+%
+Por la \iflatexml{}Ecuación~\ref{e2:neuron-general}\else\autoref{e2:neuron-general}\fi, se tiene
+%
+\begin{align}\label{e2:deriv-s-wrt-v}
+  \dpar{s_i(n)}{v_i(n)}{} \tab = f'(v_i(n)),\tabs
+  \dpar{v_i(n)}{w_{ij}}{} \tab = s_j(n).
+\end{align}
+%
+Reemplazando las Ecuaciones
+\ref{e2:deriv-E-wrt-s}--\ref{e2:deriv-s-wrt-v} en la
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-expanded}
+\else\autoref{e2:deriv-E-wrt-w-expanded}\fi, se tiene
+%
+\begin{align}\label{e2:deriv-E-wrt-w}
+  \dpar{\C{E}(n)}{w_{ij}}{} = -e_i(n) f'(v_i(n)) s_j(n).
+\end{align}
+%
+Cuando la neurona $i$ está en la capa de salida, esta fórmula se
+utiliza directamente para el cálculo de $\dpar{\C{E}(n)}{w_{ij}}{}$,
+ya que la señal de error $e_i(n)$ de la neurona viene dada por la
+diferencia entre el valor deseado $y_k(n)$ y la salida de la neurona
+$s_i(n)$ según la
+\iflatexml{}Ecuación~\ref{e2:error-energy-neuron}\else\autoref{e2:error-energy-neuron}\fi.
+
+Cuando la neurona $i$ se ubica en una capa oculta, el cálculo de
+$\dpar{\C{E}(n)}{w_{ij}}{}$ resulta más complejo, ya que no existe una
+``respuesta deseada'' correspondiente $y_k(n)$.
+El cálculo de la derivada $\dpar{\C{E}(n)}{s_{i}}{}$ para una neurona
+oculta $i$, parte del supuesto de que el valor de
+$\dpar{\C{E}(n)}{s_k}{}$ es conocido para todas las neuronas
+$k\in{}\C{S}(i)$, en donde $\C{S}(i)$ contiene los índices de todas
+las neuronas en la capa siguiente a la capa de $i$.
+Entonces, se puede ver que
+%
+\begin{align}
+  \dpar{\C{E}}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
+      \dpar{\C{E}}{s_k}{}\dpar{s_k}{s_i}{} \notag\\
+    \tab= \sum_{k\in\C{S}(i)}
+      \dpar{\C{E}}{s_k}{}\dpar{s_k}{v_k}{}\dpar{v_k}{s_i}{} \notag\\
+    \tab= \sum_{k\in\C{S}(i)} \dpar{\C{E}}{s_k}{} s'(v_k) w_{ki}.
+    \label{e2:deriv-E-wrt-s-hid}
+\end{align}
+%
+Reemplazando la
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-s-hid}\else\autoref{e2:deriv-E-wrt-s-hid}\fi{}
+y la \iflatexml{}Ecuación~\ref{e2:deriv-s-wrt-v}
+\else\autoref{e2:deriv-s-wrt-v}\fi{} en la
+\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-expanded}\else\autoref{e2:deriv-E-wrt-w-expanded}\fi,
+se tiene entonces
+%
+\begin{align}\label{e2:deriv-E-wrt-w-hid}
+  \dpar{\C{E}(n)}{w_{ij}}{} =
+  \sum_{k\in\C{S}(i)} \dpar{\C{E}(n)}{s_k(n)}{} s'(v_k(n)) w_{ki}
+  f'(v_i(n)) s_j(n).
+\end{align}
+%
+Esta fórmula es la clave del algoritmo de retropropagación: por la
+arquitectura del MLP, la salida $s_i(n)$ de una neurona oculta ejerce
+una influencia en la salida de todas las neuronas en las capas
+subsiguientes.
+Del mismo modo, se tiene que el \e{gradiente local} de la señal de
+error de la neurona viene determinado por los gradientes de error de
+todas las neuronas en las capas subsiguientes.
+
+Comenzando el cálculo de $\dpar{\C{E}(n)}{w_{ij}}{}$ por la capa de
+salida
+(\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w}\else\autoref{e2:deriv-E-wrt-w}\fi)
+y continuando con las capas ocultas en orden inverso
+(\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-hid}\else\autoref{e2:deriv-E-wrt-w-hid}\fi),
+el gradiente resulta calculable para todas las neuronas.
+Éste es el origen del nombre ``retropropagación'': se dice que la
+información del gradiente de error se propaga hacia atrás, partiendo
+de la capa de salida hasta alcanzar la primer capa oculta.
+
+El desarrollo del algoritmo de retropropagación a mediados de los años
+$80$ representó un hito en el campo de las redes neuronales, ya
+que brindó un método computacionalmente eficiente, usable, para
+entrenar el perceptrón multicapa.

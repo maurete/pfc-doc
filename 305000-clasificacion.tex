@@ -1,0 +1,26 @@
+%
+%
+%
+\section{Clasificación}
+%
+El proceso de clasificación recibe como entrada un modelo de
+clasificador $h$, obtenido mediante alguna de las funciones de
+entrenamiento, así como un conjunto de datos de prueba $T$ generado
+mediante una invocación al módulo de preprocesamiento.
+
+La clasificación consiste en invocar la función definida en el modelo,
+pasándole como argumentos el mismo modelo del clasificador y el
+conjunto de datos de prueba recibidos como argumento.
+Cuando se trata de un modelo MLP, se invoca la función de
+clasificación del \work{Neural Network Toolbox} de Matlab; cuando se
+trata de un modelo SVM, se invoca la función correspondiente a la
+herramienta utilizada para generar el modelo.
+
+A la salida se retorna un vector $\hat{\yy}=(\hat{y}_1,\hat{y}_2,\ldots)^T$,
+que contiene las predicciones de clase para cada ejemplo
+correspondiente $\xx_i$ del conjunto de prueba $T$:
+%
+\begin{align*}
+  \hat{y}_i = h(\xx_i).
+\end{align*}
+%

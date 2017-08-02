@@ -1,0 +1,64 @@
+%
+\subsubsection{La función error empírico}
+%
+La función error empírico es la función objetivo a minimizar, y se
+construye a partir de una estimación de la probabilidad de error del
+modelo sobre el conjunto de entrenamiento.
+Esta función posee características deseables de continuidad y
+derivabilidad que permiten su optimización mediante descenso por
+gradiente.
+
+Considerando en primer lugar la pérdida $0-1$ promedio del modelo $h$
+sobre un conjunto de validación $V=((\xx_k,y_k)),\,i=1,\ldots,\ell^V$,
+se observa que este error puede escribirse
+%
+\begin{align}
+\label{e3:error-test-alt}
+E^V \tab = \frac{1}{\ell^V}\sum_{k=1}^{\ell^V} H(-{y}_k {h}(\xx_k))
+\tabs = \frac{1}{\ell^V}\sum_{k=1}^{\ell^V} L_{0-1}(y_k,h(\xx_k)).
+\end{align}
+%
+El uso de la función escalón unitario de Heaviside $H(\cdot)$ pone de
+relieve el hecho que $E^V$ es una suma de funciones discontinuas, y
+por lo tanto no es derivable.
+
+Para salvar esta limitación, la función error empírico se construye a
+partir de una estimación $\hat{p}_k$ de la \e{probabilidad a
+  posteriori} $p_k$ de que el ejemplo $\xx_k$ pertenezca a la clase
+positiva
+%
+\begin{align}
+  \label{e3:pk}
+  p_k = p(\xx_k) = P(h(\xx_k)=+1|\xx_k).
+\end{align}
+%
+Por el momento, se supone que $p_k$ es una función continua y
+derivable.
+La \e{probabilidad de error} $E_k$ del modelo al clasificar el ejemplo
+$\xx_k$ puede escribirse en términos de la probabilidad $p_k$ según
+%
+\begin{align}
+\label{e3:Ek}
+  E_k = P(h(\xx_k)\neq y_k) = |t_k-{p}_k| =
+  \begin{cases}
+    {p}_k, & t_k=0\\ 1-{p}_k, & t_k = 1,
+  \end{cases}
+\end{align}
+%
+en donde $t_k=\frac{1}{2}({y_k+1})$ es un ``valor deseado'' calculado
+a partir de la clase conocida $y_k$.
+El error empírico es simplemente la probabilidad de error promedio
+para el conjunto completo $V$:
+%
+\begin{align}
+\label{Err1}
+  E = \frac{1}{\ell^V}\sum_{j=1}^{\ell^V} E_k.
+\end{align}
+%
+Para el cálculo exacto de $E$ se requiere conocer la probabilidad
+$p_k$ (\iflatexml{}Ecuación~\ref{e3:pk}\else\autoref{e3:pk}\fi), la
+cual no puede determinarse a partir de la salida binaria del modelo
+SVM.
+En su lugar se utiliza un estimador $\hat{p}_k$, que se obtiene
+ajustando un modelo probabilístico a la salida del modelo, tal como se
+explica a continuación.

@@ -1,0 +1,62 @@
+%
+%
+\subsection{SVM de margen duro}
+%
+La máquina de vectores de soporte más simple es aquella llamada ``de
+margen duro'', y consiste en un clasificador de margen máximo que
+incorpora el ``truco del núcleo''.
+Dado un núcleo $k:X\times{}X\rightarrow\RR$, se asume que el conjunto
+de datos transformado
+$D=\left((\BPhi(\xx_1),y_1)),\ldots,(\BPhi(\xx_\ell),y_\ell)\right)$ es
+linealmente separable en el espacio inducido $Z$.
+El entrenamiento consiste en resolver el
+Problema~\ref{e2:svm-problem-kernel}, que en notación vectorial se
+escribe
+%
+\begin{equation}\label{e2:svm-hard-margin}
+  \begin{aligned}
+    \max_{\Balpha}\quad\tabs
+      \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
+    \T{sujeto a} \quad\tabs
+      \yy^T\Balpha = 0, \\
+      \tabs \alpha_i\geq 0,  i\in {1,\ldots,\ell }.
+  \end{aligned}
+\end{equation}
+%
+Aquí, la matriz $\QQ$ es semidefinida positiva con elementos
+$Q_{ij}=y_iy_jk(\xx_i,\xx_j)$, y $\B{1}$ es un vector columna de
+$\ell$ elementos iguales a $1$.
+El entrenamiento de este problema se efectúa comúnmente mediante el
+algoritmo denominado SMO (\eng{Sequential Minimal Optimization},
+Optimización mínima secuencial) \cite{smo} específicamente diseñado
+para la SVM, aunque puede ser resuelto mediante cualquier algoritmo
+capaz de resolver un problema de optimización cuadrático.
+
+El modelo de la máquina de vectores de soporte de margen
+duro viene dado por
+%
+\begin{align}\label{e2:svm-model-hard0}
+    h(\xx) &= \T{signo}\left(\langle\ww^*,\BPhi(\xx)\rangle+b^*\right).
+\end{align}
+%
+Para el cálculo de $h(\xx)$, se utiliza la función núcleo $k$ y se
+observa que
+%
+\begin{align}
+  \langle\ww^*,\BPhi(\xx)\rangle \tab=
+  \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx),\\
+  b^* \tab= y_j - \sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx_j).
+  \label{e2:svm-model-b-kernel}
+\end{align}
+%
+El subíndice $j$ de la
+\iflatexml{}Ecuación~\ref{e2:svm-model-b-kernel}\else\autoref{e2:svm-model-b-kernel}\fi{}
+es cualquiera que cumpla con la condición $\alpha_j>0$.
+Con estos resultados, el modelo $h(\xx)$ se escribe
+%
+\begin{align}
+  h(\xx) &=
+  \T{signo}\left(\sum_{i=1}^\ell{}y_i\alpha^*_ik(\xx_i,\xx)+b^*\right).
+\label{e2:svm-model-hard}
+\end{align}
+%

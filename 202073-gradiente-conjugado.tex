@@ -1,0 +1,30 @@
+%
+\subsubsection{Gradiente conjugado}
+%
+Al utilizar la regla del descenso más pronunciado, puede demostrarse
+que dos pasos de actualización sucesivos ocurren necesariamente en
+direcciones perpendiculares.  Esta perpendicularidad entre iteraciones
+genera un ``zigzagueo'' en el camino del descenso del gradiente. El
+algoritmo del \e{gradiente conjugado} aprovecha esta perpendicularidad
+estableciendo como dirección de búsqueda una combinación de la
+dirección de búsqueda anterior y del gradiente actual, ``atravesando''
+el zigzag y logrando entonces pasos más pronunciados y directos.  La
+regla de actualización de los pesos mediante gradiente conjugado viene
+dada por
+%
+\begin{align}\label{e2:delta-rule-conjugate}
+  \Delta w_{ij}(t)\tab=\eta(t)\B{d}(t), \tabs
+  \B{d}(t)\tab=-\nabla{\C{E}(t)}+\beta\B{d}(t-1),
+\end{align}
+%
+donde $\eta(t)$ se determina mediante búsqueda en la línea y $\beta$
+viene dado por la fórmula de Polak-Ribière:
+%
+\begin{align}\label{e2:polak-ribiere}
+  \beta=
+  \frac{(\nabla{\C{E}(t)}-\nabla{\C{E}(t-1)})\nabla{\C{E}(t)}}{(\nabla{\C{E}(t-1)})^2}.
+\end{align}
+%
+El mayor costo computacional de las iteraciones en el algoritmo del
+gradiente conjugado se compensa con una convergencia mucho más rápida
+en comparación con la retropropagación clásica.

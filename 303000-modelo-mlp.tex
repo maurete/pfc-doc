@@ -1,0 +1,21 @@
+%
+%
+%
+\section{Construcción del modelo del clasificador MLP}
+%
+La construcción del modelo del clasificador MLP consiste en generar
+una red neuronal con propagación hacia adelante con topología capa de
+entrada--capa oculta--capa de salida.
+La capa de entrada posee $F$ (número de características) nodos
+sensores, y la capa de salida una única neurona.
+El número de neuronas en la capa oculta se determina aplicando alguna
+de las dos estrategias soportadas: trivial o de búsqueda exhaustiva.
+
+La red se inicializa con pesos aleatorios, que luego se ajustan a
+partir de los datos del conjunto de entrenamiento mediante un
+algoritmo de retropropagación.
+La implementación hace uso de las funciones disponibles en el paquete
+\eng{Neural Network Toolbox} del software Matlab.
+
+A continuación, se describen las estrategias de selección del número de
+neuronas en la capa oculta y el entrenamiento de la red.

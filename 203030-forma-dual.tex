@@ -1,0 +1,127 @@
+%
+%
+\subsection{Formulación dual}
+%
+En el Problema~\ref{e2:svm-problem-basic} se minimiza una función
+cuadrática simple con restricciones relativamente complejas
+${y}_i(\ww^T\BPhi(\xx_i)+b)\geq{}1$.
+Utilizando la técnica de los multiplicadores de Lagrange
+\cite{bottou,kuhntucker}, resulta posible obtener una fomulación
+alternativa del problema con restricciones simples, cuya conveniencia
+será aparente con la introducción del concepto de núcleos.
+
+La técnica de los multiplicadores de Lagrange permite incorporar las
+restricciones del problema dentro de la función a optimizar.  En
+primer lugar, se define el funcional lagrangiano
+%
+\begin{align}\label{e2:lagrangian}
+  \C{L}(\ww,b,\Balpha) = \frac{1}{2} \|\ww\|^2 + \sum_{i=1}^{\ell}
+  \alpha_i (1-y_i(\langle\ww,\BPhi(\xx)\rangle+b)).
+\end{align}
+%
+Como se puede ver, el funcional $\C{L}$ es la función a optimizar más
+las restricciones ${y}_if_i\geq{}1$, expresadas en la forma $g(\xx)\leq0$,
+y multiplicadas por las variables de holgura $\alpha_i$,
+denominadas \e{multiplicadores de Lagrange}.
+A partir del lagrangiano se plantea la formulación \emph{dual} del
+problema
+%
+\begin{equation}\label{e2:svm-problem-dual}
+  \begin{aligned}
+    \max_\alpha \tabs\quad f(\Balpha) = \min_{\ww,b} \C{L}(\ww,b,\Balpha)\\
+    \T{sujeto a} \tabs\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}.
+  \end{aligned}
+\end{equation}
+%
+En este problema las restricciones son más sencillas y aplican
+únicamente a los multiplicadores de Lagrange.
+Dado que $\frac{1}{2}\|\ww\|^2$ es una función continuamente derivable
+y convexa, y dado que $\C{L}$ es continuamente derivable respecto de
+sus argumentos en las cercanías del punto óptimo
+$(\ww^*,b^*,\Balpha^*)$, las condiciones de Karush-Kuhn-Tucker
+\cite{kuhntucker} garantizan la existencia de una solución
+$(\ww^*,b^*,\Balpha^*)$ al problema dual
+(\iflatexml{}Ecuación~\ref{e2:svm-problem-dual}\else\autoref{e2:svm-problem-dual}\fi)
+tal que $(\ww^*,b^*)$ también es solución al problema primal
+(\iflatexml{}Ecuación~\ref{e2:svm-problem-basic}\else\autoref{e2:svm-problem-basic}\fi).
+
+Dado que la solución $(\ww^*,b^*,\Balpha^*)$ del problema dual
+(\iflatexml{}Ecuación~\ref{e2:svm-problem-dual}\else\autoref{e2:svm-problem-dual}\fi)
+es un punto de ``silla'', sus respectivas derivadas parciales se
+anulan.
+Esto implica que
+%
+\begin{align}\label{e2:lagrangian-w}
+  \evalen{\ww=\ww^*}{\dpar{\C{L}(\ww,b,\Balpha)}{\ww}{}}
+    &=\ww^*-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
+    &\Rightarrow \ww^* = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i),
+  \\
+  \label{e2:lagrangian-sum-yalpha}
+  \evalen{b=b^*}{\dpar{\C{L}(\ww,b,\Balpha)}{b}{}}
+    &=-\sum_{i=1}^\ell y_i\alpha_i = 0
+      &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0.
+\end{align}
+%
+Incorporando los resultados (\ref{e2:lagrangian-w}) y
+(\ref{e2:lagrangian-sum-yalpha}) en la
+\iflatexml{}Ecuación~\ref{e2:lagrangian}\else\autoref{e2:lagrangian}\fi,
+el lagrangiano puede escribirse
+%
+\begin{align*}
+  \C{L}(\ww,b,\Balpha)
+  & =
+    \frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle \\
+    &\qquad\qquad +
+    \sum_{i=1}^{\ell} \alpha_i \left(1-y_i\left(\left\langle
+    \sum_{j=1}^\ell y_j\alpha_j\BPhi(\xx_j) ,\BPhi(\xx_i)\right\rangle
+    +b\right)\right)\\
+  & =
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
+    \sum_{i=1}^{\ell} \alpha_i  - b \sum_{i=1}^\ell y_i\alpha_i \\
+ & =
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle\BPhi(\xx_i),\BPhi(\xx_j)\rangle +
+    \sum_{i=1}^{\ell} \alpha_i  .
+\end{align*}
+%
+Con este resultado, se reescribe el problema dual en función de los
+multiplicadores de Lagrange $\alpha_i$:
+%
+\begin{align}
+  \begin{split}
+    \max_\alpha &\quad
+    -\frac{1}{2}\sum_{i=1}^\ell\sum_{j=1}^\ell y_iy_j\alpha_i\alpha_j
+    \langle \BPhi(\xx_i),\BPhi(\xx_j) \rangle +
+    \sum_{i=1}^{\ell} \alpha_i \\
+    \T{sujeto a} &\quad \yy^T\Balpha = 0, \\
+    &\quad \alpha_i \geq 0\T{ para todo } i\in\{1,\ldots,\ell\}.
+  \end{split}
+  \label{e2:svm-problem-dual2}
+\end{align}
+%
+Este problema se resuelve directamente para las variables de holgura
+$\alpha_i$, resultando en una solución $\Balpha^*$.
+El vector solución $\ww^*$ al problema original
+(\iflatexml{}Ecuación~\ref{e2:svm-problem-basic}\else\autoref{e2:svm-problem-basic}\fi)
+se obtiene por la
+ \iflatexml{}Ecuación~\ref{e2:lagrangian-w}\else\autoref{e2:lagrangian-w}\fi:
+%
+\begin{align}\label{e2:w-from-alpha}
+  \ww^* = \sum_{i=1}^\ell y_i\alpha^*_i\BPhi(\xx_i).
+\end{align}
+%
+El cálculo de $b^*$ óptimo se deriva de las condiciones de
+complementariedad de Karush-Kuhn-Tucker \cite{kuhntucker,bottou}, que
+establecen que para todo $i\in\{1,\ldots,\ell\}$, se cumple
+$\alpha^*_i(1-y_i(\langle\ww^*,\BPhi(\xx_i)\rangle+b^*))=0$.
+Entonces, para algún $\alpha^*_i\neq0$, se tiene
+%
+\begin{align}\label{e2:b-from-alpha}
+  b^* = y_i - \langle\ww^*,\BPhi(\xx_i)\rangle .
+\end{align}
+%
+La existencia de $\alpha^*_i\neq0$ está garantizada siempre que el
+conjunto de entrenamiento tenga elementos de ambas clases
+\cite{glasmachers}.

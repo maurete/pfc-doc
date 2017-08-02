@@ -1,17 +1,24 @@
 %
 \begin{table}[h]
   \tableStyle
-  \begin{tabular}{lllScr}
-    \toprule
-    Nombre & Uso & Fuente &{Clase}& Especie & Cant. elementos \\
+  \iflatexml%
+  \begin{tabular}{lllrcr}
+  \else%
+  \sisetup{
+    table-format = 4.0,
+  }
+  \begin{tabular}{lllScS}
+  \fi%
+  \toprule
+    {Nombre}&{Uso}& {Fuente}&{Clase}&{Especie}&{Cant. elementos}\\
     \midrule
     \mrow{2}{*}{TR-H} & \mrow{2}{*}{Entrenamiento}
-    &  \mirbase 8.2       & +1    & humana  & 200             \\
-    && coding             & -1    & humana  & 400             \\
+    &  \mirbase 8.2         & +1    & humana  & 200             \\
+    && coding               & -1    & humana  & 400             \\
     \midrule
     \mrow{2}{*}{TE-H} & \mrow{2}{*}{Prueba}
-    &  \mirbase 8.2       & +1    & humana  & 123             \\
-    && coding             & -1    & humana  & 246             \\
+    &  \mirbase 8.2         & +1    & humana  & 123             \\
+    && coding               & -1    & humana  & 246             \\
     \bottomrule
   \end{tabular}
   \caption{\captionStyle Conjuntos de datos de entrenamiento y prueba

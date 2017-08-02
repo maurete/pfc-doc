@@ -1,0 +1,36 @@
+%
+%
+\subsection{Regularización}
+%
+Un modelo sobreajustado es una solución demasiado compleja para un
+problema que en la realidad es más simple.
+Esto evoca un principio referido como la \e{navaja de Ockam}, que
+afirma: ``las entidades no deben multiplicarse más allá
+de lo necesario''.
+En otras palabras, propone que las explicaciones simples son más
+plausibles y los modelos sencillos son más explicativos y más
+confiables que los complicados.
+La \e{regularización} consiste en forzar la simplicidad del modelo,
+buscando evitar el sobreajuste en el modelo generado por la máquina
+de aprendizaje.
+Existen diversas formas para incorporar simplicidad en el
+modelo, tales como:
+%
+\begin{itemize}
+\item Limitar el modelo a una familia de funciones simples.
+\item Añadir un término de penalización por complejidad al objetivo
+  de entrenamiento.
+\item Estimar el error de generalización durante el entrenamiento,
+  interrumpiendo el proceso cuando se detecta que el mismo alcanza
+  su valor mínimo.
+\end{itemize}
+%
+Cualquiera de estos procedimientos regularizan el proceso de
+aprendizaje, ya que favorecen los modelos más simples.
+
+Se debe notar que, por definición, la regularización entra en conflicto con
+la minimización del error de entrenamiento, y un modelo regularizado
+cometerá más errores sobre el conjunto de entrenamiento que un modelo
+no regularizado.
+Sin embargo, se ha de esperar que el modelo
+regularizado tenga mayor capacidad de generalización.

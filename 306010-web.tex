@@ -1,0 +1,68 @@
+%
+%
+\subsection{Interfaz de usuario web}
+%
+Se generó una interfaz web utilizando la herramienta \eng{\webdemo{}}
+\cite{webdemobuilder}.
+Esta interfaz interactúa con el método a través de una función
+codificada para este propósito denominada \e{webif}.
+La función está diseñada para ser invocada en una línea de comandos no
+interactiva, generando en todos los casos un archivo que es presentado
+al usuario a través de la web.
+Cuando la invocación es exitosa, genera un reporte en formato HTML que
+incorpora el modelo del clasificador generado y/o un listado con
+predicciones de clase para los ejemplos en el conjunto de prueba.
+El reporte HTML puede utilizarse sucesivamente como modelo para
+clasificar nuevos datos a través de la interfaz web.
+En caso de encontrarse errores, la función genera un reporte
+informando al usuario del error encontrado.
+
+La función \func{webif} recibe 8 argumentos en la entrada:
+%
+\begin{enumerate}
+\item Tipo de clasificador
+\item Conjunto de \caract{s}
+\item Estrategia de selección de \hparam{s}
+\item Datos de entrenamiento de clase positiva
+\item Datos de entrenamiento de clase negativa
+\item Modelo previamente generado
+\item Datos de prueba
+\item Clase de los datos de prueba (usado para estadísticas)
+\end{enumerate}
+%
+
+Según la tarea que deseeefectuar, el usuario debe cargar los
+siguientes datos en el formulario web:
+%
+\begin{itemize}
+\item
+  \e{Para la generación del modelo del clasificador}
+  %
+  \begin{itemize}
+  \item
+    Tipo de clasificador
+  \item
+    Conjunto de características
+  \item
+    Estrategia de selección de \hparam{s}
+  \item
+    Archivo FASTA con datos de entrenamiento de clase positiva
+  \item
+    Archivo FASTA con datos de entrenamiento de clase negativa
+  \end{itemize}
+  %
+\item
+  \e{Para clasificación con un modelo generado previamente}
+  %
+  \begin{itemize}
+  \item
+    Archivo con el modelo de clasificador
+  \item
+    Archivo FASTA con datos de prueba
+  \item
+    Clase de los datos de prueba: opcional, utilizado para calcular
+    una tasa de error sobre el conjunto.
+  \end{itemize}
+  %
+\end{itemize}
+%

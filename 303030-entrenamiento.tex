@@ -1,0 +1,24 @@
+%
+\subsection{Entrenamiento}
+%
+Una vez determinado el número óptimo de neuronas en la capa oculta
+mediante alguna de las estrategias anteriores, se inicializa una red
+neuronal con la topología indicada.
+A continuación, se efectúa el entrenamiento mediante un algoritmo de
+retropropagación tal como \func{Rprop} \cite{rprop} (utilizado por
+defecto), o el gradiente conjugado escalado \cite{scg}.
+
+Para regularizar el proceso de entrenamiento, se separa un $20\%$ de
+los ejemplos, y se detenie el entrenamiento cuando el número de
+errores de clasificación sobre estos ejemplos alcanza un valor mínimo.
+
+Se ha observado que en algunos casos la inicialización aleatoria de
+los pesos en la red condiciona negativamente al algoritmo de
+retropropagación, resultando en soluciones subóptimas.
+Para contrarrestar este efecto, el método permite entrenar en paralelo
+múltiples redes (con inicializaciones diferentes).
+Estas redes pasan a formar parte del mismo modelo, el cual al ser
+utilizado para clasificación, determina su salida global a calculando
+la moda entre las salidas de las múltiples redes que lo componen.
+De este modo, se obtiene un modelo más fiable, a costa de una mayor
+complejidad computacional.

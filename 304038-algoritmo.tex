@@ -1,0 +1,31 @@
+%
+\subsubsection{Algoritmo de optimización}
+%
+El algoritmo comienza la búsqueda estableciendo en $1$ el valor de
+todos los \hparam{s}: $\Btheta^0=(1,1,\ldots)$.
+En cada iteración $t$, se efectúan los siguientes pasos:
+%
+\begin{enumerate}
+\item
+  Aplicando validación cruzada, se entrena un modelo SVM para cada
+  conjunto de estimación.
+\item
+  Se calculan las salidas $f_k$
+  (\iflatexml{}Ecuación~\ref{fk}\else\autoref{fk}\fi) de los modelos
+  para todos los ejemplos $\xx_k$ en las respectivas particiones de
+  validación.
+\item
+  Se determinan los valores óptimos de los parámetros $A$ y $B$,
+  minimizando el Problema~\ref{abproblem}, partiendo de los valores
+  iniciales $A_0=1$, $B_0=0$.
+\item
+  Se calculan las probabilidades estimadas $\hat{p}_k$ y con ellas, el
+  error empírico de cada ejemplo $E_k$ y global $E$.
+\item
+  Se calculan las derivadas $\dpar{E}{\theta_j}{}$.
+\end{enumerate}
+%
+La búsqueda procede en cada punto $\Btheta^t$ evaluando la función
+objetivo $E$ y determinando un nuevo punto $\Btheta^{t+1}$ a partir de
+la información disponible en el gradiente $\nabla{}E^t$, mediante el
+algoritmo de optimización BFGS \cite{nocedal}.

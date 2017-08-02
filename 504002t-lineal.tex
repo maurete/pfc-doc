@@ -6,10 +6,14 @@
   % do_test('batuwita',classifiers,[4,5,8]);
   \tableStyle
   \smaller
+  \iflatexml%
+  \begin{tabular}{ccrrrrcrrrcrrr}
+  \else%
   \sisetup{
     table-format = 2.1
   }
   \begin{tabular}{ccrSSScSSScSSS}
+  \fi
     \toprule
     \mrow{2}{*}{Problema} & \mrow{2}{*}{Caracts.} & &
     \mcol{3}{c}{Selección trivial} &&

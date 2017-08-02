@@ -1,0 +1,61 @@
+%
+\subsubsection{Cálculo de $\rho$}
+%
+La cota radio-margen $\rho$ es la función objetivo a minimizar, y
+se define según
+%
+\begin{align}
+  \rho = \rho_R \cdot \rho_M,
+\end{align}
+%
+donde
+%
+\begin{align}
+  \label{rho-r}
+  \rho_R &= R^2+\frac{1}{C}, \\
+  \label{rho-m}
+  \rho_M &= \|\ww\|^2+2C\sum\xi_i.
+\end{align}
+%
+El valor $R^2$ es el cuadrado del radio de la hiperesfera mínima que
+engloba a todos los vectores de soporte del modelo, y viene dado por
+%
+\begin{align}
+  R^2 = 1 - \Bbeta_*^T \KK \Bbeta_*,
+\end{align}
+%
+en donde $\Bbeta_*$ es solución al problema de optimización conocido
+como ``SVM de una clase'' \cite{scholkopf}:
+%
+\begin{align}
+\begin{split}
+  \arg\min_{\Bbeta}\quad&\Bbeta^T \KK \Bbeta,\\
+  \T{sujeto a}    \quad&0\leq\beta_i\leq{}1,\quad{}i=1,\ldots,\ell,\\
+                       &\B{1}^T_\ell\,\Bbeta=1.
+  \end{split}
+  \label{svm-oneclass}
+\end{align}
+%
+Aquí, $\B{1}_{\ell}$ es un vector columna con $\ell$ elementos iguales
+a 1, y $\KK$ es la matriz del núcleo con elementos
+$k_{ij}=k(\xx_i,\xx_j)$.
+Este problema posee solución única siempre que no haya elementos
+repetidos en el conjunto de entrenamiento \cite{chung}.
+En la implementación, el cálculo de la solución se realiza invocando
+las funciones provistas por la biblioteca \e{libSVM} \cite{libsvm}.
+
+El valor ``margen'' $\rho_M$ es dos veces la solución al problema de
+optimización de la SVM (\autoref{svm-primal-blando}).
+Dada la equivalencia de las soluciones a los problemas primal y dual
+de entrenamiento de la SVM, si $\Balpha$ es solución a la forma dual
+(\autoref{svmprob-dual-soft}), se tiene simplemente
+%
+\begin{align}
+\label{prieqdual}
+  \rho_M &= 2\left(\frac{1}{2}\|\ww\|^2+C\sum\xi_i \right)
+  =2\left(\B{e}^T\Balpha-\frac{1}{2}\Balpha^T\B{Q}\Balpha\right),
+\end{align}
+%
+donde $\QQ$ es la matriz con elementos $Q_{ij}=y_iy_jk(\xx_i,\xx_j)$.
+El cálculo de $\rho_M$ es sencillo, ya que tanto $\QQ$ como $\Balpha$
+se extraen directamente a partir del modelo.

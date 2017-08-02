@@ -18,6 +18,9 @@
   %%   \bottomrule
   %%   \\
   %% \end{tabular}
+  \iflatexml%
+  \begin{tabular}{lrrrr}
+  \else%
   \sisetup{
     table-format = 2.1(2),
     table-number-alignment = right,
@@ -29,6 +32,7 @@
     uncertainty-separator = \,\smaller
   }
   \begin{tabular}{lSSSS}
+  \fi%
     \toprule
     {Datos de entrenamiento} & {MLP-B}  & {SVM-LE} & {SVM-RE} & {SVM-RR} \\
     \midrule
