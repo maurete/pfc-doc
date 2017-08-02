@@ -8,45 +8,14 @@ Dado un vector de entrada $\xx\in{}X$, el clasificador lineal
 determina la clase de $\xx$ según
 %
 \begin{align*}
-  y = \T{signo}(\langle\vv,\xx\rangle+b)
+  y = \T{signo}(\vv\cdot\xx+b)
 \end{align*}
 %
 en donde $\vv$ y $b$ son los parámetros del modelo obtenidos mediante
 un algoritmo de entrenamiento.
-%
-\subsubsection{Espacio imagen}
-%
-La primera adición de la SVM al clasificador lineal básico es una
-transformación de los vectores de entrada a un \e{espacio imagen}.
-Esto se logra aplicando una función $\BPhi:X\rightarrow{}Z$, que
-transforma el \e{espacio de entrada} $X$ a otro espacio vectorial
-inducido $Z$, llamado \e{espacio imagen}.
-La elección de la función $\BPhi$ es tal que los datos transformados
-sean separables en el espacio $Z$.
-Dada una entrada $\xx\in{}X$, la máquina de vectores de soporte
-calcula un vector imagen $\zz=\BPhi(\xx)$ y le asigna una clase de
-salida $\hat{y}=\pm{}1$ según
-%
-\begin{align*}
-  y = \T{signo}(\ww^T \BPhi(\xx)+b)
-\end{align*}
-%
-Los valores de $\ww$ y $b$ se obtienen del algoritmo de entrenamiento,
-que se explicará más adelante.
-La ecuación $\ww^T\BPhi(\xx)+b=0$ define un hiperplano en el espacio
-imagen $Z$, que actúa como frontera de decisión entre las clases
+La ecuación $\vv\cdot\xx+b=0$ define un hiperplano en el espacio lineal
+$X$, que actúa como frontera de decisión entre las clases
 $\hat{\yy}=+1$ e $\hat{\yy}=-1$.
 Para visualizarlo, obsérvese que, desde el punto de vista geométrico,
-el signo de $\ww^T\BPhi(\xx)+b$ indica de qué lado del plano se
-encuentra el punto $\zz$.
-%
-\begin{quote}
-  {\bfseries Notación.}\quad{}En la literatura, resulta común
-  encontrar que el vector $\BPhi(\xx)$ se denomina \e{vector de
-    características} (\e{feature vector}) y el espacio vectorial $Z$
-  como \e{espacio de las características} (\e{feature space}).  En
-  este trabajo se prefiere denominarlos con los nombres alternativos
-  \e{vector imagen} y \e{espacio vectorial imagen} para evitar
-  confusión con el proceso previo de extracción de características.
-\end{quote}
-%
+el signo de $\vv\cdot\xx+b$ indica de qué lado del plano se encuentra
+el punto $\xx$.

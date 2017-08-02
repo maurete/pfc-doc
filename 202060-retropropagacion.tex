@@ -49,25 +49,18 @@ Cuando la neurona $i$ está en la capa de salida, esta fórmula se
 utiliza directamente para el cálculo de $\dpar{\C{E}(n)}{w_{ij}}{}$,
 ya que la señal de error $e_i(n)$ de la neurona viene dada por la
 diferencia entre el valor deseado $y_k(n)$ y la salida de la neurona
-$s_i(n)$ según la según la
-\iflatexml{}Ecuación~\ref{e2:error-energy-neuron}
-\else\autoref{e2:error-energy-neuron}\fi.
+$s_i(n)$ según la
+\iflatexml{}Ecuación~\ref{e2:error-energy-neuron}\else\autoref{e2:error-energy-neuron}\fi.
 
-Sin embargo, las neuronas en las capas ocultas también deberán ajustar
-sus pesos, ya que su valor de salida tiene influencia en la salida
-global de la red, aunque resulta imposible determinar una ``respuesta
-deseada'' correspondiente $y_k(n)$.  Por ello, cuando la neurona $i$
-se ubica en una capa oculta, el cálculo de $\dpar{\C{E}(n)}{w_{ij}}{}$
-resulta más complejo.  En particular, se desea obtener el valor de
-$\dpar{\C{E}(n)}{s_i}{}$ correspondiente a una neurona en la capa
-oculta.
-
-El razonamiento para el cálculo de $\dpar{\C{E}(n)}{s_{i}}{}$, cuando
-la neurona $i$ es oculta, es como sigue. Considérese en primer lugar
-que el valor de $\dpar{\C{E}(n)}{s_k}{}$ es conocido, con
-$k\in{}\C{S}(i)$, siendo $\C{S}(i)$ el conjunto de índices de todas
-las neuronas en la capa siguiente a la capa de $i$.  Entonces, se
-puede ver que
+Cuando la neurona $i$ se ubica en una capa oculta, el cálculo de
+$\dpar{\C{E}(n)}{w_{ij}}{}$ resulta más complejo, ya que no existe una
+``respuesta deseada'' correspondiente $y_k(n)$.
+El cálculo de la derivada $\dpar{\C{E}(n)}{s_{i}}{}$ para una neurona
+oculta $i$, parte del supuesto de que el valor de
+$\dpar{\C{E}(n)}{s_k}{}$ es conocido para todas las neuronas
+$k\in{}\C{S}(i)$, en donde $\C{S}(i)$ contiene los índices de todas
+las neuronas en la capa siguiente a la capa de $i$.
+Entonces, se puede ver que
 %
 \begin{align}
   \dpar{\C{E}}{s_i}{} \tab= \sum_{k\in\C{S}(i)}
@@ -94,21 +87,22 @@ se tiene entonces
 Esta fórmula es la clave del algoritmo de retropropagación: por la
 arquitectura del MLP, la salida $s_i(n)$ de una neurona oculta ejerce
 una influencia en la salida de todas las neuronas en las capas
-subsiguientes.  Del mismo modo, se tiene que el \e{gradiente local} de
-la señal de error de la neurona viene determinado por los gradientes
-de error de todas las neuronas en las capas subsiguientes.
+subsiguientes.
+Del mismo modo, se tiene que el \e{gradiente local} de la señal de
+error de la neurona viene determinado por los gradientes de error de
+todas las neuronas en las capas subsiguientes.
 
 Comenzando el cálculo de $\dpar{\C{E}(n)}{w_{ij}}{}$ por la capa de
 salida
 (\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w}\else\autoref{e2:deriv-E-wrt-w}\fi)
 y continuando con las capas ocultas en orden inverso
 (\iflatexml{}Ecuación~\ref{e2:deriv-E-wrt-w-hid}\else\autoref{e2:deriv-E-wrt-w-hid}\fi),
-el gradiente resulta calculable para todas las neuronas.  Por ello el
-nombre `` retropropagación'': se dice que la información del gradiente
-de error se propaga hacia atrás a partir de la capa de salida hasta la
-primer capa oculta.
+el gradiente resulta calculable para todas las neuronas.
+Éste es el origen del nombre ``retropropagación'': se dice que la
+información del gradiente de error se propaga hacia atrás, partiendo
+de la capa de salida hasta alcanzar la primer capa oculta.
 
 El desarrollo del algoritmo de retropropagación a mediados de los años
-80 representó un hito en el campo de las redes neuronales, ya
+$80$ representó un hito en el campo de las redes neuronales, ya
 que brindó un método computacionalmente eficiente, usable, para
 entrenar el perceptrón multicapa.

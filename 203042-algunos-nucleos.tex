@@ -1,0 +1,55 @@
+%
+\subsubsection{Funciones núcleo comunes}
+%
+A continuación, se presentan algunas de las funciones núcleo más
+utilizadas con las máquinas de vectores de soporte.
+%
+\begin{description}[font=\relscale{0.9}]
+%
+\item[Núcleo lineal]
+  %
+  \begin{align}
+    k(\xx_1,\xx_2)=\langle \xx_1, \xx_2\rangle=\xx_1^T\xx_2
+  \end{align}
+  %
+  Calcula simplemente el producto interno entre sus argumentos.
+  Aquí, el espacio imagen $Z$ es el mismo que el espacio de entrada,
+  $X$, correspondiente a la transformación identidad $\BPhi(\xx)=\xx$.
+%
+\item[Núcleo polinómico]
+  %
+  \begin{align}
+    k(\xx_1,\xx_2)=\left(\langle{}\xx_1,\xx_2\rangle+\theta\right)^d,
+  \end{align}
+  %
+  con grado $d\in\R{N}$ y desvío $\theta\in\RR$.
+  Este núcleo es una generalización del núcleo lineal (el caso $d=1$ y
+  $\theta=0$).
+  Su espacio imagen es el espacio de los polinomios de grado $d$ sobre
+  el espacio $X$.
+  El cálculo del producto interno aplicando el núcleo requiere
+  $\C{O}(\dim{}X)$ operaciones, contrastando con las
+  $\C{O}\left((\dim{}X)^d\right)$ necesarias para el cálculo de la
+  transformación $\BPhi$.
+%
+\item[Función de base radial (RBF)]
+  %
+  \begin{align}
+    k(\xx_1,\xx_2)=\exp\left(-\frac{\|\xx_1-\xx_2\|^2}{2\sigma^2}\right)
+    =\exp\left(-\gamma\|\xx_1-\xx_2\|^2\right)
+  \end{align}
+  %
+  También llamado núcleo gaussiano, o \eng{Radial Basis Function} en
+  inglés, es el núcleo más utilizado.
+  En la primer forma, el hiperparámetro $\sigma$ se llama parámetro de
+  amplitud.
+  En la segunda forma el hiperparámetro $\gamma$ se llama de
+  concentración.
+  La transformación $\BPhi$ correspondiente a este núcleo genera un
+  espacio imagen de dimensión infinita, imposible de calcular
+  directamente.
+  El producto interno mediante este núcleo se puede calcular en
+  $\C{O}(\dim{}X)$ operaciones.
+  %
+\end{description}
+%
