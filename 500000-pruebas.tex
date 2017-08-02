@@ -6,21 +6,24 @@
 %
 \chapter{Pruebas}
 %
-La evaluación del software se efectuó mediante pruebas experimentales
-basadas en la bibliografía.
-Cada prueba determina un conjunto de entrenamiento, que se utiliza
-para la generación del modelo, y un conjunto de prueba sobre el cual
-se aplica el modelo obtenido.
-Los resultados de clasificación del conjunto de prueba se evaluaron
-con las métricas de sensibilidad (\SE), especificidad (\SP) y media
-geométrica de la sensibilidad y la especificidad (\GM).
+La evaluación del software se efectuó mediante casos de prueba
+experimentales basados en la bibliografía.
+Estos casos de prueba, llamados \e{problemas}, determinan un conjunto
+de entrenamiento y un conjunto de prueba, que en los experimentos se
+utilizan para la generación del modelo del clasificador y para evaluar
+su funcionamiento al clasificar el conjunto de prueba.
+Los resultados de clasificación se evaluaron con las medidas de
+sensibilidad (\SE), especificidad (\SP) y media geométrica de la
+sensibilidad y la especificidad (\GM).
 Se probaron las diferentes variantes de los clasificadores,
 estrategias de selección de \hparam{s} y conjuntos de \caract{s},
 tabulando los resultados obtenidos para cada combinación.
-Adicionalmente, se realizaron pruebas complementarias, menos
-exhausitivas, que permiten obtener una idea del funcionamiento del
+Adicionalmente, se efectuaron pruebas menos exhaustivas con problemas
+``complementarios'', que brindan una idea del funcionamiento del
 software ante tipos de problemas comunes.
 
-En la primer parte de este Capítulo se presenta una descripción de
-los diferentes casos de prueba, seguida de un análisis de los
-resultados obtenidos con cada clasificador.
+En adelante, se describe la composición de los problemas y la
+configuración de las pruebas, seguida de un análisis de los resultados
+obtenidos con los diferentes clasificadores.
+Al final del capítulo, se presentan los resultados de las pruebas
+efectuadas con los problemas complementarios.
