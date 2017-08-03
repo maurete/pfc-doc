@@ -120,11 +120,14 @@ figures/triplet/triplet.png
 503004-mlp-results.tex
 504000-lineal.tex
 504002t-lineal.tex
+504004-lineal.tex
 505000-rbf.tex
 505002t-rbf.tex
+505004-rbf.tex
 506000-consideraciones.tex
 506010-costo.tex
 506012t-costo.tex
+506014-costo.tex
 507000-adicionales.tex
 507010-tripletsvm.tex
 507012t-tripletsvm.tex
@@ -134,5 +137,7 @@ figures/triplet/triplet.png
 507032t-mirbase21.tex
 507040-deltamirbase.tex
 507042t-composicion.tex
+507044-deltamirbase.tex
 507046t-resultados.tex
 600000-conclusion.tex
+601000-futuro.tex

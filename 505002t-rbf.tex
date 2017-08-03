@@ -1,3 +1,4 @@
+%
 \begin{table}[h]
   \tableStyle
   \smaller
@@ -9,13 +10,13 @@
   }
   \setlength{\tabcolsep}{5.1pt}
   \begin{tabular}{ccrSSScSSScSSScSSS}
-  \fi%
+    \fi%
     \toprule
-    \mrow{2}{*}{P.} & \mrow{2}{*}{Car.} & &
+    \mrow{2}{*}{P.} & \mrow{2}{*}{Caract.} & &
     \mcol{3}{c}{Selección trivial} &&
     \mcol{3}{c}{Búsq. exhaustiva} &&
     \mcol{3}{c}{Crit. err. empírico} &&
-    \mcol{3}{c}{RMB}
+    \mcol{3}{c}{Cota radio-margen}
     \\
     \cmidrule(lr){4-6}\cmidrule(lr){8-10}\cmidrule(lr){12-14}\cmidrule(lr){16-18}
     &&  & \ti{SE\%} & \ti{SP\%} & \ti{Gm\%} &
@@ -97,9 +98,11 @@
   %%   \bottomrule
   %%   \\
   %% \end{tabular}
-  \caption{\captionStyle Resultados de clasificar los conjuntos de
-    prueba de los tres problemas mediante el clasifi- cador SVM con
-    núcleo de función de base radial (RBF).}
+  \caption{
+    \captionStyle
+    Resultados de clasificación de los conjuntos de prueba con modelos
+    de clasificadores SVM con núcleo RBF, para los tres problemas
+    definidos.}
   \label{tbl:rbf-results}
-
 \end{table}
+%

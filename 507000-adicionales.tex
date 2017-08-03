@@ -3,41 +3,44 @@
 %
 \section{Pruebas adicionales}
 %
-Además de las pruebas sobre los tres problemas de clasificación
-principales, se realizaron pruebas complementarias con el propósito de
-obtener una idea general del comportamiento del método ante distintos
-tipos de problemas de clasificación.
+Se efectuaron una serie de pruebas complementarias con el propósito de
+obtener una idea del comportamiento del método ante otros tipos de
+tipos de problemas de clasificación, con conjuntos de prueba con
+ejemplos de otras especies o con ejemplos de \premirna{s} más
+recientes.
 
-En las pruebas complementarias se trabajó únicamente con el conjunto
-de características S-E y se probaron cuatro combinaciones de
-clasificador--estrategia de selección de \hparam{s}, basadas en los
-resultados obtenidos en las pruebas principales:
+A partir de los resultados observados en las pruebas principales,
+en las pruebas complementarias se trabajó únicamente con el conjunto
+de características \dset{S-E} y se probaron cuatro combinaciones de
+clasificadores y estrategias de selección de \hparam{s}:
 %
 \begin{itemize}
 \item
-  \sbs{MLP-B}: Clasificador MLP, estrategia de búsqueda
-  exhaustiva
+  \sbs{MLP-B}: Clasificador MLP, estrategia de búsqueda exhaustiva.
 \item
-  \sbs{SVM-LE}: Clasificador SVM, núcleo lineal, estrategia de
-  selección de hiperparámetros mediante minimización del criterio del error
-  empírico
+  \sbs{SVM-LE}: Clasificador SVM con núcleo lineal, estrategia de
+  selección de hiperparámetros mediante el criterio del error
+  empírico.
 \item
-  \sbs{SVM-RE}: Clasificador SVM, núcleo de base radial (RBF), selección de
-  hiperparámetros mediante minimización del criterio del error empírico,
+  \sbs{SVM-RE}: Clasificador SVM, núcleo de base radial (RBF),
+  selección de hiperparámetros mediante el criterio del error
+  empírico.
 \item
   \sbs{SVM-RR}: Clasificador SVM con núcleo RBF y estrategia de
   selección de hiperparámetros minimizando la cota radio-margen.
 \end{itemize}
 %
 
-Algunos de los problemas generados se basan en las pruebas
-suplementarias de los trabajos de referencia \cite{xue,ng}.
+Algunos de los problemas complementarios se basan en las pruebas
+suplementarias descriptas en los trabajos de referencia \cite{xue} y
+\cite{ng}.
 Por otra parte, se generaron problemas que clasifican los ejemplos de
-la especie humana disponibles en la última versión de \dset\mirbase
-(21.0, {junio de 2014}) entrenando con los conjuntos de entrenamiento
+la especie humana disponibles en la última versión de \dset\mirbase{}
+($21$.$0$, junio de 2014) entrenando con los conjuntos de entrenamiento
 de los problemas principales \prob\tripletsvm{}, \prob\mipred{} y
 \prob\micropred{}.
-Por úlrimo, el problema llamado \prob\deltamirbase{} prueba la
-capacidad del método de predecir los nuevos ejemplos de la especie
-humana incorporados a la base de datos \dset\mirbase en la última
-actualización.
+Por último, el problema llamado \prob\deltamirbase{} prueba la
+predicción de los nuevos ejemplos de la especie humana entre dos
+versiones sucesivas de la base de datos \dset\mirbase{}.
+En adelante, se describe el armado de cada problema junto con los
+resultados obtenidos en cada caso.

@@ -4,31 +4,46 @@
 \section{Discusión}
 %
 Los resultados obtenidos en las pruebas muestran que la elección del
-conjunto de \caract{s} resulta determinante para el desempeño de los
+conjunto de \caract{s} resultó determinante para el desempeño de los
 clasificadores.
-La utilización del conjunto de \caract{s} \dset{S-E} obtuvo las
-mejores tasas de clasificación, mientras que el conjunto de \caract{s}
-\dset{E} obtuvo muy buenos resultados considerando que se trata de un
-vector de sólo 7 \caract{s}.
+El conjunto de \caract{s} \dset{S-E} obtuvo las mejores tasas de
+clasificación, mientras que el conjunto de \caract{s} \dset{E} obtuvo
+muy buenos resultados considerando que se trata de un vector de sólo 7
+\caract{s}.
 Por el contrario, la utilización del conjunto de \caract{s} \dset{S}
 resultó en las tasas de clasificación más bajas, incluso provocando la
-divergencia de la estrategia de minimización de la cota RM en el
-problema \prob\mipred{}.
-La recomendación general es entonces utilizar los conjuntos de \caract{s}
-\dset{S-E} o \dset{E}.
-Se deberá evitar utilizar el conjunto \dset{S}, ya que obtiene tasas
-de clasificación no satisfactorias y puede provocar inestabilidad.
-Se recomienda asimismo no utilizar las \caract{s} de tripletes
-\dset{T}, \dset{X} y \dset{T-X} para evitar potenciales problemas
-cuando los ejemplos presenten bucles múltiples.
+divergencia de la estrategia de minimización de la cota radio-margen
+en el problema \prob\mipred{}.
 
-Respecto a los diferentes clasificadores, se obtuvieron resultados
-comparables tanto para MLP como para SVM con núcleos RBF y lineal.
+Respecto a los clasificadores, se obtuvieron resultados comparables
+con los tres clasificadores evaluados, con una pequeña ventaja de los
+clasificadores SVM por sobre el perceptrón multicapa.
 Se destacaron en particular los resultados obtenidos al utilizar las
 estrategias de minimización del error empírico en el caso de los
 problemas \prob\mipred{} y \prob\micropred{} y la cota radio-margen
 para el problema \prob\tripletsvm{}.
-En general, se recomienda utilizar el clasificador SVM en alguna de
-sus dos variantes, ya que en la práctica los resultados obtenidos con
-el clasificador MLP varían en función de la inicialización aleatoria
-de la red.
+
+A partir de estas observaciones se formulan las siguientes
+recomendaciones generales:
+%
+\begin{itemize}
+\item
+  \e{Utilizar los conjuntos de \caract{s} \dset{S-E} o \dset{E}}.
+  Mientras que el conjunto \dset{S} obtiene resultados no
+  satisfactorios y puede provocar inestabilidades, las \caract{s} de
+  tripletes \dset{T}, \dset{X} y \dset{T-X} no pueden clacularse
+  cuando los ejemplos contienen bucles múltiples.
+\item
+  \e{Utilizar el clasificador SVM en alguna de sus dos variantes}.
+  En la práctica, los resultados obtenidos con el clasificador MLP son
+  dependientes de la inicialización aleatoria de la red, condicionando
+  el modelo y agregando incertidumbre a la hora de clasificar nuevos
+  datos.
+\item
+  \e{Probar la estrategia trivial con el clasificador SVM-lineal y la
+    estrategia de minimización de la cota radio-margen con el
+    clasificador SVM-RBF}.
+  Ambas estrategias tienen un bajo coste computacional y obtiene
+  buenos resultados con los respectivos clasificadores.
+\end{itemize}
+%

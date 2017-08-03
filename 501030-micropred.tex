@@ -1,45 +1,47 @@
 %
 %
-\subsection{Problema microPred}
+\subsection{Problema \micropred{}}
 %
 Este problema se basa en los datos utilizados en \cite{batuwita} para
 entrenamiento y prueba del método \work{\micropred}.
-Los ejemplos de clase positiva se obtienen de la versión 12.0 de la
-base de datos \work{\mirbase}.
-Para los ejemplos de clase negativa se utilizan dos fuentes: la base
-de datos \dset{coding} y una base de datos curada por los autores,
-denominada \dset{other human ncRNAs}, que contiene en total 754
-ejemplos de \ncrna{s} (excluyendo \premirna{s}) de la especie humana.
+
+Como ejemplos de clase positiva se utilizaron $691$ \premirna{s}
+de la especie humana de la versión $12$.$0$ de
+\dset{\mirbase}.
+Los ejemplos de clase negativa provienen de dos fuentes: además de la
+base de datos \dset{coding}, se utilizó una base de datos curada por
+los autores, denominada \dset{other human ncRNAs}, que contiene en
+total $754$ ejemplos de \ncrna{s} (excluyendo \premirna{s}) de la
+especie humana \cite{batuwita}.
 
 En el trabajo original, los autores no especifican una separación
 en conjuntos de entrenamiento y prueba, sino que utilizan todos los
 ejemplos contenidos en las bases de datos positivas y negativas para
 entrenamiento, y reportan las medidas de rendimiento del método
-a partir de los resultados obtenidos en la validación cruzada.
+a partir de los resultados obtenidos mediante validación cruzada.
 Este esquema contrasta con la forma de efectuar las pruebas en el
 presente trabajo, en donde los resultados se obtienen de clasificar un
-conjunto de prueba previamente separado de los datos de
-entrenamiento.
+conjunto de prueba previamente separado de los datos de entrenamiento,
+aplicando el método de retención.
 
-El armado de los conjuntos de datos de entrenamiento y prueba del
-problema \prob\micropred{} es como sigue:
-se utiliza el 85\% (587/691) de los ejemplos positivos en el conjunto
-de entrenamiento, reservando el 15\% restante (104 ejemplos) para el
-conjunto de prueba.
-Tal como en el problema \prob{\mipred}, se mantiene una
-proporcionalidad de 1:2 entre ejemplos positivos y negativos, por lo
-que se incluyen 1174 ejemplos negativos en el conjunto de
+El armado de los conjuntos de datos del problema \prob\micropred{} se
+efectuó según el procedimiento a continuación.
+De los ejemplos de clase positiva, se utilizó el $85\%$ ($587/691$) de
+los ejemplos, seleccionados aleatoriamente para generar el conjunto de
 entrenamiento.
-De ellos, se toman 1078 de la base de datos \dset{coding} y 96
+Tal como se propone en \cite{ng}, se mantuvo una proporcionalidad de
+$1$ a $2$ entre ejemplos positivos y negativos, seleccionando al azar
+$1174$ ejemplos negativos para entrenamiento.
+De ellos, $1078$ se obtienen de la base de datos \dset{coding} y $96$
 de \dset{human other \ncrna{s}}, respetando la proporcionalidad de
-8494:754 entre ambas bases de datos.
+de $8494$ a $754$ entre ambas bases de datos.
 
 El conjunto de prueba incorpora todos los ejemplos de las bases de
-datos positivas y negativas no utilizados para entrenamiento: 104
-ejemplos de \dset{miRBase} (clase positiva), 7416 ejemplos de
-\dset{coding} (clase negativa), y 658 ejemplos de \dset{human other
-  \ncrna{s}} (clase negativa).
+datos positivas y negativas no utilizados para entrenamiento: $104$
+ejemplos de clase positiva de \dset{miRBase}, $7416$ ejemplos
+negativos de \dset{coding}, y $658$ ejemplos de \dset{human other
+  \ncrna{s}}, también de clase negativa.
 
 En la \iflatexml{}Tabla~\ref{tbl:problembtw}\else\autoref{tbl:problembtw}\fi{}
 se resume la composición de los conjuntos de entrenamiento y prueba
-que integran el problema \prob\micropred.
+que integran el problema \prob\micropred{}.
