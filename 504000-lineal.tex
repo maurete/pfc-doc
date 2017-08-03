@@ -4,43 +4,10 @@
 \section{Pruebas del clasificador SVM con núcleo lineal}
 %
 Se probó el clasificador SVM con núcleo lineal sobre los tres
-problemas definidos, aplicando las estrategias de selección trivial,
-de búsqueda exhaustiva y de minimización del criterio del error
-empírico para determinar el valor óptimo del hiperparámetro $C$.
+problemas definidos, aplicando las estrategias trivial, de búsqueda en
+la grilla (exhaustiva) y del criterio del error empírico para la
+selección del \hparam{s} $C$.
 En la \iflatexml{}Tabla~\ref{tbl:linear-results}\else\autoref{tbl:linear-results}\fi{}
 se presentan los resultados de clasificar el conjunto de prueba de
-cada problema con un modelo generado a partir del conjunto de
-entrenamiento del mismo problema.
-
-Los resultados obtenidos con las tres estrategias de selección del
-hiperparámetro $C$ resultaron similares en todos los casos.
-
-Los conjuntos de \caract{s} que incluyen la estructura secundaria
-(\dset{E} y \dset{S-E}) obtuvieron las mejores tasas de clasificación,
-tal como se observó en el caso del clasificador MLP.
-
-La desviación estándar resultó nula en el problema \prob{\tripletsvm}
-utilizando la estrategia de selección trivial.
-Esto es esperable dado que el algoritmo SMO, utilizado para el
-entrenamiento de la SVM, es determinístico.
-Puede decirse entonces que la variabilidad observada en la estrategia
-de selección trivial es atribuible exclusivamente a la variación en la
-composición de las particiones de entrenamiento y prueba según la
-semilla aleatoria.
-
-Considerando el caso del problema \prob\tripletsvm{} y \caract{s} de
-tripletes (\dset{T}), se obtuvieron resultados similares a los
-reportados por los autores, aunque con una \SP{} levemente inferior.
-Tal como con el clasificador MLP, la utilización de los conjuntos de
-\caract{s} \dset{E} y \dset{S-E} mejoró significativamente los
-resultados obtenidos con las \caract{s} de tripletes.
-
-En el caso de los problemas \prob\mipred{} y \prob\micropred{}, se
-observó que la diferencia entre la especificidad (\SP) y la
-sensibilidad (\SE) fue menor a la obtenida con el clasificador MLP.
-Esto es un indicio de que el clasificador SVM es menos sensible al
-``desbalance de clases'' en los datos de entrenamiento.
-Al comparar las tasas obtenidas por el clasificador SVM-lineal contra
-aquellas del clasificador MLP, se observa una leve mejora en los
-resultados obtenidos sobre los problemas \prob\mipred{} y
-\prob\micropred{}.
+cada problema con un modelo generado a partir del respectivo
+conjunto de entrenamiento.
