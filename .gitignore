@@ -10,4 +10,5 @@ revision.tex
 *.out
 *.run.xml
 *.toc
+*.upa
 \#*\#
