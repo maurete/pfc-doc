@@ -1,9 +1,12 @@
+\shorthandoff{<}
+\shorthandoff{>}
+\tikzsetnextfilename{figures/neurona/neurona}
 \begin{tikzpicture}[   % opciones por defecto
   shorten >=1pt,     % acortar la linea en 1pt al final
   shorten <=1pt,     % acortar la linea en 1pt al principio
   - stealth,         % estilo de flecha al final (manual pgf p~210)
   draw=black!100,    % linea negro 100%
-  font=\small\sffamily
+  %font=\relscale{0.9}\sffamily
 ]
   \tikzstyle{weight}=[draw, circle, inner sep=1pt];
   \tikzstyle{guide}=[draw=red!50];
@@ -74,3 +77,5 @@
   % nodo vacio para separar imagen
   \node at (0,-3.5) {};
 \end{tikzpicture}
+\shorthandon{<}
+\shorthandon{>}

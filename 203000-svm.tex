@@ -6,18 +6,17 @@
 La máquina de vectores de soporte (\eng{Support Vector Machine, SVM})
 es una máquina de aprendizaje propuesta por Boser et al. \cite{boser}
 y Cortes y Vapnik \cite{svm} que puede ser utilizada para tareas de
-clasificación y regresión. Su funcionamiento se basa en la
-construcción de un modelo en el cual los ejemplos son representados
-como puntos en el espacio.
+clasificación y regresión.
+Su funcionamiento se basa en la construcción de un modelo en el cual
+los ejemplos son representados como puntos en el espacio.
 En un problema de clasificación, el entrenamiento de la SVM construye,
 a partir de los ejemplos en el conjunto de entrenamiento, una frontera
 de decisión que permite determinar la pertenencia de clase de los
 ejemplos según se ubiquen a un lado u otro de la frontera.
-
 La popularidad de la máquinas de vectores de soporte se debe en gran
 parte a que permiten incorporar no-linealidad a la representación
 vectorial de los ejemplos de manera eficiente, mediante la utilización
-de familias especiales de funciones denominadas núcleos.
+de familias especiales de funciones denominadas \e{núcleos}.
 
 %% En su variante más común, la máquina de vectores de soporte incorpora
 %% un término de regularización que permite su aplicación a conjuntos de
@@ -25,7 +24,7 @@ de familias especiales de funciones denominadas núcleos.
 %% el sobreajuste.
 
 La máquina de vectores de soporte es un tipo de \e{clasificador
-  lineal} con tres propiedades importantes:
+  lineal} que incorpora tres propiedades importantes:
 %
 \begin{enumerate}
 \item El algoritmo de entrenamiento de la SVM genera una frontera de
@@ -38,10 +37,10 @@ La máquina de vectores de soporte es un tipo de \e{clasificador
   datos no separables.
 \end{enumerate}
 %
-A continuación se presenta una descripción de la SVM
-comenzando por el clasificador lineal e incorporando estas propiedades
-hasta alcanzar la formulación más general, que
-utiliza funciones núcleo e incorpora regularización al modelo.
+A continuación se presenta una descripción de la SVM comenzando por el
+clasificador lineal e incorporando estas propiedades hasta alcanzar la
+formulación más general, que utiliza funciones núcleo e incorpora
+regularización al modelo.
 En esta descripción se trata la obtención del modelo de un
 clasificador binario a partir de un conjunto de entrenamiento
 $D=\left((\xx_1,y_1),\ldots,(\xx_\ell,y_\ell)\right)$, en donde el

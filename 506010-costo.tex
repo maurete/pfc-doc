@@ -3,49 +3,20 @@
 \subsection{Costo computacional}
 %
 En cada prueba efectuada, se midió en forma básica el ``costo
-computacional'' mediante el tiempo y el número de entrenamientos
+computacional'' según el tiempo y el número de entrenamientos
 requeridos para generar el modelo del clasificador.
 Si bien estas mediciones ignoran otros factores involucrados en el
 costo computacional real, tales como la generación de modelos
-auxiliares y la resolución de problemas de optimización, resultan
-suficientes para brindar una idea global del comportamiento del
-sistema.
+auxiliares y la resolución de problemas adicionales de optimización,
+resultan suficientes para brindar una idea global del comportamiento
+del sistema.
 
 Los resultados se resumen en la
 \iflatexml{}Tabla~\ref{tbl:cost-main}\else\autoref{tbl:cost-main}\fi{},
 discriminados según el clasificador y la estrategia de selección de
-\hparam{s} probado, para cada problema de clasificación y conjunto de
-\caract{s}.
-Para una mayor claridad, se omite la estrategia trivial, que efectúa
-en todos los casos un único entrenamiento.
-
-En el caso del clasificador MLP, el número de entrenamientos
-efectuados es fijo para las dos estrategias de selección del número de
-neuronas ocultas.
-El tiempo requerido para la generación del modelo aumenta
-proporcionalmente al número de ejemplos en el conjunto de datos, lo
-que se condice con el entrenamiento por épocas de la implementación.
-Se observa asimismo un aumento del tiempo requerido para el
-entrenamiento con el conjunto de \caract{s} \dset{S}.
-
-Al probar el clasificador SVM con núcleo lineal, se observó que el
-conjunto de \caract{s} resultó un factor determinante del tiempo
-requerido para generar el modelo del clasificador.
-Mientras que el uso del conjunto de \caract{s} \dset{E} derivó en los
-menores tiempos de entrenamiento, las \caract{s} de secuencia y de
-tripletes requirieron los mayores tiempos de entrenamiento.
-Este efecto se observó especialmente en la estrategia de selección del
-\hparam{} $C$ mediante búsqueda exhaustiva, la cual efectuó 41
-entrenamientos en todos los casos.
-
-La generación del modelo de clasificador SVM con núcleo RBF requirió
-en general un mayor número de entrenamientos.
-Sin embargo, el tiempo de ejecución resultó en muchos casos similar o
-incluso inferior a aquel requerido por el clasificador SVM con núcleo
-lineal.
-En comparación con el clasificador SVM-lineal, el tiempo de ejecución
-resultó más uniforme entre los distintos grupos de \caract{s}.
-En particular, se destaca la velocidad del método al aplicar la
-estrategia de selección de \hparam{s} mediante minimización de la cota
-RM, requiriendo un tiempo muy inferior al de las demás estrategias no
-triviales.
+\hparam{s}, para cada problema de clasificación y cada conjunto de
+\caract{s} probados.
+Para una mayor claridad en la visualización, no se muestra en dicha
+Tabla la estrategia de selección de \hparam{s} trivial, que para todos
+los clasificadores efectúa un único entrenamiento en forma casi
+instantánea.

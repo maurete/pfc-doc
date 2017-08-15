@@ -1,0 +1,62 @@
+%
+
+A partir de los resultados que se muestran en la
+\iflatexml{}Tabla~\ref{tbl:rbf-results}\else\autoref{tbl:rbf-results}\fi{},
+se efectuaron las siguientes observaciones:
+%
+%
+\begin{itemize}
+\item
+  \e{Estrategias de selección de \hparam{s}}.
+  La estrategia de selección de \hparam{s} mediante minimización de la
+  cota radio-margen obtuvo muy buenos resultados, especialmente cuando
+  se considera su bajo coste computacional (analizado más adelante).
+  Esta estrategia presentó divergencia al utilizar el conjunto de
+  \caract{s} de secuencia \dset{S} para el problema \prob\mipred{}.
+  La estrategia del criterio del error empírico presentó una leve
+  ventaja respecto a la misma estrategia aplicada con una SVM de
+  núcleo lineal.
+  A diferencia de lo ocurrido con el clasificador SVM-lineal, la
+  estrategia de selección trivial obtuvo resultados inferiores a las
+  demás estrategias.
+\item
+  \e{Conjuntos de \caract{s}}.
+  La utilización del conjunto de \caract{s} \dset{S-E} resultó en las
+  mayores tasas de clasificación, a excepción del prolema
+  \prob\mipred{}, para el cual los mejores resultados variaron entre
+  los conjuntos \dset{E} y \dset{S-E}, según la estrategia considerada.
+\item
+  \e{Variabilidad}.
+  Tal como el caso de la estrategia trivial, la minimización de la
+  cota radio-margen no efetúa validación cruzada, resultando en una
+  desviación estándar nula para el caso del problema
+  \prob\tripletsvm{}.
+\item
+  \e{Problema \tripletsvm{}}.
+  Para este problema se obtuvo una elevada \SE{}, en especial para el
+  caonjunto de \caract{s} \dset{S-E} y para la estrategia RMB.
+\item
+  \e{Problema \mipred{}}.
+  Para este problema, los resultados resultaron generalmente
+  inferiores a los obtenidos con el clasificador SVM-lineal.
+\item
+  \e{Problema \micropred{}}.
+  Para este problema se observó una mejora sensible en los resultados
+  obtenidos respecto de los demás clasificadores.
+\item
+  \e{Desbalance de clases}.
+  El efecto del desbalance de clases en los problemas de los problemas
+  \prob\mipred{} y \prob\micropred{} resultó similar al observado en
+  el clasificador SVM con núcleo lineal, con una \SP{} superior a la
+  \SE{} en todos los casos.
+\item
+  \e{Comparación con los otros clasificadores}.
+  Mientras que para el problema \prob\tripletsvm{} las tasas de
+  clasificación superaron las obtenidas con el núcleo lineal, para los
+  problemas \prob\mipred{} y \prob\micropred{} los resultados variaron
+  según el caso considerado.
+  Al comparar con el clasificador MLP, puede observarse que este
+  clasificador presenta mejores resultados, en particular para los
+  problemas más complejos.
+\end{itemize}
+%

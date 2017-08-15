@@ -1,32 +1,34 @@
 %
 %
-\subsection{Problema miPred}
+\subsection{Problema \mipred{}}
 %
-El problema \prob\mipred{} se basa en los datos utilizados en \cite{ng}
-para el entrenamiento y prueba del método \work\mipred.
+El problema \prob\mipred{} se basa en los datos utilizados en
+\cite{ng} para el entrenamiento y prueba del método \work\mipred{}.
 
 Si bien en \cite{ng} se describen los pasos efectuados para el armado
-de los conjuntos de entrenamiento y prueba, no se dispone de
-información de los ejemplos específicos que los componen.
-Esto significa que si bien se mantiene el origen de los datos y el
-número de ejemplos de clase positiva y negativa en cada conjunto,
-resulta imposible replicarlos de manera exacta.
+de los conjuntos de entrenamiento y prueba, los autores no publicaron
+los datos particionados.
+Esto implica que no es imposible replicar de manera exacta las pruebas
+efectuadas por los autores.
+En cambio, se generaron las particiones de entrenamiento y prueba
+mediante selección aleatoria, mantieniendo el origen de los datos y el
+número de ejemplos de clase positiva y negativa en cada caso.
 
-Los ejemplos de clase positiva se obtienen de la versión 8.2 (de julio
-de 2006) de la base de datos \work{\mirbase}.
-Se utilizan los 323 \premirna{s} de la especie humana disponibles en
-esta versión, incluyendo aquellos con estructura secundaria tipo
-horquilla, con bucle central único, y ramificada, con bucles
-múltiples.
-Los ejemplos de clase negativa se obtienen de la base de datos
-\dset{coding}, al igual que en el problema \prob\tripletsvm.
+Los ejemplos de clase positiva se obtuvieron de la versión $8$.$2$ (de
+julio de $2006$) de la base de datos \dset{\mirbase}, mientras que los
+ejemplos de clase negativa se obtuvieron de la base de datos
+\dset{coding}, tal como en el problema \prob\tripletsvm{}.
 
 Respetando el procedimiento descripto en \cite{ng}, para el armado del
-conjunto de entrenamiento \dset{TR-H} se seleccionan al azar 200
-ejemplos de clase positiva y 400 de clase negativa.
-El conjunto de prueba \dset{TE-H} se conforma con los 123 ejemplos
-restantes de clase positiva, y con 246 ejemplos de clase negativa
-seleccionados al azar, excluyendo los ya utilizados para
-entrenamiento.
-La composición de los conjuntos de entrenamiento y prueba se detalla
-en \iflatexml{}Tabla~\ref{tbl:pruebasng}\else\autoref{tbl:pruebasng}\fi.
+conjunto de entrenamiento \dset{TR-H} se seleccionaron al azar $200$
+de los $323$ ejemplos de \premirna{s} de la especie humana como clase
+positiva y $400$ pseudo \premirna{s} de \dset{coding} como ejemplos de
+clase negativa.
+El conjunto de prueba \dset{TE-H} se compuso con los $123$ ejemplos de
+clase positiva no usados para entrenamiento, y con otros $246$
+ejemplos de clase negativa seleccionados al azar de la base
+\dset{coding}, excluyendo aquellos ya utilizados para entrenamiento.
+
+La composición de los conjuntos de entrenamiento y prueba de este
+problema se detalla en
+\iflatexml{}Tabla~\ref{tbl:pruebasng}\else\autoref{tbl:pruebasng}\fi.

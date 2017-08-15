@@ -242,7 +242,6 @@
 \newcommand{\ti}{\textsmaller}
 \newcommand{\func}[1]{{\texttt{#1}}}
 \newcommand{\dataset}[1]{{\texttt{#1}}}
-\newcommand{\Gm}{\scriptsize $G_m$}
 \newcommand{\Ft}[1]{\mrow{2}{*}{#1}}
 \newcommand{\tbmean}{\smaller{2} $\bar{x}$}
 \newcommand{\tbstd}{\smaller $\sigma$}
@@ -251,7 +250,7 @@
 \newcommand{\tripletsvm}{{Triplet-SVM}}
 \newcommand{\mipred}{{miPred}}
 \newcommand{\micropred}{{microPred}}
-\newcommand{\deltamirbase}{{$\mathbf{\mathsf{\Delta}}$miRBase}}
+\newcommand{\deltamirbase}{{\ensuremath{\mathbf{\Delta}}miRBase}}
 \newcommand{\premirna}[1]{pre-miRNA#1}
 \newcommand{\webdemo}{Web-demo builder}
 \newcommand{\ncrna}[1]{ncRNA#1}
@@ -269,12 +268,12 @@
 \newcommand{\FN}{\T{\slshape FN}}
 \newcommand{\SE}{\T{\slshape SE}}
 \newcommand{\SP}{\T{\slshape SP}}
-\newcommand{\GM}{\T{\slshape Gm}}
+\newcommand{\GM}{\ensuremath{\T{\slshape G}_m}}
+\newcommand{\Gm}{\GM}
 \newcommand{\PR}{\T{\slshape Pr}}
 \newcommand{\AC}{\T{\slshape Ac}}
 \newcommand{\avg}{\T{$\bar{x}$}}
 \newcommand{\std}{\T{$\sigma$}}
-
 
 \newcounter{FeatureCounter}
 \newcommand{\headRow}{  \sfbf{\footnotesize Pos.} &
@@ -522,7 +521,7 @@
 
 % dataset
 \newcommand{\dset}[1]{%
-\iflatexml{\bfseries #1}\else\ifpdf\ssf{#1}\fi\fi
+\iflatexml{\bfseries #1}\else\ifpdf\upshape\ssf{#1}\fi\fi
 }
 
 % work
