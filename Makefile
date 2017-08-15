@@ -33,15 +33,16 @@ crm  = rm -f
 
 # construir pdf
 all: pdf tikzimages
-	$(crm) $(output) $(aux) $(biber_aux)
+	$(crm) $(aux) $(biber_aux)
 
 rev:
-	echo -n '\\iflatexml\\else\\ohead{\small ' > $(revision)
-	git rev-parse --abbrev-ref HEAD | tr -d '\n' >> $(revision)
-	echo -n ', rev. ' >> $(revision)
-	git rev-parse HEAD | cut -c1-7 | tr -d '\n' >> $(revision)
-	git diff-index --quiet HEAD -- || echo -n '+' >> $(revision)
-	echo ', \\today}\\fi' >> $(revision)
+	@  echo -n '\\iflatexml\\else\\ohead{\small ' > $(revision)
+	@- git rev-parse --abbrev-ref HEAD | tr -d '\n' >> $(revision)
+	@  echo -n ', rev. ' >> $(revision)
+	@- git rev-parse HEAD | cut -c1-7 | tr -d '\n' >> $(revision)
+	@- git diff-index --quiet HEAD -- || echo -n '+' >> $(revision)
+	@  echo ', \\today}\\fi' >> $(revision)
+	@- git status > /dev/null || echo '' > $(revision)
 
 temp: $(header) $(contents)
 	echo '\\include{documentclass}' > $(output)
@@ -57,12 +58,11 @@ pdf: rev temp
 tikzimages: $(tikzfigs:%=%.png)
 
 $(tikzfigs:%=%.pdf): $(@:%.pdf=%.tikz.tex)
-	@echo All images exist now. Use make -B to re-generate them.
-	$(tikzcc) -jobname "$(@:%.pdf=%)" "\def\tikzexternalrealjob{$(output:%.tex=%)}\input{$(output:%.tex=%)}"
+	-$(tikzcc) -jobname "$(@:%.pdf=%)" "\def\tikzexternalrealjob{$(output:%.tex=%)}\input{$(output:%.tex=%)}"
 
 %.png: %.pdf
-	convert -density 300 $(<) $(<:%.pdf=%.png)
+	-convert -density 300 $(<) $(<:%.pdf=%.png)
 
 # borrar todos los compilados y auxiliares
 clean:
-	$(crm) $(output) $(output:%.tex=%.pdf) $(aux) $(biber_aux) $(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)
+	$(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) $(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)
