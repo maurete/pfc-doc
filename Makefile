@@ -69,5 +69,5 @@ $(tikzfigs:%=%.pdf): $(@:%.pdf=%.tikz.tex)
 
 # borrar todos los compilados y auxiliares
 clean:
-	$(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) \
+	@$(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) \
 $(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)

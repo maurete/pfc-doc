@@ -470,15 +470,6 @@
 %
 %
 
-% comentarios PDF en el margen
-\iflatexml
-\usepackage{comment}
-\newcommand{\pdfmargincomment}[2][]{%
-\begin{comment}{#1}{#2}\end{comment}}
-\else
-\usepackage{pdfcomment}
-\fi
-
 \iflatexml
 \newcommand{\nt}{\textrm{nt}}
 \else
