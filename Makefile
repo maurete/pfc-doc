@@ -33,7 +33,7 @@ crm  = rm -f
 
 # construir pdf
 all: pdf tikzimages
-	$(crm) $(aux) $(biber_aux)
+	@ $(crm) $(aux) $(biber_aux)
 
 rev:
 	@  echo -n '\\iflatexml\\else\\ohead{\small ' > $(revision)
@@ -45,15 +45,15 @@ rev:
 	@- git status > /dev/null || echo '' > $(revision)
 
 temp: $(header) $(contents)
-	echo '\\include{documentclass}' > $(output)
-	echo '\\include{header}' >> $(output)
-	echo '\\include{revision}' >> $(output)
-	echo '\\input{begindocument}' >> $(output)
-	egrep -v '^[#%]' $(layout) | perl -ne 'chomp; if (m{^figures/}){ \
+	@ echo '\\input{documentclass}' > $(output)
+	@ echo '\\input{header}' >> $(output)
+	@ echo '\\input{revision}' >> $(output)
+	@ echo '\\input{begindocument}' >> $(output)
+	@ egrep -v '^[#%]' $(layout) | perl -ne 'chomp; if (m{^figures/}){ \
 s{/[^/]+$$}{}; print "\\begin{figure}[H]\n\\figureStyle\n\\input{$$_/figure}\
 \\caption{\\captionStyle\\protect\\input{$$_/caption}}\
 \\end{figure}\n"; } else { s{.tex$$}{}; print "\\input{$$_}\n"; }' >> $(output)
-	echo '\\include{enddocument}' >> $(output)
+	@ echo '\\input{enddocument}' >> $(output)
 
 pdf: rev temp
 	@ $(cc) $(output) || ( $(crm) $(output:%.tex=%.bcf); exit 1 )
@@ -69,5 +69,5 @@ $(tikzfigs:%=%.pdf): $(@:%.pdf=%.tikz.tex)
 
 # borrar todos los compilados y auxiliares
 clean:
-	@$(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) \
+	$(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) \
 $(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)
