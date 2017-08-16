@@ -250,7 +250,7 @@
 \newcommand{\tripletsvm}{{Triplet-SVM}}
 \newcommand{\mipred}{{miPred}}
 \newcommand{\micropred}{{microPred}}
-\newcommand{\deltamirbase}{{$\mathbf{\mathsf{\Delta}}$miRBase}}
+\newcommand{\deltamirbase}{{\ensuremath{\mathbf{\Delta}}miRBase}}
 \newcommand{\premirna}[1]{pre-miRNA#1}
 \newcommand{\webdemo}{Web-demo builder}
 \newcommand{\ncrna}[1]{ncRNA#1}
@@ -521,7 +521,7 @@
 
 % dataset
 \newcommand{\dset}[1]{%
-\iflatexml{\bfseries #1}\else\ifpdf\ssf{#1}\fi\fi
+\iflatexml{\bfseries #1}\else\ifpdf\upshape\ssf{#1}\fi\fi
 }
 
 % work

@@ -3,43 +3,59 @@
 %
 \section{Configuración de las pruebas}
 %
-Cada ``prueba'' refiere a un experimento consistente en generar un
-modelo de clasificador y luego evaluar su desempeño al clasificar
-un conjunto de prueba.
-Para cada prueba, se establece un {problema} de clasificación, que
-determina los datos utilizados como conjuntos de entrenamiento y de
-prueba, un \e{conjunto de \caract{s}}, que regula las componentes de
-los vectores de \caract{s} a utilizar, y una estrategia de selección
-de \hparam{s}.
+Cada \e{prueba} refiere a un experimento en particular, que combina un
+{problema} de clasificación, un \e{conjunto de \caract{s}}, y una
+estrategia de selección de \hparam{s}.
+En cada experimento se probaron los tres clasificadores: perceptrón
+multicapa, máquina de vectores de soporte con núcleo lineal, y máquina
+de vectores de soporte con núcleo RBF, generando un modelo del
+clasificador a partir de los datos de entrenamiento definidos en el
+problema, y evaluando su desempeño al clasificar el conjunto de
+prueba.
 
 \paragraph{Semillas pseudoaleatorias.}
 La inicialización de los algoritmos pseudoaleatorios que particionan
-los datos influye en la composición de los problemas,
-generando particiones más o menos ``complejas'' para la máquina
-de aprendizaje según los ejemplos que contengan.
+los datos influye en la composición de los problemas \prob\mipred{} y
+\prob\micropred{}, generando particiones más o menos ``complejas'' de
+clasificar, según los ejemplos que contengan.
 Para lograr que las pruebas efectuadas fueran reproducibles, se
 fijaron cinco números arbitrarios que se utilizaron como ``semillas''
 para inicializar los algoritmos pseudoaleatorios, y se repitió cada
-prueba para cada semilla.
+prueba con las cinco semillas.
 
-\paragraph{Características.}
-Para todos los problemas, se efectuaron pruebas para las
-características de secuencia (S), de estructura secundaria (E), y de
-secuencia y estructura secundaria en conjunto (S-E).
-Para aquellos problemas que contienen únicamente ejemplos con
-estructura secundaria tipo horquilla (bucle único), se probaron las
-características de tripletes (T), auxiliares de tripletes (X), y de
-tripletes y auxiliares en conjunto (T-X).
+\paragraph{Conjuntos de \caract{s}.}
+Se definieron para las pruebas seis conjuntos de \caract{s}:
+%
+\begin{itemize}
+\item\dset{T} ($2$): incluye las $32$ \caract{s} con el número de
+  ocurrencias de cada triplete, sin incluir las medidas auxiliares.
+\item\dset{X} ($3$): incluye las $4$ \caract{s} auxiliares de
+  tripletes.
+\item\dset{S} ($4$): contiene $23$ \caract{s} de la secuencia.
+\item\dset{E} ($5$): compuesto por las $7$ \caract{s} de la estructura
+  secundaria.
+\item\dset{T-X} ($6$): contiene las $36$ \caract{s} de tripletes,
+  incluyendo número de ocurrencias y medidas auxiliares.
+\item\dset{S-E} ($8$): combina $30$ \caract{s} de la secuencia y de la
+  estructura secundaria.
+\end{itemize}
+%
+El número entre paréntesis refiere al identificador utilizado para
+cada conjunto de \caract{s} en el código.
+Los conjuntos de \caract{s} de la secuencia (\dset{S}), de la
+estructura secundaria (\dset{E}), y de la secuencia y estructura
+secundaria combinadas (\dset{S-E}) se probaron con todos los
+problemas.
+Los conjuntos de \caract{s} relacionados con los tripletes (\dset{T},
+\dset{X}, y \dset{T-X}), en cambio, se probaron sólo con el problema
+\prob\tripletsvm{}, ya que es el único que no contiene ejemplos con
+estructura secundaria ramificada (con bucles múltiples).
 
 \paragraph{Entorno.}
-Las pruebas del software se efectuaron en entorno Matlab versión
-R2012b, en un ordenador personal de escritorio con 8\iflatexml{}Gb\else\si{\giga b}\fi{} de
-RAM, procesador Intel Core i5-4440 de 4 núcleos de 3.10\iflatexml{}GHz\else\si{\giga Hz}\fi{},
-y sistema operativo Debian GNU/Linux versión 8.
-La configuración del sistema permite el cómputo paralelo con los 4
+Las pruebas se efectuaron en un entorno Matlab, versión R2012b, en un
+ordenador personal de escritorio con $8$\iflatexml{}Gb\else\si{\giga
+  b}\fi{} de RAM, procesador Intel Core i5-4440 con $4$ núcleos de
+3.10\iflatexml{}GHz\else\si{\giga Hz}\fi{}, y un sistema operativo
+Debian GNU/Linux, versión $8$ (``jessie'').
+La configuración del sistema permite el cómputo paralelo con los $4$
 núcleos del sistema.
-
-%% \paragraph{Validación cruzada.}
-%% En todos los casos que se aplicó validación cruzada se utilizaron 10
-%% particiones, el valor por defecto definido en la implementación del
-%% método propuesto.

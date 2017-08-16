@@ -3,27 +3,10 @@
 %
 \section{Pruebas del clasificador SVM con núcleo RBF}
 %
-En la
-\iflatexml{}Tabla~\ref{tbl:rbf-results}\else\autoref{tbl:rbf-results}\fi
-se observa que los resultados obtenidos para los tres problemas de
-clasificación resultaron comparables a los obtenidos con el
-clasificador SVM con núcleo lineal.
-Mientras que para el problema \prob\tripletsvm{} las tasas de
-clasificación superaron las obtenidas con el núcleo lineal, para los
-problemas \prob\mipred{} y \prob\micropred{} se observaron tasas
-generalmente inferiores.
-
-Para todos los problemas, la utilización del conjunto de \caract{s}
-\dset{S-E} resultó en las mayores tasas de clasificación, superando
-además las tasas obtenidas con los clasificadores MLP y SVM con núcleo
-lineal.
-
-La estrategia de selección de \hparam{s} mediante minimización de la
-cota RM obtuvo muy buenos resultados de clasificación, especialmente
-teniendo en cuenta su bajo coste computacional, que se analiza más
-adelante.
-Resulta prudente sospechar que el modelo generado con esta estrategia
-presenta sobreajuste en el caso del problema \prob\tripletsvm{}.
-Asimismo, se observa que la estrategia presentó divergencia al
-utilizar el conjunto de \caract{s} de secuencia \dset{S} para el
-problema \prob\mipred{}.
+Se efectuaron pruebas de entrenamiento y clasificación mediante el
+clasificador SVM con núcleo RBF de los tres problemas definidos, con
+selección de los \hparam{s} $C$ y $\gamma$ aplicando las estrategias
+trivial, de búsqueda en la grilla (exhaustiva), del criterio del error
+empírico y de minimización de la cota radio-margen.
+En la \iflatexml{}Tabla~\ref{tbl:rbf-results}\else\autoref{tbl:rbf-results}\fi{}
+se presentan los resultados obtenidos en cada caso.

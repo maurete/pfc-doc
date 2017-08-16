@@ -1,0 +1,62 @@
+%
+
+Las siguientes observaciones derivan de los resultados de la
+\iflatexml{}Tabla~\ref{tbl:linear-results}\else\autoref{tbl:linear-results}\fi{}:
+%
+\begin{itemize}
+\item
+  \e{Estrategias de selección de \hparam{s}}.
+  Las tres estrategias probadas arrojaron resultados similares en
+  prácticamente todos los casos.
+\item
+  \e{Conjuntos de \caract{s}}.
+  Tal como se observó con el clasificador MLP, los conjuntos que
+  incluyen las \caract{s} de la estructura secundaria (\dset{E} y
+  \dset{S-E}) obtuvieron las mejores tasas de clasificación.
+\item
+  \e{Variabilidad}.
+  Para el problema \prob{\tripletsvm} con la estrategia de selección
+  de \hparam{s} trivial se obtuvo una desviación estándar nula: esto
+  se debe a que la determinación del \hparam{C} no involucra ningún
+  factor aleatorio, como es el particionado de validación cruzada.
+  Por ello, también se concluye que la variabilidad observada con la
+  estrategia de selección trivial en los problemas \prob\mipred{} y
+  \prob\micropred{} es atribuible únicamente a la composición
+  diferente de las particiones de entrenamiento y prueba según la
+  semilla aleatoria utilizada.
+\item
+  \e{Problema \tripletsvm{}}.
+  Con el conjunto de \caract{s} de tripletes (\dset{T}), tal como el
+  utilizado en \cite{xue}, se obtuvieron resultados similares a los
+  reportados por los autores, con una menor especificidad (\SP{}).
+  Con el uso de los conjuntos de \caract{s} \dset{E} y \dset{S-E},
+  sin embargo, las tasas \SE{} y \SP{} mejoraron significativamente.
+\item
+  \e{Problema \mipred{}}.
+  Al comparar con los resultados reportados por los autores \cite{ng}
+  de una $\SE=84.5\%$ y una $\SP=98.0\%$, los resultados obtenidos con
+  este problema presentan una mayor sensibilidad, que ronda el $90\%$
+  con los conjuntos de \caract{s} \dset{E} y \dset{S-E}, y una menor
+  especificidad ($\approx{94\%}$).
+\item
+  \e{Problema \micropred{}}.
+  Tal como en el clasificador MLP, se observa que este problema
+  resultó el más difícil de clasificar correctamente con el
+  clasificador SVM-lineal.
+\item
+  \e{Desbalance de clases}.
+  Se observó el efecto del ``desbalance de clases'' en los datos de
+  entrenamiento de los problemas \prob\mipred{} y \prob\micropred{},
+  ya que en ambos casos se obtuvo una especificidad (\SP{})
+  sensiblemente superior a la especificidad (\SE{}).
+\item
+  \e{Comparación con el clasificador MLP}.
+  Mientras que los resultados obtenidos para el problema
+  \prob\tripletsvm{} resultaron comparables a los del clasificador
+  MLP, en los problemas \prob\mipred{} y \prob\micropred{} se observó
+  una pequeña mejora.
+  Asimismo, la diferencia entre la especificidad (\SP) y la
+  sensibilidad (\SE) observada en estos problemas \prob\mipred{} fue
+  menor a la obtenida con el clasificador MLP.
+\end{itemize}
+%
