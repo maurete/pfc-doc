@@ -1,21 +1,20 @@
 %
 %
 %
-\section{Pruebas del Perceptrón Multicapa}
+\section{Pruebas del perceptrón multicapa}
 %
-Se probó el funcionamiento del Perceptrón Multicapa sobre los tres
-problemas de clasificación definidos, aplicando las estrategias
+Se probó el funcionamiento del perceptrón multicapa mediante los tres
+problemas de clasificación definidos, utilizando las estrategias
 trivial y de búsqueda exhaustiva para determinar el número de neuronas
 en la capa oculta.
- %% Se probó el desempeño del Perceptrón Multicapa para los tres problemas
-%% de clasificación y las dos estrategias de selección del número de
-%% neuronas en la capa oculta: trivial y de búsqueda exhaustiva.
 En la \iflatexml{}Tabla~\ref{tbl:mlp-results}\else\autoref{tbl:mlp-results}\fi{}
-se presentan los resultados obtenidos de generar el clasificador con
-el conjunto de entrenamiento y clasificando el conjunto de prueba
-respectivo de cada problema, discriminando según el conjunto de
+se muestran los resultados obtenidos de clasificar el conjunto de
+prueba de cada problema luego de generar el modelo del clasificador
+con el respectivo conjunto de entrenamiento.
+Los resultados se presentan discriminados según el conjunto de
 \caract{s} y la estrategia de selección del número de neuronas en la
-capa oculta.
-Resulta necesario remarcar que, al replicar las pruebas, estos
-resultados presentarán ligeras variaciones debido a la inicialización
-aleatoria de los pesos de la red.
+capa oculta utilizados en cada caso.
+Debido a la inicialización aleatoria de los pesos de la red, que no es
+parametrizable mediante un número ``semilla'', los resultados
+obtenidos al replicar las pruebas resultarán ligeramente diferentes a
+los aquí mostrados.

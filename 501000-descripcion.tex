@@ -1,31 +1,31 @@
 %
 %
 %
-\section{Descripción de los casos de prueba}
+\section{Descripción de los problemas}
 %
-Se utilizaron tres casos de prueba principales, denominados
-\e{problemas} de clasificación, que se basan en los conjuntos de
-datos utilizados por los autores de \work{\tripletsvm} \cite{xue},
-\work{\mipred} \cite{ng}, y \work{\micropred} \cite{batuwita} para
-evaluar sus respectivos métodos.
+Tomando como base los trabajos \cite{xue,ng,batuwita}, se definieron
+tres problemas principales a partir de los conjuntos de datos de los
+métodos \work{\tripletsvm}, \work{\mipred}, y \work{\micropred},
+respectivamente, utilizados por los autores para las pruebas de sus
+métodos.
 Los problemas se denominaron \prob\tripletsvm{}, \prob{\mipred} y
-\prob\micropred{}, tal como los métodos para los que han sido
-creados.
+\prob\micropred{}, según el nombre del trabajo en el cual se basan.
 
-En los tres problemas seleccionados, los ejemplos de clase positiva
-son \premirna{s} de la especie humana, provenientes de diferentes
-versiones de la base de datos \work{\mirbase}, un repositorio de
-referencia de \premirna{s} experimentalmente validados mantenido por
-el laboratorio Griffiths-Jones de la Universidad de Manchester, Reino
+Los tres problemas contienen \premirna{s} de la especie humana
+extraídos de la base de datos \dset\mirbase{} como ejemplos
+de clase positiva.
+\dset{\mirbase} es un repositorio de referencia en línea que contiene
+ejemplos de \premirna{s} experimentalmente validados, mantenido por el
+laboratorio Griffiths-Jones de la Universidad de Manchester, Reino
 Unido \cite{mirbase1, mirbase2, mirbase3}.
-Diferentes versiones de \work\mirbase{} se publican regularmente con
+Diferentes versiones de \work\mirbase{} se publican regularmente, con
 los nuevos \premirna{s} descubiertos para diferentes organismos.
-Asimismo, los ejemplos de clase negativa provienen principalmente de
-un conjunto de datos artificial denominado \dset{coding}.
-Este conjunto de ``pseudo \premirna{s}'' fue creado por los autores de
-\work{\tripletsvm}, y contiene $8494$ ejemplos generados con fragmentos
-del genoma humano que presentan una estructura secundaria de horquilla
-similar a la de los \premirna{s}, pero sin embargo son extraídos de
-regiones genómicas en las que no se ha reportado la presencia de
-ningún \premirna{}.
-El armado del conjunto de datos \dset{coding} se detalla en \cite{xue}.
+Asimismo, los ejemplos de clase negativa de los tres problemas
+provienen principalmente de la base de datos \dset{coding}, un
+conjunto de datos artificial creado por los autores de
+\work{\tripletsvm} que contiene $8494$ ejemplos de clase negativa
+llamados ``pseudo \premirna{s}'' \cite{xue}.
+Estos ejemplos, generados con fragmentos del genoma humano extraídos
+de regiones genómicas en las que no se ha reportado la presencia de
+ningún \premirna{}, presentan una estructura secundaria con forma de
+horquilla, similar a la de los \premirna{s} reales.

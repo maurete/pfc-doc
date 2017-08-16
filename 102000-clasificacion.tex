@@ -3,27 +3,27 @@
 %
 \section{Clasificación de \premirna{s}}
 %
-Los métodos computacionales para clasificación de \premirna{s} se
-basan en técnicas de \e{aprendizaje supervisado}, una disciplina de la
-Inteligencia Computacional.
+Los métodos de la Inteligencia Computacional utilizados para
+clasificación de \premirna{s} son técnicas de \e{aprendizaje
+  supervisado}.
 En general, estas técnicas permiten generar un \e{modelo} o
 representación interna que caracteriza los \premirna{s}, extrayendo
 información a partir de un conjunto de datos de ejemplo denominado
 \e{conjunto de entrenamiento}.
 Se dice que el modelo generado posee capacidad de \e{generalización},
-ya que puede ser aplicado sobre nuevos ejemplos que no han sido
-presentados con aterioridad.
+ya que puede ser aplicado sobre nuevos ejemplos que no le han sido
+presentados con anterioridad.
 El modelo funciona como un \e{clasificador}, discriminando los
-ejemplos en dos clases: \e{positiva}, asociada a \premirna{s}
-``reales'', y \e{negativa}, asociada a los ejemplos que no se
-reconocen como \premirna{s}.
+ejemplos en diferentes \e{clases}.
+Se considera el caso de la clasificación binaria, asociando una clase
+``positiva'' a los \premirna{s} reales, y una clase ``negativa'' a los
+ejemplos que son de otro tipo.
+En el presente trabajo se generan clasificadores binarios de
+secuencias de \premirna{s} utilizando técnicas de aprendizaje
+supervisado mediante el \e{perceptrón multicapa} \cite{mlp1,mlp2} y la
+\e{máquina de vectores de soporte} \cite{svm}.
 
-En el presente trabajo se utilizan dos técnicas de aprendizaje
-supervisado para la generación de clasificadores de \premirna{s}: el
-\e{Perceptrón Multicapa} \cite{mlp1,mlp2} y la \e{Máquina de
-  Vectores de Soporte} \cite{svm}.
-
-El Preceptrón Multicapa (\e{MLP}, del inglés \eng{Multilayer
+El perceptrón multicapa (\e{MLP}, del inglés \eng{Multi-Layer
   Perceptron}) es un tipo de red neuronal artificial con propagación
 hacia adelante, en la que se disponen nodos computadores (neuronas)
 organizados en \e{capas}.
@@ -36,11 +36,13 @@ algoritmo de aprendizaje basado en la \e{propagación hacia atrás} del
 error de clasificación, hasta satisfacer un criterio de corte
 \cite{jain}.
 
-La Máquina de Vectores de Soporte (\e{SVM}, de su nombre en inglés
+La máquina de vectores de soporte (\e{SVM}, de su nombre en inglés
 \eng{Support Vector Machine}) es un algoritmo de clasificación que se
 basa en transformar, mediante una función llamada \e{núcleo}, el
 espacio $N$-dimensional de los datos de entrada en otro espacio de
 dimensión $M: M\gg N$, donde se espera que los datos sean linealmente
 separables mediante un hiperplano.
-El entrenamiento consiste en encontrar el hiperplano óptimo de
-separación para el conjunto de datos presentado \cite{bottou}.
+El entrenamiento consiste en encontrar resolver un problema de
+optimización que determina un hiperplano de separación óptimo para los
+datos presentados, maximizando la distancia a los ejemplos más
+cercanos en el espacio transformado \cite{bottou}.
