@@ -49,7 +49,10 @@ temp: $(header) $(contents)
 	echo '\\include{header}' >> $(output)
 	echo '\\include{revision}' >> $(output)
 	echo '\\input{begindocument}' >> $(output)
-	egrep -v '^[#%]' $(layout) | sed 's/^/\\includeFileOrFigure\{/g ; s/$$/}/g ;' >> $(output)
+	egrep -v '^[#%]' $(layout) | perl -ne 'chomp; if (m{^figures/}){ \
+s{/[^/]+$$}{}; print "\\begin{figure}[H]\n\\figureStyle\n\\input{$$_/figure}\
+\\caption{\\captionStyle\\protect\\input{$$_/caption}}\
+\\end{figure}\n"; } else { s{.tex$$}{}; print "\\input{$$_}\n"; }' >> $(output)
 	echo '\\include{enddocument}' >> $(output)
 
 pdf: rev temp
@@ -58,11 +61,13 @@ pdf: rev temp
 tikzimages: $(tikzfigs:%=%.png)
 
 $(tikzfigs:%=%.pdf): $(@:%.pdf=%.tikz.tex)
-	-$(tikzcc) -jobname "$(@:%.pdf=%)" "\def\tikzexternalrealjob{$(output:%.tex=%)}\input{$(output:%.tex=%)}"
+	-$(tikzcc) -jobname "$(@:%.pdf=%)" \
+"\def\tikzexternalrealjob{$(output:%.tex=%)}\input{$(output:%.tex=%)}"
 
 %.png: %.pdf
 	-convert -density 300 $(<) $(<:%.pdf=%.png)
 
 # borrar todos los compilados y auxiliares
 clean:
-	$(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) $(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)
+	$(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) \
+$(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)
