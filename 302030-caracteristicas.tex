@@ -15,8 +15,7 @@ La construcción del vector de características conforma toda una
 disciplina en sí misma, y su estudio excede el alcance del presente
 trabajo.
 En cambio, se adoptó un enfoque simple que consiste en construir un
-vector de $66$ \caract{s} basado en aquellas de los trabajos
-\cite{xue,ng,batuwita}.
+vector de $66$ \caract{s} utilizadas en el estado del arte.
 Las características calculadas fueron seleccionadas en base a los
 siguientes criterios:
 %
@@ -34,11 +33,34 @@ siguientes criterios:
 \end{enumerate}
 %
 Según el tipo de dato que representan, las $66$ \caract{s} calculadas
-se agrupan en: $36$ \caract{s} de \e{tripletes}, $23$ \caract{s} de la
+son $36$ \caract{s} de \e{tripletes}, $23$ \caract{s} de la
 \e{secuencia}, y $7$ de la \e{estructura secundaria}.
-En adelante, se describen estas \caract{s} en detalle siguiendo este
-orden.
-Para una mejor comprensión de la terminología, en la
+Siguiendo esta clasificación, dentro del vector de \caract{s} se
+diferencian cuatro ``grupos'':
+%
+\pdfmargincomment[icon=Note,color=Yellow]{Agrego esta descripción de
+  los grupos ya que en las pruebas se hace referencia, a ver si queda
+  más claro?}
+%
+\begin{itemize}
+\item \dset{T}: \caract{s} de tripletes ``principales'', ubicadas
+  en las posiciones $1$ a $32$,
+\item \dset{X}: \caract{s} de tripletes ``adicionales'' en las
+  posiciones $33$--$36$,
+\item \dset{S}: \caract{s} de la secuencia, con índices $37$--$59$, y
+\item \dset{E}: \caract{s} de la estructura secundaria, con
+  índices $60$ a $66$.
+\end{itemize}
+%
+El método permite trabajar con cualquier combinación de estos cuatro
+grupos, ya sea para efectuar comparaciones entre distintas \caract{s}
+o bien porque algunas de ellas no pueden ser calculadas.
+El modelo generado en este caso contendrá los índices necesarios
+indicando cuáles son las \caract{s} a calcular.
+
+En adelante se describe el vector de \caract{s} en detalle.
+Como ayuda para la comprensión de algunos términos utilizados en la
+descripción, se muestra en la
 \iflatexml{}Figura~\ref{fig:hairpin-parts}\else\autoref{fig:hairpin-parts}\fi{}
-se ilustran las diferentes partes que componen una estructura
-secundaria típica en forma de horquilla.
+una estructura secundaria típica con forma de horquilla, identificando
+las diferentes partes que la componen.

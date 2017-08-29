@@ -6,10 +6,10 @@
 %
 \chapter{Descripción del clasificador desarrollado}
 %
-El método desarrollado abarca un sistema completo de reconocimiento de
-\premirna{s}, con funcionalidad para la generación de un modelo de
-clasificador y para su posterior aplicación sobre nuevos datos.
-
+%% El desarrollo abarca un sistema completo de reconocimiento de
+%% \premirna{s}, con funcionalidad para la generación de un modelo de
+%% clasificador y para su posterior aplicación sobre nuevos datos.
+%
 Como punto de partida se consideraron los trabajos
 \cite{xue,ng,batuwita,sheng,sewer,ding}, en los que se presentan
 clasificadores con propósito similar al del presente desarrollo.
@@ -17,15 +17,16 @@ En particular, debido a la disponibilidad de datos suplementarios, se
 utilizaron los conjuntos de datos y se aplicaron las técnicas de
 extracción de \caract{s} de los trabajos \cite{xue,ng,batuwita}.
 
-La implementación se efectuó en lenguaje Matlab versión R2012b,
-utilizando los módulos adicionales ``Neural Network Toolbox''
-y ``Bioinformatics Toolbox''.
-Se decidió utilizar el lenguaje Matlab siguiendo un criterio práctico,
-ya que el mismo es ampliamente utilizado en la disciplina para la
-generación de modelos matemáticos y brinda funcionalidades específicas
-en forma de módulos adicionales.
-Se integraron asimismo la biblioteca \work{libSVM} \cite{libsvm} para
-las máquinas de vectores de soporte y la herramienta \work{RNAFold}
-\cite{vienna} para el cálculo de la estructura secundaria.
+Se optó por utilizar el lenguaje Matlab, dado que el mismo es
+ampliamente utilizado en la disciplina para la generación de modelos
+matemáticos y brinda funcionalidades específicas en forma de módulos
+adicionales.
+La codificación se efectuó sobre un entorno Matlab versión R2012b,
+utilizando los módulos adicionales ``Neural Network Toolbox'' y
+``Bioinformatics Toolbox''.
+Se integró asimismo funcionalidad de la biblioteca \work{libSVM}
+\cite{libsvm} para las máquinas de vectores de soporte y de la
+herramienta \work{RNAFold} \cite{vienna} para el cálculo de la
+estructura secundaria.
 Se utilizó el software \work\webdemo{} \cite{webdemobuilder} para
 la creación de una interfaz web de demostración.

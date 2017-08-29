@@ -1,13 +1,14 @@
+%
+El cálculo de las \caract{s} de tripletes requiere que el ejemplo
+tenga una estructura secundaria con forma de horquilla, con un único
+bucle central.
+De otro modo, la definición del ``tallo'' pierde sentido y el
+algoritmo falla, retornando valores nulos para estas \caract{s} e
+invalidando cualquier procesamiento posterior del ejemplo en cuestión.
+Por ello, los grupos de \caract{s} de tripletes \dset{T} y \dset{X} no
+son aptos para un uso general, sino que deberán utilizarse sólo cuando
+se garantice la estructura secundaria forma de horquilla para todos
+los ejemplos.
 
-La principal limitación de las características de tripletes reside en
-que su cálculo resulta posible únicamente cuando la estructura
-secundaria tiene forma de horquilla, ya que de otro modo la definición
-del ``tallo'' pierde sentido. Por ello, estas \caract{s} no se
-calculan cuando el ejemplo contiene bucles múltiples en su estrucutra
-secundaria.
-
-
-En la tabla a continuación se detallan las 36 características de
-tripletes y su posición en el vector de características.
-
-
+En la Tabla a continuación se detallan las $36$ características de
+tripletes \cite{xue} y su posición en el vector de características.

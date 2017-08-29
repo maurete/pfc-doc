@@ -30,8 +30,8 @@
     draw=black!60,
     tape,
     tape bend top=none,
-    minimum width=0.9cm,
-    minimum height=1cm,
+    minimum width=0.6cm,
+    minimum height=0.6cm,
     fill=white,
     dato
   ];
@@ -50,12 +50,13 @@
     trapezium left angle=60,
     trapezium right angle=120,
     minimum width=1cm,
-    inner sep=0.2cm,
+    inner sep=0.1cm,
   ];
   \tikzstyle{tarea}=[
     rectangle,
     minimum width=1cm,
-    inner sep=0.25cm,
+    inner ysep=0.15cm,
+    inner xsep=0.25cm,
     append after command={\pgfextra{
         \coordinate [] (NW) at ($(\tikzlastnode.north west)$);
         \coordinate [] (SE) at ($(\tikzlastnode.south east)$);
@@ -70,8 +71,8 @@
   ];
   \tikzstyle{estruct}=[
     dato,
-    minimum width=0.9cm,
-    minimum height=1.2cm,
+    minimum width=0.7cm,
+    minimum height=0.9cm,
     append after command={\pgfextra{
         \coordinate [] (nw) at ($(\tikzlastnode.north west)$);
         \coordinate [] (se) at ($(\tikzlastnode.south east)$);
@@ -116,8 +117,8 @@
     }},
   ];
   \tikzstyle{matriz}=[
-    minimum width=0.9cm,
-    minimum height=1.2cm,
+    minimum width=0.7cm,
+    minimum height=0.9cm,
     dato,
     append after command={\pgfextra{
         \coordinate [] (nw) at ($(\tikzlastnode.north west)$);
@@ -148,8 +149,8 @@
     dato,
     cylinder,
     shape border rotate=90,
-    minimum width=0.9cm,
-    minimum height=1.2cm,
+    minimum width=0.6cm,
+    minimum height=0.7cm,
     %text width=1,
     fill=white,
     shape aspect=.5,
@@ -157,8 +158,8 @@
   ];
   \tikzstyle{modelo}=[
     % fill=white,
-    minimum width=0.9cm,
-    minimum height=0.9cm,
+    minimum width=0.7cm,
+    minimum height=0.7cm,
     dato,
     append after command={\pgfextra{
         \coordinate [] (nw) at ($(\tikzlastnode.north west)$);
@@ -193,7 +194,7 @@
           ($(nw)!\c!(ne)$) to ($(vnw)!\c!(vne)$)
           ($(se)!\c!(ne)$) to ($(hse)!\c!(hne)$)
         };
-        \node [black,anchor=center] at ($(sw)!0.7!10:(ne)$) {$h(x)$};
+        \node [black,anchor=center] at ($(sw)!0.67!10:(ne)$) {{\tiny $h(x)$}};
     }},
   ];
   \tikzstyle{transicion}=[
@@ -204,12 +205,12 @@
         \coordinate [] (nw) at ($(\tikzlastnode.north west)$);
         \coordinate [] (ne) at ($(\tikzlastnode.north east)$);
         \coordinate [] (c) at ($(\tikzlastnode.center)$);
-	\draw [line width=0.1cm,black!20]
-        ($(nw)+(0,0.25cm)$) -- ($(c)+(0,0.25cm)$) -- ($(ne)+(0,0.25cm)$);
-	\draw [line width=0.1cm,black!25]
+	\draw [line width=0.07cm,black!20]
+        ($(nw)+(0,0.15cm)$) -- ($(c)+(0,0.15cm)$) -- ($(ne)+(0,0.15cm)$);
+	\draw [line width=0.07cm,black!25]
         (nw) -- (c) -- (ne);
-	\draw [line width=0.1cm,black!30]
-        ($(nw)-(0,0.25cm)$) -- ($(c)-(0,0.25cm)$) -- ($(ne)-(0,0.25cm)$);
+	\draw [line width=0.07cm,black!30]
+        ($(nw)-(0,0.15cm)$) -- ($(c)-(0,0.15cm)$) -- ($(ne)-(0,0.15cm)$);
     }},    
   ];
   \tikzstyle{flechapri}=[
@@ -220,8 +221,7 @@
   ];
   \tikzstyle{flechasec}=[
     ->,
-    very thick,
-    dashed,
+    thick,
     semitransparent,
     shorten >=4,
     shorten <=4
@@ -230,16 +230,16 @@
   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   % coordenadas de anclaje
-  \node[tarea] at (5,-2)  (zanal) {Análisis sintáctico};
-  \node[tarea] at (5,-8) (zpart) {Particionado};
+  \node[tarea] at (5,-2) (zanal) {Análisis sintáctico};
+  \node[tarea] at (5,-6.8) (zpart) {Particionado};
   \coordinate (canal) at ($(zanal.center)$);
   \coordinate (cpart) at ($(zpart.center)$);
   \coordinate (ccara) at ($(canal)!0.5!(cpart)$);
   \coordinate (pretl) at ($(zanal.north)-(3,0)$);
   \coordinate (prebr) at ($(zpart.south)+(7,0)$);
   \coordinate (mrbot) at ($(zpart.south)!0.75!(prebr)$);
-  \def\vw{0.5cm};
-  \def\vh{0.25cm};
+  \def\vw{0.3cm};
+  \def\vh{0.15cm};
   
   \path let \p1=(pretl), \p2=(prebr), \p3=(ccara),
   \p4=(mrbot), \p5=(canal), \p6=(cpart) in
@@ -269,15 +269,15 @@
   \node[tarea] at ($(canal)!1.0!(cpart)$) (npart) {Particionado};
   \node[io]    at ($(canal)!1.2!(cpart)$) (nsali) {Salida};
   
-  \node[modelo,label={below:Modelo}] at ($(nnorm.west)!-0.3!(prebr)$) (modelo) {};
+  %\node[modelo,label={below:Modelo}] at ($(nnorm.west)!-0.3!(prebr)$) (modelo) {};
 
-  \node[archivos,label=below:Archivos FASTA] at ($(mrtop)!-.15!(mrbot)$) (fasta) {};
-  \node[estruct,label={below:Datos estructurados}] at ($(mrtop)!0.25!(mrbot)$) (estructurado) {};
-  \node[matriz,label={below:Matrices}] at ($(mrtop)!0.75!(mrbot)$) (matriz) {};
-  \node[datos,label={below:Conjunto de datos}] at ($(mrtop)!1.15!(mrbot)$) (datos) {};
-  \node [transicion,minimum width={2*\vw},minimum height={\vh},shift={(0,-0.25)}] at (mrtop) {};
+  \node[archivos,label=below:Archivos FASTA] at ($(mrtop)!-.14!(mrbot)$) (fasta) {};
+  \node[estruct,label={below:Datos estructurados}] at ($(mrtop)!0.26!(mrbot)$) (estructurado) {};
+  \node[matriz,label={below:Matrices}] at ($(mrtop)!0.73!(mrbot)$) (matriz) {};
+  \node[datos,label={below:Conjunto de datos}] at ($(mrtop)!1.12!(mrbot)$) (datos) {};
+  \node [transicion,minimum width={2*\vw},minimum height={\vh},shift={(0,-0.15)}] at (mrtop) {};
   \node [transicion,minimum width={2*\vw},minimum height={\vh}] at (mrcara) {};
-  \node [transicion,minimum width={2*\vw},minimum height={\vh},shift={(0,0.25)}] at (mrbot) {};
+  \node [transicion,minimum width={2*\vw},minimum height={\vh},shift={(0,0.15)}] at (mrbot) {};
 
   \draw[flechapri] (nentr) -> (nanal);
   \draw[flechapri] (nanal) -> (npleg);
@@ -286,7 +286,7 @@
   \draw[flechapri] (nnorm) -> (npart);
   \draw[flechapri] (npart) -> (nsali);  
 
-  \draw[flechasec] (modelo) .. controls +(2,0) and +(-2,0) .. (nnorm) ;
+  %\draw[flechasec] (modelo) .. controls +(right:1cm) and +(left:2cm) .. (nnorm) ;
 \end{tikzpicture}
 \shorthandon{<}
 \shorthandon{>}
