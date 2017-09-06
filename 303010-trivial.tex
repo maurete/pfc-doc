@@ -6,16 +6,16 @@ La estrategia trivial retorna simplemente el valor $H=0$ como cantidad
 El modelo resultante es siempre equivalente a un perceptrón simple, y
 permite clasificar conjuntos de datos linealmente separables.
 Si bien esta estrategia no efectúa optimización alguna, resulta útil
-para generar un modelo ``base'' para comparar el rendimiento frente a
+en la generación de un modelo ``básico'' para ser comparado frente a
 otros modelos generados con estrategias de mayor complejidad.
-Incluso, este modelo ``base'' resultará óptimo en algunos casos
-\cite{nnfaq3}.
-\pdfmargincomment[color=Ivory]{
-  De la fuente citada:
-  You may not need any hidden layers at all. Linear and generalized
-  linear models are useful in a wide variety of applications (McCullagh
-  and Nelder 1989). And even if the function you want to learn is mildly
-  nonlinear, you may get better generalization with a simple linear
-  model than with a complicated nonlinear model if there is too little
-  data or too much noise to estimate the nonlinearities accurately.
-}
+Incluso, se sabe que este modelo básico resultará óptimo en
+determinados casos \cite{nnfaq3}.
+%% \pdfmargincomment[color=Ivory]{
+%%   De la fuente citada:
+%%   You may not need any hidden layers at all. Linear and generalized
+%%   linear models are useful in a wide variety of applications (McCullagh
+%%   and Nelder 1989). And even if the function you want to learn is mildly
+%%   nonlinear, you may get better generalization with a simple linear
+%%   model than with a complicated nonlinear model if there is too little
+%%   data or too much noise to estimate the nonlinearities accurately.
+%% }

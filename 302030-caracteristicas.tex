@@ -35,32 +35,13 @@ siguientes criterios:
 Según el tipo de dato que representan, las $66$ \caract{s} calculadas
 son $36$ \caract{s} de \e{tripletes}, $23$ \caract{s} de la
 \e{secuencia}, y $7$ de la \e{estructura secundaria}.
-Siguiendo esta clasificación, dentro del vector de \caract{s} se
-diferencian cuatro ``grupos'':
-%
-\pdfmargincomment[icon=Note,color=Yellow]{Agrego esta descripción de
-  los grupos ya que en las pruebas se hace referencia, a ver si queda
-  más claro?}
-%
-\begin{itemize}
-\item \dset{T}: \caract{s} de tripletes ``principales'', ubicadas
-  en las posiciones $1$ a $32$,
-\item \dset{X}: \caract{s} de tripletes ``adicionales'' en las
-  posiciones $33$--$36$,
-\item \dset{S}: \caract{s} de la secuencia, con índices $37$--$59$, y
-\item \dset{E}: \caract{s} de la estructura secundaria, con
-  índices $60$ a $66$.
-\end{itemize}
-%
-El método permite trabajar con cualquier combinación de estos cuatro
-grupos, ya sea para efectuar comparaciones entre distintas \caract{s}
-o bien porque algunas de ellas no pueden ser calculadas.
-El modelo generado en este caso contendrá los índices necesarios
-indicando cuáles son las \caract{s} a calcular.
+El método puede utilizar todas las \caract{s} del vector o bien sólo
+un subconjunto de ellas: esto permite ignorar ciertas \caract{s}
+cuando no son calculables y también comparar el funcionamiento de
+diferentes tipos de \caract{s} por separado.
 
 En adelante se describe el vector de \caract{s} en detalle.
-Como ayuda para la comprensión de algunos términos utilizados en la
-descripción, se muestra en la
+Como referencia, en la
 \iflatexml{}Figura~\ref{fig:hairpin-parts}\else\autoref{fig:hairpin-parts}\fi{}
-una estructura secundaria típica con forma de horquilla, identificando
-las diferentes partes que la componen.
+se muestra una estructura secundaria típica con forma de horquilla,
+identificando en forma gráfica las diferentes partes que la componen.

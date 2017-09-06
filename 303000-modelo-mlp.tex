@@ -4,18 +4,18 @@
 \section{Construcción del modelo del clasificador MLP}
 %
 La construcción del modelo del clasificador MLP genera una red
-neuronal con propagación hacia adelante con una capa oculta
-\cite{nnfaq}, con $F$ (número de características) nodos sensores en la
-capa de entrada y una única neurona en la capa de salida.
-
-En un primer paso, se calcula el número $H$ de neuronas a disponer en
-la capa oculta mediante una estrategia de prueba y error que maximiza
+neuronal con propagación hacia adelante con una topología de una
+capa oculta, siguiendo la recomendación de \cite{nnfaq}.
+La capa de entrada de la red contiene $F$ nodos sensores, en donde $F$
+es el número de características, y una única neurona en la capa de
+salida.
+En un primer paso se calcula el número $H$ de neuronas a disponer en
+la capa oculta, mediante una estrategia de prueba y error que maximiza
 la tasa de clasificación sobre el conjunto de validación cruzada.
 Como alternativa a esta búsqueda exhaustiva se creó una ``estrategia
 trivial'' que genera, sin efectuar entrenamiento, una red mínima
 equivalente a un perceptrón simple (el caso $H=0$).
-
 Una vez determinado el número óptimo $H$ de neuronas ocultas, se
 inicializa aleatoriamente una red con esta topología ($F$--$H$--$1$),
 y se ajustan sus pesos a partir de los datos del conjunto de
-entrenamiento aplicando retropropagación.
+entrenamiento mediante un algoritmo de retropropagación.

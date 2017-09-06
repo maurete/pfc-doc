@@ -1,14 +1,16 @@
 %
+% esta footnote corresponde a la figura triplet
+\footnotetext{De \url{http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MI0000801}.}
+%
 El cálculo de las \caract{s} de tripletes requiere que el ejemplo
 tenga una estructura secundaria con forma de horquilla, con un único
 bucle central.
 De otro modo, la definición del ``tallo'' pierde sentido y el
-algoritmo falla, retornando valores nulos para estas \caract{s} e
+cálculo falla, retornando valores nulos para estas \caract{s} e
 invalidando cualquier procesamiento posterior del ejemplo en cuestión.
-Por ello, los grupos de \caract{s} de tripletes \dset{T} y \dset{X} no
-son aptos para un uso general, sino que deberán utilizarse sólo cuando
-se garantice la estructura secundaria forma de horquilla para todos
+Esto implica que las \caract{s} de tripletes deberán ignorarse en
+problemas generales, utilizándolas sólo en casos específicos cuando se
+garantice una estructura secundaria en forma de horquilla para todos
 los ejemplos.
-
 En la Tabla a continuación se detallan las $36$ características de
 tripletes \cite{xue} y su posición en el vector de características.

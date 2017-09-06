@@ -9,11 +9,10 @@ retropropagación.
 Por defecto se utiliza el algoritmo {Rprop} \cite{rprop}, aunque
 también se permite especificar otros algoritmos, tal como el de
 gradiente conjugado escalado (SCG) \cite{scg}.
-
 La regularización del modelo se efectúa siguiendo una estrategia de
 ``corte prematuro'' (\eng{early stopping}), que consiste en separar un
-$20\%$ de los ejemplos de entrenamiento seleccionados al azar, y
-\pdfmargincomment[color=Red,open=true]{falta cita para esto}
+$20\%$ de los ejemplos de entrenamiento seleccionados al azar,
+%\pdfmargincomment[color=Red,open=true]{falta cita para esto}
 deteniendo el entrenamiento cuando se detecta que el número de errores
 de clasificación sobre estos ejemplos alcanza un valor mínimo.
 
