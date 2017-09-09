@@ -1,13 +1,21 @@
 %
 \subsection{Estrategia trivial}
 %
-Tal como su nombre lo indica, esta estrategia es la más básica para
-determinar el número de neuronas en la capa oculta.
-Consiste simplemente en devolver siempre el valor $0$ como cantidad
-``óptima'' de neuronas en la capa oculta, sin efectuar entrenamiento
-alguno.
-El modelo resultante al utilizar esta estrategia es equivalente a un
-perceptrón simple, y funciona como un clasificador lineal.
+La estrategia trivial retorna simplemente el valor $H=0$ como cantidad
+``óptima'' de neuronas en la capa oculta, sin efectuar entrenamiento.
+El modelo resultante es siempre equivalente a un perceptrón simple, y
+permite clasificar conjuntos de datos linealmente separables.
 Si bien esta estrategia no efectúa optimización alguna, resulta útil
-para generar un modelo ``base'' para comparar el rendimiento frente a
-otros modelos generados con una estrategia más compleja.
+en la generación de un modelo ``básico'' para ser comparado frente a
+otros modelos generados con estrategias de mayor complejidad.
+Incluso, se sabe que este modelo básico resultará óptimo en
+determinados casos \cite{nnfaq3}.
+%% \pdfmargincomment[color=Ivory]{
+%%   De la fuente citada:
+%%   You may not need any hidden layers at all. Linear and generalized
+%%   linear models are useful in a wide variety of applications (McCullagh
+%%   and Nelder 1989). And even if the function you want to learn is mildly
+%%   nonlinear, you may get better generalization with a simple linear
+%%   model than with a complicated nonlinear model if there is too little
+%%   data or too much noise to estimate the nonlinearities accurately.
+%% }
