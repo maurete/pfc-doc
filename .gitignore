@@ -1,5 +1,4 @@
 *~
-revision.tex
 *.pdf
 *.bak
 *.aux
@@ -11,4 +10,5 @@ revision.tex
 *.run.xml
 *.toc
 *.upa
+*.upb
 \#*\#
