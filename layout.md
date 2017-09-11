@@ -65,6 +65,7 @@ figures/mlp/mlp.png
 300000-descripcion.tex
 301000-general.tex
 302000-preprocesamiento.tex
+figures/preprocesamiento/preprocesamiento.png
 302020-lectura.tex
 302022-formato.tex
 figures/fastafmt/fasta.png

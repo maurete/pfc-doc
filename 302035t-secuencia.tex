@@ -1,28 +1,28 @@
 \newcommand{\dnRow}[1]{
-  \stepcounter{FeatureCounter}\theFeatureCounter & $N_{\T{\mono{#1}}}$
-  & Número de dinucleótidos \mono{#1} \iflatexml\else\cite{batuwita}\fi.}
+  \stepcounter{FeatureCounter}\theFeatureCounter
+  & $N_{\T{\mono{#1}}}$
+  & Número de dinucleótidos \mono{#1}.}
 %
 \setcounter{FeatureCounter}{43}
 %
 \begin{longtable}{@{}p{0.07\textwidth}%
-@{\hspace{0.01\textwidth}}p{0.17\textwidth}%
-@{\hspace{0.01\textwidth}}p{0.74\textwidth}@{}}
+@{\hspace{0.01\textwidth}}p{0.13\textwidth}%
+@{\hspace{0.01\textwidth}}p{0.78\textwidth}@{}}
   \headRow\endhead
   37 & $L$ &
-  Longitud total del pre-miRNA, contando extremos sueltos y el bucle
-  central. \cite{ng} \\
-  38 & $N_\ntA$ &
-  Número de nucleótidos \ntA \cite{ng}. \\
-  39 & $N_\ntC$ &
-  Número de nucleótidos \ntC \cite{ng}. \\
-  40 & $N_\ntG$ &
-  Número de nucleótidos \ntG \cite{ng}. \\
-  41 & $N_\ntU$ &
-  Número de nucleótidos \ntU \cite{ng}. \\
-  42 & $N_\ntC+N_\ntG$ &
-  Número de nucleótidos \ntC y \ntG \cite{ng}. \\
-  43 & $N_\ntA+N_\ntU$ &
-  Número de nucleótidos \ntA y \ntU \cite{ng}. \\
+  Longitud de la secuencia. \\
+  38 & $N_\ntA{}$ &
+  Número de nucleótidos \ntA{}. \\
+  39 & $N_\ntC{}$ &
+  Número de nucleótidos \ntC{}. \\
+  40 & $N_\ntG{}$ &
+  Número de nucleótidos \ntG{}. \\
+  41 & $N_\ntU{}$ &
+  Número de nucleótidos \ntU{}. \\
+  42 & $N_\ntC{}+N_\ntG{}$ &
+  Número de nucleótidos \ntC{} y \ntG{}. \\
+  43 & $N_\ntA{}+N_\ntU{}$ &
+  Número de nucleótidos \ntA{} y \ntU{}. \\
   \dnRow{AA}\\
   \dnRow{AC}\\
   \dnRow{AG}\\

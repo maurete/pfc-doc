@@ -6,13 +6,8 @@ Una vez determinados los \hparam{s} del clasificador mediante alguna
 de las estrategias antes definidas, se entrena el modelo SVM ``final''
 a partir del conjunto de entrenamiento $D$ generado en la etapa de
 preprocesamiento.
-El modelo generado incorpora toda la información necesaria para poder
+El modelo entrenado incorpora toda la información necesaria para poder
 clasificar nuevos ejemplos, incluyendo la información de normalización
 extraída del conjunto de entrenamiento.
-Esto permite la utilización del modelo como entrada al
+Esto permite además la utilización del modelo como entrada al
 preprocesamiento para normalizar los nuevos ejemplos a clasificar.
-
-En al implementación, el entrenamiento se efectúa mediante la rutina
-\func{mysvm\_train}, que funciona como capa de abstracción para el
-entrenamiento con \work{libSVM} \cite{libsvm} o con el paquete
-\work{Bioinformatics Toolbox} de Matlab.
