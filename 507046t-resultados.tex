@@ -1,13 +1,15 @@
 %
 \begin{table}[h]
   \tableStyle
+  \smaller
   \iflatexml%
   \begin{tabular}{lrrrr}
   \else%
   \sisetup{
     table-format = 2.1(2),
     table-number-alignment = right,
-    uncertainty-separator = \,\smaller
+    separate-uncertainty=true,
+    %uncertainty-separator = \,\smaller
   }
   \begin{tabular}{lSSSS}
   \fi%

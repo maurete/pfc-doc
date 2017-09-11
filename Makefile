@@ -9,6 +9,7 @@ revision = revision.tex
 
 aux = $(output:%.tex=%.aux) $(output:%.tex=%.log) \
 $(output:%.tex=%.out) $(output:%.tex=%.toc) $(header:%.tex=%.aux) \
+$(output:%.tex=%.upa) $(output:%.tex=%.upb) \
 $(title:%.tex=%.aux) $(contents:%.tex=%.aux) $(revision:%.tex=%.aux) \
 $(tikzfigures:%.tex=%.aux) $(tikzfigures:%.tikz.tex=%.run.xml) \
 $(tikzfigures:%.tikz.tex=%.log) $(tikzfigures:%.tikz.tex=%.dpth) \
@@ -45,15 +46,15 @@ rev:
 	@- git status > /dev/null || echo '' > $(revision)
 
 temp: $(header) $(contents)
-	echo '\\include{documentclass}' > $(output)
-	echo '\\include{header}' >> $(output)
-	echo '\\include{revision}' >> $(output)
-	echo '\\input{begindocument}' >> $(output)
-	egrep -v '^[#%]' $(layout) | perl -ne 'chomp; if (m{^figures/}){ \
+	@ echo '\\include{documentclass}' > $(output)
+	@ echo '\\include{header}' >> $(output)
+	@ echo '\\include{revision}' >> $(output)
+	@ echo '\\input{begindocument}' >> $(output)
+	@ egrep -v '^[#%]' $(layout) | perl -ne 'chomp; if (m{^figures/}){ \
 s{/[^/]+$$}{}; print "\\begin{figure}[H]\n\\figureStyle\n\\input{$$_/figure}\
 \\caption{\\captionStyle\\protect\\input{$$_/caption}}\
 \\end{figure}\n"; } else { s{.tex$$}{}; print "\\input{$$_}\n"; }' >> $(output)
-	echo '\\include{enddocument}' >> $(output)
+	@ echo '\\include{enddocument}' >> $(output)
 
 pdf: rev temp
 	@ $(cc) $(output) || ( $(crm) $(output:%.tex=%.bcf); exit 1 )
