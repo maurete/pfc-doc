@@ -33,7 +33,7 @@ crm  = rm -f
 
 # construir pdf
 all: pdf tikzimages
-	$(crm) $(aux) $(biber_aux)
+	@ $(crm) $(aux) $(biber_aux)
 
 rev:
 	@  echo -n '\\iflatexml\\else\\ohead{\small ' > $(revision)
@@ -61,13 +61,13 @@ pdf: rev temp
 tikzimages: $(tikzfigs:%=%.png)
 
 $(tikzfigs:%=%.pdf): $(@:%.pdf=%.tikz.tex)
-	-$(tikzcc) -jobname "$(@:%.pdf=%)" \
+	- $(tikzcc) -jobname "$(@:%.pdf=%)" \
 "\def\tikzexternalrealjob{$(output:%.tex=%)}\input{$(output:%.tex=%)}"
 
 %.png: %.pdf
-	-convert -density 300 $(<) $(<:%.pdf=%.png)
+	- convert -density 300 $(<) $(<:%.pdf=%.png)
 
 # borrar todos los compilados y auxiliares
 clean:
-	@$(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) \
+	@ $(crm) $(output:%.tex=%.pdf) $(aux) $(biber_aux) \
 $(tikzfigures:%.tikz.tex=%.pdf) $(tikzfigures:%.tikz.tex=%.png)
