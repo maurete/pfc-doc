@@ -1,24 +1,27 @@
 %
 \subsection{Entrenamiento}
 %
-Una vez determinado el número óptimo de neuronas en la capa oculta
-mediante alguna de las estrategias anteriores, se inicializa una red
-neuronal con la topología indicada.
-A continuación, se efectúa el entrenamiento mediante un algoritmo de
-retropropagación tal como \func{Rprop} \cite{rprop} (utilizado por
-defecto), o el gradiente conjugado escalado \cite{scg}.
+Una vez determinado el número de neuronas en la capa oculta mediante
+alguna de las estrategias descriptas, se inicializa aleatoriamente una
+nueva red con la topología correspondiente.
+Luego se procede al entrenamiento de esta red mediante un algoritmo de
+retropropagación.
+Por defecto se utiliza el algoritmo {Rprop} \cite{rprop}, aunque
+también se permite especificar otros algoritmos, tal como el de
+gradiente conjugado escalado (SCG) \cite{scg}.
+La regularización del modelo se efectúa siguiendo una estrategia de
+``corte prematuro'' (\eng{early stopping}), que consiste en separar un
+$20\%$ de los ejemplos de entrenamiento seleccionados al azar,
+%\pdfmargincomment[color=Red,open=true]{falta cita para esto}
+deteniendo el entrenamiento cuando se detecta que el número de errores
+de clasificación sobre estos ejemplos alcanza un valor mínimo.
 
-Para regularizar el proceso de entrenamiento, se separa un $20\%$ de
-los ejemplos, y se detenie el entrenamiento cuando el número de
-errores de clasificación sobre estos ejemplos alcanza un valor mínimo.
-
-Se ha observado que en algunos casos la inicialización aleatoria de
-los pesos en la red condiciona negativamente al algoritmo de
-retropropagación, resultando en soluciones subóptimas.
-Para contrarrestar este efecto, el método permite entrenar en paralelo
-múltiples redes (con inicializaciones diferentes).
-Estas redes pasan a formar parte del mismo modelo, el cual al ser
-utilizado para clasificación, determina su salida global a calculando
-la moda entre las salidas de las múltiples redes que lo componen.
-De este modo, se obtiene un modelo más fiable, a costa de una mayor
-complejidad computacional.
+En las pruebas efectuadas durante la codificación, se pudo observar
+que en algunos casos la inicialización aleatoria de la red condiciona
+negativamente al algoritmo de retropropagación, haciendo que éste
+converja a un mínimo local y resultando en una solución subóptima.
+Para contrarrestar este efecto, el método permite incorporar al modelo
+múltiples redes con igual topología e inicializaciones aleatorias
+diferentes.
+La salida del modelo en este caso se determina calculando la moda
+entre las salidas de las múltiples redes que lo componen.

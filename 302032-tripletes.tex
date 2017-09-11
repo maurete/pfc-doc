@@ -1,13 +1,16 @@
-
-La principal limitación de las características de tripletes reside en
-que su cálculo resulta posible únicamente cuando la estructura
-secundaria tiene forma de horquilla, ya que de otro modo la definición
-del ``tallo'' pierde sentido. Por ello, estas \caract{s} no se
-calculan cuando el ejemplo contiene bucles múltiples en su estrucutra
-secundaria.
-
-
-En la tabla a continuación se detallan las 36 características de
-tripletes y su posición en el vector de características.
-
-
+%
+% esta footnote corresponde a la figura triplet
+\footnotetext{De \url{http://mirbase.org/cgi-bin/mirna_entry.pl?acc=MI0000801}.}
+%
+El cálculo de las \caract{s} de tripletes requiere que el ejemplo
+tenga una estructura secundaria con forma de horquilla, con un único
+bucle central.
+De otro modo, la definición del ``tallo'' pierde sentido y el
+cálculo falla, retornando valores nulos para estas \caract{s} e
+invalidando cualquier procesamiento posterior del ejemplo en cuestión.
+Esto implica que las \caract{s} de tripletes deberán ignorarse en
+problemas generales, utilizándolas sólo en casos específicos cuando se
+garantice una estructura secundaria en forma de horquilla para todos
+los ejemplos.
+En la Tabla a continuación se detallan las $36$ características de
+tripletes \cite{xue} y su posición en el vector de características.

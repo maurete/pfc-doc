@@ -1,38 +1,35 @@
 %
 %
-\subsection{Interfaz de usuario web}
+\section{Web de demostración del clasificador}
 %
 Se generó una interfaz web utilizando la herramienta \eng{\webdemo{}}
-\cite{webdemobuilder}.
-Esta interfaz interactúa con el método a través de una función
-codificada para este propósito denominada \e{webif}.
-La función está diseñada para ser invocada en una línea de comandos no
-interactiva, generando en todos los casos un archivo que es presentado
-al usuario a través de la web.
-Cuando la invocación es exitosa, genera un reporte en formato HTML que
-incorpora el modelo del clasificador generado y/o un listado con
-predicciones de clase para los ejemplos en el conjunto de prueba.
-El reporte HTML puede utilizarse sucesivamente como modelo para
-clasificar nuevos datos a través de la interfaz web.
-En caso de encontrarse errores, la función genera un reporte
-informando al usuario del error encontrado.
+\cite{webdemobuilder}, que interactúa con el clasificador a través de
+una función específica.
+La misma recibe un número de argumentos fijos, que son presentados
+como campos del formulario web, y genera luego de cada ejecución un
+``reporte'' que se muestra al usuario.
+Cuando la invocación es exitosa, el reporte contiene el modelo
+generado y las predicciones de clase del conjunto de prueba (si
+corresponde), y puede descargarse y utilizarse posteriormente como
+modelo para clasificar nuevos datos.
+Cuando se encuentran errores, el reporte informa al usuario del
+problema ocurrido.
 
-La función \func{webif} recibe 8 argumentos en la entrada:
-%
-\begin{enumerate}
-\item Tipo de clasificador
-\item Conjunto de \caract{s}
-\item Estrategia de selección de \hparam{s}
-\item Datos de entrenamiento de clase positiva
-\item Datos de entrenamiento de clase negativa
-\item Modelo previamente generado
-\item Datos de prueba
-\item Clase de los datos de prueba (usado para estadísticas)
-\end{enumerate}
-%
-
-Según la tarea que deseeefectuar, el usuario debe cargar los
-siguientes datos en el formulario web:
+%% Los argumentos de entrada en el formulario web son:
+%% %
+%% \begin{enumerate}
+%% \item Tipo de clasificador requerido
+%% \item Grupos de \caract{s} a incluir
+%% \item Estrategia de selección de \hparam{s}
+%% \item Archivo con datos de entrenamiento de clase positiva
+%% \item Archivo con datos de entrenamiento de clase negativa
+%% \item Modelo generado previamente
+%% \item Archivo con datos de prueba
+%% \item Clase de los datos de prueba (usado para estadísticas)
+%% \end{enumerate}
+%% %
+Según la tarea a realizar, se deben cargar los siguientes datos en el
+formulario web:
 %
 \begin{itemize}
 \item
@@ -66,3 +63,6 @@ siguientes datos en el formulario web:
   %
 \end{itemize}
 %
+Luego de la ejecución, se muestra en pantalla un enlace al archivo de
+reporte, que ser puede descargado y almacenado para su utilización
+posterior.
