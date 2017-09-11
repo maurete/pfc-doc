@@ -3,20 +3,21 @@
 %
 \section{Preprocesamiento}
 %
-El preprocesamiento es el conjunto de pasos efectuados para
-transformar los datos de entrada, que vienen dados en forma de
-archivos de texto, a un formato numérico apto para la máquina de
-aprendizaje.
-La secuencia de pasos efectuados en la etapa de preprocesamiento son:
+El preprocesamiento se encarga de transformar los datos de entrada,
+que vienen dados en forma de archivos de texto, a un formato numérico
+apto para la máquina de aprendizaje.
+Los pasos efectuados en la etapa de preprocesamiento, tal como se muestra en la
+\iflatexml{}Figura~\ref{fig:preprocesamiento}\else\autoref{fig:preprocesamiento}\fi{},
+son:
 %
 \begin{enumerate}
 \item
-  \e{Análisis sintáctico (\e{parsing})}: se trata de interpretar el texto
-  en los archivos de entrada identificando las líneas de descripción,
+  \e{Análisis sintáctico}: es la tarea de de interpretar el texto
+  en los archivos de entrada, identificando las líneas de descripción,
   de secuencia, y de estructura secundaria.
 \item
   \e{Plegado}: consiste en calcular la información de estructura
-  secundaria invocando herramientas de software externas.
+  secundaria incompleta invocando herramientas de software externas.
 \item
   \e{Extracción de \caract{s}}: es el proceso de generar vectores
   numéricos de longitud fija que representan cada ejemplo, a partir de
@@ -33,9 +34,7 @@ La secuencia de pasos efectuados en la etapa de preprocesamiento son:
   clasificador o predicción de pertenencia de clase.
 \end{enumerate}
 %
-Aplicando estos pasos, se obtiene una representación de los datos en
-un formato numérico estandarizado, que puede utilizars como entrada a
-las funciones de entrenamiento y clasificación de la máquina de
+De este modo se obtiene una representación de los datos en un formato
+numérico estandarizado, que puede utilizarse como entrada a las
+funciones de entrenamiento y clasificación de la máquina de
 aprendizaje.
-En adelante, se presenta una descripción detallada de cada una de estas
-sub-tareas.

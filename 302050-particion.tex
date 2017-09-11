@@ -17,14 +17,14 @@ con números de referencia que indican el archivo de origen, la
 posición del dato original dentro del archivo, y la clase del ejemplo
 en cuestión.
 El segundo paso armar los conjuntos de entrenamiento y prueba como
-matrices, cuyas filas son vectores ``etiquetados'' seleccionados en
-orden aleatorio de cada archivo respetando las proporciones indicadas
-por el usuario.
+matrices, cuyas filas son vectores ``etiquetados'' seleccionados al
+azar de cada archivo, respetando las proporciones indicadas por el
+usuario.
 Una vez incorporados todos los ejemplos a los conjuntos de
 entrenamiento y prueba, se permutan las filas de ambas matrices en
 forma pseudoaleatoria.
 
 La partición de los datos se efectúa de forma tal que los conjuntos de
-entrenamiento y prueba resultantes son conjuntos disjuntos.
-Esto implica que si un ejemplo se incorpora al conjunto de prueba, no
-será parte del conjunto de entrenamiento, y viceversa.
+entrenamiento y prueba resultantes sean disjuntos: si un ejemplo se
+incorpora al conjunto de prueba, no será parte del conjunto de
+entrenamiento, y viceversa.

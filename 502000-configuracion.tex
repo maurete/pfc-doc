@@ -6,7 +6,7 @@
 Cada \e{prueba} refiere a un experimento en particular, que combina un
 {problema} de clasificación, un \e{conjunto de \caract{s}}, y una
 estrategia de selección de \hparam{s}.
-En cada experimento se probaron los tres clasificadores: perceptrón
+En cada experimento se probaron tres clasificadores: perceptrón
 multicapa, máquina de vectores de soporte con núcleo lineal, y máquina
 de vectores de soporte con núcleo RBF, generando un modelo del
 clasificador a partir de los datos de entrenamiento definidos en el
@@ -50,12 +50,3 @@ Los conjuntos de \caract{s} relacionados con los tripletes (\dset{T},
 \dset{X}, y \dset{T-X}), en cambio, se probaron sólo con el problema
 \prob\tripletsvm{}, ya que es el único que no contiene ejemplos con
 estructura secundaria ramificada (con bucles múltiples).
-
-\paragraph{Entorno.}
-Las pruebas se efectuaron en un entorno Matlab, versión R2012b, en un
-ordenador personal de escritorio con $8$\iflatexml{}Gb\else\si{\giga
-  b}\fi{} de RAM, procesador Intel Core i5-4440 con $4$ núcleos de
-3.10\iflatexml{}GHz\else\si{\giga Hz}\fi{}, y un sistema operativo
-Debian GNU/Linux, versión $8$ (``jessie'').
-La configuración del sistema permite el cómputo paralelo con los $4$
-núcleos del sistema.
