@@ -15,8 +15,7 @@ La construcción del vector de características conforma toda una
 disciplina en sí misma, y su estudio excede el alcance del presente
 trabajo.
 En cambio, se adoptó un enfoque simple que consiste en construir un
-vector de $66$ \caract{s} basado en aquellas de los trabajos
-\cite{xue,ng,batuwita}.
+vector de $66$ \caract{s} utilizadas en el estado del arte.
 Las características calculadas fueron seleccionadas en base a los
 siguientes criterios:
 %
@@ -34,11 +33,15 @@ siguientes criterios:
 \end{enumerate}
 %
 Según el tipo de dato que representan, las $66$ \caract{s} calculadas
-se agrupan en: $36$ \caract{s} de \e{tripletes}, $23$ \caract{s} de la
+son $36$ \caract{s} de \e{tripletes}, $23$ \caract{s} de la
 \e{secuencia}, y $7$ de la \e{estructura secundaria}.
-En adelante, se describen estas \caract{s} en detalle siguiendo este
-orden.
-Para una mejor comprensión de la terminología, en la
+El método puede utilizar todas las \caract{s} del vector o bien sólo
+un subconjunto de ellas: esto permite ignorar ciertas \caract{s}
+cuando no son calculables y también comparar el funcionamiento de
+diferentes tipos de \caract{s} por separado.
+
+En adelante se describe el vector de \caract{s} en detalle.
+Como referencia, en la
 \iflatexml{}Figura~\ref{fig:hairpin-parts}\else\autoref{fig:hairpin-parts}\fi{}
-se ilustran las diferentes partes que componen una estructura
-secundaria típica en forma de horquilla.
+se muestra una estructura secundaria típica con forma de horquilla,
+identificando en forma gráfica las diferentes partes que la componen.

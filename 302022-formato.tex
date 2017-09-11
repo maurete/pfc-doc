@@ -2,8 +2,6 @@
 %
 \subsubsection{Especificación del formato de entrada}
 %
-La especificación a continuación define el formato de los archivos de
-entrada interpretados por el método.
 Los archivos de entrada son de tipo texto plano, y cada uno
 contiene uno o más ejemplos contiguos.
 Cada ejemplo se describe por una línea de descripción, una o más
@@ -27,17 +25,17 @@ secundaria, según las reglas siguientes:
   En el ácido ribonucleico (RNA), un nucleótido contiene una de las
   bases adenina (\mono{A}), citosina (\mono{C}), guanina (\mono{G}), o
   uracilo (\mono{U}), luego, los caracteres permitidos en la secuencia
-  son \mono{ACGU} y sus variantes en minúsculas \mono{acgu}.
+  son \mono{A}, \mono{C}, \mono{G}, \mono{U} y sus variantes en
+  minúsculas \mono{a}, \mono{c}, \mono{g}, \mono{u}.
   También se permiten caracteres de fin de línea, que son ignorados
   cuando se encuentran en medio de la secuencia.
   La secuencia termina cuando se encuentra el comienzo de una línea de
   descripción o de estructura secundaria.
 \item
   Las líneas de estructura secundaria vienen dadas en notación
-  ``punto-paréntesis'' compuesta por caracteres \mono{.}, \mono{(}, y
-  \mono{)}, indicando que la base correspondiente está suelta
-  (no acoplada), o es primera o segunda dentro de un par de bases,
-  respectivamente.
+  ``punto-paréntesis'' con caracteres \mono{.}, \mono{(}, y \mono{)},
+  indicando que la base correspondiente está suelta (no acoplada), o
+  es primera o segunda dentro de un par de bases, respectivamente.
   Opcionalmente, la línea finaliza por un número entre paréntesis que
   indica la denominada ``mínima energía libre'' resultante del cálculo
   de la estructura secundaria.

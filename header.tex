@@ -77,7 +77,7 @@
 %\ifpdf\usepackage{pst-pdf}\fi
 %
 % color me permite usar colores en el documento.
-\usepackage[dvipsnames,tables]{xcolor}
+\usepackage[dvipsnames,svgnames,tables]{xcolor}
 %
 % graphicx me da el comando \includegraphics para insertar imágenes (?)
 \usepackage{graphicx}
@@ -215,15 +215,15 @@
 \newcommand{\iid}{independiente e idénticamente distribuido}
 \newtheorem{definicion}{Definición}[chapter]
 \newtheorem{lema}[definicion]{Lema}
-\newcommand{\ntA}{\textrm{\mono{A}}{ }}
-\newcommand{\ntC}{\textrm{\mono{C}}{ }}
-\newcommand{\ntG}{\textrm{\mono{G}}{ }}
-\newcommand{\ntU}{\textrm{\mono{U}}{ }}
-\newcommand{\pairL}{\textrm{\mono{(}}{ }}
-\newcommand{\pairR}{\textrm{\mono{)}}{ }}
-\newcommand{\noPair}{\textrm{\mono{.}}{ }}
-\newcommand{\dn}[1]{\textrm{\mono{#1}}{ }}
-\newcommand{\bp}[2]{\textrm{\mono{#1-#2}}{ }}
+\newcommand{\ntA}{\textrm{\mono{A}}}
+\newcommand{\ntC}{\textrm{\mono{C}}}
+\newcommand{\ntG}{\textrm{\mono{G}}}
+\newcommand{\ntU}{\textrm{\mono{U}}}
+\newcommand{\pairL}{\textrm{\mono{(}}}
+\newcommand{\pairR}{\textrm{\mono{)}}}
+\newcommand{\noPair}{\textrm{\mono{.}}}
+\newcommand{\dn}[1]{\textrm{\mono{#1}}}
+\newcommand{\bp}[2]{\textrm{\mono{#1-#2}}}
 \newcommand{\grad}[1]{\nabla{#1}}
 \newcommand{\tableStyle}{
 \iflatexml\else\ifpdf\relsize{-0.5}\center\sffamily\fi\fi
@@ -277,7 +277,7 @@
 
 \newcounter{FeatureCounter}
 \newcommand{\headRow}{  \sfbf{\footnotesize Pos.} &
-  \sfbf{\footnotesize Característica} &
+  \sfbf{\footnotesize Caract.} &
   \sfbf{\footnotesize Descripción}
 }
 
@@ -535,3 +535,11 @@
 }
 
 \usepackage{tabu}
+
+\iflatexml
+\newcommand{\pdfcomment}[2][]{}
+\newcommand{\pdfmargincomment}[2][]{}
+\else
+\usepackage[author=Mauro Torrez]{pdfcomment}
+\DTMsetregional % para que pdfcomment no me rompa las fechas
+\fi

@@ -1,25 +1,18 @@
 %
 \subsection{Búsqueda exhaustiva}
 %
-La estrategia de búsqueda exhaustiva determina el número óptimo de
-neuronas ocultas mediante prueba y error, entrenando modelos con
+La búsqueda exhaustiva determina el número óptimo de neuronas ocultas
+mediante una estrategia de prueba y error, entrenando modelos con
 diferentes cantidades de neuronas en la capa oculta y seleccionando
 aquel que obtiene la mayor tasa \GM{} promedio de validación cruzada.
-
 Dado que no existe una regla general para determinar el número
 recomendado de neuronas ocultas \cite{nnfaq3}, se establece un rango
 de prueba de entre $0$ y $200$ neuronas.
 Por razones de costo computacional, en lugar de efectuar la búsqueda
-sobre todos los valores posibles, se prueban $20$ valores $N_h$ de
+sobre todos los valores posibles, se prueban $20$ valores $H$ de
 neuronas en la capa oculta, variando en una escala aproximadamente
-logarítmica:
-%
-\begin{align}
-  \label{mlp-hidden-tries}
-  N_h=0,1,2,3,4,5,7,9,11,14,19,24,32,41,54,70,91,118,154,200.
-\end{align}
-%
-Una vez entrenados y probados los $20$ modelos mediante validación
-cruzada, la estrategia retorna como número óptimo de neuronas ocultas
-el de aquel modelo que maximiza la tasa \GM{} sobre los datos de
-validación.
+logarítmica: $H\in\{0,1,2,3,4,5,7,9,11,14,19,24,32,41,54,70,91,118,154,200\}$.
+Una vez entrenados y probados los diferentes modelos mediante validación
+cruzada (\iflatexml{}Sección~\ref{s2:crossval}\else\autoref{s2:crossval}\fi{}),
+se retorna como número óptimo de neuronas ocultas aquel del modelo que
+maximiza la tasa \GM{} sobre los datos de validación.

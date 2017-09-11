@@ -1,6 +1,7 @@
 %
 \begin{table}[h]
   \tableStyle
+  \smaller
   %% \begin{tabular}{lrScScScS}
   %%   \toprule
   %%   {Problema de entrenamiento}
@@ -25,11 +26,11 @@
     table-format = 2.1(2),
     table-number-alignment = right,
     % si es true, separa com \pm #.#. si no, escribe ()
-    separate-uncertainty = false,
+    separate-uncertainty = true
     % las siguientes solo funcionan en separate-uncertainty=false
     %    output-open-uncertainty = \smaller\smaller,
     %    output-close-uncertainty = ,
-    uncertainty-separator = \,\smaller
+    % uncertainty-separator = \,\smaller
   }
   \begin{tabular}{lSSSS}
   \fi%

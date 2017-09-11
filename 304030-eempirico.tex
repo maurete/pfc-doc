@@ -5,23 +5,7 @@
 El \e{criterio del error empírico} es una estrategia de selección de
 \hparam{s} basada en la propuesta presentada en \cite{ayat}, que
 optimiza los \hparam{s} del clasificador minimizando una función
-objetivo denominada \e{error empírico}.
-Esta función mide el error de validación cruzada sobre el conjunto de
-entrenamiento acoplando un modelo probabilístico a la salida del
-clasificador, y permite su optimización mediante descenso por
-gradiente ya que sus derivadas respecto de los \hparam{s} son
-calculables.
-
-En la propuesta original \cite{ayat}, la función \e{error empírico} se
-optimiza únicamente respecto a los \hparam{s} del núcleo.
-En la estrategia implementada, se agregó soporte para la optimización
-del hiperparámetro $C$, siguiendo el método del cálculo de la derivada
-respecto de $C$ propuesto en \cite{keerthi} y \cite{glasmachers}, tal
-como se implementa en \cite{shark}.
-
-%
-\begin{quote}
-  \sbs{Terminología.}
+objetivo denominada \e{error empírico}\,\footnote{
   El lector experto encontrará ambigua la denominación de la función
   ``error empírico'', ya que en la disciplina este nombre se utiliza
   como equivalente de ``error de entrenamiento''.
@@ -29,5 +13,16 @@ como se implementa en \cite{shark}.
   \cite{ayat}, definiendo ``error empírico'' como la función que
   calcula un error probabilístico de validación cruzada sobre el
   conjunto de entrenamiento.
-\end{quote}
-%
+}.
+Esta función mide el error de validación cruzada sobre el conjunto de
+entrenamiento acoplando un modelo probabilístico a la salida del
+clasificador, y permite su optimización mediante descenso por
+gradiente ya que sus derivadas respecto de los \hparam{s} son
+calculables.
+
+En la propuesta original \cite{ayat}, la función {error empírico} se
+optimiza únicamente respecto a los \hparam{s} del núcleo.
+En la estrategia implementada, se agregó soporte para la optimización
+del hiperparámetro $C$, siguiendo el método del cálculo de la derivada
+respecto de $C$ propuesto en \cite{keerthi} y \cite{glasmachers}, tal
+como se implementa en \cite{shark}.
