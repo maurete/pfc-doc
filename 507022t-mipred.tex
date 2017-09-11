@@ -1,6 +1,7 @@
 %
 \begin{table}[h]
   \tableStyle
+  \smaller
   %% \begin{tabular}{lccrScScScS}
   %%   \toprule
   %%       {Problema} & {Clase} & {N. elem.} &&
@@ -21,7 +22,7 @@
   \sisetup{
     table-format = 2.1(2),
     table-number-alignment = right,
-    uncertainty-separator = \,\smaller
+    separate-uncertainty=true,
   }
   \begin{tabular}{lS[table-format=2.0]
       S[table-format=4.0]SSSSS[table-format=2.1]}
@@ -37,9 +38,6 @@
   \end{tabular}
   \caption{\captionStyle Resultados de clasificación de los
     conjuntos de prueba complementarios del método \work{\mipred}.
-    El número entre paréntesis indica $10$ veces la desviación
-    estándar de las $5$ pruebas efectuadas en cada caso con semillas
-    aleatorias diferentes.
     En la columna de la derecha se muestra la tasa obtenida por los
     autores \cite{ng}.
   }
