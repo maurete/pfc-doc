@@ -2,12 +2,12 @@
 %
 \subsection{Búsqueda en la grilla}
 %
-La \e{búsqueda en la grilla} es una estrategia heurística basada en el
-método propuesto en \cite{hsu} que calcula valores óptimos para los
-\hparam{s} de regularización $C$ y de amplitud del núcleo RBF
-$\gamma$.
+La \e{búsqueda en la grilla} es una estrategia heurística, basada en el
+método propuesto en \cite{hsu}, que calcula valores óptimos para los
+\hparam{s} de regularización ($C$) y de amplitud del núcleo RBF
+($\gamma$).
 La estrategia considera las combinaciones de $(C,\gamma)$ como
-``coordenadas en el espacio de los \hparam{s}''.
+coordenadas en el ``espacio de los \hparam{s}''.
 En cada punto $(C,\gamma)$, se entrena el clasificador con los
 \hparam{s} correspondientes y se evalúa el resultado de validación
 cruzada.
@@ -15,7 +15,6 @@ La búsqueda comienza con una ``grilla'' de puntos espaciados a
 intervalos regulares y continúa interpolando en las cercanías de
 aquellos puntos donde se obtuvo las mayores tasas de clasificación de
 validación cruzada.
-
 La grilla inicial viene dada por las coordenadas $C$-$\gamma$
 %
 \begin{align}
@@ -27,7 +26,6 @@ La grilla inicial viene dada por las coordenadas $C$-$\gamma$
 Para cada punto $(C_i,\gamma_j)$, se entrena un modelo con los
 \hparam{s} correspondientes y se clasifican las particiones de
 validación cruzada, obteniendo una tasa ${\GM}_{ij}$ promedio.
-
 La interpolación de la grilla se lleva a cabo mediante alguno de los
 siguientes algoritmos heurísticos:
 %
