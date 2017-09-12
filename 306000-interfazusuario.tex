@@ -9,21 +9,19 @@ Estas funciones proponen al usuario un flujo de trabajo en tres pasos:
 %
 \begin{enumerate}
 \item
-  El primer paso es efectuar el preprocesamiento de los datos mediante
-  una función que interpreta en su entrada los archivos FASTA.
+  El primer paso es efectuar el preprocesamiento de los datos, que
+  vienen dados como archivos FASTA.
   Para cada archivo, se especifica la pertenencia de clase y el uso
   pretendido (entrenamiento o prueba) del mismo.
-  A la salida retorna una estructura en memoria, llamada ``problema'',
-  que incluye un conjunto de datos de entrenamiento y/o uno de prueba
-  generados según la especificación.
+  A la salida se retorna una estructura en memoria, llamada
+  ``problema'', que incluye un conjunto de datos de entrenamiento y/o
+  uno de prueba según la especificación.
 \item
   La segunda función efectúa la construcción del modelo del
   clasificador.
-  Recibe como entrada un ``problema'' con datos de entrenamiento junto
-  a una especificación del tipo de clasificador requerido (MLP,
-  SVM-lineal o SVM-RBF) y la estrategia de selección de \hparam{s} a
-  aplicar.
-  A la salida, retorna el modelo de clasificador obtenido.
+  Recibe como entrada un problema con datos de entrenamiento, y a
+  partir de la especificación construye el modelo de clasificador
+  requerido (MLP, SVM-lineal o SVM-RBF).
 \item
   El tercer paso es la clasificación: la función correspondiente
   recibe un ``problema'' de clasificación y un modelo.
