@@ -19,15 +19,17 @@ Se considera el caso de la clasificación binaria, asociando una clase
 ``positiva'' a los \premirna{s} reales, y una clase ``negativa'' a los
 ejemplos que son de otro tipo.
 En el presente trabajo se generan clasificadores binarios de
-secuencias de \premirna{s} mediante las técnicas de aprendizaje
-supervisado de \e{máquinas de vectores de soporte} \cite{svm}, la más
-ampliamente utilizada en el área, y el \e{perceptrón multicapa}
-\cite{mlp1,mlp2}, una técnica de aplicación novedosa para este tipo de
-problemas que se hipotetiza podría tener mejor desempeño que las SVMs.
+secuencias de \premirna{s} aplicando las técnicas de aprendizaje
+supervisado de la \e{máquina de vectores de soporte} \cite{svm} y
+del \e{perceptrón multicapa} \cite{mlp1,mlp2}.
+Mientras que la primera es la técnica más ampliamente utilizada en
+la disciplina para la clasificación, el uso del perceptrón multicapa
+resulta novedoso en este tipo de problemas, y se hipotetiza que podría
+alcanzar un mejor desempeño que la máquina de vectores de soporte.
 
 El perceptrón multicapa (\e{MLP}, del inglés \eng{Multi-Layer
   Perceptron}) es un tipo de red neuronal artificial con propagación
-hacia adelante, en la que se disponen nodos computadores (neuronas)
+hacia adelante en la que se disponen nodos computadores (neuronas)
 organizados en \e{capas}.
 La salida de cada neurona se determina al aplicar una \e{función de
   activación}, de tipo sigmoidea, a una suma ponderada de las salidas
