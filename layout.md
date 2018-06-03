@@ -40,10 +40,10 @@ figures/mlp/mlp.png
 202075-rprop.tex
 203000-svm.tex
 203010-clasif-lineal.tex
-203012-espacio-imagen.tex
-203020-hiperplano-optimo.tex
-203030-forma-dual.tex
-203040-nucleos.tex
-203042-algunos-nucleos.tex
-203050-margen-duro.tex
-203060-regularizacion.tex
+203020-espacio-imagen.tex
+203030-hiperplano-optimo.tex
+203040-forma-dual.tex
+203050-nucleos.tex
+203052-algunos-nucleos.tex
+203060-margen-duro.tex
+203070-margen-blando.tex

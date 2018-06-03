@@ -1,0 +1,60 @@
+%
+%
+\subsection{Hiperplano de separación óptimo}
+%
+Dado un conjunto de entrenamiento
+$D=\left((\xx_1,y_1),\ldots,(\xx_\ell,y_\ell)\right)$, se dice que
+éste es linealmente separable en el espacio imagen $Z$ cuando existe
+una función discriminante lineal
+$f(\xx)=\pint{\ww}{\BPhi(\xx)}+b$ tal que su signo
+permite determinar sin errores la clase de todos los elementos del
+conjunto.
+Cuando el conjunto $D$ es linealmente separable en $Z$, se sabe que
+existen infinitas funciones discriminantes lineales capaces de
+clasificar correctamente todos los elementos.
+
+La característica saliente de la \MVS{} es que, durante el
+entrenamiento, determina un hiperplano de separación
+$\pint{\ww}{\zz}+b=0$ \e{óptimo}, en el sentido que maximiza la
+distancia a los puntos $\zz_i=\BPhi(\xx_i)$ más cercanos.
+Esto se expresa a través del problema de optimización
+%
+\begin{equation}\label{e2:svm-problem-basic}
+  \begin{aligned}
+    \min_{\ww,b} \quad\tabs \frac{1}{2}\|\ww\|^2, \\
+    \T{sujeto a}\quad\tabs y_i f_i\geq1,\,i=1,\ldots,\ell\,.
+  \end{aligned}
+\end{equation}
+%
+Aquí, $f_i=f(\xx_i)=\pint{\ww}{\BPhi(\xx_i)}+b$ es la
+función discriminante lineal aplicada al vector $\xx_i$.
+La distancia de un vector $\zz_i=\BPhi(\xx_i)$ al hiperplano
+$\pint{\ww}{\zz}+b=0$ viene dada por
+%
+\begin{align*}
+  d_i&=\pint{\frac{\ww}{\|\ww\|}}{\zz_i}+b,
+\end{align*}
+%
+por ello, minimizar $\|\ww\|$ equivale a maximizar la distancia $d_i$.
+Puede demostrarse que el vector solución $\ww_*$ de
+(\ref{e2:svm-problem-basic}) es una combinación lineal de aquellos
+vectores $\zz_i$ para los cuales se cumple la condición:
+%
+\begin{align*}
+  |\pint{\ww}{\zz_i}+b\,|=1.
+\end{align*}
+%
+Estos vectores se denominan \e{vectores de soporte}, lo que da el
+nombre al clasificador.
+Los hiperplanos $\pint{\ww}{\zz}+b=\pm1$ que contienen los vectores de
+soporte determinan el llamado \e{margen} del clasificador.
+%
+%% El problema~(\ref{e2:svm-problem-basic}) también puede entenderse
+%% como la maximización de la distancia del hiperplano
+%% $\pint{\ww}{\zz}+b=0$ al margen $\pint{\ww}{\zz}+b=\pm1$.
+%% Esto explica el nombre alternativo por el cual se conoce a la
+%% máquina de vectores de soporte: \e{clasificador de margen máximo}.
+%
+%% Desde el punto de vista numérico, el
+%% problema~(\ref{e2:svm-problem-basic}) es un problema de
+%% optimización cuadrático convexo con restricciones lineales.
