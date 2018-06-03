@@ -16,18 +16,20 @@ La distribución $\hat{\nu}$ conduce a la definición del
 datos de entrenamiento en $D$:
 %
 \begin{align}
-  \hat{\C{R}}_D(h)=E_\T{entrenamiento}=\R{E}_{\hat{\nu}}[L(\xx,\yy,h(\xx))]
-  =\frac{1}{\ell}\sum_{i=1}^\ell L(\xx_i, \yy_i, h(\xx_i)),
+  E_D=\R{E}_{\hat{\nu}}[L(\xx,\yy,h(\xx))]
+  =\frac{1}{\ell}\sum_{i=1}^\ell L(\xx_i, \yy_i, h(\xx_i)).
 \end{align}
 %
-en donde $L$ es una función de pérdida.
-La forma de entrenamiento más básica e importante de una máquina
-de aprendizaje consiste en seleccionar el modelo que minimiza el
-error de entrenamiento
+La forma de entrenamiento básica de una máquina de aprendizaje
+consiste en seleccionar el modelo $h(x)$ que minimiza el error de
+entrenamiento
 %
 \begin{align}
-  \hat{h}:=\arg \min \left\{ \hat{\C{R}}_D(h)\middle|h \in H\right\}.
+  {h}:=\arg \min_{\hat{h}} \left\{
+  E_D\!\left(\hat{h}\right)\,\middle|\,\hat{h} \in \C{H}\right\}.
+  \label{e2:minerrorempirico}
 \end{align}
 %
+%en donde $H$ es una familia de funciones utilizables como modelo.
 Este procedimiento se conoce también como la minimización del riesgo
 empírico sobre el conjunto de entrenamiento.

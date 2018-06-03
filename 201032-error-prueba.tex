@@ -2,16 +2,17 @@
 \subsubsection{Error de prueba}
 %
 Dado un \e{conjunto de prueba}
-$\,T=((\tilde{\xx}_1,\tilde{\yy}_1),\ldots,(\tilde{\xx}_N,\tilde{\yy}_N))$, el
-\e{error de prueba} es la pérdida media del modelo sobre el conjunto $T$:
+$\,T=(\tilde{\xx}_1,\tilde{\yy}_1),\ldots,(\tilde{\xx}_N,\tilde{\yy}_N)$,
+el \e{error de prueba} es la pérdida media del modelo sobre el
+conjunto $T$:
 %
 \begin{align}
-  E_{\T{prueba}}=\frac{1}{N}\sum_{n=1}^N
+  E_T=\frac{1}{N}\sum_{n=1}^N
   L(\tilde{\xx}_N,\tilde{\yy}_N,h(\tilde{\xx}_N)).
   \label{eq:error-prueba}
 \end{align}
 %
-Este error de prueba es una estimación no sesgada del error de
+Esta medida de error es una estimación no sesgada del error de
 generalización siempre que $T$ sea una muestra independiente e
 idénticamente distribuida de $\nu$:
 %
@@ -20,6 +21,5 @@ idénticamente distribuida de $\nu$:
   \label{eq:conj-prueba-sim-nu}
 \end{align}
 %
-En la práctica, esta última condición no es más que un supuesto,
-ya que no se dispone de información de la probabilidad
-de la muestra $T$.
+En la práctica, esta última condición no es más que un supuesto, ya
+que no se dispone de información de la probabilidad de la muestra $T$.

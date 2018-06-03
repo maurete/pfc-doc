@@ -1,14 +1,10 @@
 %
-\subsubsection{Entrenamiento por época}
+\subsubsection{Ajuste de los pesos $\ww_{ij}$ en el entrenamiento por época}
 %
-En una estrategia de entrenamiento por época, en cada iteración $t$
-se propagan hacia adelante todos los vectores $\xx(n)$ del conjunto
-de entrenamiento $D$, y a partir de los respectivos
-gradientes de error instantáneo $\dpar{\C{E}(n)}{w_{ij}}{}$
-se obtiene la energía de error promedio $\C{E}_{\T{av}}$
-(\iflatexml{}Ecuación~\ref{e2:average-energy-net}\else\autoref{e2:average-energy-net}\fi)
-para la época $t$.
-
+En cada época $t$ se propagan hacia adelante todos los vectores
+$\xx(n)$ del conjunto de entrenamiento $D$, y a partir de los valores
+de error instantáneo $\C{E}(n)$ se calcula la energía de error
+promedio $\C{E}_{\T{av}}(t)$ según (\ref{e2:average-energy-net}).
 El gradiente de error promedio para la época viene dado por
 %
 \begin{align}\label{e2:deriv-Eav-wrt-w}
@@ -19,10 +15,12 @@ El gradiente de error promedio para la época viene dado por
 y la corrección a aplicar a los pesos viene dada por
 %
 \begin{align}\label{e2:delta-rule-epoch}
-  \Delta w_{ij}(t)\tab=-\eta\dpar{\C{E}_{\T{av}}(t)}{w_{ij}}{}.
+  \Delta w_{ij}(t)\tab=-\eta\dpar{\C{E}_{\T{av}}(t)}{w_{ij}}{}=
+  -\frac{\eta}{\ell}\sum_{n=1}^\ell\dpar{\C{E}(n)}{w_{ij}}{}.
 \end{align}
 %
-Dado que la función $\C{E}_{\T{av}}$ promedia todos los patrones de la
-época, la superficie de la función de error resultante es más
-``suave'' y el gradiente $\nabla\C{E}_{\T{av}}$ es numéricamente más
-estable que en el caso del error intantáneo.
+Dado que la función $\C{E}_{\T{av}}$ se calcula a partir de todos los
+ejemplos del conjunto $D$, la superficie de la función de error
+resultante es más ``suave'' y el gradiente $\nabla\C{E}_{\T{av}}$ es
+numéricamente más estable que en el entrenamiento en línea, lo que
+garantiza la convergencia a un mínimo local.

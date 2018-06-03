@@ -8,14 +8,14 @@ Dado un vector de entrada $\xx\in{}X$, el clasificador lineal
 determina la clase de $\xx$ según
 %
 \begin{align*}
-  y = \T{signo}(\vv\cdot\xx+b)
+  \hat{y} = \T{signo}(\pint{\vv}{\xx}+b)
 \end{align*}
 %
 en donde $\vv$ y $b$ son los parámetros del modelo obtenidos mediante
 un algoritmo de entrenamiento.
-La ecuación $\vv\cdot\xx+b=0$ define un hiperplano en el espacio lineal
-$X$, que actúa como frontera de decisión entre las clases
-$\hat{\yy}=+1$ e $\hat{\yy}=-1$.
-Para visualizarlo, obsérvese que, desde el punto de vista geométrico,
-el signo de $\vv\cdot\xx+b$ indica de qué lado del plano se encuentra
-el punto $\xx$.
+La ecuación $\pint{\vv}{\xx}+b=0$ define un hiperplano en el
+espacio lineal $X$, que actúa como frontera de decisión entre las
+clases $\hat{y}=+1$ e $\hat{y}=-1$.
+Para visualizarlo obsérvese que, desde el punto de vista geométrico,
+el signo de $\pint{\vv}{\xx}+b$ indica de qué lado del plano se
+encuentra el punto $\xx$.
