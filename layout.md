@@ -29,7 +29,6 @@ figures/neurona/neurona.png
 figures/mlp/mlp.png
 202050-aprendizaje.tex
 202060-retropropagacion.tex
-202061-online-batch.tex
 202062-regla-delta.tex
 202064-por-epoca.tex
 202066-criterio-corte.tex
