@@ -30,21 +30,20 @@ separación.
 Por definición, $\xi_i$ es mayor a cero sólo cuando el modelo
 clasifica incorrectamente el ejemplo, esto es, cuando
 $h(\xx_i)\neq{}y_i$.
-
-Se introduce un hiperparámetro de regularización $C>0$ que ajusta el
-balance entre complejidad del modelo y la cantidad de error, lo que deriva
-en el problema de optimización \emph{primal}
+Luego, se introduce un hiperparámetro de regularización $C>0$ que
+ajusta el balance entre complejidad del modelo y la cantidad de error,
+lo que deriva en el problema de optimización ``primal''
 %
 \begin{equation}\label{svm-primal-blando}
   \begin{aligned}
-    \min_{(\ww,b,\xi)} \quad & \frac{1}{2}\|\ww\|^2+C\sum_{i=1}^{\ell}\xi_i\\
+    \min_{\ww,b,\xi} \quad & \frac{1}{2}\|\ww\|^2+C\sum_{i=1}^{\ell}\xi_i\\
     \T{sujeto a} \quad &
     y_i\left(\langle{}\ww,\BPhi(\xx_i)\rangle+b\right) \geq 1-\xi_i, i=1,\ldots,\ell, \\
     & \xi_i \geq 0, i=1,\ldots,\ell.
   \end{aligned}
 \end{equation}
 %
-
+%
 %% La SVM de margen blando (con regularización ``L1'' o ``de norma 1'')
 %% es el tipo de clasificador SVM más utilizado.  Consiste en un
 %% clasificador de margen máximo con el truco del núcleo, tal como la SVM
@@ -55,28 +54,30 @@ en el problema de optimización \emph{primal}
 %% introducción del término de regularización a la SVM de margen rígido
 %% permite su aplicación a problemas no separables en el espacio imagen,
 %% ya que se permiten errores de clasificación en el entrenamiento.
-
+%
 %% Como medida de complejidad del modelo
 %% $h(\xx)=\T{signo}(\langle{}\ww,\BPhi(\xx)\rangle{}+b)$
 %% se utiliza el valor $\frac{1}{2}\|\ww\|^2$, que es la misma función optimizada en
 %% la SVM de margen rígido.
-
+%
 %% Otra forma de ver este concepto es que para valores pequeños de
 %% $\|w\|$, la función $\langle{}\ww,\BPhi(\xx)\rangle+b$ es suave en el
 %% espacio de entrada, y para valores mayores de $\|w\|$ se vuelve más
 %% ``abrupta'' (en el sentido que posee derivadas más grandes).
-
+%
 %% Como medida del error de entrenamiento, se utiliza una función de
 %% pérdida $L:X\times\RR\times\RR\rightarrow\RR^{\geq0}$.
-
-
+%
 Para obtener la forma dual de este problema, en primer lugar se
 calcula el funcional lagrangiano
 %
 \begin{equation}
   \begin{aligned}
-  \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta) &= \frac{1}{2} \|\ww\|^2 + C \sum_{i=1}^{\ell} \xi_i \\
-  &\quad\quad + \sum_{i=1}^{\ell} \alpha_i (1-\xi_i-y_i(\langle\ww,\BPhi(\xx_i)\rangle+b)) - \sum_{i=1}^{\ell} \beta_i\xi_i
+    \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta) &= \frac{1}{2} \|\ww\|^2
+        + C \sum_{i=1}^{\ell} \xi_i \\
+    &\quad\quad
+        + \sum_{i=1}^{\ell} \alpha_i (1-\xi_i-y_i(\langle\ww,\BPhi(\xx_i)\rangle+b))
+        - \sum_{i=1}^{\ell} \beta_i\xi_i
   \end{aligned}
 \end{equation}
 %
@@ -86,14 +87,15 @@ $\ww$, $b$, $\Bxi$ a cero y se obtiene
 \begin{align}
   \dpar{ \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta)}{\ww}{}
     &=\ww-\sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i) = 0
-    &\Rightarrow \ww = \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i)
+    &\Rightarrow&& \ww &= \sum_{i=1}^\ell y_i\alpha_i\BPhi(\xx_i),
   \\
   \dpar{ \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta)}{b}{}
-    &=-\sum_{i=1}^\ell y_i\alpha_i = 0
-    &\Rightarrow \sum_{i=1}^\ell y_i\alpha_i = \yy^T\Balpha = 0,\\
+    &=-\sum_{i=1}^\ell y_i\alpha_i = 0,
+    &\Rightarrow&& \sum_{i=1}^\ell y_i\alpha_i &= 0,
+  \\
   \dpar{ \C{L}(\ww,b,\Bxi,\Balpha,\Bbeta)}{\Bxi_i}{}
     &=C-\alpha_i-\beta_i = 0
-    &\Rightarrow \alpha_i \leq C,
+    &\Rightarrow&& \alpha_i &\leq C.
 \end{align}
 %
 Reescribiendo estos resultados en el problema dual, se tiene
@@ -101,28 +103,25 @@ Reescribiendo estos resultados en el problema dual, se tiene
 \begin{equation}
 \begin{aligned}\label{svmprob-dual-soft}
     \max_{\Balpha} \quad
-    & f(\Balpha) = \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
+    & \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha\\
     \T{sujeto a}\quad & \yy^T\Balpha = 0, \\
                       & 0\leq\alpha_i\leq C, \T{ para todo } i\in {1,\ldots,\ell }.
 \end{aligned}\end{equation}
 %
-Este problema es el mismo que aquel de la SVM de magen duro, salvo por
-la restricción $\alpha_i\leq C$.
-
-El Problema~\ref{svmprob-dual-soft} es el tipo de clasificador SVM más
-utilizado, y se denomina también SVM ``de norma 1'' o ``con
-regularización L1''.
-Esto se debe a que la variable holgura $\xi_i$ se incorpora con
-potencia 1.
-Una variante de la SVM de margen blando es aquella que utiliza la
-norma dos del vector holgura $\B{\xi}=(\xi_1,\ldots,\xi_\ell)^T$,
-correspondiente a la pérdida de bisagra al cuadrado.
-En este caso, el objetivo primal se define como
+Este problema es idéntico a (\ref{e2:svm-hard-margin}), salvo por la
+restricción adicional $\alpha_i\leq C$.
+La \MVS{} que resuelve este problema en el entrenamiento es la más
+utilizada, y se denomina también SVM ``de norma 1'' o ``con
+regularización L1'', ya que la variable holgura $\xi_i$ se incorpora
+al problema con potencia $1$.
+Una variante llamada ``con regularización L2'' utiliza en su lugar la
+norma $2$ del vector holgura $\B{\xi}=(\xi_1,\ldots,\xi_\ell)^T$,
+correspondiente a una función de pérdida de bisagra al cuadrado.
+En este caso, el objetivo del problema primal se define como
 %
 \begin{align}\label{svm-l2}
   \frac{1}{2}\|w\|^2+\frac{C}{2}\sum_{n=1}^{\ell}\xi_n^2,
 \end{align}
 %
-con las mismas restricciones que el problema anterior.
-La forma resultante se denomina ``SVM de margen blando con
-regularización L2''.
+sujeto a las mismas restricciones que el problema
+(\ref{svm-primal-blando}).

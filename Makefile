@@ -51,7 +51,7 @@ temp: $(header) $(contents)
 	@ echo '\\include{revision}' >> $(output)
 	@ echo '\\input{begindocument}' >> $(output)
 	@ egrep -v '^[#%]' $(layout) | perl -ne 'chomp; if (m{^figures/}){ \
-s{/[^/]+$$}{}; print "\\begin{figure}[H]\n\\figureStyle\n\\input{$$_/figure}\
+s{/[^/]+$$}{}; print "\\begin{figure}[t]\n\\figureStyle\n\\input{$$_/figure}\
 \\caption{\\captionStyle\\protect\\input{$$_/caption}}\
 \\end{figure}\n"; } else { s{.tex$$}{}; print "\\input{$$_}\n"; }' >> $(output)
 	@ echo '\\include{enddocument}' >> $(output)

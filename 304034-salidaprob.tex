@@ -1,15 +1,14 @@
 %
 \subsubsection{Salida probabilística del modelo SVM}
 %
-La salida del modelo de una máquina de vectores de soporte
-(\iflatexml{}Ecuación~\ref{e2:svm-model-hard}\else\autoref{e2:svm-model-hard}\fi)
-puede entenderse como el resultado de aplicar la operación signo sobre
-una función continua $f$:
+La salida del modelo de una \MVS{} (\ref{e2:svm-model-hard}) puede
+entenderse como el resultado de aplicar la operación signo sobre una
+función continua $f$:
 %
 \begin{align}
 \label{e3:svm-model-as-sign-f}
   h(\xx) \tab= \T{signo}(f),\tabs
-  f\tab=\langle\ww,\BPhi(\xx)\rangle+b.
+  f\tab=\pint{\ww}{\BPhi(\xx)}+b.
 \end{align}
 %
 Aplicando el método propuesto por {Platt} en \cite{platt}, se calcula
@@ -21,7 +20,7 @@ utilizando el valor de $f$:
   \hat{p}\tab=\frac{1}{1+e^{Af+B}} \tabs\approx\,{}p.%P(h=+1|\xx).
 \end{align}
 %
-Los valores $A$ y $B$ se determinan a partir del conjunto de validación
+Los valores $A$ y $B$ se determinan a partir de un conjunto de validación
 $V$ resolviendo el problema de optimización
 %
 \begin{align}
@@ -29,8 +28,7 @@ $V$ resolviendo el problema de optimización
   \label{abproblem}
 \end{align}
 %
-en donde $\hat{p}_k$ viene dado por la
-\iflatexml{}Ecuación~\ref{e3:p-hat}\else\autoref{e3:p-hat}\fi{}, y
+en donde $\hat{p}_k$ viene dado por (\ref{e3:p-hat}), y
 $t_k=\frac{1}{2}({y_k+1})$.
 Este problema se resuelve mediante el algoritmo de optimización
 estándar BFGS \cite{nocedal}, observando que las derivadas de

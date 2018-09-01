@@ -1,0 +1,49 @@
+%
+\subsubsection{El error de generalización}
+%
+Para un modelo $h$, el error de generalización es el error esperado al
+clasificar un ejemplo ``nuevo'', independiente del conjunto de
+entrenamiento $D$, y se define según
+%
+\begin{align}
+  \mathcal{R}_\nu=\mathds{E}_\nu\left[L(\xx,\yy,h(\xx))\right]
+  =\int_{X\times Y} L(\xx,\yy,h(\xx))\, d\nu(\xx,\yy).
+\end{align}
+%
+La función $L$ es una \e{función de pérdida} que mide la cantidad de error
+del modelo $\hat{\yy}=h(\xx)$ para un ejemplo
+$(\xx,\yy)\in{}X\times{}Y$ mediante la transformación
+$L(\xx,\yy,\hat{\yy})$.
+Si la predicción resultante del modelo $\hat{\yy}$ es correcta, el
+error es nulo.
+En la práctica, la mayoría de las funciones de pérdida no dependen de
+la entrada $\xx$, sino sólo de la predicción $\hat{\yy}$ y la clase
+$\yy$.
+Algunas de las funciones de pérdida más comunes son:
+%
+\begin{align}
+  \T{Pérdida 0-1:} \quad\tab
+    L(\yy,\hat{\yy})=\begin{cases}0,\quad{}\yy=\hat{\yy}\\
+      1,\quad\T{en otro caso}\end{cases} \\
+  \T{Pérdida ``bisagra'':} \quad\tab
+    L(\yy,\hat{\yy})=\max\{0,\yy-\hat{\yy}\}\\
+  \T{Error absoluto:} \quad\tab
+    L(\yy,\hat{\yy})=|\yy-\hat{\yy}|\\
+  \T{Error cuadrático:} \quad\tab
+    L(\yy,\hat{\yy})=(\yy-\hat{\yy})^2.
+\end{align}
+
+Para poder calcular el error de generalización se requiere conocer la
+distribución generadora de datos $\nu$.
+Sin embargo, toda la información disponible de $\nu$ es la muestra $D$,
+de probabilidad desconocida.
+Entonces, la aplicación del concepto de error de generalización es
+teórica, y en la práctica se utilizarán otras medidas de error para
+aproximarlo.
+
+%% El cálculo de este error requiere conocer la distribución generadora
+%% de datos $\nu$.
+%% Sin embargo, toda la información que se tiene de $\nu$
+%% es la realización $D$, para la cual no se conoce su probabilidad.
+%% Por ello, la aplicación del concepto de error de generalización es
+%% teórica, y se utilizan en la práctica medidas que lo aproximan.

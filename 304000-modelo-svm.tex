@@ -3,8 +3,8 @@
 \section{Construcción del modelo del clasificador SVM}
 %
 El método permite la construcción de modelos de clasificador mediante
-SVMs con regularización L1, y soporta la utilización de los núcleos
-lineal y de función de base radial (también llamado gaussiano o RBF).
+\MVS{s} con regularización \e{L1}, y soporta la utilización de los
+núcleos lineal y gaussiano (función de base radial).
 Antes de efectuar el entrenamiento, se optimizan los valores de los
 \hparam{s} del clasificador a partir de los datos de entrenamiento,
 aplicando alguna de las siguientes estrategias de selección de
@@ -28,11 +28,10 @@ aplicando alguna de las siguientes estrategias de selección de
   las propiedades geométricas del modelo con el error de clasificación.
 \end{itemize}
 %
-
 En la implementación se codificó una interfaz común para las funciones
 de la biblioteca \work{libSVM} \cite{libsvm} y las funciones SVM
-disponibles en el paquete \work{Bioinformatics Toolbox} de Matlab.
-Esta interfaz funciona como una capa de abstracción que permite el uso
-indistinto de estas bibliotecas en casi todos los casos.
+disponibles en el paquete \work{Bioinformatics Toolbox} de Matlab, lo
+que permite el uso indistinto de estas bibliotecas en casi todos los
+casos.
 A continuación se describen las diferentes estrategias de selección de
 \hparam{s} y el entrenamiento del modelo del clasificador.

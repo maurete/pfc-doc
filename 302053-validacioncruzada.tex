@@ -2,8 +2,6 @@
 %
 \subsubsection{Generación de particiones para validación cruzada}
 %
-%La generación de las particiones de validación cruzada se lleva a cabo
-%una vez armado el conjunto de entrenamiento con $\ell^E$ elementos.
 Las particiones de validación cruzada se generan como un conjunto de
 índices sobre el conjunto de entrenamiento.
 En primer lugar, se genera un vector de índices en orden aleatorio
@@ -15,9 +13,9 @@ de estimación correspondiente.
 La operación se repite para cada $j=1,\ldots,k$, efectuando un
 desplazamiento circular del vector de índices en $\ell^E/k$ elementos
 entre iteraciones.
-El parámetro $p$ regula la proporción de elementos de entrenamiento a
-utilizar para validación, mientras que $k$ determina el número de
-iteraciones de la validación cruzada.
+El parámetro $p$ regula la proporción de elementos a utilizar para
+validación, mientras que $k$ determina el número de iteraciones de la
+validación cruzada.
 Ambos parámetros pueden ser especificados por el usuario, y por
 defecto se utilizan los valores $k=10$ y $p=1/k$, siguiendo el ejemplo
 de la función de Matlab \func{crossval}\footnote{%

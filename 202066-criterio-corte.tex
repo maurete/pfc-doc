@@ -1,9 +1,9 @@
 %
 \subsubsection{Criterio de corte}
 %
-En general, no existe un criterio de corte bien definido para
-detener el entrenamiento. Algunos criterios razonables para establecer
-la convergencia pueden ser:
+Si bien no existe un criterio de corte universal para detener el
+entrenamiento mediante retropropagación, pueden postularse algunos
+criterios razonables para establecer la convergencia:
 %
 \begin{itemize}
 \item Cuando la norma del gradiente es muy pequeña
@@ -14,16 +14,16 @@ la convergencia pueden ser:
   mínimo local, indicando convergencia.
 \end{itemize}
 %
-El problema de estos criterios es similar al de la velocidad de
-aprendizaje: los valores de tolerancia a considerar para la
-convergencia serán siempre dependientes del problema, y una elección
-incorrecta puede llevar ya sea a un corte prematuro del entrenamiento,
-o bien a que el algoritmo nunca converja.
+El problema principal de estos criterios es que los valores de
+tolerancia a considerar serán siempre dependientes del problema, y una
+elección incorrecta puede llevar a un corte prematuro del
+entrenamiento, o bien a que el algoritmo nunca converja.
 
-Un criterio de convergencia alternativo, ampliamente utilizado, se
-basa en la aplicación del método de retención sobre el conjunto de
-entrenamiento $D$, entrenando sobre un conjunto de estimación $E$ y
-evaluando en cada iteración el error sobre un conjunto de validación
-$V$ que estima el error de generalización.  El entrenamiento se
-detiene cuando se observa que este error es adecuado, o bien cuando
-resulta evidente que ha alcanzado su mínimo.
+Un criterio de convergencia alternativo y ampliamente difundido se
+basa en estimar el error de generalización de la red luego de cada
+iteración y abortar el entrenamiento cuando se detecta que se ha
+alcanzado el mínimo.
+La estimación del error de generalización se efectúa aplicando el
+método de retención sobre el conjunto de entrenamiento $D$, entrenando
+con un subconjunto de estimación $E$ y evaluando la red con un
+subconjunto de monitoreo $M$.

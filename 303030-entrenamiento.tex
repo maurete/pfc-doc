@@ -10,11 +10,12 @@ Por defecto se utiliza el algoritmo {Rprop} \cite{rprop}, aunque
 también se permite especificar otros algoritmos, tal como el de
 gradiente conjugado escalado (SCG) \cite{scg}.
 La regularización del modelo se efectúa siguiendo una estrategia de
-``corte prematuro'' (\eng{early stopping}), que consiste en separar un
-$20\%$ de los ejemplos de entrenamiento seleccionados al azar,
-%\pdfmargincomment[color=Red,open=true]{falta cita para esto}
-deteniendo el entrenamiento cuando se detecta que el número de errores
-de clasificación sobre estos ejemplos alcanza un valor mínimo.
+``corte prematuro'' (\eng{early stopping}), que consiste en detener el
+entrenamiento cuando se detecta que el número de errores de
+clasificación sobre el conjunto de monitoreo alcanza un valor
+mínimo.
+%% El conjunto de monitoreo se arma separando el $20\%$ de los ejemplos,
+%% seleccionados al azar.
 
 En las pruebas efectuadas durante la codificación, se pudo observar
 que en algunos casos la inicialización aleatoria de la red condiciona

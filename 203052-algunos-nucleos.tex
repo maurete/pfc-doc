@@ -1,25 +1,26 @@
 %
-\subsubsection{Funciones núcleo comunes}
+%\subsubsection{Funciones núcleo comunes}
 %
-A continuación, se presentan algunas de las funciones núcleo más
-utilizadas con las máquinas de vectores de soporte.
+
+Algunas de las funciones núcleo más utilizadas con las máquinas de
+vectores de soporte son las siguientes:
 %
-\begin{description}[font=\relscale{0.9}]
+\begin{itemize}% [font=\relscale{0.9}]
 %
-\item[Núcleo lineal]
+\item \e{Núcleo lineal}:
   %
   \begin{align}
-    k(\xx_1,\xx_2)=\langle \xx_1, \xx_2\rangle=\xx_1^T\xx_2
+    k(\xx_1,\xx_2)=\pint{\xx_1}{\xx_2}=\pinT{\xx_1}{\xx_2}
   \end{align}
   %
   Calcula simplemente el producto interno entre sus argumentos.
   Aquí, el espacio imagen $Z$ es el mismo que el espacio de entrada,
   $X$, correspondiente a la transformación identidad $\BPhi(\xx)=\xx$.
 %
-\item[Núcleo polinómico]
+\item \e{Núcleo polinómico}:
   %
   \begin{align}
-    k(\xx_1,\xx_2)=\left(\langle{}\xx_1,\xx_2\rangle+\theta\right)^d,
+    k(\xx_1,\xx_2)=\left(\pint{\xx_1}{\xx_2}+\theta\right)^d,
   \end{align}
   %
   con grado $d\in\R{N}$ y desvío $\theta\in\RR$.
@@ -30,26 +31,27 @@ utilizadas con las máquinas de vectores de soporte.
   El cálculo del producto interno aplicando el núcleo requiere
   $\C{O}(\dim{}X)$ operaciones, contrastando con las
   $\C{O}\left((\dim{}X)^d\right)$ necesarias para el cálculo de la
-  transformación $\BPhi$.
+  transformación $\BPhi$ \cite{glasmachers}.
 %
-\item[Función de base radial (RBF)]
+\item \e{Núcleo gaussiano}:
   %
   \begin{align}
     k(\xx_1,\xx_2)=\exp\left(-\frac{\|\xx_1-\xx_2\|^2}{2\sigma^2}\right)
     =\exp\left(-\gamma\|\xx_1-\xx_2\|^2\right)
   \end{align}
   %
-  También llamado núcleo gaussiano, o \eng{Radial Basis Function} en
-  inglés, es el núcleo más utilizado.
-  En la primer forma, el hiperparámetro $\sigma$ se llama parámetro de
-  amplitud.
+  Es el núcleo más utilizado.
+  También llamado \e{función de base radial} (en inglés \eng{Radial
+    Basis Function}, \e{RBF}).
+  En la primer forma, el hiperparámetro $\sigma$ se llama de
+  \e{amplitud}.
   En la segunda forma el hiperparámetro $\gamma$ se llama de
-  concentración.
+  \e{concentración}.
   La transformación $\BPhi$ correspondiente a este núcleo genera un
   espacio imagen de dimensión infinita, imposible de calcular
   directamente.
   El producto interno mediante este núcleo se puede calcular en
-  $\C{O}(\dim{}X)$ operaciones.
+  $\C{O}(\dim{}X)$ operaciones \cite{glasmachers}.
   %
-\end{description}
+\end{itemize}
 %

@@ -1,8 +1,7 @@
 %
 
-A partir de los resultados de la
-\iflatexml{}Tabla~\ref{tbl:mlp-results}\else\autoref{tbl:mlp-results}\fi{}
-se efectuaron las siguientes observaciones:
+A partir de los resultados de la Tabla~\ref{tbl:mlp-results} se
+efectuaron las siguientes observaciones:
 %
 \begin{itemize}
 \item
@@ -15,8 +14,8 @@ se efectuaron las siguientes observaciones:
   Los mejores resultados se obtuvieron con aquellos conjuntos que
   incluyen las \caract{s} de estructura secundaria: \dset{E} y
   \dset{S-E}.
-  Asimismo, al probar el conjunto de \caract{s} de la secuencia se
-  obtuvieron tasas de clasificación subóptimas en todos los casos.
+  Asimismo, al probar el conjunto de \caract{s} \dset{S} se obtuvieron
+  tasas de clasificación subóptimas en todos los casos.
 \item
   \e{Variabilidad}.
   La variabilidad observada en los resultados proviene de dos fuentes:
@@ -31,7 +30,7 @@ se efectuaron las siguientes observaciones:
   directamente con aquellos presentados por los autores del método
   \work\tripletsvm{} \cite{xue}, ya que los datos utilizados en ambos
   casos son idénticos.
-  En \cite{xue} se reporta una $\SE=93.3\%$ y una $\SP=88.1\%$ parael
+  En \cite{xue} se reporta una $\SE=93.3\%$ y una $\SP=88.1\%$ para el
   conjunto de \caract{s} de tripletes (\dset{T}).
   El clasificador MLP obtuvo resultados inferiores para este mismo
   conjunto de \caract{s}, mientras que con el conjunto de \caract{s}
@@ -43,12 +42,11 @@ se efectuaron las siguientes observaciones:
   una $\SP=98.0\%$ sobre un conjunto de prueba similar al del problema
   \prob\mipred{}.
   Este resultado está en línea con el obtenido por el clasificador MLP
-  utilizando el \caract{s} \dset{S-E}.
+  utilizando el conjunto de \caract{s} \dset{S-E}.
 \item
   \e{Problema \micropred{}}.
-  Con el problema \prob\micropred{} se obtuvo el menor rendimiento del
-  clasificador, lo cual se explica por la mayor complejidad del
-  conjunto de datos.
+  Para el problema \prob\micropred{} se obtuvo el menor desempeño, lo
+  cual se explica por la mayor complejidad del conjunto de datos.
 \item
   \e{Desbalance de clases}.
   En los resultados obtenidos para los problemas \prob\mipred{} y

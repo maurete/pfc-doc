@@ -1,33 +1,7 @@
 %
-%
-\subsection{Conceptos básicos del aprendizaje supervisado}
-%
-El \e{aprendizaje automático} es la disciplina de la Inteligencia
-Computacional que estudia la construcción de algoritmos capaces de
-``aprender'' a partir de información presentada a modo de ejemplo.
-Estos algoritmos, llamados \e{máquinas de aprendizaje}, generan
-{modelos} matemáticos de la información observada.
-Dentro del aprendizaje automático, se diferencia entre el aprendizaje
-supervisado y el aprendizaje no supervisado.
-En el aprendizaje supervisado, los datos de ejemplo incluyen entradas
-y salidas reales del fenómeno o proceso de interés, y la máquina
-aprende a producir respuestas adecuadas para cualquier entrada válida.
-En el aprendizaje no supervisado, en cambio, la máquina extrae
-propiedades de los ejemplos, las que resultan útiles para encontrar
-patrones comunes en los datos o para analizar el funcionamiento
-interno de un sistema desconocido.
-El objetivo fundamental de una máquina de aprendizaje es
-\e{generalizar} el conocimiento: esto significa que, además de
-ajustarse bien a los datos observados en los ejemplos, el modelo será
-aplicable sobre datos nuevos (no vistos durante el aprendizaje), con
-una baja tasa de error.
-%
 \subsubsection{Definiciones formales del aprendizaje supervisado y la
   clasificación}
 %
-%% Para poder elaborar una definición formal del aprendizaje supervisado,
-%% se parte del siguiente supuesto: existe un sistema del cual se conoce
-%% únicamente una muestra $U$ de sus entradas y salidas.
 Sea $U$ una muestra de datos compuesta por \e{ejemplos}, expresados
 como pares de vectores $(\xx,\yy)$, asociando una ``entrada''
 (estímulo) $\xx\in{}X$ con una ``salida'' (respuesta) correspondiente
@@ -43,11 +17,11 @@ conforman el \e{conjunto de datos de entrenamiento}
 %
 \begin{align}
   D = \left((\B{x}_1,\yy_1),\ldots,(\B{x}_\ell,\yy_\ell)\right)
-  \subseteq U, % \in \mathcal{D}, %=\bigcup_{\ell=1}^\infty (X\times Y)^\ell,
+  \subseteq U,
 \end{align}
 %
 que se considera como una muestra independiente e idénticamente
-distribuida de $\nu$. % , esto es, $D\sim\nu$.
+distribuida de $\nu$.
 La extracción de propiedades de $\nu$ se efectúa mediante una función
 $h:X\rightarrow{}Y$ denominada \e{modelo} o \e{hipótesis},
 que aproxima el fenómeno real que da origen a los datos relacionando
