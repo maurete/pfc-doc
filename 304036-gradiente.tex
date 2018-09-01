@@ -4,7 +4,7 @@
 %
 Considerando un vector genérico de \hparam{s}
 $\Btheta=(\theta_1,\theta_2,\ldots)$, el gradiente
-$\nabla{}E=\left(\dpar{E}{\theta}{}\right)$ se calcula según
+$\nabla{}E=\left(\dpar{E}{\theta}{}\right)$ viene dado por
 %
 \begin{align}
 \label{gradE}
@@ -24,20 +24,20 @@ $\dpar{\hat{p}_k}{f_k}{}$, se tiene
   \label{eq:deriv-pk-thetaj}
 \end{align}
 %
-Para el cálculo de $\dpar{f_k}{\theta_j}{}$ a continuación se recurre
-a una interpretación geométrica del modelo SVM con regularización $L1$
+Para el cálculo de $\dpar{f_k}{\theta_j}{}$, se recurre a una
+interpretación geométrica del modelo de la SVM con regularización $L1$
 tal como en \cite{keerthi,glasmachers,shark}.
 En primer lugar, se observa que $f_k$ viene dado por
 %
 \begin{align}
-  f_k = \langle \ww,\Phi(\xx_k)\rangle+b
+  f_k = \pint{\ww}{\Phi(\xx_k)}+b
       = \sum_{i=1}^\ell \alpha_i y_i k(\xx_i,\xx_k) + b,
   \label{fk}
 \end{align}
 %
 en donde $((\xx_i,y_i)),\,i=1,\ldots,\ell$ son los ejemplos del
-conjunto utilizado para entrenamiento, $k(\cdot,\cdot)$ es la función
-núcleo, y $(\alpha_i, b)$ son los parámetros del modelo SVM $h$.
+conjunto de entrenamiento, $k(\cdot,\cdot)$ es la función núcleo, y
+$(\alpha_i, b)$ son los parámetros del modelo $h$.
 Aplicando la regla de la derivada de un producto,
 $\dpar{f_k}{\theta_j}{}$ viene dada por
 %g
@@ -47,7 +47,7 @@ $\dpar{f_k}{\theta_j}{}$ viene dada por
     \dpar{k(\xx_i,\xx_k)}{\theta_j}{} \right].
 \end{align}
 %
-Según sea el valor de $\alpha_i$, el multiplicador correspondiente al
+Según sea el valor del multiplicador $\alpha_i$, correspondiente al
 vector de entrenamiento $\xx_i$, se definen los conjuntos de índices
 %
 \begin{align}
@@ -58,10 +58,9 @@ vector de entrenamiento $\xx_i$, se definen los conjuntos de índices
   n &= \left\{i\in\{1,\ldots,\ell\}: \alpha_i=0 \right\}.
 \end{align}
 %
-Efectuando una interpretación geométrica de la solución al problema de
-la SVM (\iflatexml{}Ecuación~\ref{svmprob-dual-soft}\else\autoref{svmprob-dual-soft}\fi),
-se sabe que para aquellos vectores $\xx_i$ que no son de soporte, se
-cumple que $\alpha_i=0$, luego las derivadas
+Por interpretación geométrica de la solución al problema de la SVM
+(\ref{svmprob-dual-soft}), se sabe que para aquellos vectores $\xx_i$
+que no son de soporte, se cumple que $\alpha_i=0$, luego las derivadas
 $\dpar{\alpha_n}{\theta_j}{}$ son nulas.
 Cuando $\alpha_i=\pm{}C$, el valor de $\alpha_g$ viene limitado (en
 valor absoluto) por el \hparam{} $C$, y las derivadas
@@ -75,7 +74,7 @@ $\dpar{\alpha_g}{\theta_j}{}$ son entonces
 en donde $\theta_j^K$ es un hiperparámetro del núcleo.
 Para simplificar el cálculo de las derivadas de $\alpha_u$ y $b$, se
 plantea el problema en forma matricial.
-Se plantea entonces la \e{matriz del núcleo} $K$
+Sea la \e{matriz del núcleo} $K$
 %
 \begin{align}
   K = \begin{pmatrix} k(\xx_1,\xx_1) & k(\xx_1,\xx_2) & \cdots & k(\xx_1,\xx_\ell)
@@ -94,7 +93,7 @@ Se plantea entonces la \e{matriz del núcleo} $K$
 En la matriz de la derecha, los elementos de $K$ han sido reordenados
 en submatrices $K_{uu},K_{ug},\ldots$ según los conjuntos de índices
 $u, g, n$ definidos anteriormente.
-Entonces, se calcula la matriz
+A partir de la sub-matriz $K_{uu}$ se define
 %
 \begin{align}
   H=\begin{pmatrix} K_{uu} & \B{1}_u \\ \B{1}_u^T & 0
@@ -143,8 +142,6 @@ $\dpar{f}{\theta_j}{}$ se calcula según
   + \dpar{b}{C}{}.
 \end{align}
 %
-Reemplazando estos resultados en la
-\iflatexml{}Ecuación~\ref{eq:deriv-pk-thetaj}\else\autoref{eq:deriv-pk-thetaj}\fi{},
-el gradiente $\nabla{}E=\left(\dpar{E}{\theta_j}{}\right)$
-(\iflatexml{}Ecuación~\ref{gradE}\else\autoref{gradE}\fi{}) se calcula
-directamente.
+Reemplazando estos resultados en (\ref{eq:deriv-pk-thetaj}), el
+gradiente $\nabla{}E=\left(\dpar{E}{\theta_j}{}\right)$ (\ref{gradE})
+se calcula directamente.

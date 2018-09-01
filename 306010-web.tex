@@ -4,10 +4,10 @@
 %
 Se generó una interfaz web de demostración utilizando la herramienta
 \eng{\webdemo{}} \cite{webdemobuilder}, que interactúa con el
-clasificador a través de una función específica.
+clasificador a través de una función codificada a tal fin.
 Esta función recibe un número de argumentos fijos, que son presentados
-como campos del formulario web, y luego de cada ejecución genera un
-``reporte'' que se muestra al usuario.
+como campos del formulario web, y luego de ser invocada retorna un
+``reporte'' que se presenta al usuario.
 Cuando la invocación es exitosa, el reporte contiene el modelo
 generado y las predicciones de clase del conjunto de prueba (si
 corresponde), y puede descargarse y utilizarse posteriormente como
@@ -28,12 +28,12 @@ problema ocurrido.
 %% \item Clase de los datos de prueba (usado para estadísticas)
 %% \end{enumerate}
 %% %
-Según la tarea que desee efectuar, el usuario debe cargar los
-siguientes datos en el formulario web:
+Según la tarea que desee efectuar, el usuario debe cargar/seleccionar
+los siguientes datos en el formulario web:
 %
 \begin{itemize}
 \item
-  \e{Para la generación del modelo del clasificador}
+  {Para la generación del modelo del clasificador}:
   %
   \begin{itemize}
   \item
@@ -49,7 +49,7 @@ siguientes datos en el formulario web:
   \end{itemize}
   %
 \item
-  \e{Para clasificación con un modelo generado previamente}
+  {Para efectuar clasificación con un modelo generado previamente}:
   %
   \begin{itemize}
   \item
