@@ -55,9 +55,14 @@ para el conjunto completo $V$:
 \end{align}
 %
 Para el cálculo exacto de $E$ se requiere conocer la probabilidad
-$p_k$ (\iflatexml{}Ecuación~\ref{e3:pk}\else\autoref{e3:pk}\fi), la
-cual no puede determinarse a partir de la salida binaria del modelo
-SVM.
+$p_k$ (\ref{e3:pk}), la cual no puede determinarse a partir de la
+salida binaria del modelo de la SVM.
 En su lugar se utiliza un estimador $\hat{p}_k$, que se obtiene
 ajustando un modelo probabilístico a la salida del modelo, tal como se
 explica a continuación.
+%% La probabilidad $p_k$ (\ref{e3:pk}), requerida para el cálculo de $E$,
+%% no puede determinarse a partir de la salida binaria del modelo de la
+%% SVM.
+%% En su lugar, se utiliza un estimador $\hat{p}_k$ que surge de ajustar
+%% un modelo probabilístico a la salida del modelo.
+%% A continuación se describe la obtención de este estimador.

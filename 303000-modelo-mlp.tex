@@ -7,8 +7,8 @@ La construcción del modelo del clasificador MLP genera una red
 neuronal con propagación hacia adelante con una topología de una
 capa oculta, siguiendo la recomendación de \cite{nnfaq}.
 La capa de entrada de la red contiene $F$ nodos sensores, en donde $F$
-es el número de características, y una única neurona en la capa de
-salida.
+es el número de características, mientras que la capa de salida
+contiene una única neurona.
 En un primer paso se calcula el número $H$ de neuronas a disponer en
 la capa oculta, mediante una estrategia de prueba y error que maximiza
 la tasa de clasificación sobre el conjunto de validación cruzada.
