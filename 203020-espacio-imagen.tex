@@ -1,26 +1,26 @@
 %
-\subsubsection{Espacio imagen}
+\subsection{Transformación al espacio imagen}
 %
-La primera adición de la SVM al clasificador lineal básico es una
-transformación de los vectores de entrada a un \e{espacio imagen}.
+La primera adición de la \MVS{} al clasificador lineal básico es una
+transformación de los vectores de entrada a un nuevo espacio vectorial.
 Esto se logra aplicando una función $\BPhi:X\rightarrow{}Z$, que
-transforma el \e{espacio de entrada} $X$ a otro espacio vectorial
-inducido $Z$, llamado \e{espacio imagen}.
+transforma el \e{espacio de entrada} $X$ a otro espacio inducido $Z$,
+llamado \e{espacio imagen}.
 La elección de la función $\BPhi$ es tal que los datos transformados
 sean separables en el espacio $Z$.
 Dada una entrada $\xx\in{}X$, la máquina de vectores de soporte
-calcula un vector imagen $\BPhi(\xx)$ y le asigna una clase de
+calcula un vector imagen $\zz=\BPhi(\xx)$ y le asigna una clase de
 salida $\hat{y}=\pm{}1$ según
 %
 \begin{align*}
-  y = \T{signo}(\ww^T \BPhi(\xx)+b)
+  \hat{y} = \T{signo}\left(\pint{\ww}{\BPhi(\xx)}+b\right)
 \end{align*}
 %
-Los valores de $\ww$ y $b$ se obtienen del algoritmo de entrenamiento,
-que se explicará más adelante.
+Los valores de $\ww$ y $b$ se obtienen con un algoritmo de
+entrenamiento que se explicará más adelante.
 En este caso, la frontera de decisión se ubica en el espacio imagen
 $Z$, y viene dada por el hiperplano con ecuación
-$\ww^T\BPhi(\xx)+b=0$.
+$\pint{\ww}{\BPhi(\xx)}+b=0$.
 %
 \begin{quote}
   {\bfseries Notación.}\quad{}En la literatura, resulta común

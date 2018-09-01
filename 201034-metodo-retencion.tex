@@ -8,15 +8,15 @@ todos los ejemplos conocidos.
 El \e{método de retención} consiste en dividir el conjunto $U$ en dos
 conjuntos disjuntos $D$ y $T$, que son usados respectivamente como
 conjuntos de entrenamiento y de prueba.
-La máquina de aprendizaje se entrena con el conjunto $D$, y el modelo
-obtenido se evalúa sobre el conjunto de prueba $T$ para obtener una
-estimación del error de generalización.
+La máquina de aprendizaje se entrena con el conjunto $D$, y el error
+de generalización se estima midiendo el error del modelo sobre el
+conjunto de prueba $T$.
 
 En ocasiones, el conjunto de entrenamiento $D$ se subdivide siguiendo
 el mismo procedimiento en conjuntos de \e{estimación} $E$ y
-de \e{validación} $V$.
+de \e{monitoreo} $M$.
 Estos conjuntos son utilizados antes del entrenamiento para ajustar
 los hiperparámetros del algoritmo de aprendizaje, generando modelos
-de estimación que se evalúan con el conjunto de validación $V$.
+de estimación que se evalúan con el conjunto de monitoreo $M$.
 Una vez determinados los hiperparámetros, el modelo final se 
 entrena con el conjunto de entrenamiento completo $D$.

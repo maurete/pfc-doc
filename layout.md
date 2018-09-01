@@ -21,7 +21,6 @@ figures/triplet/triplet.png
 302037t-estructura.tex
 302040-normalizacion.tex
 302050-particion.tex
-302052-sobremuestreo.tex
 302053-validacioncruzada.tex
 303000-modelo-mlp.tex
 303010-trivial.tex

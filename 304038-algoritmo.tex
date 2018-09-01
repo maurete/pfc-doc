@@ -10,13 +10,11 @@ En cada iteración $t$, se efectúan los siguientes pasos:
   Aplicando validación cruzada, se entrena un modelo SVM para cada
   conjunto de estimación.
 \item
-  Se calculan las salidas $f_k$
-  (\iflatexml{}Ecuación~\ref{fk}\else\autoref{fk}\fi) de los modelos
-  para todos los ejemplos $\xx_k$ en las respectivas particiones de
-  validación.
+  Se calculan las salidas $f_k$ (\ref{fk}) de los modelos para todos
+  los ejemplos $\xx_k$ en las respectivas particiones de validación.
 \item
   Se determinan los valores óptimos de los parámetros $A$ y $B$,
-  minimizando el Problema~\ref{abproblem}, partiendo de los valores
+  minimizando el problema (\ref{abproblem}), partiendo de los valores
   iniciales $A_0=1$, $B_0=0$.
 \item
   Se calculan las probabilidades estimadas $\hat{p}_k$ y con ellas, el

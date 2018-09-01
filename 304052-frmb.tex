@@ -1,7 +1,7 @@
 %
 \subsubsection{Cálculo de $\rho$}
 %
-La cota radio-margen $\rho$ es la función objetivo a minimizar, y
+La ``cota radio-margen'' $\rho$ es la función objetivo a minimizar, y
 se define según
 %
 \begin{align}
@@ -45,10 +45,10 @@ En la implementación, el cálculo de la solución se realiza invocando
 las funciones provistas por la biblioteca \e{libSVM} \cite{libsvm}.
 
 El valor ``margen'' $\rho_M$ es dos veces la solución al problema de
-optimización de la SVM (\autoref{svm-primal-blando}).
+optimización de la SVM (\ref{svm-primal-blando}).
 Dada la equivalencia de las soluciones a los problemas primal y dual
 de entrenamiento de la SVM, si $\Balpha$ es solución a la forma dual
-(\autoref{svmprob-dual-soft}), se tiene simplemente
+(\ref{svmprob-dual-soft}), se tiene simplemente
 %
 \begin{align}
 \label{prieqdual}
