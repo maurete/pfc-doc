@@ -1,18 +1,17 @@
 %
 \subsubsection{Validación cruzada dejando uno fuera}
 %
-La \e{validación cruzada dejando uno fuera}
-es el caso especial del procedimiento de validación cruzada 
-cuando se establece el número de particiones $k$ igual al
-número de elementos $\ell$ del conjunto de entrenamiento $D$.
-Aplicando esta estrategia, el modelo obtenido en cada iteración
-es muy similar a uno entrenado con el conjunto completo $D$.
-
+La \e{validación cruzada dejando uno fuera} es el caso especial del
+procedimiento de validación cruzada cuando se establece el número de
+particiones $k$ igual al número de elementos $\ell$ del conjunto de
+entrenamiento $D$.
+Aplicando esta estrategia, el modelo obtenido en cada iteración es muy
+similar a uno entrenado con el conjunto completo $D$.
 La importancia de este procedimiento reside en el hecho que es el
-mejor estimador del error de generalización de la máquina de aprendizaje.
+mejor estimador del error de generalización del modelo.
 En la práctica, no es muy utilizado debido a su elevado costo
 computacional, ya que se requieren $\ell$ entrenamientos para su
 cálculo.
-Sin embargo, existen técnicas para el cálculo eficiente
-para ciertas máquinas de aprendizaje específicas
-\cite{chapelle,lee-keerthi}.
+Sin embargo, para ciertas máquinas de aprendizaje específicas existen
+técnicas que permiten calcular el error de validación dejando uno
+fuera de manera eficiente \cite{chapelle,lee-keerthi}.

@@ -2,12 +2,11 @@
 %
 \subsection{Búsqueda en la grilla}
 %
-La \e{búsqueda en la grilla} es una estrategia heurística basada en el
-método propuesto en \cite{hsu} que calcula valores óptimos para los
-\hparam{s} de regularización $C$ y de amplitud del núcleo RBF
-$\gamma$.
-La estrategia considera las combinaciones de $(C,\gamma)$ como
-``coordenadas en el espacio de los \hparam{s}''.
+La \e{búsqueda en la grilla} es una estrategia que optimiza los
+\hparam{s} de regularización ($C$) y de amplitud del núcleo gaussiano
+($\gamma$), basada en la estrategia propuesta en \cite{hsu,libsvm}.
+La idea básica es considerar las combinaciones de $(C,\gamma)$ como
+coordenadas en el ``espacio de los \hparam{s}''.
 En cada punto $(C,\gamma)$, se entrena el clasificador con los
 \hparam{s} correspondientes y se evalúa el resultado de validación
 cruzada.
@@ -15,7 +14,6 @@ La búsqueda comienza con una ``grilla'' de puntos espaciados a
 intervalos regulares y continúa interpolando en las cercanías de
 aquellos puntos donde se obtuvo las mayores tasas de clasificación de
 validación cruzada.
-
 La grilla inicial viene dada por las coordenadas $C$-$\gamma$
 %
 \begin{align}
@@ -25,9 +23,9 @@ La grilla inicial viene dada por las coordenadas $C$-$\gamma$
 \end{align}
 %
 Para cada punto $(C_i,\gamma_j)$, se entrena un modelo con los
-\hparam{s} correspondientes y se clasifican las particiones de
-validación cruzada, obteniendo una tasa ${\GM}_{ij}$ promedio.
-
+\hparam{s} correspondientes y se estima la capacidad de generalización
+mediante la medida ${\GM}_{ij}$ promedio obtenida aplicando validación
+cruzada.
 La interpolación de la grilla se lleva a cabo mediante alguno de los
 siguientes algoritmos heurísticos:
 %
@@ -37,10 +35,10 @@ siguientes algoritmos heurísticos:
   de clasificación, reduciendo el área de búsqueda a $1/2$ de la
   amplitud anterior en cada dimensión.
 \item
-  \e{Umbral}: interpola puntos intermedios alrededor de las
-  coordenadas cuyo resultado se ubica por encima de un valor
-  ``umbral'', por defecto el percentil 90 de toda la grilla.
-  Este algoritmo es el utilizado por defecto.
+  \e{Umbral}: interpola puntos alrededor de las coordenadas cuyo
+  resultado se ubica por encima de un valor ``umbral'', por defecto el
+  percentil 90 de toda la grilla.  Este algoritmo es el utilizado por
+  defecto.
 \item
   \e{$n$-mejores}: similar al umbral, interpola la grilla alrededor de
   los $n$ puntos con mejores resultados de validación cruzada.

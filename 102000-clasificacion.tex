@@ -3,48 +3,45 @@
 %
 \section{Clasificación de \premirna{s}}
 %
-Los métodos de la Inteligencia Computacional utilizados para
-clasificación de \premirna{s} son técnicas de \e{aprendizaje
-  supervisado}.
-En general, estas técnicas permiten generar un \e{modelo} o
-representación interna que caracteriza los \premirna{s}, extrayendo
-información a partir de un conjunto de datos de ejemplo denominado
-\e{conjunto de entrenamiento}.
-Se dice que el modelo generado posee capacidad de \e{generalización},
-ya que puede ser aplicado sobre nuevos ejemplos que no le han sido
-presentados con anterioridad.
-El modelo funciona como un \e{clasificador}, discriminando los
-ejemplos en diferentes \e{clases}.
-Se considera el caso de la clasificación binaria, asociando una clase
-``positiva'' a los \premirna{s} reales, y una clase ``negativa'' a los
-ejemplos que son de otro tipo.
-En el presente trabajo se generan clasificadores binarios de
-secuencias de \premirna{s} mediante las técnicas de aprendizaje
-supervisado de \e{máquinas de vectores de soporte} \cite{svm}, la más
-ampliamente utilizada en el área, y el \e{perceptrón multicapa}
-\cite{mlp1,mlp2}, una técnica de aplicación novedosa para este tipo de
-problemas que se hipotetiza podría tener mejor desempeño que las SVMs.
+En el ámbito de la Inteligencia Computacional se han desarrollado
+diversas técnicas de \e{aprendizaje supervisado} que pueden ser
+utilizadas para la clasificación de \premirna{s}.
+A grandes rasgos, estas técnicas generan una representación interna
+(\e{modelo}) que caracteriza los \premirna{s}, extrayendo información
+a partir de un conjunto de datos de ejemplo denominado \e{conjunto de
+  entrenamiento}.
+Una vez ``entrenado'', el modelo puede ser aplicado sobre nuevos
+ejemplos para obtener predicciones de \e{clase}, asociando una clase
+``positiva'' a los ejemplos de \premirna{s}, y una clase ``negativa''
+a los ejemplos que son de otro tipo.
+Esta propiedad se denomina \e{capacidad de generalización}.
+
+En el presente trabajo se utilizan las técnicas de aprendizaje
+supervisado llamadas \e\MVS{} \cite{svm} y \e{perceptrón multicapa}
+\cite{mlp1,mlp2} como clasificadores de secuencias de \premirna{s}.
+Mientras que la primera es la técnica más ampliamente utilizada en
+la disciplina para la clasificación, el uso del perceptrón multicapa
+resulta novedoso en este tipo de problemas, y se hipotetiza que podría
+alcanzar un mejor desempeño que la máquina de vectores de soporte.
 
 El perceptrón multicapa (\e{MLP}, del inglés \eng{Multi-Layer
   Perceptron}) es un tipo de red neuronal artificial con propagación
-hacia adelante, en la que se disponen nodos computadores (neuronas)
-organizados en \e{capas}.
-La salida de cada neurona se determina al aplicar una \e{función de
-  activación}, de tipo sigmoidea, a una suma ponderada de las salidas
-en la capa anterior.
+hacia adelante en la que se disponen nodos computadores (llamados
+\e{neuronas}) organizados en \e{capas}.
+La salida de cada neurona se determina a partir de una suma ponderada
+de las salidas en la capa anterior.
 Durante el entrenamiento del perceptrón multicapa, se ajustan
 progresivamente los pesos (ponderaciones) de cada neurona mediante un
 algoritmo de aprendizaje basado en la \e{propagación hacia atrás} del
 error de clasificación, hasta satisfacer un criterio de corte
 \cite{jain}.
 
-La máquina de vectores de soporte (\e{SVM}, de su nombre en inglés
-\eng{Support Vector Machine}) es un algoritmo de clasificación que se
-basa en transformar, mediante una función llamada \e{núcleo}, el
-espacio $N$-dimensional de los datos de entrada en otro espacio de
-dimensión $M: M\gg N$, donde se espera que los datos sean linealmente
-separables mediante un hiperplano.
-El entrenamiento consiste en resolver un problema de optimización que
-determina un hiperplano de separación óptimo para los datos
-presentados, maximizando la distancia a los ejemplos más cercanos en
-el espacio transformado \cite{bottou}.
+La \MVS{} (\e{SVM}, de su nombre en inglés \eng{Support Vector
+  Machine}) es un algoritmo de clasificación que, considerando a los
+ejemplos como puntos en un espacio vectorial, determina un hiperplano
+óptimo de separación que permite discriminar la clase de los ejemplos
+según se encuentren a un lado u otro del hiperplano.
+Aplicando unas funciones denominadas \e{núcleos}, esta operación se
+efectúa de manera implícita en un espacio vectorial transformado de
+alta dimensionalidad, en el que se espera que los ejemplos sean
+linealmente separables \cite{bottou}.

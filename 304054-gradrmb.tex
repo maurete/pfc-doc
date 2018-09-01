@@ -5,9 +5,8 @@ El cálculo de las derivadas de $\rho$ se basa en resultados de
 análisis de perturbación de problemas de optimización, ya que tanto
 $\rho_R$ como $\rho_M$ son soluciones a problemas de este tipo
 \cite{chung}.
-
-Las derivadas de $\rho_R$ respecto de los hiperparámetros $C$ y $\gamma$
-vienen dadas por
+Las derivadas de $\rho_R$ respecto de los hiperparámetros $C$ y
+$\gamma$ vienen dadas por
 %
 \begin{align}
 %
@@ -26,9 +25,8 @@ vienen dadas por
 %
 Para garantizar la existencia de estas derivadas, resulta necesario
 reescribir las restricciones $\alpha_i\leq{}C$ del problema de la SVM
-(\iflatexml{}Ecuación~\ref{svmprob-dual-soft}\else\autoref{svmprob-dual-soft}\fi)
-de forma tal que las mismas no dependan del \hparam{} $C$
-\cite{chung}.
+(\ref{svmprob-dual-soft}) de forma tal que las mismas no dependan del
+\hparam{} $C$ \cite{chung}.
 Esto se logra efectuando el cambio de variable
 $\bar{\Balpha}=\Balpha/C$ en (\ref{svmprob-dual-soft}):
 %
@@ -76,8 +74,8 @@ calculan según:
     %% & = \sum_{i,j=1}^\ell \alpha_i\alpha_j y_i y_j \dpar{k(\xx_i,\xx_j)}{\gamma}{}, \\[0.2em]
 \end{align}
 %
-Los elementos $\dpar{k_{ij}}{\gamma}{}$ de la matriz $\dpar{\KK}{\gamma}{}$
-vienen dados por
+Los elementos $\dpar{k_{ij}}{\gamma}{}$ de la matriz
+$\dpar{\KK}{\gamma}{}$ vienen dados por
 %
 \begin{align}
   \dpar{k_{ij}}{\gamma}{}
@@ -86,22 +84,23 @@ vienen dados por
   = -k_{ij}\|\xx_i-\xx_j\|.
 \end{align}
 %
-Finalmente se calculan las derivadas de la función $\rho$ respecto de
-$C$ y $\gamma$ haciendo
+Finalmente se calculan las derivadas de $\rho$ respecto de $C$ y
+$\gamma$ mediante
 %
 \begin{align}
     \dpar{\rho}{C}{} &= \dpar{\rho_M}{C}{} \rho_R + \rho_M \dpar{\rho_R}{C}{} \nonumber\\
     &= \frac{2}{C} \left(\B{1}^T\Balpha - \Balpha^T\QQ\Balpha\right) \left( R^2 + \frac{1}{C} \right)
     - 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right)
-    \left( \frac{1}{C^2} \right) \label{drho-dc} \\[1em]
+    \left( \frac{1}{C^2} \right) \label{drho-dc}, \\[1em]
     \dpar{\rho}{\gamma}{} &= \dpar{\rho_M}{\gamma}{} \rho_R + \rho_M \dpar{\rho_R}{\gamma}{}\nonumber\\
     &= \left( - \Balpha^T \left(\yy^T \dpar{\KK}{\gamma}{}\yy\right) \Balpha \right)
     \left( R^2 + \frac{1}{C} \right)
     - 2\left(  \B{1}^T\Balpha-\frac{1}{2}\Balpha^T\QQ\Balpha \right)
-    \left( \Bbeta^T \dpar{\KK}{\gamma}{} \Bbeta \right). \label{drho-dgamma}
+    \left( \Bbeta^T \dpar{\KK}{\gamma}{} \Bbeta \right), \label{drho-dgamma}
 \end{align}
 %
-Los elementos de las matrices $\QQ$ y $\dpar{\KK}{\gamma}{}$ son
+en donde los elementos de las matrices $\QQ$ y $\dpar{\KK}{\gamma}{}$
+son
 %
 \begin{align}
   q_{ij}&=y_i y_j k(\xx_i,\xx_j)= y_i y_j e^{-\gamma\|\xx_i-\xx_j\|}, \\
