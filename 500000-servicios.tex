@@ -1,0 +1,312 @@
+\section{5 DevOps en los servicios}
+
+Ninguna adopción de DevOps puede llamarse como tal si no pretende generar una cultura en común entre los equipos de desarrollo y operaciones. En el presente Capítulo se presenta una revisión del trabajo realizado en este sentido.
+
+Como primer paso se configuraron las herramientas necesarias para la implementación de CI/CD en los servicios. Luego, en una etapa exploratoria, se trabajó junto a los desarrolladores sobre dos servicios de baja complejidad. El objetivo de este trabajo inicial fue generar una comprensión de las implicancias de una implementación de CI/CD sobre la forma de trabajo con el código, así como entender el funcionamiento de las herramientas utilizadas.
+
+Finalmente, se trabajó con tres servicios más complejos en una implementación más formal, proponiendo buenas prácticas que acercaran el trabajo de los desarrolladores y operadores hacia una filosofía DevOps. Esta implementación permitió integrar el código fuente y los flujos de trabajo de ambos equipos e incorporó automatización de las tareas posteriores al desarrollo utilizando una tubería de integración y entrega continuas.
+
+\subsection{Herramientas CI/CD}
+
+Las herramientas de integración y entrega continuas (CI/CD) permiten automatizar prácticamente todas las tareas posteriores a la publicación del código, tales como la compilación, el testing, el empaquetado y la publicación de artefactos.
+
+Se configuraron los servicios Jenkins y el módulo de CI/CD de GitLab, para comparar su funcionamiento y determinar la conveniencia de utilización de cada uno. La elección se justificó en el hecho de que Jenkins es el servicio más popular \href{https://www.zotero.org/google-docs/?VQPh0a}{[19]}, mientras que GitLab es la herramienta adoptada por la Dirección para la gestión del código fuente, lo que hace de la configuración de su servicio de CI/CD una tarea relativamente sencilla.
+
+\subsubsection{Jenkins}
+
+Jenkins ofrece un ecosistema muy completo que ofrece una gran cantidad de \textit{plugins}, lo cual lo convierte en una herramienta muy adaptable y flexible, capaz de integrar el trabajo con las herramientas utilizadas por los desarrolladores (Gradle, Nexus) para cada tipo de proyecto. Soporta múltiples tipos de agentes para la ejecución de los trabajos (entornos Linux, Docker, Windows, etc.) y ofrece una herramienta gráfica para crear y editar la tubería de integración y entrega continuas.
+
+El mayor impedimento encontrado con Jenkins fue la dificultad de configurarlo con una herramienta de configuración como código tal como Ansible. En muchos casos fue necesario escribir código Groovy para lograr la configuración requerida, tomando como referencia directamente el código fuente de Jenkins y/o de los plugins, ya que la documentación en general sólo explica cómo efectuar la configuración mediante la interfaz gráfica. Incluso, resultó imposible de configurar completamente mediante Ansible la funcionalidad de edición gráfica de la pipeline.
+
+\subsubsection{GitLab CI}
+
+El software GitLab es utilizado en la Dirección para gestionar el código fuente. El mismo incorpora soporte para la ejecución de tareas de integración y entrega continua. Para habilitar esta funcionalidad, fue necesario generar una instancia de prueba, sobre la que se instaló el software denominado \textit{gitlab-runner}. Este software se encarga de ejecutar los trabajos de las tuberías de CI/CD, los cuales son gestionados desde la interfaz principal de GitLab. La tarea de implementación definitiva del servicio \textit{gitlab-runner} se realizó en una etapa posterior y formó parte de las tareas de actualización de GitLab.
+
+\subsection{Pruebas iniciales de CI/CD}
+
+Se seleccionaron dos servicios de baja complejidad y se trabajó en conjunto con sus desarrolladores en el modelado de tuberías de CI/CD para automatizar las tareas que se realizan una vez concluida la escritura del código. Los servicios seleccionados fueron “Wordpress externos” y “Portal de firma digital”.
+
+\subsubsection{Servicio “Wordpress externos”}
+
+Este servicio consiste en una instalación básica de WordPress\footnote{ https://wordpress.org/} con algunas personalizaciones sobre los plugins y temas. El servicio no cuenta con tests unitarios. Una vez registrados los cambios en el código, las únicas acciones realizadas son referidas al despliegue, primero en un entorno de \textit{test} donde se validan los requerimientos, para luego pasar al entorno de producción.
+
+Para automatizar las tareas de despliegue, se agregaron al repositorio los archivos necesarios que especifican la tubería de CI/CD a ejecutar. El archivo correspondiente a Jenkins se denomina \textit{Jenkinsfile} y el que modela la tubería de GitLab se denomina \textit{.gitlab-ci.yml}. Ambas tuberías efectúan la siguiente secuencia de tareas\footnote{ En el Informe de Avance 1 se explicó que las tuberías utilizan la herramienta Ansible para efectuar los despliegues. Este detalle se omitió a propósito en el presente Informe a fin de evitar confusiones: mientras que a lo largo del Informe se describe a Ansible como una herramienta de configuración como código, en este caso se le dio otro uso experimental para efectuar operaciones de despliegue.}:
+
+\begin{enumerate}
+\item Validación de la sintaxis: se verifica la sintaxis del código para asegurar su integridad.
+\item Despliegue en el entorno de test: se especificó como una tarea manual para conservar el flujo de trabajo sobre los entornos.
+\item Despliegue en el entorno de producción: esta es una tarea manual permitida sólo para la rama de desarrollo principal (\textit{master}).
+\end{enumerate}
+Resulta oportuno aclarar que las tareas manuales de esta tubería consisten en un simple click de un botón en las interfaces de Jenkins/GitLab. Asimismo, cuando una tarea falla, no se permiten ejecutar las acciones posteriores.
+
+\subsubsection{Servicio “Portal de firma digital”}
+
+El servicio es una aplicación Java que permite efectuar y validar firmas digitales de documentos PDF. Utiliza Gradle como herramienta de \textit{build}. Las tareas realizadas por el desarrollador una vez concluida la codificación son la compilación y ejecución de tests (\textit{gradle build}), el empaquetado y publicación al repositorio de artefactos (\textit{gradle publish}) y el despliegue a los entornos de \textit{integración}, \textit{test}, y producción.
+
+Para las pruebas de CI/CD se modeló una tubería simplificada, que omite la publicación al repositorio de artefactos. Se agregaron los archivos \textit{Jenkinsfile} y \textit{.gitlab-ci.yml} al repositorio de código. La tubería efectúa las siguientes tareas:
+
+\begin{enumerate}
+\item Compilación y ejecución de tests (\textit{gradle build}).
+\item Generación del artefacto para el despliegue (\textit{gradle assemble}).
+\item Despliegue (automático) en el entorno de \textit{integración}.
+\item Despliegue en el entorno de test (tarea manual).
+\item Despliegue en el entorno de producción: tarea manual habilitada sólo para la rama de desarrollo principal (\textit{maste}r).
+\end{enumerate}
+\subsubsection{Resultados de las pruebas}
+
+La conclusión principal obtenida de estas pruebas es que, independientemente de las herramientas utilizadas, la implementación de un esquema de CI/CD en los proyectos viene atada a la forma de gestionar el código en Git. Esto no es precisamente una novedad, pero puso en evidencia la falta de una cultura en común en cuanto a las buenas prácticas de la gestión del código. Se observaron incluso falencias en el conocimiento de algunos aspectos de Git. 
+
+En cuanto a la comparación de las herramientas de CI/CD, se realizaron las siguientes observaciones:
+
+\begin{itemize}
+\item \textit{Sintaxis}: el archivo \textit{.gitlab-ci.yml} de GitLab posee una sintaxis mucho más clara que la del archivo \textit{Jenkinsfile} utilizado por Jenkins.
+\item \textit{Simplicidad}: la configuración de CI/CD en GitLab es automática, sólo se requiere registrar un archivo \textit{.gitlab-ci.yml} válido. En el caso de Jenkins, la configuración debe efectuarse de forma explícita, aunque podría automatizarse con una implementación adecuada.
+\item \textit{Integración}: La herramienta CI/CD de GitLab se integra completamente en  flujos de trabajo que utilicen \textit{merge requests}. La implementación de una funcionalidad similar con Jenkins requiere adquirir una versión comercial (privativa) del software GitLab.
+\item \textit{Flexibilidad}: Jenkins ofrece un modelo de pipelines muy flexible y altamente configurable, mientras que GitLab impone una estructura rígida separada en etapas bien delimitadas.
+\item \textit{Compatibilidad}: Jenkins permite ejecutar pipelines en múltiples entornos tales como Linux, Windows y Docker. En cambio, las pipelines de GitLab deben ejecutarse dentro de contenedores Docker.
+\item \textit{Interfaz gráfica}: Jenkins ofrece una interfaz muy potente para la generación de pipelines en modo gráfico. GitLab, en cambio, requiere escribir la tubería como código.
+\item \textit{Configuración}: La administración de Jenkins resulta una tarea compleja y difícil de automatizar, mientras que GitLab no requiere efectuar configuración alguna.
+\item \textit{Accesibilidad}: En GitLab las operaciones manuales de la tubería pueden lanzarse con un solo click desde los \textit{merge requests}. En el caso de Jenkins resulta necesario cambiar de contexto para verificar el estado de CI/CD.
+\end{itemize}
+Teniendo en cuenta todas estas consideraciones, la herramienta elegida para las implementaciones de CI/CD fue GitLab.
+
+\subsection{Análisis de los servicios}
+
+Una vez concluidas las pruebas iniciales de CI/CD se trabajó en la implementación de prácticas DevOps sobre tres de los servicios principales ofrecidos por la Dirección. A partir de las necesidades institucionales, los servicios seleccionados fueron los siguientes:
+
+\begin{itemize}
+\item Ilitía: sistema de gestión de servicios a terceros.
+\item Mercurio: sistema de cobranzas electrónicas.
+\item Hera: sistema de gestión de trámites digitales.
+\end{itemize}
+Estos tres sistemas interactúan entre sí, lo que resulta ideal para implementar tests de integración automáticos como parte de la pipeline de CI/CD.
+
+Como primer paso, se realizaron reuniones con los equipos de desarrollo para comprender cómo organizan su trabajo en torno a estos servicios. Luego se analizaron el sistema de gestión de proyectos, la documentación interna, el repositorio de código fuente y la configuración actual de los servidores. Los resultados de este análisis se presentan a continuación.
+
+\subsubsection{Gestión de los servicios}
+
+En términos generales, se encontró que la organización del trabajo sobre los servicios estaba en línea con el proceso descrito previamente en el análisis del flujo de valor para la entrega de un nuevo requerimiento (Tabla 1.2). Con algunas diferencias tales como la frecuencia de los sprints, la gestión de las ramas en el código fuente o la publicación de artefactos, la metodología de trabajo de los equipos de desarrollo resultó similar en los tres casos.
+
+\subsubsection{Gestión del código fuente}
+
+La gestión del código fuente se realizaba utilizando la herramienta SVN, siguiendo una la estructura de directorios \textit{trunk/tags/branches} estándar para este tipo de repositorios.
+
+En el servicio Mercurio, los tags de SVN se utilizaban para guardar artefactos compilados de la aplicación, en lugar del código fuente. Esta práctica había sido implementada en su momento como una solución temporal hasta tanto el equipo de desarrollo contara con recursos para migrar al repositorio de artefactos Nexus, tarea que nunca se concretó. Esta particularidad debe ser considerada al momento de efectuar la migración a Git.
+
+\subsubsection{Documentación}
+
+Al revisar la documentación de los servicios se encontraron manuales de usuario, documentos de requerimientos y descripciones de alto nivel sobre las integraciones con sistemas externos. Sin embargo, la documentación técnica (arquitectura, soporte tecnológico requerido, configuración, compilación, testing, etc.) resultó prácticamente inexistente. En el sistema de gestión de proyectos se encontró un proyecto denominado “Desarrollo de software UNL”, con documentación genérica para todos los servicios.
+
+\subsubsection{Gestión de la configuración}
+
+Los tres servicios contaban con configuración escrita como código Ansible en el repositorio Git propio del equipo de infraestructura. Este aspecto simplificó en cierto modo la incorporación de la configuración como código en los nuevos repositorios Git para los servicios.
+
+\subsubsection{Soporte tecnológico}
+
+Dentro de la Dirección, el equipo de infraestructura es el encargado de proponer los entornos de software sobre el que funcionan las aplicaciones. Por ello, el soporte tecnológico de los tres servicios resultó similar:
+
+\begin{itemize}
+\item Sistema operativo Debian GNU/Linux, versión 9
+\item Entorno Java OpenJDK, versión 8
+\item Servidor de base de datos PostgreSQL versión 9.6
+\item Servidor de aplicación WildFly versiones 12 (Ilitía) y 15 (Mercurio, Hera)
+\item Herramientas de build Gradle (Mercurio, Hera) y Maven (Ilitía)
+\item Entornos de integración, test, y producción
+\item Esquemas de monitoreo, backup y servicio de dumps estándar de la DIPT
+\end{itemize}
+\subsection{Integración del código fuente de los equipos de desarrollo y operaciones}
+
+Ya se ha expresado que ninguna transformación DevOps puede llamarse como tal si no se propone generar una cultura en común entre los equipos de desarrollo y operaciones. En este sentido es que se decidió integrar, para cada servicio, el código fuente del equipo de desarrollo (código de la aplicación) y del equipo de operaciones/infraestructura (configuración como código).
+
+La unificación del código y la configuración de los servicios es el primer paso para generar una cultura DevOps en común. Por un lado, obliga a los equipos a coordinar sus flujos de trabajo, en especial sobre los cambios que son aplicados en los entornos productivos. Por otra parte, brinda transparencia y visibilidad del trabajo realizado por ambos equipos. Finalmente, permite intercambiar roles a los miembros de cada equipo permitiendo, por ejemplo, la configuración de la infraestructura por parte de un desarrollador, y la proposición de mejoras en el proceso de build por parte del operador. Todos estos aspectos derivan en un incremento de la confianza mutua entre los equipos y la generación de una cultura en común.
+
+\subsubsection{Procedimiento}
+
+Para cada servicio se realizó el procedimiento descrito a continuación. En todos los casos, la migración se efectuó de manera coordinada con los equipos de desarrollo para no impactar en la productividad de los mismos.
+
+En primer lugar, se creó en GitLab un nuevo repositorio Git para el servicio. Se incorporó a este repositorio el código Ansible que especifica la configuración, tal como estaba configurado en el repositorio de infraestructura.
+
+Fue necesario adaptar la configuración de Ansible para su funcionamiento dentro de un repositorio independiente. Para ello, se generaron nuevos repositorios específicos con roles reutilizables por parte de todos los servicios. Se realizó además una segunda adaptación al código Ansible con el propósito de hacerla compatible con el servicio AWX.
+
+Una vez consolidada y probada la configuración en el repositorio, se procedió a importar el código fuente de la aplicación desde el repositorio SVN, utilizando la herramienta Git-SVN\footnote{ https://git-scm.com/docs/git-svn}. En el caso del servicio Mercurio, fue necesario filtrar los artefactos binarios para evitar incorporarlos al repositorio Git. Se trabajó asimismo en conjunto con el equipo de desarrollo para integrar en su flujo de trabajo el repositorio Nexus para la publicación de los artefactos.
+
+\subsubsection{Documento de recomendaciones}
+
+Se escribió un documento de recomendaciones que condensa las lecciones aprendidas del trabajo realizado sobre los repositorios y las inquietudes planteadas por los desarrolladores a la hora de integrar los flujos de trabajo de los equipos. El objetivo del documento es contribuir a la generación de una cultura en común. Este documento incluye consideraciones relacionadas a las tuberías de integración y entrega continuas, así como también una guía básica del uso del sistema de versionado Git.
+
+\subsection{Integración y entrega continuas (CI/CD)}
+
+Se implementaron herramientas de integración y entrega continuas (CI/CD) en los en los servicios con el propósito de automatizar las tareas efectuadas por el desarrollador una vez finalizada la escritura del código. Estas tareas se modelan en el servicio de CI/CD con una \textit{tubería} (o \textit{pipeline}), consistente en un proceso automático que se dispara con cada  registro de cambios (\textit{push}) al repositorio central de código fuente GitLab.
+
+El diseño tomado como base para la implementación de las tuberías fue aquel propuesto por Humble y Farley en \href{https://www.zotero.org/google-docs/?9SSytI}{[1]}. Se adaptó el diseño a las particularidades de la Organización, integrando el flujo de trabajo de ramas de vida corta especificado en la propuesta de mejora para el proceso de entrega de un nuevo requerimiento, tal como se explica en el Capítulo 3. El resultado principal de la implementación fueron los archivos de definición de la tubería para el servicio CI/CD de GitLab. Estos archivos fueron incorporados al repositorio de cada servicio en forma de un \textit{merge request}.
+
+La implementación de las tuberías resultó una tarea muy compleja desde el punto de vista técnico. Fue necesaria la creación de entornos específicos en forma de contenedores Docker para la ejecución de tareas. Para lograr compilar y ejecutar los tests de las aplicaciones dentro de la tubería fue necesario realizar ingeniería inversa y depuración de los trabajos, en consulta permanente con los desarrolladores de los servicios.
+
+En adelante, se describe el proceso de implementación de las tuberías. Se generaron dos diseños: el primero, acorde con la bibliografía,  funciona como una meta a implementar a mediano plazo, ya que requiere la codificación de nuevos tipos de tests y la adopción generalizada de la tubería en todos los servicios relacionados.
+
+El segundo diseño es la implementación concreta efectuada, considerada un compromiso entre las posibilidades actuales de la Organización y la estructura básica requerida para generar una cultura DevOps adecuada.
+
+\subsubsection{Tubería objetivo (teórica)}
+
+Este diseño, muy similar a la propuesta presentada en \href{https://www.zotero.org/google-docs/?lBK1S4}{[1]}, especifica una tubería completa que ejecuta diferentes tipos de tests, incluyendo pruebas de humo\footnote{ Una “prueba de humo” es un tipo de test que valida la funcionalidad principal del software. Es una prueba rápida que asegura la integridad a grandes rasgos.} (\textit{smoke tests}) y pruebas de capacidad. Se considera una meta a alcanzar a futuro, ya que requiere la codificación de implementación de nuevos tipos de tests y la creación de un nuevo entorno para ejecutar las pruebas de capacidad, tareas que conllevan un cierto grado de complejidad y se consideran fuera de alcance del presente Proyecto. En la Figura 5.1 se muestra el diseño de esta tubería.
+
+\begin{tabular}{|l|}
+\hline
+\includegraphics[width=6.34in,height=5.23in]{img_7.png}
+
+
+\textit{Figura 5.1. Tubería teórica} \\ \hline
+\end{tabular}
+El disparador de la ejecución de la tubería es un push del código al servidor GitLab. Las tareas se ejecutan en forma secuencial. Una falla en una tarea aborta la ejecución de la tubería completa, la cual pasa a un estado fallido.
+
+\paragraph{1 Etapa de construcción del código (\textit{build})}
+
+En esta primera etapa se llevan a cabo las tareas que permiten la generación de los archivos compilados y los artefactos de la aplicación. Las tareas se ejecutan en forma secuencial dentro de un contenedor Docker del servicio de CI/CD.
+
+\begin{enumerate}
+\item \textbf{Verificar que la versión no ha sido publicada}. Una falla en este paso indica al desarrollador que debe incrementar el número de versión para poder ejecutar la tubería.
+\item \textbf{Compilar la aplicación}. Se ejecuta la herramienta encargada de la compilación tal como Maven o Gradle.
+\item \textbf{Ejecutar tests unitarios}. Se ejecuta la suite de tests unitarios utilizando la herramienta apropiada. Los tests unitarios se ejecutan primero ya que son los más rápidos.
+\item \textbf{Ejecutar tests de integración}. Se ejecutan los tests que validan la funcionalidad integrada de diferentes componentes del software. No se debe confundir estos tests con los de integración de sistemas.
+\item \textbf{Empaquetar la aplicación}. Se genera el artefacto que puede ser desplegado en el servidor de aplicación. Este artefacto se guarda en una ubicación temporal hasta el fin de la ejecución de la tubería.
+\end{enumerate}
+\paragraph{2 Etapa de verificación}
+
+En esta etapa se efectúan pruebas de validación de la aplicación completa en el entorno controlado de contenedor Docker del servicio CI/CD que incorpora un servidor de aplicación y brinda acceso a una base de datos.
+
+\begin{enumerate}
+\item \textbf{Configurar el entorno de testing local}. Se configuran los archivos y recursos necesarios en el servidor de aplicación para poder efectuar el despliegue de la aplicación.
+\item \textbf{Desplegar la aplicación}. Se despliega el paquete de la aplicación generado en la etapa anterior.
+\item \textbf{Pruebas de humo}. Se ejecutan pruebas de humo para verificar la integridad global de la aplicación.
+\item \textbf{Tests de aceptación automáticos}. Este tipo de tests verifican la integridad de los distintos componentes de la aplicación durante la ejecución, incluyendo el acceso a todos los recursos locales.
+\item \textbf{Tests de integración de sistemas}. Estos tests acceden a recursos externos, en general servicios web de otros sistemas, y verifican la interacción con los mismos.
+\end{enumerate}
+\paragraph{3 Publicación}
+
+En el caso que el disparador de la tubería haya sido un cambio sobre la rama principal de desarrollo (\textit{master}), se publica el paquete de la aplicación al repositorio de artefactos y se genera la etiqueta de versión correspondiente en el repositorio de código.
+
+\paragraph{4 Tests de capacidad}
+
+Se deja como tarea a futuro la especificación y diseño de los tests de capacidad/estrés y el entorno de ejecución para los mismos. La secuencia de tareas a ejecutar en este entorno es similar a las demás:
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Desplegar la aplicación}.
+\item \textbf{Ejecutar pruebas de humo}.
+\item \textbf{Ejecutar tests de capacidad}.
+\end{enumerate}
+\paragraph{5 Despliegue en el entorno de aceptación de usuario}
+
+Ésta es una tarea que requiere aprobación manual, típicamente de algún miembro de los equipos de desarrollo o testing. El objetivo es poder probar manualmente la aplicación en el entorno antes mencionado.
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Despliegue de aplicación}.
+\item \textbf{Pruebas de humo}.
+\end{enumerate}
+\paragraph{6 Despliegue en el entorno de producción}
+
+Una vez que el software ha pasado por todas las etapas anteriores, se considera que está listo para su publicación en el entorno productivo, alcanzando al usuario final. Esta tarea requiere aprobación manual, típicamente del responsable del proyecto, y sólo está habilitada para los cambios efectuados sobre la rama principal de desarrollo (\textit{master}).
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Despliegue de aplicación}.
+\item \textbf{Pruebas de humo}.
+\end{enumerate}
+\subsubsection{Tubería implementada (real) }
+
+La arquitectura implementada es un compromiso entre la tubería teórica y las posibilidades actuales de la Dirección. Permite a los equipos organizar su trabajo en torno a la tubería, lo cual permitirá acostumbrarse a su uso y evolucionar en forma paulatina hacia la tubería teórica. El diseño de la misma se muestra en la Figura 5.2.
+
+\begin{tabular}{|l|}
+\hline
+\includegraphics[width=6.34in,height=5.23in]{img_8.png}
+
+
+\textit{Figura 5.2. Tubería implementada} \\ \hline
+\end{tabular}
+La tubería implementada es similar a la tubería teórica, aunque con menos tareas de testing. Al igual que aquella, un push del código al servidor GitLab dispara la ejecución de la tubería. Una tarea fallida aborta la ejecución de la tubería completa.
+
+\paragraph{1 Etapa de construcción del código}
+
+Entorno de ejecución: contenedor Docker del servicio CI/CD.
+
+\begin{enumerate}
+\item \textbf{Verificar que la versión no ha sido publicada}.
+\item \textbf{Compilar la aplicación}.
+\item \textbf{Ejecutar tests unitarios}.
+\item \textbf{Ejecutar tests de integración}.
+\item \textbf{Empaquetar la aplicación}. Se genera el artefacto para el despliegue y se conserva el mismo en una ubicación temporal.
+\end{enumerate}
+\paragraph{2 Etapa de verificación}
+
+Entorno de ejecución: contenedor Docker del servicio CI/CD, con servidor de aplicación integrado y acceso a la base de datos.
+
+\begin{enumerate}
+\item \textbf{Configurar el entorno de testing local}.
+\item \textbf{Desplegar la aplicación}.
+\item \textbf{Tests de integración de sistemas}.
+\end{enumerate}
+\paragraph{3 Publicación}
+
+En el caso que el disparador de la tubería haya sido un cambio sobre la rama principal (\textit{master}), se publica el paquete de la aplicación al repositorio de artefactos y se genera la etiqueta de versión correspondiente en el repositorio Git.
+
+\paragraph{4 Despliegue en el entorno para tests de integración de sistemas}
+
+Esta acción requiere aprobación manual, típicamente de un desarrollador. Permite actualizar la aplicación en el entorno de \textit{integración} para que otros sistemas puedan validar sus integraciones.
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Despliegue de aplicación}.
+\end{enumerate}
+\paragraph{5 Despliegue en el entorno para tests de aceptación de usuario}
+
+Esta acción requiere aprobación manual. Es idéntica a la de la tubería teórica, pero excluye las pruebas de humo.
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Despliegue de aplicación}.
+\end{enumerate}
+\paragraph{6 Despliegue en el entorno de producción}
+
+También se trata de una acción de aprobación manual. Aplican las mismas consideraciones que en la tubería teórica, siendo la única diferencia que no se ejecutan pruebas de humo.
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Despliegue de aplicación}.
+\end{enumerate}
+\subsection{Dificultades encontradas en la implementación}
+
+La implementación de las tuberías en los servicios resultó una tarea de una complejidad mucho mayor a la prevista en el plan de trabajo. Estas dificultades impactaron retrasando el desarrollo del Proyecto. A continuación se presenta una revisión de los problemas encontrados a la hora de implementar tuberías de integración y entrega continuas en los servicios.
+
+\subsubsection{Generación de imágenes Docker}
+
+Las imágenes de Docker son entornos de ejecución aislados y reproducibles, generados a partir de una especificación de configuración como código basada en un lenguaje de dominio específico. Cuando una imagen de Docker es instanciada para su ejecución, se crea un contenedor que incluye el contenido de la imagen asociado a recursos específicos tales como la memoria asignada y los recursos de red. Las imágenes de Docker pueden construirse en base a otras imágenes ya existentes, lo cual ofrece una gran flexibilidad de adaptación a los requerimientos de cada aplicación.
+
+Dicho esto, también resulta cierto que los entornos Docker son limitados por diseño. Por ejemplo, dentro de un contenedor se permite la ejecución de un único proceso, a contramano de lo que sucede en las instancias virtualizadas, que ejecutan un sistema operativo completo.
+
+A la hora de configurar los entornos de Docker para la ejecución de las tareas de CI/CD, se optó por generar entornos que se adaptaran a los requerimientos del proceso de construcción del código y las pruebas, en lugar de adaptar los procesos a un entorno limitado como Docker. Esta decisión significó realizar un gran esfuerzo en la generación de imágenes de Docker personalizadas.
+
+Por citar dos ejemplos:
+
+\begin{itemize}
+\item Para poder compilar la aplicación con Maven, es necesario configurar la URL y las credenciales para acceder al repositorio de artefactos Nexus. Esto se configura en un archivo XML, que si bien se guarda en el repositorio de código, por políticas de seguridad no puede contener claves. Para editar las claves del archivo XML en forma programática se debe utilizar una programa específico, el cual no está disponible en la imagen de Maven oficial.
+\item En los servicios de la DIPT se utiliza mayoritariamente el servidor de base de datos PostgreSQL, con la siguiente convención de nombres y niveles de acceso: para un servicio llamado “hola”, la base de datos se llama “hola\_db” y posee tres usuarios “hola\_owner”, “hola\_user” y “hola\_ro”, cada uno con diferentes permisos sobre la base de datos. Si bien existe una imagen oficial de Docker para PostgreSQL, alcanzar este estándar de nombres y permisos con la misma es demasiado complejo.
+\end{itemize}
+La creación de cada imagen de Docker implicó la creación de un repositorio específico para el código de la misma. Estos repositorios incorporan a su vez sus propias pipelines de integración y entrega continuas, encargadas de generar las imágenes y publicarlas en el repositorio público Docker Hub. Las imágenes de Docker creadas fueron las siguientes:
+
+\begin{itemize}
+\item diptunl/debian: sistema operativo Debian de base con herramientas y configuraciones estándares requeridas por los servicios de la DIPT. Incluye configuración de locales, hora y fecha, y certificados SSL.
+\item diptunl/java: basada en diptunl/debian, incorpora la máquina virtual OpenJDK configurada con opciones de ejecución adaptadas a los servicios de la DIPT e incorpora los certificados SSL al depósito de claves de Java.
+\item diptunl/gradle: se basa en diptunl/java y contiene la herramienta Gradle.
+\item diptunl/maven: se basa en diptunl/java y contiene la herramienta Maven.
+\item diptunl/wildfly: basada en diptunl/java, diptunl/gradle y diptunl/maven, posee un servidor Wildfly que incluye un driver para conectarse a PostgreSQL y está parametrizado para los servicios Java de la DIPT.
+\item diptunl/postgres: basada en diptunl/debian, posee un servidor PostgreSQL que soporta el esquema de nombres y permisos utilizados en la DIPT.
+\end{itemize}
+Esta arquitectura de imágenes de Docker fue evolucionando conforme se avanzó con la implementación de las tuberías de cada servicio.
+
+\subsubsection{Falta de documentación}
+
+Otro de los grandes problemas encontrados a la hora de la implementación de las tuberías fue la falta de documentación de los procesos, configuraciones y comandos necesarios para poder compilar las aplicaciones y ejecutar los tests. En particular los tests de integración de sistemas, los cuales fueron diseñados únicamente para soportar el caso de uso de la ejecución local en la PC del desarrollador. Estos inconvenientes impactaron en la implementación de las tuberías generando retrasos debidos a las situaciones de prueba y error, y de ingeniería inversa a partir de la inspección del código fuente.
+
+Como un aspecto positivo, debido a estos problemas se incorporaron modificaciones al código fuente de la aplicación, incluyendo documentación e incorporando soporte de parametrizaciones para que los procesos de testing fueran más flexibles.
+

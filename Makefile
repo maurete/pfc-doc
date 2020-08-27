@@ -22,7 +22,7 @@ $(output:%.tex=%-blx.bib)
 tikzfigs = $(shell ls figures/*/*.tikz.tex | sed 's/.tikz.tex//')
 
 # usar rubber para compilar pdf
-cc   = rubber --pdf --unsafe
+cc   = rubber -m lualatex --pdf --unsafe
 
 # compilador para imagenes tikz
 tikzcc = pdflatex -halt-on-error -interaction=batchmode

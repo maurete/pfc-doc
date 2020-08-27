@@ -1,0 +1,239 @@
+\section{6 Observabilidad y comunicación}
+
+La propuesta DevOps enfatiza la necesidad de acelerar la \textit{retroalimentación} mediante canales de comunicación eficientes para los equipos de trabajo y herramientas adecuadas para la medición del funcionamiento de los servicios.
+
+Si bien la Dirección cuenta con medios de comunicación formales tales como el e-mail y el sistema de gestión de proyectos, se observó que el intercambio de información en el trabajo diario se encontraba disperso entre éstos, la comunicación oral y las herramientas de mensajería instantánea tales como Google Hangouts y WhatsApp. Esta diversidad de canales de comunicación dificulta el acceso a la información e incrementa el nivel de estrés de los individuos. Para atacar esta problemática se planteó como objetivo explícito del Proyecto la implementación de un servicio de chat para uso interno.
+
+Se trabajó además en la implementación de herramientas para aumentar la observabilidad de los servicios. Se diseñó una arquitectura para la recolección, almacenamiento y visualización de métricas y eventos, y se configuró una interfaz de visualización de los registros (\textit{logs}) de los servicios.
+
+Por último, se describe el trabajo efectuado para la implementación de un servicio de \textit{consola de operaciones}, una tarea que no resultó exitosa.
+
+\subsection{Servicio de chat}
+
+Para la implementación del servicio de chat se consideraron las herramientas de código abierto Gitter y Mattermost. Gitter\footnote{ \href{https://gitter.im/}{https://gitter.im/}} es es una herramienta de chat ofrecida por los desarrolladores de GitLab con un enfoque orientado a la creación de comunidades. Mattermost\footnote{ \href{https://mattermost.com/}{https://mattermost.com/} }, por su parte, se posiciona como una herramienta para la comunicación interna de los equipos de trabajo (teams) en entornos empresariales, y es la alternativa de software libre al servicio comercial ofrecido por Slack. Ambas herramientas ofrecen funcionalidades similares: salas/canales de chat, mensajes directos, notificaciones, bots y comandos.
+
+En primera instancia se desplegaron ambas herramientas en entornos de prueba para su evaluación. Finalmente se decidió implementar Mattermost dado que su configuración resultó más sencilla y la interfaz web más amigable que Gitter.
+
+La implementación definitiva de Mattermost se realizó escribiendo el código Ansible necesario para la configuración del servicio. Esta configuración incluye la autenticación de los usuarios a través de GitLab.
+
+Se creó un canal de chat denominado “Actividad” en el cual se publican automáticamente los eventos de lanzamiento de un trabajo de AWX y su resultado. También se configuraron notificaciones de eventos de GitLab a modo de prueba en algunos servicios.
+
+\subsection{Servicio de análisis de registros (logs)}
+
+La Dirección cuenta con un servicio interno de recolección y almacenamiento de registros (\textit{logs}) para todos los servicios. Cada instancia cuenta con un agente (\textit{filebeat}) que recopila y envía los registros a un servidor centralizado denominado \textit{logserver}. Los desarrolladores y operadores de los servicios se conectan al servidor central \textit{logserver} vía SSH, y visualizan los registros utilizando herramientas de línea de comandos pueden visualizar el contenido de los logs. La forma de acceso vía SSH presenta una serie de inconvenientes tales como la configuración manual de los usuarios y sus permisos y la necesidad de establecer múltiples conexiones para visualizar registros en simultáneo.
+
+Con el propósito de dar mayor accesibilidad a los registros es que se decidió implementar un servicio de análisis de registros, que permita visualizar y filtrar los registros en tiempo real, así como también efectuar búsquedas sobre los mismos. 
+
+Se evaluaron las herramientas de código abierto Kibana y Graylog. Ambas ofrecen una interfaz web para visualizar los registros en tiempo real y efectuar búsquedas eficientes mediante el motor de búsqueda Elasticsearch.
+
+Luego de una implementación de prueba inicial, se optó por la implementación de Graylog a partir de los siguientes criterios:
+
+\begin{itemize}
+\item La interfaz de Graylog está orientada al análisis de registros, mientras que la de Kibana se enfoca en el procesamiento de flujos de información textual en general.
+\item Graylog ofrece una interfaz API para recibir y guardar registros de logs, de potencial utilización directa para registrar eventos por parte de los servicios desarrollados en la DIPT.
+\item Graylog permite utilizar el directorio LDAP ya existente para la autenticación y autorización de los usuarios, mientras que Kibana sólo ofrece autenticación y autorización básicas.
+\end{itemize}
+La configuración del servicio se basó en la guía oficial de instalación\footnote{ \href{https://docs.graylog.org/en/3.1/pages/installation/docker.html}{https://docs.graylog.org/en/3.1/pages/installation/docker.html} } y se guardó como código en un repositorio GitLab. Se utilizó la herramienta Ansible para el despliegue del nuevo servicio.
+
+\includegraphics[width=6.21in,height=3.39in]{img_9.png}
+
+
+\textit{Figura 6.1. Diagrama de la arquitectura de recolección, almacenamiento y visualización de registros. A la infraestructura preexistente se acopló el servicio Graylog, que ofrece visualización de los registros en tiempo real y un servicio de indexación y búsqueda sobre los mismos.}
+
+\includegraphics[width=6.5in,height=3.88in]{img_10.png}
+
+
+\textit{Figura 6.2. La interfaz gráfica de Graylog ofrece visualización en tiempo real, con un campo de búsqueda para el filtrado de los registros y selección de los campos a visualizar.}
+
+\subsection{Servicio de métricas}
+
+La necesidad de implementar un servicio de métricas surge como respuesta a dos necesidades de la organización. La primera necesidad es contar con una herramienta que permita visualizar y correlacionar métricas de los servicios a partir de múltiples fuentes. Esto permite visualizar, por ejemplo, un evento de despliegue en un servicio y la cantidad de mensajes de error generados por éste. La otra necesidad se relaciona con las limitaciones del servicio de monitoreo Zabbix. 
+
+En la Dirección se utiliza el software Zabbix como servicio de monitoreo. El mismo ha demostrado ser una herramienta fiable y de buen desempeño para monitorear las métricas básicas de los servicios tales como la carga, el uso de memoria y la disponibilidad. Cuenta con un módulo de alertas que notifica a los equipos responsables ante cualquier eventualidad.
+
+Las limitaciones de Zabbix se ponen en evidencia cuando se requiere trabajar con métricas de más alto nivel. Si bien el mismo permite utilizarlas, su configuración es muy compleja, impactando en la mantenibilidad del servicio. Como ejemplo de este tipo de métricas podemos citar: número de usuarios conectados a un servicio, cantidad de transacciones registradas, códigos de respuesta HTTP de un servicio o utilización de la memoria \textit{heap} dentro de la máquina virtual de Java.
+
+\subsubsection{Arquitectura}
+
+La solución implementada como servicio de métricas consta de tres componentes. El primero es una base de datos de series de tiempo (time-series database)\footnote{ Una base de datos de series de tiempo es un tipo de base de datos especializada en el almacenamiento de datos que evolucionan con el tiempo. } encargada de recibir las mediciones, almacenarlas, y ofrecer una interfaz programática (API) para su consulta. El segundo componente es una interfaz de visualización de datos provenientes de múltiples fuentes. El tercer componente de esta arquitectura es un \textit{agente} que se ejecuta en las instancias y se encarga de recopilar y enviar las métricas hacia el servidor de base de datos. 
+
+Tal como fue implementado, el servicio de métricas se limita a funcionar como complemento de los servicios de observabilidad existentes, permitiendo generar tableros de visualización con métricas de diversos orígenes. La arquitectura resultante tiene ciertas funcionalidades duplicadas, pero se deja como trabajo a futuro la racionalización de la misma. En la Figura 6.3 se presenta un diagrama de la arquitectura del servicio de métricas.
+
+\subsubsection{\includegraphics[width=5.35in,height=4.42in]{img_11.png}
+}
+
+\textit{Figura 6.3. Arquitectura del nevo servicio de métricas y otros servicios relacionados. En cada servicio se ejecutan tres agentes: Telegraf (métricas de alto nivel), Filebeat (registros) y Zabbix (métricas básicas). Los agentes envían la información recolectada a InfluxDB, Graylog y Zabbix, respectivamente. Grafana permite la visualización de los datos provenientes de los tres servicios en forma simultánea.}
+
+\subsubsection{Base de datos de series de tiempo}
+
+Para la implementación de la base de datos de series de tiempo se consideraron los ofrecimientos de Prometheus\footnote{ \href{https://prometheus.io/}{https://prometheus.io/} } e InfluxDB\footnote{ \href{https://www.influxdata.com/}{https://www.influxdata.com/} }. Si bien ambos ofrecen funcionalidades similares, se optó por la implementación de InfluxDB debido a su mejor capacidad para el manejo de datos textuales\footnote{ \url{https://prometheus.io/docs/introduction/comparison/\#prometheus-vs-influxdb}{https://prometheus.io/docs/introduction/comparison/\#prometheus-vs-influxdb} } así como su simplicidad de instalación y configuración.
+
+La implementación se efectuó escribiendo el código Ansible necesario y desplegando el servicio en la infraestructura. Al tratarse de un nuevo tipo de base de datos, fue necesario codificar un script para efectuar el proceso de backup, de acuerdo a la política de resguardo de datos de la Dirección.
+
+\subsubsection{Visualización}
+
+Como servicio de visualización se adoptó el software Grafana\footnote{ \href{https://grafana.com/}{https://grafana.com/} }, una herramienta orientada a la creación de tableros (dashboards) que permiten visualizar datos provenientes de distintas fuentes, entre los que se incluyen Zabbix, InfluxDB y Graylog\footnote{ Estrictamente, Grafana no utiliza Graylog como origen de datos, sino Elasticsearch, el motor de indexación y búsqueda utilizado por Graylog como \textit{backend}.}. La decisión de utilizar Grafana frente a otras alternativas se basó en el hecho que el equipo de infraestructura cuenta con experiencia previa en su utilización.
+
+El aprovisionamiento del servicio se efectuó utilizando Ansible y Docker Compose, guardando el código respectivo en un repositorio de GitLab.
+
+En la Figura 6.4 se muestra un tablero en utilización que muestra métricas obtenidas de diversas fuentes.
+
+\includegraphics[width=6.5in,height=4.06in]{img_12.png}
+
+
+\textit{Figura 6.4. Ejemplo de un tablero de visualización de Grafana. La fila superior muestra las métricas del servicio HTTP obtenidas del servidor de frontend. La fila del medio muestra las métricas obtenidas desde la instancia. Los gráficos de la fila inferior se obtienen desde el sistema de monitoreo Zabbix y también del  nuevo servicio de métricas.}
+
+\subsubsection{Agente}
+
+Se configuró en las instancias el software Telegraf, un agente para la recolección y envío de métricas provisto por los desarrolladores de InfluxDB. Este agente se encarga de recolectar las métricas de alto nivel y enviarlas a la base de datos InfluxDB. La configuración se realizó editando el código del rol Ansible que contiene la configuración básica de todas las instancias de la infraestructura. De este modo, el agente puede habilitarse de manera sencilla en todas las instancias.
+
+%% \subsubsection{Visibilización de las operaciones}
+
+%% Uno de los objetivos
+
+%% A modo de prueba se generaron gráficas que combinan el estado de los servicios con marcadores de despliegue en la línea de tiempo:
+
+%% \begin{itemize}
+%% \item Histograma de respuestas HTTP del servicio web, diferenciando según rangos de los códigos de error: 200-299 (OK), 300-399 (redirección), 400-499 (error en el cliente), y 500-599 (error en el servidor).
+%% \item Utilización de memoria y CPU del servicio.
+%% \item Histograma de los mensajes de log del servicio clasificados según gravedad (debug, info, warning, error).
+%% \end{itemize}
+%% En las Figuras 1 y 2 se pueden visualizar ejemplos de las gráficas obtenidas. 
+
+%% \begin{tabular}{|l|}
+%% \hline
+%% \includegraphics[width=6.3in,height=3.42in]{img_13.png}
+
+
+%% Figura 1. Ejemplo de estado del servicio HTTP con un marcador de despliegue.. \\ \hline
+%% \end{tabular}
+%% %% \begin{tabular}{|l|}
+%% %% \hline
+%% %% \includegraphics[width=6.34in,height=2.8in]{img_14.png}
+
+
+%% %% Figura 2. Tiempo de respuesta del servicio HTTP.
+
+%% %% Con el objetivo
+
+%% %% La solución a este requerimiento involucra dos aspectos principales:
+
+%% %% \begin{enumerate}
+%% %% \item Guardar registro de las operaciones efectuadas.
+%% %% \item Generar gráficas que permitan visualizar las operaciones junto con las demás métricas de los servicios. 
+%% %% \end{enumerate}
+%% %% Esta posibilidad fue descartada para evitar complejizar la arquitectura, y en cambio se decidió registrar las operaciones en un archivo de log específico, el cual es recolectado y publicado en el servidor de logs central.
+
+%% %% La implementación implicó modificar los scripts de operaciones, agregando código que registra cada ejecución en una ubicación predeterminada. También se modificó la configuración del agente Filebeat para que envíe estos registros al servidor de logs central. \\ \hline
+%% %% \end{tabular}
+%% \subsection{Consola de operaciones}
+
+%% Para la implementación de una consola de operaciones, se evaluaron las herramientas RunDeck y StackStorm.
+
+%% \begin{itemize}
+%% \item El funcionamiento de RunDeck se organiza en torno a la “Ejecución” de “Trabajos” en “Nodos”, respetando un esquema de permisos y guardando registro de las acciones ejecutadas por cada usuario. Los “Trabajos” se pueden parametrizar con variables, lo cual permite ejecutar scripts de forma segura y controlada. La interfaz de Rundeck es amigable e intuitiva, pero también tiene grandes falencias. Por ejemplo, para la definición de un nuevo nodo se debe generar un archivo XML y cargarlo mediante la interfaz gráfica. Esta falencia fue determinante para decidir que Rundeck no se ajusta a las necesidades de la Organización.
+%% \item Por otro lado, la funcionalidad de StackStorm se orienta a ejecutar “Acciones” como respuesta ante “Eventos” de diversos tipos, tales como un mensaje en un canal de chat o un disparador/alerta del sistema de monitoreo. Si bien permite ejecutar comandos como una acción manual, ésta no es su funcionalidad principal.
+%% \end{itemize}
+%% En las pruebas efectuadas se ha determinado que tanto RunDeck como StackStorm son herramientas con mucho potencial para avanzar en el camino de la automatización de las operaciones. Sin embargo, su integración y utilización en el entorno actual de la Organización resultó ser demasiado compleja en ambos casos. Este riesgo estaba contemplado en la Propuesta del Proyecto presentada oportunamente.
+
+%% Ante esta situación, se ha determinado que, por el momento, resulta conveniente la utilización de las pipelines de GitLab para efectuar operaciones sobre los servicios. Esta alternativa aprovecha la infraestructura actual, por lo que no requiere configuración adicional más allá de la codificación de los trabajos manuales dentro de las pipelines de cada proyecto.
+
+%% \section{7 Conclusiones}
+
+%% En el presente Informe se describió el trabajo realizado para la implementación de prácticas DevOps en la DIPT. El resultado alcanzado evidencia la generación de una cultura más uniforme entre los equipos y los beneficios de la automatización.
+
+%% Quizá la principal falencia del Proyecto fue su desarrollo en torno a una estructura rígida de tareas a realizar, fechas límite y entregables. Se reconoce asimismo que esta estructura está completamente justificada dada la naturaleza del Proyecto. Como aprendizaje, se reconoce que cualquier proyecto de mejora debe fluir de acuerdo a las capacidades de la Organización, ya que de otro modo la percepción de mejora se convierte en una de imposición o, en el mejor de los casos de requerimiento.
+
+%% queda trabajarlo de manera mas comprometida
+
+%% planificada 
+
+%% algunos ejemplos de casos de éxito
+
+%% no se termino de adoptar ci/cd - vuelta atras
+
+%% beneficios de la automatizacion
+
+%% A modo de revisión se consideró oportuno describir el estado inicial de los servicios involucrados y contrastarlo con el estado alcanzado luego de las implementaciones realizadas.
+
+%% \subsection{Situación inicial}
+
+%% Respecto de la infraestructura, se puede afirmar que al comienzo del Proyecto:
+
+%% \begin{itemize}
+%% \item Se contaba con configuración como código Ansible para las instancias. El equipo de Infraestructura se ocupaba de crear instancias y aprovisionar la configuración ejecutando comandos manuales.
+%% \item La configuración de los servicios de backup,  monitoreo y recolección de logs de las instancias eran tareas realizadas por el equipo de Infraestructura, con un cierto grado de automatización.
+%% \item Se configuraban los frontends web para los diferentes servicios editando manualmente la configuración de los servidores nginx.
+%% \end{itemize}
+%% En lo que refiere al desarrollo, al comienzo del Proyecto:
+
+%% \begin{itemize}
+%% \item El código de los servicios se guardaba en repositorios SVN, separado de la configuración de la infraestructura.
+%% \item Se utilizaba un esquema de gestión de versiones secuencial, alineado con las tareas de cada sprint.
+%% \item La compilación, testing y publicación al repositorio de artefactos se efectuaba desde la máquina del desarrollador.
+%% \item Los desarrolladores contaban con scripts para efectuar actualizaciones de versión y ejecución de scripts SQL en las instancias.
+%% \item Cualquier modificación en la configuración de las instancias debía solicitarse mediante tickets al equipo de infraestructura.
+%% \item Los desarrolladores contaban con un servicio de agregado de logs al que debían acceder mediante una interfaz de línea de comandos.
+%% \end{itemize}
+%% \subsection{Situación actual - DevOps}
+
+%% \begin{itemize}
+%% \item Tanto el código como la configuración de los servicios se encuentran en el mismo repositorio Git.
+%% \item El equipo de Desarrollo cuenta con herramientas que le permiten modificar la configuración de las instancias y aprovisionarlas utilizando una interfaz web para Ansible (AWX).
+%% \item El servicio AWX permite gestionar incluso la creación de instancias y la configuración de los servicios de backup, monitoreo y agregado de logs.
+%% \item La configuración de los frontends (publicación de los servicios) se efectúa de manera automática escribiendo la información necesaria para el direccionamiento como parte de la definición de cada servicio.
+%% \item Los servicios cuentan con integración continua, la cual se encarga de ejecutar permanentemente procesos de validación, compilación, testeo y publicación de los artefactos sin intervención necesaria por parte de los desarrolladores.
+%% \item La utilización de la integración continua impone un flujo de trabajo en Git de ramas de vida corta. Estas ramas se orientan conceptualmente a la resolución de tareas, y el concepto de “cierre de versión” pasa a ser un hito interno que se deja a criterio de cada equipo de desarrollo.
+%% \item Se cuenta con una herramienta Web para la visualización y búsqueda de logs.
+%% \item Se cuenta con una interfaz gráfica de visualización que integra múltiples fuentes, tales como eventos de despliegue, variables de estado del servicio y agregados extraídos de los logs.
+%% \item Se cuenta con una herramienta de comunicación ChatOps simplifica la comunicación interna y canaliza las alertas ante eventos de monitoreo o de gestión del servicio relevantes.
+%% \item Notablemente, no se implementado una consola de operaciones. Esta funcionalidad se implementará a futuro como parte de las pipelines de CI/CD de cada servicio.
+%% \end{itemize}
+%% %% \subsection{Trabajos futuros}
+
+%% %% \begin{itemize}
+%% %% \item Implementar consola de operaciones (era un riesgo que se materializó)
+%% %% \end{itemize}
+%% %% \section{Bibliografía}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[1]	J. Humble y D. Farley, \textit{Continuous Delivery: Reliable Software Releases Through Build, Test, and Deployment Automation}, 1st ed. Addison-Wesley Professional, 2010.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[2]	\textit{Adopción del Software Libre en el ámbito de la U.N.L.} 2003.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[3]	G. Kim, P. Debois, J. Willis, J. Humble, y J. Allspaw, \textit{The DevOps handbook: how to create world-class agility, reliability, \& security in technology organizations}, First edition. Portland, OR: IT Revolution Press, LLC, 2016.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[4]	J. P. Womack y D. T. Jones, \textit{Lean thinking: banish waste and create wealth in your corporation}, 1st Free Press ed., rev.Updated. New York: Free Press, 2003.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[5]	E. M. Goldratt y J. Cox, \textit{The goal: a process of ongoing improvement}, 3rd rev. ed., 20th anniversary ed. Great Barrington, MA: North River Press, 2004.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[6]	T. Ōno, \textit{Toyota production system: beyond large-scale production}. Cambridge, Mass: Productivity Press, 1988.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[7]	P. M. Senge, \textit{The fifth discipline: the art and practice of the learning organization}, 1. Currency paperback ed. New York, NY: Currency Doubleday, 1994.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[8]	“¿Qué es DevOps? - Amazon Web Services (AWS)”, \textit{Amazon Web Services, Inc. }https://aws.amazon.com/es/devops/what-is-devops/ (consultado jun. 23, 2020).}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[9]	K. Beck \textit{et al.}, “Manifesto for agile software development”, 2001. https://agilemanifesto.org/.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[10]	J. Allspaw y P. Hammond, “10+ deploys per day: Dev and ops cooperation at Flickr”, 2009.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[11]	M. Rother, \textit{Toyota Kata.} New York, USA: McGraw-Hill Professional Publishing, 2009.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[12]	B. Beyer, N. R. Murphy, D. K. Rensin, K. Kawahara, y S. Thorne, \textit{The Site Reliability Workbook: Practical Ways to Implement SRE}. O’Reilly, 2018.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[13]	G. Kim, K. Behr, y K. Spafford, \textit{The phoenix project: A novel about IT, DevOps, and helping your business win}. IT Revolution, 2014.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[14]	“The Three Ways: The Principles Underpinning DevOps”, \textit{IT Revolution}, ago. 22, 2012. https://itrevolution.com/the-three-ways-principles-underpinning-devops/ (consultado jun. 13, 2019).}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[15]	B. Beyer, C. Jones, J. Petoff, y N. R. Murphy, \textit{Site Reliability Engineering: How Google Runs Production Systems}. O’Reilly, 2016.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[16]	“The Relationship Between Dev-Ops And Continuous Delivery: A Conversation With Jez Humble Of ThoughtWorks”, \textit{Forrester}, sep. 09, 2011. https://go.forrester.com/blogs/11-09-09-the_relationship_between_dev_ops_and_continuous_delivery_a_conversation_with_jez_humble_of_thought/ (consultado jun. 21, 2019).}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[17]	M. Rother y J. Shook, “Learning to See”. jun. 1999.}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[18]	M. Fowler, “Blue Green Deployment”, \textit{martinfowler.com}. https://martinfowler.com/bliki/BlueGreenDeployment.html (consultado ago. 24, 2020).}
+
+%% %% \href{https://www.zotero.org/google-docs/?RSsjOX}{[19]	“CI/CD Tools Comparison: Jenkins, GitLab CI, Buildbot, Drone, and Concourse”, \textit{DigitalOcean}. https://www.digitalocean.com/community/tutorials/ci-cd-tools-comparison-jenkins-gitlab-ci-buildbot-drone-and-concourse (consultado sep. 09, 2019).}
+
+
+
+%% %% \end{document}

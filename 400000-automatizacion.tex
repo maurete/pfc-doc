@@ -1,0 +1,185 @@
+\section{4 Automatización de la infraestructura}
+
+El primer aspecto trabajado en el proyecto fue la automatización de la infraestructura, entendida en general como la implementación de servicios que reemplacen las operaciones manuales. Para alcanzar la automatización fue necesario el despliegue de nuevos servicios, la codificación de nuevos “roles” (módulos o código reutilizable) en Ansible, y la adaptación de la infraestructura para dar soporte a la funcionalidad requerida.
+
+La implementación se llevó a cabo en dos etapas. Al principio del proyecto se puso en servicio la interfaz web de Ansible y se codificaron los roles que reemplazan las operaciones manuales de infraestructura. Asimismo, hacia el final del desarrollo del proyecto se trabajó la automatización de los servidores de frontend y la actualización de los repositorios de código y de artefactos (GitLab y Nexus).
+
+\subsection{Interfaz web para Ansible}
+
+Ya se ha expresado que el equipo de infraestructura utiliza la herramienta Ansible para la configuración y el mantenimiento de la infraestructura de varios servicios. Las configuraciones de las instancias virtuales de los servicios se escriben como código un repositorio Git interno. A la hora de aplicar la configuración de un servicio, se ejecuta Ansible desde la línea de comandos y el software se conecta a las instancias vía SSH y aplica la configuración definida en el código.
+
+El objetivo principal de la implementación de una interfaz Web para Ansible es permitir la ejecución del código Ansible por parte de todos los integrantes de la DIPT y no sólo de parte del equipo de Infraestructura. La interfaz web permite además transparentar la gestión de la configuración de los servicios, con una estructura de permisos y conservando registro de los cambios aplicados sobre cada servicio.
+
+El software elegido como interfaz web para Ansible fue AWX\footnote{ https://github.com/ansible/awx}. Se trata de la versión libre del producto comercial Ansible Tower, ofrecido por los mismos desarrolladores de Ansible. La implementación se realizó a partir del código Ansible provisto por los autores de AWX, el cual fue expandido para incluir la configuración de las contraseñas y claves SSH utilizadas internamente en la DIPT, la autenticación y autorización integrada al servicio LDAP, y la configuración automática de los proyectos a partir del código especificado en el repositorio de AWX.
+
+Además del despliegue del servicio AWX, fue necesario configurar un usuario SSH con permisos específicos en todas las instancias “controladas” por AWX. Se modificaron los \textit{templates} de creación de instancias virtuales para que esta configuración sea incluida automáticamente en todos los nuevos servicios. También fue necesaria la modificación de reglas de firewall para que AWX pueda conectarse a las instancias vía SSH.
+
+Si bien la interfaz de AWX no es de las más amigables, el lanzamiento de un nuevo trabajo resulta suficientemente intuitivo. Por ejemplo, si se desea aplicar un cambio en el servicio \textit{hermes} en el entorno de \textit{producción}, el responsable del servicio puede resolver esta tarea siguiendo la secuencia de pasos:
+
+\begin{enumerate}
+\item Editar la configuración en el repositorio Git del servicio.
+\item Acceder a AWX e ingresar a la sección \textit{Plantillas}.
+\item Ubicar la plantilla \textit{hermes\_playbook} y presionar el botón de lanzamiento.
+\item Especificar los datos solicitados en el diálogo de lanzamiento (Figura 4.1), en particular la \textit{rama} de Git del código donde se han efectuado los cambios, y el \textit{límite} que determina el entorno sobre el cual se aplicará la configuración.
+\item Continuar y esperar a que se complete la configuración.
+\end{enumerate}
+\includegraphics[width=4.77in,height=2.88in]{img_1.png}
+
+
+\textit{Figura 4.1 Diálogo de lanzamiento de la configuración de un servicio en AWX.}
+
+En la Figura 4.2 se puede ver la pantalla principal de AWX con un vistazo general que incluye las “plantillas” y los “trabajos” aplicados recientemente. En la terminología AWX, una plantilla refiere al código Ansible que define la configuración para un servicio, y un trabajo es el registro generado al momento de ejecutar esta configuración sobre un entorno específico de un servicio.
+
+En la Figura 4.3 se observa la vista con el registro de un trabajo. Allí se detalla, entre otros datos, el resultado de la ejecución, la persona que lanzó el trabajo, el número de revisión del código y el entorno sobre el cual fue aplicado.
+
+\includegraphics[width=6.5in,height=4.09in]{img_2.png}
+
+
+\textit{Figura 4.2 Pantalla principal de AWX.}
+
+\includegraphics[width=6.5in,height=4.09in]{img_3.png}
+
+
+\textit{Figura 4.3 Registro de un trabajo de AWX.}
+
+\subsection{Automatización de operaciones}
+
+En el análisis del flujo de valor del proceso de creación de un nuevo servicio se puso en evidencia la necesidad de automatizar ciertas operaciones de la infraestructura. Para resolver este problema se escribió código Ansible en forma de dos \textit{roles}, denominados \textit{bootstrap} y \textit{zabbix-host}. Estos roles, al ser incorporados al código que gestiona la configuración de los servicios (actuales o nuevos), permiten efectuar las operaciones que antes se realizaban en forma manual.
+
+Además de la codificación de los roles, se efectuaron los siguientes cambios para dar soporte a la automatización en la infraestructura:
+
+\begin{itemize}
+\item En GitLab, se otorgaron permisos para poder crear proyectos a todos los miembros de la Dirección, y se otorgó en general acceso a todos los repositorios internos.
+\item Se agregó soporte para la ejecución de los scripts de administración en modo no interactivo.
+\item Se crearon usuarios específicos en los distintos servicios para autorizar las interacciones automáticas.
+\item Se habilitaron reglas de firewall para permitir la comunicación automatizada.
+\end{itemize}
+El rol \textit{bootstrap} está diseñado para ser invocado al principio de la ejecución y se encarga del registro de entradas en los servidores DNS y DHCP, de la creación/modificación de la instancia virtualizada y asegura la configuración del servicio de backup. Al ser ejecutado, el rol realiza internamente las siguientes tareas:
+
+\begin{itemize}
+\item Se conecta al servidor utilizado para la administración de la infraestructura (\textit{cerbero}).
+\item En este servidor, ejecuta comandos que verifican la existencia de las entradas DNS y DHCP requeridas para la instancia.
+\item Si las entradas no existen, invoca el comando para crearlas y luego ejecuta otro script que propaga los cambios hacia los servidores DNS Y DHCP.
+\item Se conecta vía API al servidor que administra las instancias virtualizadas (\textit{copernico} o \textit{flanders}).
+\item Verifica en forma programática que la instancia existe y que sus recursos reflejan lo especificado en el código.
+\item Si es necesario, mediante llamadas a la API crea la instancia o modifica los recursos asignados a la misma.
+\item Se conecta al servidor GitLab para descargar el inventario del servicio de backup.
+\item Si es necesario, agrega la instancia al servicio de backup y dispara una reconfiguración del mismo.
+\end{itemize}
+A diferencia de \textit{bootstrap}, el rol \textit{zabbix-host} está diseñado para ser ejecutado al final del \textit{playbook} (el guión de configuración aplicado por Ansible), lo cual le permite detectar qué servicios han sido instalados en la instancia, y configura el servicio de monitoreo con opciones preestablecidas para cada tipo de servicio. La interacción con el servicio de monitoreo se realiza mediante llamadas a la API del mismo.
+
+Para ilustrar la ganancia en productividad de la implementación de estos roles, antes era necesario efectuar las siguientes tareas manuales para crear un nuevo servicio:
+
+\begin{itemize}
+\item Conectarse al servidor de administración y actualizar el código SVN.
+\item Ejecutar el script para registrar las entradas DNS y DHCP.
+\item Ejecutar el script para recargar el estado de los servicios DNS y DHCP.
+\item Conectarse al servidor principal del cluster de virtualización.
+\item Ejecutar comandos de creación de la instancia, revisando las opciones correctas según los recursos solicitados para el servicio.
+\item En la PC de trabajo actualizar el código Git donde se administra el servicio de backup.
+\item Agregar entrada en el inventario de backup para la instancia recién creada.
+\item Aplicar la configuración del servicio de backup ejecutando Ansible mediante la línea de comandos.
+\item En el servidor de administración, ejecutar el script para la configuración del monitoreo de la instancia.
+\end{itemize}
+Luego de la implementación de los roles de automatización, todas las acciones anteriores se reduce a escribir algunas líneas en el código Ansible que gestiona el servicio:
+
+\begin{verbatim}
+bootstrap_host_network: sdmz1
+bootstrap_ganeti_cluster: copernico.intranet
+bootstrap_instance_disk_size: 25600
+bootstrap_instance_memory: 8192
+bootstrap_instance_vcpus: 8
+bootstrap_instance_os_type: stretch+default
+bootstrap_instance_pnode: saturno.intranet
+bootstrap_instance_snode: triton.intranet
+zabbix_host_macros:
+  URL: https://servicios.unl.edu.ar/mesadeentradas/
+\end{verbatim}
+
+Este código reemplaza las acciones manuales previas, eliminando incluso la necesidad de intervención del equipo de infraestructura. Junto con la implementación de la interfaz web para Ansible, esta automatización brinda una plataforma de “autoservicio” para el aprovisionamiento de la infraestructura para todos los miembros de la DIPT. Con todo esto se evitan errores de las operaciones manuales y se eliminan tiempos de espera.
+
+\subsection{Servidores de frontend}
+
+Los servidores de frontend son los encargados de recibir las peticiones HTTP(S) externas y direccionar el tráfico al servicio interno correspondiente, siguiendo una serie de reglas. La necesidad de cambiar el proceso de configuración se puso en evidencia en el análisis del flujo de valor para la creación de un nuevo servicio. El mismo resultaba tedioso y fundamentalmente no era escalable, lo cual derivó en la búsqueda de una solución alternativa.
+
+Una forma de atacar el problema hubiera sido configurando una tubería de CI/CD para publicar automáticamente los cambios en la configuración. Esto hubiera permitido automatizar la tarea de \textit{aplicar} los cambios, aunque no se hubiera resuelto el problema de escalabilidad y mantenibilidad del servicio, ya que aún resultaría necesario escribir la configuración de los servidores en su propio repositorio y en su lenguaje específico.
+
+La solución implementada consistió en un cambio radical en la arquitectura, creando un nuevo servicio de frontend capaz de configurarse a sí mismo a partir del estado actual de los servicios de software ofrecidos en la Dirección. El seguimiento de este \textit{estado actual}, necesario para la auto-configuración de los frontends, se realiza mediante otro servicio denominado Consul.
+
+Con esta implementación se eliminaron los pasos de editar la configuración del frontend, conectarse al servidor y efectuar un reinicio manual, tareas que requerían de los permisos de un administrador de sistemas. Tal como ocurrió con la creación del rol \textit{bootstrap}, ahora basta con editar algunas líneas en el código Ansible que define la configuración del servicio.
+
+Toda la nueva configuración se escribió como código y se aprovisionó mediante Ansible.
+
+\subsubsection{Servicio Consul}
+
+Consul\footnote{ https://www.consul.io/} es un sistema distribuido que provee interconexión entre servicios de manera independiente de la infraestructura subyacente. Cada nodo ejecuta un \textit{agente} que publica los servicios ofrecidos por el mismo y se encarga de verificar el estado de los servicios.
+
+Los agentes se comunican con los \textit{servidores} de Consul, los cuales funcionan en un esquema de alta disponibilidad que asegura un estado consistente incluso cuando hay fallas en algún servidor. Los servidores mantienen un \textit{catálogo}, el cual agrega la información suministrada por los agentes. La información contenida en el catálogo incluye los servicios disponibles, los nodos que ofrecen estos servicios y el estado actual de los mismos. Otros componentes de la infraestructura (tal es el caso de los servidores de frontend) pueden consultar el catálogo mediante una API, lo que les permite descubrir los servicios y nodos disponibles.
+
+La implementación de Consul abarcó dos aspectos. Por un lado, se creó el \textit{servicio Consul}, que incluye la configuración de las instancias que contienen los servidores de Consul. Por el otro, fue necesario modificar el código Ansible que sirve de base para todos los servicios, para que éstos incorporen el \textit{agente} de Consul como parte de su configuración básica.
+
+La implementación del servicio (los servidores Consul) se llevó a cabo siguiendo las recomendaciones de la documentación oficial. Se creó un grupo de cinco servidores distribuidos en las diferentes subredes de la infraestructura para asegurar mayor disponibilidad del servicio ante fallas de conectividad.
+
+\subsubsection{Servicio de frontend}
+
+Para el nuevo servicio de frontend se utilizó el software Traefik\footnote{ https://containo.us/traefik/}, un servidor de proxy reverso que tiene la capacidad inspeccionar el estado de los servicios en Consul y ajustar su propia configuración en consecuencia. Traefik también se encarga de la generación y renovación automática de los certificados TLS de Let’s Encrypt, una tarea que antes era gestionada en forma semi-automática por el equipo de infraestructura.
+
+Dado que Traefik no ofrece soporte para funcionar como servidor de contenido HTTP(S) básico, en las instancias de frontend se instaló también un servidor Nginx, que se encarga de servir contenido estático tal como las páginas de error.
+
+El código Ansible que configura el servicio de frontend fue diseñado de modo que los cambios en la infraestructura tengan el menor impacto posible sobre la disponibilidad. Esto se logró mediante la configuración de un servicio Traefik secundario, el cual atiende las peticiones mientras se migra la configuración del servicio principal.
+
+\subsubsection{Proceso de migración}
+
+El servicio de frontend consta de tres instancias, cada una de las cuales atiende el tráfico en una dirección IP diferente. Esto es así debido a las particularidades de la infraestructura utilizada por la Dirección. Al tratarse de un servicio crítico, durante la migración se conservó en todo momento la posibilidad de revertir los cambios de manera inmediata. Esto se conoce como despliegue azul verde (\textit{blue green deployment}) \href{https://www.zotero.org/google-docs/?WMXTmt}{[18]}.
+
+Antes de comenzar con la migración de los frontends, se configuró el servicio Consul y se verificó el correcto funcionamiento del mismo. En términos generales, la migración de cada servicio de frontend se realizó siguiendo la secuencia de pasos explicada a continuación. En todos los casos, el entorno \textit{verde} hace referencia al nuevo servicio (con Traefik+nginx), y el entorno azul al servicio de frontend anterior (nginx con configuración estática). La configuración de un frontend en el entorno azul se muestra en la Figura 4.4.
+
+\begin{enumerate}
+\item Se creó una nueva instancia de frontend (entorno verde), con una regla por defecto para delegar todo el tráfico al frontend anterior (entorno azul).
+\item Se modificaron las reglas de firewall para direccionar el tráfico del puerto 80 (HTTP) al entorno verde. Esto permitió la generación automática de nuevos certificados HTTPS para el entorno verde.
+\item Se validaron los certificados generados desde la estación de trabajo, forzando la conexión a través del entorno verde. Una vez generados los certificados HTTPS, se configuró el firewall para direccionar el tráfico del puerto 443 (HTTPS, por donde se publica la gran mayoría de los servicios) al entorno verde.
+\item Para cada servicio correspondiente al frontend, de a uno por vez, se instaló y configuró el agente Consul. De este modo se logró publicar el servicio en forma directa a través del entorno verde. Se verificó el acceso correcto de cada servicio (Figura 4.5).
+\item Una vez migrados todos los servicios, se eliminó el entorno azul (Figura 4.6).
+\end{enumerate}
+\begin{tabular}{|l|}
+\hline
+\includegraphics[width=4.35in,height=3.46in]{img_4.png}
+
+
+\textit{Figura 4.4. Configuración inicial de un frontend. La información de ruteo del tráfico HTTP(S) es estática y se almacena en un repositorio SVN. Cada actualización de reglas requiere la edición de los archivos de configuración y una recarga manual.} \\ \hline
+\end{tabular}
+\begin{tabular}{|l|}
+\hline
+\includegraphics[width=4.5in,height=3.54in]{img_5.png}
+
+
+\textit{Figura 4.5. Proceso de migración mediante una estrategia de despliegue azul verde. El nuevo frontend se encuentra configurado y rutea el tráfico en forma directa a los servicios registrados en Consul.} \\ \hline
+\end{tabular}
+\includegraphics[width=4.5in,height=3.54in]{img_6.png}
+
+
+\textit{Figura 4.6. Servicio de frontend de configuración dinámica. Los servicios se identifican a sí mismos ante los servidores Consul. Los cambios en los servicios se propagan de manera automática y los frontends actualizan sus reglas de ruteo sin reiniciarse.}
+
+\subsection{Actualización de los repositorios}
+
+Como parte de las tareas de adecuación de la infraestructura, se actualizaron el repositorio de código GitLab y el repositorio de artefactos Nexus. Ninguno de los dos servicios contaba con la configuración escrita como código Ansible, ya que su implementación fue anterior a la adopción de esta herramienta.
+
+\subsubsection{Repositorio de código GitLab}
+
+Se decidió actualizar el repositorio de código GitLab para corregir vulnerabilidades y aprovechar las nuevas características ofrecidas por sus desarrolladores. Como parte de estas actualización se implementó además el código Ansible necesario para gestionar la infraestructura del servicio. Este código permitió la configuración del servicio de \textit{runners} que es utilizado para la ejecución de los procesos automáticos de integración y entrega continuas.
+
+Se actualizó el software desde la versión 9.4 hasta la 13.1. Para aplicar las actualizaciones se utilizaron las herramientas provistas por el fabricante. El proceso se realizó de manera incremental, migrando entre versiones mayores consecutivas hasta alcanzar la versión actual. Durante las actualizaciones el servicio estuvo fuera de línea.
+
+\subsubsection{Repositorio de artefactos Nexus}
+
+El repositorio de artefactos Sonatype Nexus funcionaba en su versión 2, la cual no recibe más soporte por parte del desarrollador. El proceso fue más complejo que en el caso de GitLab, ya que la migración de datos entre las versiones 2 y 3 no es automática. La secuencia de pasos a continuación describen el proceso efectuado.
+
+\begin{itemize}
+\item El primer paso fue actualizar el servicio a la última versión de la serie 2. Para ello se escribió código Ansible, el cual fue probado en un entorno de test. Una vez ajustado el procedimiento, se aplicaron los cambios en el entorno de producción.
+\item El segundo paso fue escribir código Ansible para la configuración de la versión 3. Se aplicó este código de modo que ambas versiones funcionaran en la instancia en forma simultánea.
+\item Se realizó la migración entre versiones siguiendo el proceso explicado la documentación del desarrollador.
+\item Se eliminó la instalación correspondiente a la versión 2 y se ajustó el código Ansible para que utilice la vesión 3.
+\end{itemize}
+Una vez actualizado el repositorio, se descubrió que la nueva versión introdujo cambios incompatibles en su interfaz API. Por ello fue necesario corregir los scripts de operaciones que utilizan funcionalidades de esta interfaz.
+
+
