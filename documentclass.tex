@@ -1,17 +1,24 @@
-\documentclass[12pt,bibliography=oldstyle,DIV=12,parskip=half-]{scrreprt}
+\documentclass[
+  13pt,
+  bibliography=oldstyle,
+  DIV=12,
+  parskip=half-,
+  abstract=true]{scrreprt}
+
 \newif\iflatexml\latexmlfalse
-\usepackage{xstring}
-\newcommand{\includePrueba}[1]{\input{#1}}
-\newcommand{\includeFileOrFigure}[1]{%
-  \IfBeginWith{#1}{figures/}{%
-    \begin{figure}[H]
-      \figureStyle
-      \StrBefore[2]{#1}{/}[\temp]
-      \input{\temp/figure}
-      \caption{\captionStyle\protect\input{\temp/caption}}
-    \end{figure}
-  }{%
-      \StrSubstitute{#1}{.tex}{}[\temp]
-      \input{\temp}
-  }
-}
+
+%% \usepackage{xstring}
+%% \newcommand{\includePrueba}[1]{\input{#1}}
+%% \newcommand{\includeFileOrFigure}[1]{%
+%%   \IfBeginWith{#1}{figures/}{%
+%%     \begin{figure}[H]
+%%       \figureStyle
+%%       \StrBefore[2]{#1}{/}[\temp]
+%%       \input{\temp/figure}
+%%       \caption{\captionStyle\protect\input{\temp/caption}}
+%%     \end{figure}
+%%   }{%
+%%       \StrSubstitute{#1}{.tex}{}[\temp]
+%%       \input{\temp}
+%%   }
+%% }

@@ -1,0 +1,134 @@
+\chapter{7 Conclusión}
+
+En este Proyecto se ha trabajado en la implementación de prácticas
+DevOps en el ámbito de la Dirección de Informatización y Planificación
+Tecnológica (DIPT). Se integraron múltiples aspectos del trabajo de
+los equipos de desarrollo y de operaciones aportando a la generación
+de una cultura en común. Por otro lado, se pudo observar un incremento
+de la productividad y la simplificación de procesos aplicando
+automatización y herramientas adecuadas.
+
+La unificación de repositorios de código compartidos para los equipos
+de desarrollo y de operaciones demostró ser una herramienta de cambio
+cultural muy poderosa. Los desarrolladores obtienen una visión
+práctica de la manera en que se despliega la infraestructura para la
+puesta en servicio del software. El equipo de operaciones, por su
+parte, comprende que los equipos de desarrollo llevan adelante las
+obligaciones de la organización para con los clientes, y ajusta sus
+procedimientos en concordancia, para minimizar disrupciones provocadas
+por los cambios de infraestructura. Se observó el surgimiento de
+instancias de coordinación entre ambos equipos para la aplicación de
+cambios, lo que aporta a una conciencia global del estado de los
+servicios y la infraestructura.
+
+La automatización tuvo un impacto directo en la carga de trabajo del
+equipo de infraestructura. El tiempo liberado generó un incremento de
+la productividad y la capacidad de implementación de mejoras, lo cual
+incidió incluso en el desarrollo posterior del Proyecto. Las
+implementaciones complejas como la automatización del servicio de
+frontend se lograron en parte debido a la mayor disponibilidad de
+tiempo.
+
+Por otro lado, se concluye que el Proyecto no tuvo éxito en la
+implementación de tuberías de integración y entrega continuas. La
+implementación realizada nunca fue adoptada por completo por parte de
+los equipos de desarrollo. Las tuberías resultaron quizá demasiado
+complejas, en parte, debido a la intención de mantener la forma de
+trabajo de los equipos y no impactar su productividad. Por su parte,
+los equipos de desarrollo no perciben un beneficio en automatizar
+estas tareas.
+
+Se toma como aprendizaje que una futura implementación de CI/CD deberá
+ser un proceso gradual, con una implementación progresiva. Deberá ser
+parte de un proceso de mejora en el seno de los equipos de desarrollo,
+optimizando su flujo de trabajo y procedimientos conforme se avance en
+la automatización.
+
+Otro aprendizaje obtenido con el desarrollo del Proyecto fue que los
+cambios culturales llevan su tiempo. La estructura rígida de tareas a
+realizar, fechas límite y entregables -- completamente justificada
+dado el contexto y los objetivos del desarrollo del Proyecto --
+impactó negativamente en la capacidad de generar y consolidar una
+cultura, ya que se debía ``avanzar rápido'' para cumplir con las metas
+del Proyecto. Esto generó que en ciertos casos las mejoras fueran
+percibidas como un requerimiento o incluso como una imposición.
+
+Finalmente, las herramientas de observabilidad y comunicación han
+demostrado sus beneficios. Utilizando el servicio de métricas se ha
+logrado visibilizar y resolver problemas en los entornos productivos
+que de otro modo hubieran pasado inadvertidos. Por su parte, el
+servicio de chat resultó fundamental para la coordinación y el trabajo
+en equipo ante la imposición del trabajo remoto debido a la pandemia
+de coronavirus.
+
+A modo de revisión se consideró oportuno efectuar un repaso del estado
+inicial de la Dirección y compararlo con la situación actual. Al
+comienzo del Proyecto:
+
+\begin{itemize}
+\item El equipo de infraestructura se ocupaba de crear instancias y
+  aprovisionar la configuración ejecutando Ansible en la línea de
+  comandos.
+\item La configuración de los servicios de frontend, backup, monitoreo
+  y registros eran tareas manuales, facilitadas mediante scripts
+  específicos.
+\item El código fuente de los servicios se guardaba en repositorios
+  SVN separado de la configuración de la infraestructura.
+\item Cualquier modificación en la configuración de las instancias
+  debía solicitarse mediante tickets al equipo de infraestructura.
+\item Los desarrolladores contaban con un servicio de agregado de logs
+  al que debían acceder mediante una interfaz de línea de comandos.
+\end{itemize}
+En la actualidad,
+
+\begin{itemize}
+\item Los equipos de desarrollo cuentan con herramientas para la
+  creación y modificación de la infraestructura sin requerir la
+  intervención del equipo de infraestructura.
+\item El código y la configuración de los servicios se encuentran en
+  el mismo repositorio Git. Se han establecido para el trabajo
+  conjunto sobre los repositorios.
+\item La configuración de los servicios de frontend, backup, monitoreo
+  y registros han sido automatizadas por completo.
+\item Se cuenta con un servicio de integración y entrega continuas. Si
+  bien la adopción es baja, las implementaciones de referencia sirven
+  como ejemplos prácticos y facilitan la implementación cuando los
+  equipos de desarrollo así lo dispongan.
+\item Se cuenta con herramientas web para la visualización de
+  registros y métricas, facilitando la investigación de incidentes y
+  la medición del impacto de los cambios aplicados.
+\item Se cuenta con un servicio de chat que simplifica la comunicación
+  interna y canaliza las alertas y notificaciones ante eventos de
+  monitoreo o de gestión del servicio relevantes.
+\end{itemize}
+\section{Trabajos futuros}
+
+El trabajo realizado en este Proyecto marca sin lugar a dudas el
+comienzo hacia una Dirección más dinámica, adaptable y
+productiva. Resta aún mucho por hacer, y en este respecto se proponen
+los siguientes trabajos a futuro:
+
+\begin{itemize}
+\item Adoptar las tuberías de CI/CD en el desarrollo de los
+  servicios. Esta mejora deberá surgir dentro de los equipos de
+  desarrollo, con un entendimiento de las implicancias sobre la
+  metodología de trabajo y los beneficios esperables.
+\item Implementar un servicio para efectuar operaciones. Este servicio
+  deberá ofrecer la posibilidad de realizar aquellas operaciones no
+  relacionadas con la infraestructura, tales como la puesta en
+  mantenimiento de un servicio y la posibilidad de generar y restaurar
+  dumps de las bases de datos.
+\item Implementar servicios con alta disponibilidad. La
+  infraestructura actual es suficientemente dinámica y permite
+  gestionar servicios altamente disponibles.
+\item Adoptar la experimentación continua. Una vez que se cuente con
+  servicios altamente disponibles y tuberías de CI/CD, resultará
+  posible definir objetivos de nivel de servicio (SLOs) y trabajar con
+  despliegues verde azul, posibilitando experimentar con cambios en
+  los entornos productivos.
+\item Adoptar contenedores y microservicios. Los desarrollos
+  tecnológicos actuales tienden hacia la infraestructura definida por
+  software y la gestión orquestada de los servicios. Como primer paso
+  en este sentido se propone implementar la propuesta de ``doce
+  factores''\footnote{ https://12factor.net/es/}.
+\end{itemize}

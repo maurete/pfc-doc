@@ -1,154 +1,124 @@
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ../pfc/doc/conf/preconfig.tex
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-% define  \ifpdf {...} \fi to test for compilation with pdflatex.
-\newif\ifpdf
-\ifnum\pdfoutput<0
-\pdffalse\fi
-\ifnum\pdfoutput=0
-\pdffalse\fi
-\ifnum\pdfoutput>0
-\pdftrue\fi
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ../pfc/doc/conf/fuentes.tex
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
+
 \iflatexml\else
-\usepackage[T1]{fontenc}
+
+%% Fonts ----------------------------------------------------------------------
 
 % Linux Libertine
 \usepackage{libertine}
 
-% Linux Libertine
-\usepackage{libertinust1math}
+%% % TeX Gyre Heros (estilo Helvetica)
+%% \usepackage[scale=0.96]{tgheros}
 
-% TeX Gyre Heros
-%\usepackage[scale=0.96]{tgheros}
-
-% Inconsolata
-\usepackage[scaled=0.9]{zi4}
-
-% Para evitar clash de euler con koma-script
-\renewcommand{\tt}{\mathtt}
-
-% Source Sans Pro
-% \usepackage{sourcesanspro}
+%% % Source Sans Pro
+%% \usepackage{sourcesanspro}
+%% \usepackage{sourceserifpro}
 
 % Roboto
 \usepackage{roboto}
 
-% Bitstream charter en modo math
-% \usepackage[bitstream-charter]{mathdesign}
+%% % Fira Sans
+%% \usepackage{FiraSans}
+
+%% % Montserrat
+%% \usepackage{montserrat}
+
+% fontspec - tipografias otf/ttf con xetex/luatex
+\usepackage{fontspec}
+
+\defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+%% \setmainfont{Inter}
+%% \setsansfont{Inter}
+\setmonofont{Fira Mono}
+
+%% % Bitstream charter en modo math
+%% \usepackage[bitstream-charter]{mathdesign}
+
+% Para evitar clash de euler con koma-script
+\renewcommand{\tt}{\mathtt}
 
 \fi
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ../pfc/doc/conf/packages.tex
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% ===
-% === I18n / L10n
-% ===
-%
-% babel me da separación de sílabas para palabras en el idioma que le paso como
-%       argumento opcional.
-\usepackage[spanish,es-tabla,english]{babel}
-%
-%
-% inputenc define la codificación de caracteres del código fuente, acá utf8.
-\usepackage[utf8]{inputenc}
-%
-% ===
-% === Layout
-% ===
-%
-% relsize provee comandos para utilizar tamaños de fuente relativos
+
+% idiomas ---------------------------------------------------------------------
+
+%% % babel me da separación de sílabas para palabras en el idioma que le paso como
+%% %       argumento opcional. No compatible (creo) con xetex/luatex
+%% \usepackage[spanish,es-tabla,english]{babel}
+
+%% % inputenc define la codificación de caracteres del código fuente, acá utf8.
+%% % no usar con xetex/luatex (ya traen soporte nativo)
+%% \usepackage[utf8]{inputenc}
+
+% polyglossia similar a babel pero compatible con xetex/luatex
+\usepackage{polyglossia}
+\setdefaultlanguage{spanish}
+
+% layout ----------------------------------------------------------------------
+
+% relsize provee comandos para tamaños de fuente relativos
 \usepackage{relsize}
-%
-% ===
-% === Gráficos
-% ===
-%
-% pst-pdf me permite usar PSTricks con pdflatex. Necesito cargarlo sólo si está
-%         definida la variable pdf, por eso está entre \ifpdf ... \fi
-%\ifpdf\usepackage{pst-pdf}\fi
-%
+
+% gráficos --------------------------------------------------------------------
+
+%% % pst-pdf me permite usar PSTricks con pdflatex. Necesito cargarlo sólo si está
+%% %         definida la variable pdf, por eso está entre \ifpdf ... \fi
+%% \ifpdf\usepackage{pst-pdf}\fi
+
 % color me permite usar colores en el documento.
 \usepackage[dvipsnames,svgnames,tables]{xcolor}
-%
+
+% colortbl permite cambiar colores en tabulars
+\usepackage{colortbl}
+
 % graphicx me da el comando \includegraphics para insertar imágenes (?)
 \usepackage{graphicx}
-%
-% pstricks es un conjunto de macros basadas en PostScript para TeX, en
-%          castellano: me da un entorno pstricks y comandos que uso dentro de
-%          éste, que me sirven para dibujar figuras/diagramas/etc de manera
-%          relativamente simple.
-%\usepackage{pstricks}
-%
-% pst-circ me da macros para pstricks que me dibujan elementos de circuitos
-%\usepackage{pst-circ}
-%
-% pst-plot me provee de funciones de ploteo para pstricks
-%\usepackage{pst-plot}
-%
-% pst-2dplot me sirve para plotear en pstricks, entorno pstaxes
-%\usepackage{pst-2dplot}
-%
-% url es un verbatim para escribir URL's que permite linebreaks dentro de ésta.
-%     para usarlo, \url{<URL>}
-\usepackage{url}
 
-%
-% ===
-% === Matemáticas
-% ===
-%
-\usepackage{amsmath}		%Para enornos matemáticos mas flexibles
-\usepackage{bbold}		%Fuente bb para modo math: \mathbb{R} = reales
-\iflatexml
-\newcommand*{\mathds}[1]{\mathbb{#1}}
-\else
-\usepackage{dsfont}		%Fuente ds para modo math: \mathds{R} = reales
-\fi
-%
-%
-\usepackage{multirow}		%Para "combinar" celdas en tablas
-\usepackage{float}		%Para mejorar cuadros, figuras, etc
-%
-%
-%
+%% % pstricks me da un entorno pstricks y comandos que uso dentro de
+%% %          éste, que me sirven para dibujar figuras/diagramas/etc de manera
+%% %          relativamente simple.
+%% \usepackage{pstricks}
 
-% better citation handling
-\iflatexml
-\newcommand*{\citeauthor}[1]{\textcolor{RoyalBlue}{(autor de \cite{#1})}}
-\else
-%%\usepackage[square,comma,numbers,sort&compress]{natbib}
-\usepackage[backend=biber,sorting=none,style=ieee,eprint=false,url=false]{biblatex} %% style=ieee
-%% requiere texlive-bibtex-extra en debian
-\fi
+%% % pst-circ me da macros para pstricks que me dibujan elementos de circuitos
+%% \usepackage{pst-circ}
 
+%% % pst-plot me provee de funciones de ploteo para pstricks
+%% \usepackage{pst-plot}
 
-%% % para eliminar espacio entre items de una lista
-\usepackage{enumitem}
-%% \setlist{noitemsep}
-%% \setlist[description]{noitemsep}
-%% \setlist[enumerate]{noitemsep}
-%% \setlist[itemize]{noitemsep}
+%% % pst-2dplot me sirve para plotear en pstricks, entorno pstaxes
+%% \usepackage{pst-2dplot}
 
+% tikz para graficos muy cool
 \usepackage{tikz}
+
 \iflatexml
 \else
 \usetikzlibrary{external}
 \tikzexternalize[mode=no graphics] % generar archivos de imagenes con las figs
 \fi
+
 %% \usepackage{pgfkeys}
 %% \usepackage{pgfgantt}
 %% \usetikzlibrary{babel}
 %% \usetikzlibrary{arrows}
 %% \usetikzlibrary{shapes.multipart}
+
+% utiles ----------------------------------------------------------------------
+
+% url es un verbatim para escribir URL's que permite linebreaks dentro de ésta.
+%     para usarlo, \url{<URL>}
+\usepackage{url}
+
+% Para "combinar" celdas en tablas
+\usepackage{multirow}
+
+%Para mejorar cuadros, figuras, etc
+\usepackage{float}
+
+% para eliminar espacio entre items de una lista
+\usepackage{enumitem}
+%% \setlist{noitemsep}
+%% \setlist[description]{noitemsep}
+%% \setlist[enumerate]{noitemsep}
+%% \setlist[itemize]{noitemsep}
 
 % typearea: uso con koma-script para ajustar márgenes de página.
 % vars globales a setear en la clase koma-script: DIV=12, BCOR=margen de ``binding'' para double side
@@ -169,7 +139,6 @@
 \usepackage[detect-all,alsoload=abbr]{siunitx}
 \fi
 
-%\usepackage{glossaries}
 %% \usepackage[spanish]{algorithm2e}
 
 %% Verbatims con fomato lindo
@@ -180,13 +149,49 @@
 \fvset{fontsize=\footnotesize,commandchars=\\\{\}}
 \fi
 
-% para teoremas etc
-\usepackage{amsthm}
+%% \usepackage{glossaries}
+%% \makeglossaries
+%% \newglossaryentry{latex}
+%% {
+%%     name=latex,
+%%     description={LaTeX (short for Lamport TeX) is a document
+%%       preparation system. The user has to think about only the content
+%%       to put in the document and the software will take care of the
+%%       formatting. }
+%% }
 
-%Permitir que los entornos equation, align, etc permitan saltos de página
-%\allowdisplaybreaks[1]
+%% % tabulars mejorados (no mantenido desde 2011!)
+%% \usepackage{tabu}
 
-%Colores
+% matemáticas -----------------------------------------------------------------
+
+%% \usepackage{amsmath}		%Para enornos matemáticos mas flexibles
+%% \usepackage{bbold}		%Fuente bb para modo math: \mathbb{R} = reales
+%% \iflatexml
+%% \newcommand*{\mathds}[1]{\mathbb{#1}}
+%% \else
+%% \usepackage{dsfont}		%Fuente ds para modo math: \mathds{R} = reales
+%% \fi
+
+%% % para teoremas etc
+%% \usepackage{amsthm}
+
+% bibliografias ---------------------------------------------------------------
+
+% usar biblatex cuando el documento es pdf
+\iflatexml
+\newcommand*{\citeauthor}[1]{\textcolor{RoyalBlue}{(autor de \cite{#1})}}
+\else
+\usepackage[
+  backend=biber,
+  sorting=none,
+  style=ieee,
+  eprint=false,
+  url=false]{biblatex}
+\fi
+
+% colores ---------------------------------------------------------------------
+
 \definecolor{negro}	{cmyk}{0,0,0,1}
 \definecolor{marron}	{cmyk}{0,.5,1,.41}
 \definecolor{rojo}	{cmyk}{0,1,1,0}
@@ -199,193 +204,177 @@
 \definecolor{blanco}	{cmyk}{0,0,0,0}
 \definecolor{dorado}	{cmyk}{0,.16,1,0}
 \definecolor{plateado}	{cmyk}{0,0,0,.25}
+\definecolor{grisclaro}	{cmyk}{0,0,0,.15}
 
+% columna gris clara y centrada
+\newcolumntype{g}{>{\columncolor{grisclaro}}c}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% header.tex
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ajustes de formato ----------------------------------------------------------
+
+% ajustar fuente de citas
+\renewcommand{\bibfont}{\normalfont\footnotesize}
+
+%Permitir que los entornos equation, align, etc permitan saltos de página
+%\allowdisplaybreaks[1]
+
+% separacion en silabas -------------------------------------------------------
 
 \hyphenation{micro-RNA}
 \hyphenation{micro-RNAs}
 \hyphenation{mi-RNA}
 \hyphenation{mi-RNAs}
 
+% comandos personalizados -----------------------------------------------------
+
+% enfasis
 \newcommand{\e}{\emph}
+
+% referencia a ecuaciones
 \newcommand{\fr}[1]{(\iflatexml{Ecuacion \ref{#1}}\else\autoref{#1}\fi)}
-\newcommand{\iid}{independiente e idénticamente distribuido}
-\newtheorem{definicion}{Definición}[chapter]
-\newtheorem{lema}[definicion]{Lema}
-\newcommand{\ntA}{\textrm{\mono{A}}}
-\newcommand{\ntC}{\textrm{\mono{C}}}
-\newcommand{\ntG}{\textrm{\mono{G}}}
-\newcommand{\ntU}{\textrm{\mono{U}}}
-\newcommand{\pairL}{\textrm{\mono{(}}}
-\newcommand{\pairR}{\textrm{\mono{)}}}
-\newcommand{\noPair}{\textrm{\mono{.}}}
-\newcommand{\dn}[1]{\textrm{\mono{#1}}}
-\newcommand{\bp}[2]{\textrm{\mono{#1-#2}}}
-\newcommand{\grad}[1]{\nabla{#1}}
+
+% estilo para tablas
 \newcommand{\tableStyle}{
-\iflatexml\else\ifpdf\relsize{-0.5}\center\sffamily\fi\fi
+\iflatexml\else\relsize{-0.5}\center\sffamily\fi
 }
+
+% estilo para pie de graficos
 \newcommand{\captionStyle}{
-\iflatexml\else\ifpdf\relsize{-0.5}\fi\fi
+\iflatexml\else\relsize{-0.5}\fi
 }
+
+% estilo para figuras
 \newcommand{\figureStyle}{\tableStyle}
-\newcommand{\tE}{&{\smaller $\bar{x}$}&}
-\newcommand{\tF}[1]{\multirow{2}{*}{#1}\tE}
-\newcommand{\tZ}{&{\smaller $\sigma$}&}
-\newcommand{\tA}{\addlinespace[4pt]}
-\newcommand{\rowMEAN}[1]{&\multirow{2}{*}{#1}&{\smaller $\bar{x}$}}
-\newcommand{\rowSTD}{&&{\smaller $\sigma$}}
-\newcommand{\rowSKIP}{\addlinespace[2pt]}
-\newcommand{\ti}{\textsmaller}
-\newcommand{\func}[1]{{\texttt{#1}}}
-\newcommand{\dataset}[1]{{\texttt{#1}}}
-\newcommand{\Ft}[1]{\mrow{2}{*}{#1}}
-\newcommand{\tbmean}{\smaller{2} $\bar{x}$}
-\newcommand{\tbstd}{\smaller $\sigma$}
-\newcommand{\mirbase}{{miRBase}}
-\newcommand{\rfam}{{Rfam}}
-\newcommand{\tripletsvm}{{Triplet-SVM}}
-\newcommand{\mipred}{{miPred}}
-\newcommand{\micropred}{{microPred}}
-\newcommand{\deltamirbase}{{\ensuremath{\mathbf{\Delta}}miRBase}}
-\newcommand{\premirna}[1]{pre-miRNA#1}
-\newcommand{\webdemo}{Web-demo builder}
-\newcommand{\ncrna}[1]{ncRNA#1}
-\newcommand{\caract}[1]{característica#1}
-\newcommand{\hparam}[1]{hiperparámetro#1}
-\newcommand{\MVS}[1]{máquina#1 de vectores de soporte}
-\newcommand{\rowMEANN}[2]{&
-  \multirow{2}{*}{\tablenum[table-format=1.0,table-number-alignment=right]{#1}}&
-  \multirow{2}{*}{\tablenum[table-format=3.0,table-number-alignment=right]{#2}}&
-           {\smaller $\bar{x}$}}
-\newcommand{\rowSTDN}{&&&{\smaller $\sigma$}}
 
-\newcommand{\VP}{\T{\slshape VP}}
-\newcommand{\VN}{\T{\slshape VN}}
-\newcommand{\FP}{\T{\slshape FP}}
-\newcommand{\FN}{\T{\slshape FN}}
-\newcommand{\SE}{\T{\slshape SE}}
-\newcommand{\SP}{\T{\slshape SP}}
-\newcommand{\GM}{\ensuremath{\T{\slshape G}_m}}
-\newcommand{\Gm}{\GM}
-\newcommand{\PR}{\T{\slshape Pr}}
-\newcommand{\AC}{\T{\slshape Ac}}
-\newcommand{\avg}{\T{$\bar{x}$}}
-\newcommand{\std}{\T{$\sigma$}}
+%% \newcommand{\tE}{&{\smaller $\bar{x}$}&}
+%% \newcommand{\tF}[1]{\multirow{2}{*}{#1}\tE}
+%% \newcommand{\tZ}{&{\smaller $\sigma$}&}
+%% \newcommand{\tA}{\addlinespace[4pt]}
+%% \newcommand{\rowMEAN}[1]{&\multirow{2}{*}{#1}&{\smaller $\bar{x}$}}
+%% \newcommand{\rowSTD}{&&{\smaller $\sigma$}}
+%% \newcommand{\rowSKIP}{\addlinespace[2pt]}
+%% \newcommand{\ti}{\textsmaller}
+%% \newcommand{\func}[1]{{\texttt{#1}}}
+%% \newcommand{\dataset}[1]{{\texttt{#1}}}
+%% \newcommand{\Ft}[1]{\mrow{2}{*}{#1}}
+%% \newcommand{\tbmean}{\smaller{2} $\bar{x}$}
+%% \newcommand{\tbstd}{\smaller $\sigma$}
+%% \newcommand{\mirbase}{{miRBase}}
+%% \newcommand{\rfam}{{Rfam}}
+%% \newcommand{\tripletsvm}{{Triplet-SVM}}
+%% \newcommand{\mipred}{{miPred}}
+%% \newcommand{\micropred}{{microPred}}
+%% \newcommand{\deltamirbase}{{\ensuremath{\mathbf{\Delta}}miRBase}}
+%% \newcommand{\premirna}[1]{pre-miRNA#1}
+%% \newcommand{\webdemo}{Web-demo builder}
+%% \newcommand{\ncrna}[1]{ncRNA#1}
+%% \newcommand{\caract}[1]{característica#1}
+%% \newcommand{\hparam}[1]{hiperparámetro#1}
+%% \newcommand{\MVS}[1]{máquina#1 de vectores de soporte}
+%% \newcommand{\rowMEANN}[2]{&
+%%   \multirow{2}{*}{\tablenum[table-format=1.0,table-number-alignment=right]{#1}}&
+%%   \multirow{2}{*}{\tablenum[table-format=3.0,table-number-alignment=right]{#2}}&
+%%            {\smaller $\bar{x}$}}
+%% \newcommand{\rowSTDN}{&&&{\smaller $\sigma$}}
 
-\newcounter{FeatureCounter}
-\newcommand{\headRow}{  \sfbf{\footnotesize Pos.} &
-  \sfbf{\footnotesize Caract.} &
-  \sfbf{\footnotesize Descripción}
-}
+%% \newcommand{\VP}{\T{\slshape VP}}
+%% \newcommand{\VN}{\T{\slshape VN}}
+%% \newcommand{\FP}{\T{\slshape FP}}
+%% \newcommand{\FN}{\T{\slshape FN}}
+%% \newcommand{\SE}{\T{\slshape SE}}
+%% \newcommand{\SP}{\T{\slshape SP}}
+%% \newcommand{\GM}{\ensuremath{\T{\slshape G}_m}}
+%% \newcommand{\Gm}{\GM}
+%% \newcommand{\PR}{\T{\slshape Pr}}
+%% \newcommand{\AC}{\T{\slshape Ac}}
+%% \newcommand{\avg}{\T{$\bar{x}$}}
+%% \newcommand{\std}{\T{$\sigma$}}
 
-\newcommand{\feedforward}{con propagación hacia adelante}
-\newcommand{\funcheader}[3]{\begin{description}%
-  \item[Función]{#1}\item[Entradas]{#2}\item[Salidas]{#3}%
-\end{description}}
-\newcommand{\funcentry}[4]{\begin{description}%
-  \item[Función]{#1}
-  \item[Entradas]{#2}
-  \item[Salidas]{#3}
-  \item[Descripción]{#4}
-\end{description}}
-\renewcommand{\bibfont}{\normalfont\footnotesize}
-%
-% ===
-% === Comandos
-% ===
-%
 % T: para escribir texto común cuando en modo math
 %    uso: \T{texto que aparecerá en letra normal}
 \newcommand{\T}{\textrm}
-%
+
 % aclaracion: dibuja un recuadrito aclaratorio, como <quote> en HTML.
 %             uso: \aclaracion{Texto...}
 \newcommand{\aclaracion}[1]{%
 \smallpencil\-\begin{minipage}{0.9\textwidth}
 %\vspace*{6pt}
 {#1}\smallskip\end{minipage}}
-%
+
 % consigna: parecido a aclaración, pero con texto _slanted_
 %           uso: \consigna{Consigna...}
 \newcommand{\consigna}[1]{%
 \leftpointright\ \parbox[t]{0.9\textwidth}{\textsl{#1}\vspace{8pt}}}
-%
+
 % pinterno: para representar el producto interno entre los dos argumentos
 %           uso: \pinterno{X}{Y}
 \newcommand{\pinterno}[2]{%
 \left\langle #1 , #2 \right\rangle}
-%
+
 % pint: para representar el producto interno entre los dos argumentos
 %           uso: \pinterno{X}{Y}
 \newcommand{\pint}[2]{%
 \left\langle\!#1,#2\!\right\rangle}
-%
+
 % pinT: para representar el producto interno (primero transpuesto)
 %           uso: \pinT{X}{Y}
 \newcommand{\pinT}[2]{%
 #1^{T}#2}
-%
-% === Estilos de texto
-%
+
+% Estilos de texto
+
 % resalt: resaltado con fondo verde
 %         uso: \resalt{texto resaltado}
 \newcommand{\resalt}{\colorbox{yellow}}
-%
+
 % sfbf: texto en negrita + slanted
-%       uso:
 \newcommand{\sfbf}[1]{\textsf{\bfseries #1}}
-%
+
 % small bold sans-serif
 \newcommand{\sbs}[1]{\textsf{\relscale{0.9}\bfseries #1}}
-%
+
 % eng: itálica (para palabras en inglés)
 %      uso: \eng{some English text}
 \newcommand{\eng}{\textit}
-%
+
 % mean: significado de una sigla - slanted
 %       uso: (...) SNCF: \mean{Société Nationale des Chemins de Fer Francais} ...
 \newcommand{\mean}{\textsl}
 \newcommand{\desc}{\textsl}
-%
+
 % defin: pone en negrita el texto, útil para definiciones
 %        uso: \defin{asshole}: vulgar slang for anus
 \newcommand{\defin}{\textbf}
-%
+
 % R, N: cambia la tipografía en modo math, probar para ver cómo quedan
 %       uso: \R{R} , \N{N}
 \newcommand{\R}{\mathds}
 \newcommand{\N}{\mathbf}
 \newcommand{\C}{\mathcal}
 \newcommand{\B}{\boldsymbol}
-%
+
 % dx: para escribir d2y/dx2, etc
 \newcommand{\dx}[2]{\frac{d^{#2}\!#1}{d\!x^{#2}}}
-%
+
 % dp: para escribir derivadas parciales d2y/dx2, etc
 \newcommand{\dpar}[3]{\frac{\partial^{#3}#1}{\partial{#2}^{#3}}}
-%
+
 % dvar: para escribir derivadas totales d2y/d(VAR)2, etc
 \newcommand{\dvar}[3]{\frac{d^{#3}#1}{d{#2}^{#3}}}
-%
+
 % evalen: para escribir (loquesea)|_{evaluado_en}
 \newcommand{\evalen}[2]{\left.{#2}\right|_{#1}}
-%
+
 % lil: para escribir texto pequeño. más cómodo que { \footnotesize texto pequeño... }
 %      uso: \lil{texto pequeño... }
 \newcommand{\lil}[1]{\footnotesize #1}  %Para texto pequeñooo
-%
+
 % mono: escribe el texto que le paso como parámetro con letra de ancho fijo
 %       uso: \mono{texto monoespaciado}
 \newcommand{\mono}[1]{{\texttt{#1}}}
 
 
-%
-% === Símbolos
-%
+% símbolos
+
 \newcommand{\y}{\wedge}			%Y (Lógica)
 \newcommand{\ve}{\vee}			%O (Lógica)
 \newcommand{\ent}{\supset}		%Entonces (Lógica)
@@ -415,41 +404,36 @@
 \newcommand{\Bbeta}{\B{\beta}}          %\beta negrita
 \newcommand{\Btheta}{\B{\theta}}        %\theta negrita
 \newcommand{\Bxi}{\B{\xi}}              %\xi negrita
-%
-%
-% ===
-% === Environments
-% ===
-%
+
+% environments
+
 % enunciado: un environment que básicamente tiene el mismo efecto que el
 %            comando consigna.
 %            uso: \begin{enunciado} ... contenido ... \end{enunciado}
 \newenvironment{enunciado}
 {\leftpointright\ \begin{varwidth}[t]{0.9\textwidth}\textsl}
 {\end{varwidth}\vspace{8pt}}
-%
+
 % pvi: para tipear la definición de un problema de valor inicial/funciones
 %      definidas de a trozos/etc directamente en el texto (sin necesidad de
 %      cambiar a un modo matemático.
 %      uso: \begin{pvi} linea1 \\ linea 2 \\ ... \end{pvi}
 \newenvironment{pvi}{\begin{equation}\begin{cases}}
 {\end{cases}\end{equation}}
-%
+
 % pvi*: comp pvi, pero sin número de ecuación
 \newenvironment{pvi*}{\begin{equation*}\begin{cases}}
 {\end{cases}\end{equation*}}
-%
+
 % verbatimsmall: un verbatim con letra más chica. usualmente queda bastante
 %                mejor que el verbatim pelado.
 %                uso: \begin{verbatimsmall} ........ \end{verbatimsmall}
 \newenvironment{verbatimsmall}{\small\begin{verbatim*}}
 {\end{verbatim*}}
-%
+
 % nota: escribe una aclaracion dentro del texto
 \newenvironment{nota}{$$\left[\;\begin{minipage}{0.95\textwidth}\slshape}
 {\end{minipage}\;\right]$$}
-%
-%
 
 % multicolumn y multirow
 \newcommand{\mcol}[3]{\multicolumn{#1}{#2}{#3}}
@@ -466,20 +450,16 @@
 \newcommand{\iffont}[3]{\ifthenelse{\equal{\f@family}{#1}}{#2}{#3}}
 \newcommand{\ifseri}[3]{\ifthenelse{\equal{\f@series}{#1}}{#2}{#3}}
 \makeatother
-%
+
 % sbsf: texto small, bold, sans-serif. Si ya es sans, no aplica small.
 %       uso:
 \newcommand{\sbsf}[1]{\iffont{qhv}{\textbf{#1}}{\textscale{0.9}{\textsf{\textbf{#1}}}}}
-%
+
 % ssf: texto small, sans-serif. Si ya es sans, no aplica small.
 %       uso:
 \newcommand{\ssf}[1]{\iffont{qhv}{#1}{\textscale{0.9}{\textsf{#1}}}}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% authorea/latexml workarounds
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%
+% authorea/latexml workarounds ------------------------------------------------
 
 \iflatexml
 \newcommand{\nt}{\textrm{nt}}
@@ -503,12 +483,12 @@
 \usepackage{soulutf8}
 \fi
 
-
 \iflatexml
 \newcommand{\refer}{\textcolor{OliveGreen}{Fig./Ec./etc. }\ref}
 \else
 \usepackage{hyperref}
 \newcommand{\refer}{\autoref}
+
 % lo siguiente hace que los enlaces generados por hyperref apunten a
 % /la figura/, en lugar de /la caption/ de la figura
 \usepackage[hypcap]{caption}
@@ -520,15 +500,14 @@
   urlcolor=black
 }
 \fi
-%
+
 % Koma-Script page headings
 \iflatexml\else
 \usepackage{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \fi
 
-
-%%%%%%%%%%%%%%%%%% estilos de ``caracter''
+% estilos de tipografia
 
 % dataset
 \newcommand{\dset}[1]{%
@@ -545,8 +524,7 @@
 \iflatexml\textsl{#1}\else\ifpdf\sbsf{#1}\fi\fi
 }
 
-\usepackage{tabu}
-
+% comentarios en pdfs
 \iflatexml
 \newcommand{\pdfcomment}[2][]{}
 \newcommand{\pdfmargincomment}[2][]{}
