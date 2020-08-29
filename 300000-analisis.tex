@@ -1,0 +1,568 @@
+\chapter{3 Análisis de la organización}
+
+La Dirección de Informatización y Planificación Tecnológica (DIPT) es
+el área de la Universidad Nacional del Litoral (UNL) encargada de
+brindar servicios de software a la Universidad. Bajo su órbita se
+encuentran los sistemas de gestión de alumnos, bienestar estudiantil,
+de presupuesto, de gastos, de gestión del personal, de expedientes, de
+gestión documental, de cargos y contratos, y de cursos y carreras en
+línea, entre otros.
+
+\section{Aspectos generales}
+
+En cuanto a su composición, la Dirección se subdivide en cuatro áreas:
+desarrollo, infraestructura, testing y soporte técnico. En el área de
+desarrollo se identifican 6 equipos con distintas áreas de interés,
+contabilizando un total de 25 personas. El equipo de infraestructura
+consta de 5 personas. Asimismo, el área de testing está conformada por
+4 personas, y otras tres personas integran el equipo de soporte
+técnico a usuarios.
+
+La Dirección tiene a su cargo más de 50 servicios de software, los
+cuales funcionan principalmente sobre plataformas PHP y
+Java. Actualmente unos 25 de estos servicios cuentan con un desarrollo
+activo.
+
+\subsection{Gestión del código fuente}
+
+Los equipos de desarrollo utilizan repositorios SVN y Git para la
+gestión del código, dependiendo del servicio. En los repositorios SVN
+utilizan la estructura estándar de carpetas
+\e{trunk/tags/branches} propia de SVN. En los repositorios Git,
+la utilización de ramas no está muy difundida. En general, se escribe
+el código nuevo sobre la rama \e{master} y se generan
+\e{tags} específicos para cada versión a publicar.
+
+El equipo de infraestructura utiliza también repositorios Git y SVN
+para la gestión del código propio. A diferencia de los equipos de
+desarrollo, el equipo de infraestructura considera el código publicado
+en la rama principal como la versión productiva. Excepto casos
+excepcionales, no se utilizan \e{tags} ni \e{branches} en
+estos repositorios.
+
+\subsection{La herramienta Ansible}
+
+A partir del año 2018 el equipo de infraestructura comenzó a utilizar
+la herramienta Ansible\footnote{ https://www.ansible.com/} para
+describir la configuración de la infraestructura de los
+servicios. Esta herramienta permite escribir código que describe el
+estado requerido de la configuración. Al ejecutarse, Ansible efectúa
+las modificaciones necesarias para alcanzar el estado requerido. Esto
+se conoce como \e{configuración como código}. La adopción de
+Ansible también alcanzó a los equipos de desarrollo, que utilizan la
+herramienta para generar sus entornos de desarrollo locales a partir
+del código provisto por el área de infraestructura.
+
+\section{Estrategia de análisis}
+
+Al momento de implementar DevOps resulta fundamental contar con una
+visión global que identifique los roles dentro de la organización, las
+tareas realizadas por cada uno y las interdependencias entre las
+mismas.
+
+Evidentemente, efectuar un análisis exhaustivo que identifique todas
+las tareas posibles, todas las personas involucradas, y todas las
+interdependencias resulta poco práctico. En cambio se optó por
+realizar reuniones de trabajo con representantes de los diferentes
+equipos para generar un entendimiento en común y definir aspectos
+prioritarios a considerar.
+
+Como objetivo se definió trabajar sobre las tareas que involucran
+mayor interacción entre los equipos de infraestructura y de
+desarrollo. Para obtener un panorama general se realizaron reuniones
+con el equipo de infraestructura y los responsables de los
+servicios. En estas reuniones se plantearon preguntas como la
+siguientes:
+
+\begin{itemize}
+\item ¿Cuáles son las tareas que realizo con frecuencia?
+\item ¿Cuáles de estas tareas considero repetitivas o tediosas?
+\item ¿Cuáles acciones que no dependen de mí son necesarias para
+  completar estas tareas?
+\item Si pudiera pedir cualquier cosa, ¿qué pediría para mejorar esta
+  tarea? (Incluso se puede pedir no hacerla más)
+\end{itemize}
+Con estas preguntas, inspiradas en la novela The Phoenix Project
+\cite{phoenix}, se buscó
+identificar las tareas más comunes, improductivas y plausibles de
+automatización. Se seleccionaron dos procesos para analizar:
+
+\begin{itemize}
+\item La creación de entornos para un nuevo servicio.
+\end{itemize}
+Es un proceso que en términos relativos es poco frecuente, pero se
+llegó a la conclusión de que es muy burocrático y requiere muchas
+intervenciones manuales. A pesar de que el equipo de infraestructura
+ha automatizado muchas tareas, resulta común saltarse alguna de ellas,
+lo que obliga a volver atrás en la secuencia para revisar y corregir.
+
+\begin{itemize}
+\item Entrega de un nuevo requerimiento en un servicio.
+\end{itemize}
+Abarca desde la solicitud de una nueva funcionalidad por parte del
+cliente hasta la puesta en producción de la misma. Se trata de un
+proceso a cargo del equipo de desarrollo, aunque a veces requiere la
+intervención del equipo de infraestructura, por ejemplo cuando se
+requieren modificaciones en los permisos, los scripts de
+actualización, o cualquier cambio de infraestructura requerido en la
+nueva versión.
+
+Una vez seleccionados estos procesos se realizaron reuniones
+adicionales para documentar en detalle las tareas, personas y recursos
+necesarios para cada uno de ellos.
+
+\section{Análisis del flujo de valor}
+
+Para analizar los procesos se recurrió a una forma simplificada de los
+``mapas de flujo de valor'' (\e{value-stream maps}). En el ámbito
+de la producción fabril, el mapa de flujo de valor es una técnica
+\e{lean} que tiene como objetivo ``visualizar y comprender el
+flujo de materiales e información desde el momento que se realiza el
+pedido hasta el producto terminado''
+\cite{learningtosee}. En una
+organización TI el producto es inmaterial, aunque igualmente se puede
+establecer una secuencia de acciones necesarias para cumplir un
+objetivo, tal como un cambio en la infraestructura o la entrega de una
+funcionalidad de software.
+
+La visualización concisa de la secuencia de tareas permite encontrar
+los puntos de demora y las actividades que no contribuyen al objetivo
+del proceso (entrega del producto) o bien a la mejora del proceso en
+sí mismo (planificación de mejora).
+
+En el análisis realizado se elaboraron tablas (en lugar de un diagrama
+gráfico) que enumeran la secuencia de tareas. Para cada tarea, se
+especificó una descripción, actor, tiempo de espera, y tiempo de
+ejecución.
+
+\subsection{Creación de un nuevo servicio}
+
+La creación de un nuevo servicio se gestiona utilizando un servicio
+interno denominado Pulmo. El responsable del servicio realiza la
+solicitud completando los datos que incluyen nombre, descripción,
+entornos requeridos, recursos de software y hardware necesarios para
+cada entorno, permisos de firewall y permisos de usuario para
+administración del servicio.
+
+El sistema genera tickets a resolver por parte del equipo de
+infraestructura. Este equipo efectúa las siguientes tareas para cada
+uno de los entornos de integración, test y producción:
+
+\begin{enumerate}
+\item Escribir código Ansible: el código se escribe una sola vez a
+  partir de la especificación detallada en el sistema Pulmo y se
+  ejecuta en un entorno local. Esta tarea se efectúa una sola vez, el
+  código generado es aplicable sobre los entornos de integración, test
+  y producción.
+\item Crear entrada del host en los servicios DNS y DHCP: se lleva a
+  cabo ejecutando un script específico.
+\item Crear instancia: se efectúa manualmente mediante la línea de
+  comandos en el cluster Ganeti.
+\item Agregar instancia al servicio de backup (sólo producción): se
+  modifica el código Ansible del servicio de backup y se aplica
+  ejecutando el código en la línea de comandos.
+\item Configurar el servidor de frontend: se edita el archivo de
+  configuración correspondiente y se ejecuta luego un script que
+  actualiza la configuración del redirector.
+\item Configurar monitoreo: se agrega el host al servicio Zabbix
+  invocando un script específico de línea de comandos.
+\end{enumerate}
+La Tabla 1.1 detalla el análisis del flujo de valor para la
+habilitación de un nuevo servicio. Los tiempos de espera son estimados
+para tareas con prioridad normal. Los tiempos de ejecución son
+estimados a partir de la experiencia de los actores involucrados.
+
+\begin{tabular}{|l|l|l|l|}
+\hline Actor & Tarea & Espera & Ejecución \\ \hline Dev & Solicitar
+servicio en Pulmo & & 15min \\ \hline Ops & Escribir código Ansible &
+1h & 1h-8h \\ \hline \e{- entorno local creado -} & & & \\ \hline
+Ops & Crear entradas en DNS y DHCP & & 10min \\ \hline Ops & Crear
+instancias & & 20min \\ \hline Ops & Crear claves & & 20min \\ \hline
+Ops & Ejecutar playbook Ansible & & 30min \\ \hline Ops & Configurar
+frontend & & 10min \\ \hline Ops & Configurar monitoreo & & 20min
+\\ \hline \e{- entornos de integración y test creados -} & & &
+\\ \hline Dev/Ops & Depuración de la configuración & 30d & 30min-3h
+\\ \hline Dev & Solicitud de pase a producción & 1h & 5min \\ \hline &
+Crear/verificar hosts (DNS, DHCP) & 1h & 10min \\ \hline & Crear
+instancia de producción & & 20min \\ \hline & Crear claves & & 20min
+\\ \hline & Ejecutar playbook Ansible & & 30min \\ \hline & Configurar
+servicio de backup & & 15min \\ \hline & Configurar frontend & & 10min
+\\ \hline & Configurar monitoreo & & 20min \\ \hline \e{- entorno
+  de producción creado -} & & & \\ \hline Total & & 30d 3h & 3h-15h
+\\ \hline Total (excluyendo espera de pase a producción) & & 3h &
+3h-15h \\ \hline
+\end{tabular}
+\e{Tabla 1.1 Análisis del flujo de valor para el proceso de
+  creación de un nuevo servicio.}
+
+\subsection{Entrega de un nuevo requerimiento}
+
+Para el análisis de este proceso se considera que el equipo de
+desarrollo se organiza en un ciclo de \e{sprints} de una semana
+de duración. El proceso comprende desde el ingreso del requerimiento
+hasta la publicación de la nueva versión del servicio en producción.
+
+\begin{enumerate}
+\item El cliente (un usuario o un miembro del equipo de testing) crea
+  un ticket solicitando una nueva funcionalidad o describiendo un
+  error en el servicio.
+\item Cada semana, el equipo de desarrollo realiza una reunión de
+  coordinación que da comienzo a un nuevo \e{sprint}. En esta
+  reunión se revisan los requerimientos y se asignan prioridades para
+  las tareas a realizar.
+\begin{enumerate}
+\item Se desagregan los requerimientos complejos en tareas
+  específicas, creando tickets correspondientes para cada una.
+\item Se crea en el repositorio SVN una rama de trabajo para la nueva
+  versión.
+\end{enumerate}
+\item Durante el \e{sprint} se continúa el trabajo normal
+  escribiendo el código que resuelve cada tarea. El desarrollador
+  ejecuta tests unitarios en forma manual durante el proceso de
+  desarrollo.
+\item Una vez concluido el \e{sprint}, se ejecutan tests
+  unitarios y de integración sobre el código y se publica la nueva
+  versión, dando lugar a un nuevo \e{sprint} para la versión
+  siguiente. Este proceso se denomina internamente el \e{cierre
+    de versión}.
+\item El responsable del proyecto actualiza la nueva versión en el
+  entorno de integración y solicita a los responsables de los demás
+  servicios que validen que la interacción con otros sistemas funciona
+  correctamente.
+\item Una vez confirmadas las integraciones se actualiza la versión en
+  el entorno de test, y se solicita al solicitante que valide que la
+  nueva funcionalidad es correcta.
+\item Cuando el usuario confirma la nueva funcionalidad, el
+  responsable del proyecto actualiza el entorno de producción.
+\end{enumerate}
+En la Tabla 1.2 se describe el análisis del flujo de valor para este
+proceso. Los tiempos de espera estipulados se refieren a tareas con
+prioridad normal. Los tiempos de ejecución se estimaron según la
+experiencia de los desarrolladores.
+
+\begin{tabular}{|l|l|l|l|}
+\hline Actor & Tarea & Espera & Ejecución \\ \hline Cliente & Ingresa
+requerimiento & & \\ \hline Dev & Reunión del sprint & 0-5d & 30min
+\\ \hline Dev & Crear rama de trabajo & & 5min \\ \hline Dev &
+Codificar solución & 1h-5d & 2h-10h \\ \hline Dev & Cierre de versión
+(testing, publicación) & 5d & 40min \\ \hline Dev & Despliegue en
+integración & & 10min \\ \hline Dev & Confirmación de integraciones &
+2h & 1h \\ \hline Dev & Despliegue en test & & 10min \\ \hline Cliente
+& Test de aceptación & 1h & 20min \\ \hline Dev & Despliegue en
+producción & 1h & 20min \\ \hline Total & & 6d - 16d & 5h - 13h
+\\ \hline
+\end{tabular}
+\e{Tabla 1.2 Análisis del flujo de valor para el proceso de
+  entrega de un nuevo requerimiento.}
+
+\section{Propuestas de mejora}
+
+Las propuestas de mejora de ambos procesos se realizaron generando en
+primer lugar una forma simple de ``mapa de estado futuro''. Estos mapas
+de estado futuro se basan en la secuencia de tareas identificadas
+previamente, las cuales son modificadas según el estado que se desea
+alcanzar. El ``estado futuro'' se determinó en base a los requerimientos
+organizacionales y al consenso alcanzado en las reuniones de trabajo.
+
+Las propuestas de cambio se basaron en los siguientes principios:
+
+\begin{itemize}
+\item Utilizar el repositorio de código GitLab para el código fuente y
+  la configuración de cada servicio.
+\item Escribir la configuración de la infraestructura como código
+  (Ansible).
+\item Contar con herramientas/servicios (web o de otra naturaleza) que
+  permitan efectuar operaciones de manera autónoma por parte de los
+  equipos de desarrollo e infraestructura, sin necesidad de generar
+  solicitudes en el sistema de tickets.
+\item Automatizar las operaciones tanto como sea posible.
+\item Contar con un sistema de integración y entrega continua para
+  realizar las tareas de compilación, pruebas de humo, testing
+  unitario y de integración de manera automática, sin requerir la
+  intervención de la persona que escribe el código.
+\item Todos los cambios introducidos tienen como objetivo último
+  acelerar la entrega del software al usuario final tanto como sea
+  posible.
+\end{itemize}
+\subsection{Creación de un nuevo servicio}
+
+Siguiendo los principios previamente especificados se propone
+modificar el proceso de creación de un nuevo servicio del siguiente
+modo:
+
+\begin{enumerate}
+\item El responsable del servicio crea un repositorio con el código
+  Ansible necesario para la configuración del servicio. Esta
+  configuración es directamente aplicable al entorno local para
+  desarrollo.
+\begin{itemize}
+\item \e{El responsable debe tener permisos suficientes para
+  crear proyectos en GitLab.}
+\item \e{El equipo de infraestructura debe publicar el código
+  reutilizable que aplica actualmente en sus ``playbooks''.}
+\end{itemize}
+\item El responsable del servicio genera/verifica las claves
+  necesarias (de base de datos, de conexión a otros servicios) para
+  ser utilizadas en los entornos de integración, test y producción.
+\item El responsable del servicio inicia un proceso de revisión de la
+  configuración con el equipo de infraestructura creando un
+  \e{merge request} en el repositorio de código.
+\begin{itemize}
+\item \e{Esta instancia reemplaza la creación de tickets en
+  Redmine.}
+\end{itemize}
+\item Como parte de la resolución del merge request el equipo de
+  infraestructura agrega el nuevo servicio a la interfaz web de
+  Ansible.
+\begin{itemize}
+\item \e{Se debe implementar la interfaz web para Ansible.}
+\end{itemize}
+\item Una vez finalizada la revisión se cierra el \e{merge
+  request} y el responsable del servicio lanza la tarea de
+  configuración desde la interfaz web de Ansible. Esta tarea efectúa
+  de forma automática las siguientes tareas:
+\begin{itemize}
+\item Creación de entradas DNS y DHCP
+\item Creación de instancia
+\item Agregado al servicio de backup (si fuera necesario)
+\item Configuración del frontend
+\item Configuración del servicio de monitoreo
+\end{itemize}
+\e{Para dar soporte a esta automatización se deberán modificar
+  varios aspectos de la infraestructura.}
+\end{enumerate}
+
+El análisis del estado futuro se presenta en la
+\iflatexml{}Tabla~\ref{tbl:servicio-futuro}\else\autoref{tbl:servicio-futuro}\fi.
+
+%
+\begin{table}[h]
+  \tableStyle
+  \smaller
+  \iflatexml%
+  \begin{tabular}{llrr}
+  \else%
+  \sisetup{
+      table-format = 2.1(2),
+      table-number-alignment = right,
+      separate-uncertainty=true,
+      %uncertainty-separator = \,\smaller
+  }
+  \begin{tabular}{llrr}
+  \fi%
+  \toprule
+  Actor & Tarea & Espera & Ejecución \\
+  \midrule
+  Dev/Ops & Crear receta de Ansible & & 1h - 8h \\
+  \addlinespace
+  \mcol{4}{c}{ \e{entorno local creado} } \\
+  \addlinespace
+  Dev/Ops & Crear claves & & 20min \\
+  Dev/Ops & Merge request + depuración & 1h & 1h - 3h \\
+  Ops/Dev & Agregar proyecto a interfaz web Ansible & & 20min \\
+  Dev/Ops & Ejecutar playbook Ansible & & 30min \\
+  \addlinespace
+  \mcol{4}{c}{\e{entornos de integración, test y producción creados}} \\
+  \addlinespace\midrule
+  Total & & 1h & 3h-12h \\
+  \bottomrule
+  \\
+  \end{tabular}
+  \caption{\captionStyle
+    Análisis del estado futuro para la creación de un nuevo servicio.
+  }
+  \label{tbl:servicio-futuro}
+\end{table}
+%
+
+\subsection{Entrega de un nuevo requerimiento}
+
+Para el proceso de desarrollo y entrega de un nuevo requerimiento se
+propuso modificar la secuencia de tareas según se enumera a
+continuación. Esta propuesta es genérica y la implementación se
+adaptará a las particularidades de cada servicio.
+
+\begin{enumerate}
+\item A partir del requerimiento del cliente, el desarrollador crea un
+  ``issue'' para el seguimiento de la resolución del caso.
+\begin{itemize}
+\item \e{Si la tarea es compleja, deberá separarla en varios
+  ``issues'' con complejidad menor.}
+\item \e{Las reuniones de los sprints pasan a ser reuniones de
+  revisión de las tareas efectuadas antes que de planificación de las
+  tareas a realizar.}
+\end{itemize}
+\item El desarrollador crea un merge request mediante un solo click en
+  el issue de GitLab. En la rama respectiva codifica la nueva
+  funcionalidad requerida.
+\begin{itemize}
+\item \e{El servicio de integración continua deberá efectuar
+  testing unitario y de integración de manera automática sobre el
+  código perteneciente a esta rama.}
+\end{itemize}
+\item Cuando se considera resuelto el requerimiento, se elimina el
+  estado \e{``WIP''} (``en curso'') del merge request en GitLab y se
+  asigna el a otro miembro del grupo de desarrollo para revisión.
+\item Se revisa en equipo la solución codificada y se asegura que los
+  tests unitarios y de integración hayan sido exitosos. En caso de
+  encontrarse problemas, se sigue escribiendo código sobre la misma
+  rama hasta que hayan sido solucionados.
+\item Se cierra el \e{merge request} incorporando el código a la
+  rama principal.
+\begin{itemize}
+\item \e{Esta acción cierra de forma automática el issue, dispara
+  nuevos tests automáticos sobre la rama de desarrollo principal, y
+  genera y publica un artefacto de versión.}
+\end{itemize}
+\item Se despliega la nueva versión en el entorno de test y se
+  solicita al cliente que verifique la resolución del problema.
+\item El cliente verifica la funcionalidad y confirma la resolución
+  del problema.
+\item Se despliega la nueva versión en el entorno de producción y se
+  resuelve el ticket del cliente.
+\end{enumerate}
+El análisis del estado futuro se describe en la
+\iflatexml{}Tabla~\ref{tbl:entrega-futuro}\else\autoref{tbl:entrega-futuro}\fi.
+
+%
+\begin{table}[h]
+  \tableStyle
+  \smaller
+  \iflatexml%
+  \begin{tabular}{llrr}
+  \else%
+  \sisetup{
+      table-format = 2.1(2),
+      table-number-alignment = right,
+      separate-uncertainty=true,
+      %uncertainty-separator = \,\smaller
+  }
+  \begin{tabular}{llrr}
+  \fi%
+  \toprule
+  Actor & Tarea & Espera & Ejecución \\
+  \midrule
+  Cliente & Ingresar requerimiento & & \\
+  Dev & Crear issue en GitLab + merge request & 1d & 5min \\
+  Dev & Codificar solución & 1h-5d & 2h-10h \\
+  \addlinespace
+  \mcol{4}{c}{\e{de forma automática: tests unitarios y de integración}} \\
+  \addlinespace
+  Dev & Resolver WIP y solicitar revisión & 15min & 10min \\
+  Dev & Revisión de la solución & 1h & 20min \\
+  Dev & Efectuar merge & 5min & 5min \\
+  \addlinespace
+  \mcol{4}{c}{\e{de forma automática: cierre de issue, generación de artefacto}} \\
+  \addlinespace
+  Dev & Despliegue en test & 15min & 20min \\
+  Cliente & Test de aceptación & 1h & 15min \\
+  Dev & Despliegue en producción & 1h & 10min \\
+  Dev & Resolución del ticket & & 10min \\
+  \addlinespace\midrule
+  Total & & 2d - 6d & 3h - 11h \\
+  \bottomrule
+  \\
+  \end{tabular}
+  \caption{\captionStyle
+    Análisis del estado futuro para el proceso de entrega de un nuevo
+    requerimiento.
+  }
+  \label{tbl:entrega-futuro}
+\end{table}
+%
+
+
+
+
+
+
+
+\section{Plan de trabajo}
+%
+El plan detallado en la
+\iflatexml{}Tabla~\ref{tbl:plan-trabajo}\else\autoref{tbl:plan-trabajo}\fi
+enumera las acciones requeridas y
+sus objetivos correspondientes (medibles) para alcanzar el ``estado
+futuro'' de ambas propuestas de mejora. Tal como los análisis de flujo
+de valor, este plan es una versión simplificada del formato propuesto
+por \citeauthor{learningtosee} en \e{Learning to See}
+\cite{learningtosee}.
+
+Como se podrá apreciar, la lista de acciones propuesta se encuentra en
+línea con las acciones llevadas a cabo durante el desarrollo del
+Proyecto. Las implementaciones concretas se describen en los capítulos
+de aquí en adelante.
+
+%
+\begin{table}[h]
+  \tableStyle
+  \smaller
+  \iflatexml%
+  \begin{tabular}{p{.45\textwidth}p{.45\textwidth}}
+  \else%
+  \sisetup{
+      table-format = 2.1(2),
+      table-number-alignment = right,
+      separate-uncertainty=true,
+      %uncertainty-separator = \,\smaller
+  }
+  \begin{tabular}{p{.45\textwidth}p{.45\textwidth}}
+  \fi%
+  \toprule
+  Acción & Objetivo \\
+  \midrule
+  \mrow{2}{*}{Configurar permisos en GitLab}
+  &
+  Los desarrolladores acceden a los repositorios con código Ansible.
+  \\  \addlinespace
+  &
+  Los desarrolladores pueden crear proyectos para nuevos
+  servicios.
+  \\  \addlinespace
+  Instalar y configurar una interfaz web para
+  Ansible
+  &
+  Los desarrolladores pueden aprovisionar servicios.
+  \\  \addlinespace
+  Automatizar proceso de alta de entradas en DNS y DHCP
+  & No se requiere intervención manual para dar de alta un host.
+  \\  \addlinespace
+  Automatizar la creación de instancias virtuales.
+  &
+  No se requiere intervención manual para crear una instancia virtual.
+  \\  \addlinespace
+  Automatizar el agregado de un servicio al backup.
+  &
+  No se requiere intervención manual para agregar un servicio al backup.
+  \\  \addlinespace
+  Automatizar el agregado de monitoreo a un servicio.
+  &
+  No se requiere intervención manual para agregar monitoreo a un servicio.
+  \\  \addlinespace
+  Automatizar la configuración de los frontends.
+  &
+  No se requiere intervención manual para configurar un servicio en los frontends.
+  \\  \addlinespace
+  Escribir un documento que especifique el método de trabajo utilizando ramas de
+  vida corta e integración continua.
+  &
+  Se cuenta con un documento de referencia para el trabajo con el código.
+  \\  \addlinespace
+  Configurar un sistema de integración y entrega continua.
+  &
+  El servicio está disponible para ser utilizado.
+  \\  \addlinespace
+  Configurar una consola de operaciones
+  &
+  El servicio está disponible.
+  \\  \addlinespace
+  \bottomrule
+  \\
+  \end{tabular}
+  \caption{\captionStyle
+    Plan de trabajo para alcanzar el ``estado futuro'' de
+    las propuestas de mejora surgidas del análisis del flujo de valor.
+  }
+  \label{tbl:plan-trabajo}
+\end{table}
+%

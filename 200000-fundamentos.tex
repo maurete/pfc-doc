@@ -1,14 +1,136 @@
-%
-%
-%
-%
-\iflatexml{}\else\setcounter{chapter}{1}\fi%
-%
 \chapter{Fundamentos teóricos}
-%
-En este capítulo se brinda una introducción a los conceptos teóricos
-fundamentales del aprendizaje supervisado.
-Más adelante, en las secciones segunda y tercera se describen las
-técnicas del perceptrón multicapa y de la máquina de vectores de
-soporte, utilizadas en el presente trabajo para la generación de los
-clasificadores.
+
+DevOps es un movimiento cultural que busca mejorar el software como
+producto así como también la vida de quienes se dedican a su
+producción. Su propuesta es aplicar las prácticas y principios más
+fiables del mundo de la manufactura de productos físicos a las
+Tecnologías de la Información (TI)
+\cite{handbook}. Sus
+fundamentos provienen de áreas tales como \e{lean}\footnote{ El
+  adjetivo inglés \e{lean} (/li:n/) puede traducirse como ligero,
+  esbelto, despojado.} \cite{lean}, la teoría de
+las limitaciones
+\cite{thegoal}, el sistema de
+producción de Toyota
+\cite{toyota}, y el
+aprendizaje organizacional
+\cite{fifth}. El resultado
+es la producción de software de alta calidad, confiable, estable y
+seguro, en un ambiente de trabajo saludable y con un bajo costo
+económico.
+
+Entre los beneficios comúnmente atribuidos a una adopción de prácticas
+DevOps podemos citar
+\cite{awsdevops}:
+
+\begin{itemize}
+\item \e{Velocidad}: los equipos de desarrollo gestionan sus
+  servicios mediante la automatización de la infraestructura y la
+  integración continua.
+\item \e{Entrega rápida}: la reducción del tamaño de las
+  actualizaciones junto con la integración continua y la entrega
+  continua aumentan la velocidad de llegada de los requerimientos a
+  los clientes.
+\item \e{Confiabilidad}: la integración continua efectúa pruebas
+  del software constantemente haciendo que los problemas se detecten
+  antes. Las herramientas de monitoreo proveen retroalimentación
+  (\e{feedback}) sobre el funcionamiento del software.
+\item \e{Colaboración}: la cultura DevOps enfatiza valores como
+  la propiedad y la responsabilidad. Los equipos de desarrollo y de
+  operaciones colaboran estrechamente, comparten muchas
+  responsabilidades y combinan sus flujos de trabajo.
+\end{itemize}
+\section{Contexto histórico}
+
+Si bien el origen de DevOps se identifica en el movimiento
+\e{lean}, muchos lo reconocen como la continuación lógica de la
+propuesta del desarrollo ágil que revolucionó la ingeniería de
+software allá por 2001
+\cite{agilemanifesto}.
+
+A continuación se presenta un breve repaso de los contextos, los
+eventos, y las personas de los que surgieron las ideas que dan forma a
+la propuesta DevOps.
+
+\subsection{Los comienzos}
+
+En los comienzos, la persona encargada del desarrollo de software se
+encargaba también de su operación. Jean Bartik, programadora de la
+primera computadora de uso general ENIAC, aprendió a programarla a
+partir de sus diagramas de circuitos. Programar la computadora
+requería ajustar perillas y cambiar conexiones de cables, algo que hoy
+en día asociamos más a la idea de operación.
+
+Con el avance de las capacidades del hardware, éste pasó a dejar de
+ser un impedimento, lo cual posibilitó el desarrollo de software de
+mayor complejidad. Desde la década de los 60 hasta finales de los 80
+tuvo lugar la llamada \e{crisis del software}, en la que se
+identificaron los problemas del desarrollo. Esto dio origen a la
+disciplina de ingeniería de software, que estableció un marco teórico
+y propuso métodos para la producción del software.
+
+En los años 90, el auge de internet puso en evidencia los problemas de
+los métodos tradicionales de ingeniería de software: se necesitaba
+responder a las demandas de los usuarios con mayor rapidez. La
+operación del software en línea pasó de ser una tarea secundaria a un
+aspecto crítico.
+
+\subsection{El movimiento \e{lean}}
+
+En los años 80, el sistema de producción de Toyota inventó técnicas
+tales como el análisis del flujo de valor y los tableros de Kanban. En
+la década siguiente, estas ideas se expandieron a otras disciplinas
+gracias al movimiento \e{lean}.
+
+Dos creencias fundamentales en la cultura lean son que el tiempo de
+producción desde el inicio hasta el producto terminado es el mejor
+predictor de la calidad, la satisfacción del cliente y la felicidad de
+los empleados; y que la mejor forma de alcanzar tiempos cortos de
+producción es organizar el trabajo en lotes pequeños.
+
+Lean busca crear valor para el cliente aplicando el pensamiento
+científico, asegurando la calidad desde el origen, creando un flujo
+constante en la cadena de valor, con un liderazgo basado en la
+humildad y respetuoso de cada individuo.
+
+\subsection{El manifiesto ágil}
+
+En 2001 un grupo de críticos del desarrollo de software publicaron el
+``manifiesto para el desarrollo de software ágil''
+\cite{agilemanifesto}, el cual
+proponía un marco de trabajo con valores y principios ``livianos'' en
+contraposición a las metodologías formales tradicionales tales como el
+modelo de desarrollo en cascada. Un principio clave en este documento
+era ``realizar entregas funcionales del software con frecuencia,
+idealmente en un par de semanas''. Esta propuesta reforzaba el deseo de
+las entregas incrementales con ciclos de desarrollo cortos en
+contraste con las entregas grandes derivadas del modelo en
+cascada. Otros principios ponían énfasis en la necesidad de
+organizarse en equipos pequeños, motivados, bajo un modelo gerencial
+de alta confianza.
+
+Se reconoce en la adopción de metodologías ágiles un gran incremento
+en la productividad de muchas organizaciones desarrolladoras de
+software. Asimismo, muchos momentos clave en la historia de DevOps
+tuvieron lugar dentro de la comunidad ágil o en conferencias de
+desarrollo ágil.
+
+\subsection{El pase a la infraestructura ágil}
+
+El origen de DevOps puede quizá atribuirse a la presentación
+``\e{10 Deploys per Day: Dev and Ops Cooperation at Flickr}''
+(``\e{Más de 10 despliegues por día: cooperacion entre desarrollo
+  y operaciones en Flickr}'') de John Allspaw y Paul Hammond
+\cite{flickr} en la
+conferencia \e{Velocity 2009}, donde contaron cómo habían logrado
+crear objetivos en común entre los equipos de desarrollo
+(\e{Dev}) y operaciones (\e{Ops})
+(\iflatexml{}Figura~\ref{fig:devheartops}\else\autoref{fig:devheartops}\fi), y cómo
+implementaron las prácticas de integración continua de modo que las
+tareas de despliegue formaran parte del trabajo diario de todos. Los
+asistentes a la presentación cuentan que en ese momento comprendieron
+que estaban frente a un cambio histórico en el mundo de la producción
+de software. El impacto fue tal, que ese mismo año se organizó en
+Gante (Bélgica) la conferencia DevOpsDays. Allí surgió el nombre
+``DevOps''.
+

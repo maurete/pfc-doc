@@ -1,26 +1,200 @@
-%
-%
-%
 \chapter{Introducción}
-\setcounter{page}{1}
-%
-En el presente Informe se describe el desarrollo de un método para la
-clasificación de secuencias de \premirna{}, un tipo específico de
-cadenas ácido ribonucleico (\e{RNA}), mediante la utilización de
-perceptrones multicapa (\e{MLPs}) y máquinas de vectores de soporte
-(\e{SVMs}), técnicas desarrolladas en el ámbito de la Inteligencia
-Computacional para el aprendizaje automático (\e{machine learning}).
 
-La Inteligencia Computacional es la disciplina que estudia la
-aplicación de técnicas inspiradas en la naturaleza para resolver
-problemas computacionales.
-Dentro de su área de interés, la clasificación automática es una de
-las aplicaciones más difundidas.
-Las técnicas MLP y SVM utilizadas en el presente trabajo funcionan en
-un esquema de \e{aprendizaje supervisado}, generando ``modelos''
-capaces de discriminar entre diferentes tipos de datos a partir de
-ejemplos que se ``enseñan'' a la máquina.
-La identificación de secuencias de \premirna{s} --y de cadenas de
-ácidos nucleicos en general-- es una tarea que involucra grandes
-volúmenes de datos, imposibles de procesar manualmente, por lo que se
-recurre a las herramientas ofrecidas por el aprendizaje automático.
+Internet ha transformado la vida de las personas y el funcionamiento
+de las organizaciones. Hoy en día el software ya no se limita a
+funcionar como soporte del esquema de negocios en las empresas, sino
+que se ha convertido en un componente integral de cada aspecto del
+funcionamiento de las mismas. Más aún, el software está presente en
+innumerables aspectos de la vida cotidiana de las personas. Los
+usuarios confían en el buen funcionamiento de los servicios de
+software para llevar adelante su rutina diaria. Las organizaciones no
+escapan a esta realidad: cada vez más, el éxito de un proyecto viene
+dado por la capacidad de ofrecer servicios de software que satisfagan
+las exigencias de los usuarios.
+
+El principal desafío que enfrentan las organizaciones productoras de
+software es poder responder en tiempo y forma a las demandas de los
+usuarios. En muchas organizaciones, la entrega de una nueva
+funcionalidad se mide en meses o, en el mejor de los casos,
+semanas. En una visión clásica, el problema de la \e{entrega del
+  software} se responde aplicando \e{ingeniería del software}. Se
+consideran aspectos tales como la ingeniería de requerimientos, la
+planificación, el diseño, la codificación, el testing y la validación
+de requerimientos. En muchas organizaciones, incluso se utilizan
+metodologías ágiles muy productivas para administrar el
+desarrollo. Sin embargo, el software no puede considerarse
+\e{entregado} hasta no estar publicado y funcionando sobre una
+infraestructura bien configurada que le da soporte.
+
+Las prácticas DevOps surgieron en la industria del software como
+respuesta a la necesidad de entregar el software con mayor rapidez. En
+su aspecto más fundamental, DevOps intenta resolver el problema de la
+\e{entrega} del software desde un punto de vista global, desde
+que ingresa el requerimiento hasta que el software se encuentra
+operativo a los ojos del cliente. Aplicando una visión analítica de
+todas las etapas de la producción del software, con prácticas de
+mejora continua, automatización y una gestión en base a criterios
+cuantificables, la incorporación de prácticas DevOps permite alcanzar
+entregas de software confiables, rápidas y de bajo riesgo
+\cite{humblefarley}.
+
+\section{Motivación}
+
+El presente proyecto se origina dentro del área de infraestructura de
+la Dirección de Informatización y Planificación Tecnológica (DIPT) de
+la Universidad Nacional del Litoral (UNL). La Dirección se encarga de
+brindar servicios de software a la comunidad universitaria. El área de
+infraestructura está conformada por un equipo de cinco administradores
+de sistemas que, entre otras tareas, se encargan de la operación de
+los servicios de software ofrecidos por la Dirección.
+
+Desde hace un tiempo, el equipo de infraestructura ha emprendido la
+tarea de automatizar su trabajo escribiendo piezas de código que le
+permitieran reducir el tiempo invertido en tareas repetitivas. En
+forma simultánea, a partir de las demandas de los equipos de
+desarrollo se implementaron formas de lograr entornos reproducibles
+donde probar el software. Otro hito relevante para este proyecto puede
+identificarse en el momento que el equipo de infraestructura codificó
+scripts para permitir a los desarrolladores aplicar modificaciones en
+las bases de datos y actualizar las versiones de los servicios. De
+este modo, se logró ofrecer a los desarrolladores el ``autoservicio'' de
+dos de las operaciones más solicitadas, sin requerir intervención de
+los administradores.
+
+Estas acciones pusieron en evidencia los beneficios de fomentar la
+colaboración entre los equipos de desarrollo e infraestructura, ya que
+las mismas derivaron en menos frustraciones a la espera de la
+resolución de tickets, menos trabajo tedioso y canales de comunicación
+productivos entre ambos equipos. El trabajo realizado en este proyecto
+es la continuación lógica de estas acciones, y busca dar formalidad a
+la colaboración y la búsqueda de una cultura en común entre los
+diversos equipos de trabajo que forman parte de la Dirección.
+
+La principal motivación para el desarrollo de este proyecto fue la
+necesidad de aumentar la productividad de los equipos, particularmente
+en las áreas de desarrollo y de infraestructura. Se necesitaba reducir
+el nivel de ocupación de los individuos, ya que se había alcanzado un
+punto de saturación, lo que limitaba la capacidad de respuesta a los
+requerimientos y la implementación de mejoras.
+
+Desde la gerencia se determinaron además una serie de necesidades
+concretas a basadas en la política de gestión de la Dirección:
+
+\begin{itemize}
+\item Contar con un servicio de integración y entrega continuas.
+\item Generar una cultura en común entre los equipos, con especial
+  énfasis en la gestión del código fuente, los artefactos y las
+  operaciones.
+\item Disponer de herramientas que agilicen la comunicación interna y
+  canalicen las alertas.
+\end{itemize}
+\section{Objetivos}
+
+El objetivo general del proyecto es implementar en la DIPT prácticas y
+herramientas acordes a la filosofía DevOps para mejorar la gestión de
+los servicios de software. Esta implementación estará orientada hacia
+la automatización de procesos, la observabilidad en los servicios y la
+generación de una cultura en común entre los equipos de desarrollo e
+infraestructura.
+
+\subsection{Objetivos específicos}
+
+\begin{itemize}
+\item Identificar y solucionar deficiencias en la infraestructura en
+  general.
+\item Aplicar automatización en la infraestructura para eliminar
+  tareas repetitivas y ofrecer ``autoservicio'' de la infraestructura
+  que da soporte directo a los servicios de software
+  (aprovisionamiento de instancias y de capacidad de hardware).
+\item Implementar un servicio de integración y entrega continuas
+  (CI/CD).
+\item Analizar los servicios de software y generar una propuesta de
+  mejora que incluya la implementación de CI/CD, trabajando en
+  conjunto con los equipos de desarrollo involucrados.
+\item Implementar las herramientas necesarias para:
+\begin{itemize}
+\item \e{Aprovisionamiento}: gestionar la infraestructura.
+\item \e{Observabilidad}: visualizar métricas y logs (registros)
+  de los servicios.
+\item \e{Chat}: comunicación interna para los equipos.
+\end{itemize}
+\item Integrar el trabajo de los equipos de desarrollo y de
+  infraestructura sobre los servicios, unificando en un mismo
+  repositorio el código fuente del servicio y la configuración de la
+  infraestructura.
+\item Escribir documentación de buenas prácticas y capacitar a los
+  equipos involucrados para optimizar el flujo de trabajo en las
+  diferentes áreas.
+\end{itemize}
+\subsection{Beneficios de la implementación de DevOps en la DIPT}
+
+Se pretende que la implementación de prácticas DevOps en la Dirección
+permita alcanzar una gestión más ágil de los servicios de software,
+incrementar la comunicación entre los equipos y automatizar las
+operaciones permitiendo en general lograr una entrega más rápida de
+valor a los usuarios. En particular, se espera alcanzar mejoras en los
+siguientes aspectos de la gestión del software:
+
+\begin{itemize}
+\item Reducción del tiempo de entrega de las nuevas funcionalidades.
+\item Reducción del nivel de estrés de los equipos.
+\item Incremento de la calidad del software entregado.
+\item Generación de una cultura en común entre los diferentes equipos
+  de desarrollo y de infraestructura.
+\item Mejoras en la comunicación entre los equipos, con herramientas
+  específicas y procedimientos bien definidos.
+\item Cultura de responsabilidad compartida del funcionamiento de los
+  servicios entre los desarrolladores y el equipo de operaciones.
+\item Simplificar y agilizar las tareas de operaciones, avanzando
+  hacia un esquema de ``autoservicio'' de la infraestructura para los
+  equipos de desarrollo y testing.
+\end{itemize}
+Además la implementación de DevOps sentará las bases para, en un
+futuro:
+
+\begin{itemize}
+\item Desarrollar aplicaciones escalables según demanda y
+  requerimientos.
+\item Independizar los servicios de la infraestructura subyacente, en
+  particular de las diferentes tecnologías de virtualización y de los
+  proveedores de cómputo y almacenamiento.
+\end{itemize}
+\section{Alcance}
+
+El desarrollo de este proyecto es el puntapié inicial para formalizar
+la adopción de la metodología DevOps en la DIPT. Dada la diversidad
+encontrada entre los diferentes equipos y servicios dentro de la
+Dirección, no se pretende efectuar una transformación radical: esto
+iría en contra de los principios de DevOps. En cambio, se busca
+alcanzar una implementación progresiva sobre los servicios conforme
+aumente el grado de adopción de las nuevas herramientas y se
+fortalezca la cultura en común.
+
+\section{Exclusiones}
+
+En el desarrollo del proyecto no se pretende modificar las
+metodologías actuales de ingeniería de requerimientos o la ingeniería
+del software más allá de recomendaciones de la gestión del código
+fuente. El proyecto se centra en la implementación de herramientas
+tecnológicas para agilizar los procesos y la capacitación en el uso de
+las mismas. El proyecto no desarrolla en forma explícita los cambios
+culturales propuestos por DevOps, ya que los mismos surgirán con el
+paso del tiempo, conforme avance el grado de adopción de las nuevas
+prácticas y de las herramientas a implementar.
+
+\section{Restricciones}
+
+\begin{itemize}
+\item Software libre: la reglamentación de la Organización impide la
+  contratación y/o despliegue de software considerado restrictivo, por
+  lo que las herramientas a utilizar deberán ser de licencia libre
+  \cite{unllibre}.
+\item En premisas: las soluciones propuestas deberán estar alojadas en
+  premisas de la Organización.
+\item Se requiere utilizar Git como herramienta de control de
+  versiones del código fuente.
+\item Se mantendrá la herramienta actual de gestión de proyectos
+  Redmine.
+\item Dado el grado de adopción actual, se requiere utilizar Ansible
+  como herramienta de gestión automatizada de la configuración.
+\end{itemize}

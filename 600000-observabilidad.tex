@@ -1,0 +1,270 @@
+\chapter{6 Observabilidad y comunicación}
+
+La propuesta DevOps enfatiza la necesidad de acelerar la
+\e{retroalimentación} mediante canales de comunicación eficientes
+para los equipos de trabajo y herramientas adecuadas para la medición
+del funcionamiento de los servicios.
+
+Si bien la Dirección cuenta con medios de comunicación formales tales
+como el e-mail y el sistema de gestión de proyectos, se observó que el
+intercambio de información en el trabajo diario se encontraba disperso
+entre éstos, la comunicación oral y las herramientas de mensajería
+instantánea tales como Google Hangouts y WhatsApp. Esta diversidad de
+canales de comunicación dificulta el acceso a la información e
+incrementa el nivel de estrés de los individuos. Para atacar esta
+problemática se planteó como objetivo explícito del Proyecto la
+implementación de un servicio de chat para uso interno.
+
+Se trabajó además en la implementación de herramientas para aumentar
+la observabilidad de los servicios. Se diseñó una arquitectura para la
+recolección, almacenamiento y visualización de métricas y eventos, y
+se configuró una interfaz de visualización de los registros
+(\e{logs}) de los servicios.
+
+Por último, se describe el trabajo efectuado para la implementación de
+un servicio de \e{consola de operaciones}, una tarea que no
+resultó exitosa.
+
+\section{Servicio de chat}
+
+Para la implementación del servicio de chat se consideraron las
+herramientas de código abierto Gitter y Mattermost. Gitter\footnote{
+  \href{https://gitter.im/}{https://gitter.im/}} es es una herramienta
+de chat ofrecida por los desarrolladores de GitLab con un enfoque
+orientado a la creación de comunidades. Mattermost\footnote{
+  \href{https://mattermost.com/}{https://mattermost.com/} }, por su
+parte, se posiciona como una herramienta para la comunicación interna
+de los equipos de trabajo (teams) en entornos empresariales, y es la
+alternativa de software libre al servicio comercial ofrecido por
+Slack. Ambas herramientas ofrecen funcionalidades similares:
+salas/canales de chat, mensajes directos, notificaciones, bots y
+comandos.
+
+En primera instancia se desplegaron ambas herramientas en entornos de
+prueba para su evaluación. Finalmente se decidió implementar
+Mattermost dado que su configuración resultó más sencilla y la
+interfaz web más amigable que Gitter.
+
+La implementación definitiva de Mattermost se realizó escribiendo el
+código Ansible necesario para la configuración del servicio. Esta
+configuración incluye la autenticación de los usuarios a través de
+GitLab.
+
+Se creó un canal de chat denominado ``Actividad'' en el cual se publican
+automáticamente los eventos de lanzamiento de un trabajo de AWX y su
+resultado. También se configuraron notificaciones de eventos de GitLab
+a modo de prueba en algunos servicios.
+
+\section{Servicio de análisis de registros (logs)}
+
+La Dirección cuenta con un servicio interno de recolección y
+almacenamiento de registros (\e{logs}) para todos los
+servicios. Cada instancia cuenta con un agente (\e{filebeat}) que
+recopila y envía los registros a un servidor centralizado denominado
+\e{logserver}. Los desarrolladores y operadores de los servicios
+se conectan al servidor central \e{logserver} vía SSH, y
+visualizan los registros utilizando herramientas de línea de comandos
+pueden visualizar el contenido de los logs. La forma de acceso vía SSH
+presenta una serie de inconvenientes tales como la configuración
+manual de los usuarios y sus permisos y la necesidad de establecer
+múltiples conexiones para visualizar registros en simultáneo.
+
+Con el propósito de dar mayor accesibilidad a los registros es que se
+decidió implementar un servicio de análisis de registros, que permita
+visualizar y filtrar los registros en tiempo real, así como también
+efectuar búsquedas sobre los mismos.
+
+Se evaluaron las herramientas de código abierto Kibana y
+Graylog. Ambas ofrecen una interfaz web para visualizar los registros
+en tiempo real y efectuar búsquedas eficientes mediante el motor de
+búsqueda Elasticsearch.
+
+Luego de una implementación de prueba inicial, se optó por la
+implementación de Graylog a partir de los siguientes criterios:
+
+\begin{itemize}
+\item La interfaz de Graylog está orientada al análisis de registros,
+  mientras que la de Kibana se enfoca en el procesamiento de flujos de
+  información textual en general.
+\item Graylog ofrece una interfaz API para recibir y guardar registros
+  de logs, de potencial utilización directa para registrar eventos por
+  parte de los servicios desarrollados en la DIPT.
+\item Graylog permite utilizar el directorio LDAP ya existente para la
+  autenticación y autorización de los usuarios, mientras que Kibana
+  sólo ofrece autenticación y autorización básicas.
+\end{itemize}
+La configuración del servicio se basó en la guía oficial de
+instalación\footnote{
+  \href{https://docs.graylog.org/en/3.1/pages/installation/docker.html}{https://docs.graylog.org/en/3.1/pages/installation/docker.html}
+} y se guardó como código en un repositorio GitLab. Se utilizó la
+herramienta Ansible para el despliegue del nuevo servicio.
+
+\includegraphics[width=6.21in,height=3.39in]{img_9.png}
+
+
+\e{Figura 6.1. Diagrama de la arquitectura de recolección,
+  almacenamiento y visualización de registros. A la infraestructura
+  preexistente se acopló el servicio Graylog, que ofrece visualización
+  de los registros en tiempo real y un servicio de indexación y
+  búsqueda sobre los mismos.}
+
+\includegraphics[width=6.5in,height=3.88in]{img_10.png}
+
+
+\e{Figura 6.2. La interfaz gráfica de Graylog ofrece
+  visualización en tiempo real, con un campo de búsqueda para el
+  filtrado de los registros y selección de los campos a visualizar.}
+
+\section{Servicio de métricas}
+
+La necesidad de implementar un servicio de métricas surge como
+respuesta a dos necesidades de la organización. La primera necesidad
+es contar con una herramienta que permita visualizar y correlacionar
+métricas de los servicios a partir de múltiples fuentes. Esto permite
+visualizar, por ejemplo, un evento de despliegue en un servicio y la
+cantidad de mensajes de error generados por éste. La otra necesidad se
+relaciona con las limitaciones del servicio de monitoreo Zabbix.
+
+En la Dirección se utiliza el software Zabbix como servicio de
+monitoreo. El mismo ha demostrado ser una herramienta fiable y de buen
+desempeño para monitorear las métricas básicas de los servicios tales
+como la carga, el uso de memoria y la disponibilidad. Cuenta con un
+módulo de alertas que notifica a los equipos responsables ante
+cualquier eventualidad.
+
+Las limitaciones de Zabbix se ponen en evidencia cuando se requiere
+trabajar con métricas de más alto nivel. Si bien el mismo permite
+utilizarlas, su configuración es muy compleja, impactando en la
+mantenibilidad del servicio. Como ejemplo de este tipo de métricas
+podemos citar: número de usuarios conectados a un servicio, cantidad
+de transacciones registradas, códigos de respuesta HTTP de un servicio
+o utilización de la memoria \e{heap} dentro de la máquina virtual
+de Java.
+
+\subsection{Arquitectura}
+
+La solución implementada como servicio de métricas consta de tres
+componentes. El primero es una base de datos de series de tiempo
+(time-series database)\footnote{ Una base de datos de series de tiempo
+  es un tipo de base de datos especializada en el almacenamiento de
+  datos que evolucionan con el tiempo. } encargada de recibir las
+mediciones, almacenarlas, y ofrecer una interfaz programática (API)
+para su consulta. El segundo componente es una interfaz de
+visualización de datos provenientes de múltiples fuentes. El tercer
+componente de esta arquitectura es un \e{agente} que se ejecuta
+en las instancias y se encarga de recopilar y enviar las métricas
+hacia el servidor de base de datos.
+
+Tal como fue implementado, el servicio de métricas se limita a
+funcionar como complemento de los servicios de observabilidad
+existentes, permitiendo generar tableros de visualización con métricas
+de diversos orígenes. La arquitectura resultante tiene ciertas
+funcionalidades duplicadas, pero se deja como trabajo a futuro la
+racionalización de la misma. En la Figura 6.3 se presenta un diagrama
+de la arquitectura del servicio de métricas.
+
+\includegraphics[width=5.35in,height=4.42in]{img_11.png}
+
+\e{Figura 6.3. Arquitectura del nevo servicio de métricas y otros
+  servicios relacionados. En cada servicio se ejecutan tres agentes:
+  Telegraf (métricas de alto nivel), Filebeat (registros) y Zabbix
+  (métricas básicas). Los agentes envían la información recolectada a
+  InfluxDB, Graylog y Zabbix, respectivamente. Grafana permite la
+  visualización de los datos provenientes de los tres servicios en
+  forma simultánea.}
+
+\subsection{Base de datos de series de tiempo}
+
+Para la implementación de la base de datos de series de tiempo se
+consideraron los ofrecimientos de Prometheus\footnote{
+  \href{https://prometheus.io/}{https://prometheus.io/} } e
+InfluxDB\footnote{
+  \href{https://www.influxdata.com/}{https://www.influxdata.com/}
+}. Si bien ambos ofrecen funcionalidades similares, se optó por la
+implementación de InfluxDB debido a su mejor capacidad para el manejo
+de datos textuales\footnote{
+  \url{https://prometheus.io/docs/introduction/comparison/\#prometheus-vs-influxdb}{https://prometheus.io/docs/introduction/comparison/\#prometheus-vs-influxdb}
+} así como su simplicidad de instalación y configuración.
+
+La implementación se efectuó escribiendo el código Ansible necesario y
+desplegando el servicio en la infraestructura. Al tratarse de un nuevo
+tipo de base de datos, fue necesario codificar un script para efectuar
+el proceso de backup, de acuerdo a la política de resguardo de datos
+de la Dirección.
+
+\subsection{Visualización}
+
+Como servicio de visualización se adoptó el software Grafana\footnote{
+  \href{https://grafana.com/}{https://grafana.com/} }, una herramienta
+orientada a la creación de tableros (dashboards) que permiten
+visualizar datos provenientes de distintas fuentes, entre los que se
+incluyen Zabbix, InfluxDB y Graylog\footnote{ Estrictamente, Grafana
+  no utiliza Graylog como origen de datos, sino Elasticsearch, el
+  motor de indexación y búsqueda utilizado por Graylog como
+  \e{backend}.}. La decisión de utilizar Grafana frente a otras
+alternativas se basó en el hecho que el equipo de infraestructura
+cuenta con experiencia previa en su utilización.
+
+El aprovisionamiento del servicio se efectuó utilizando Ansible y
+Docker Compose, guardando el código respectivo en un repositorio de
+GitLab.
+
+En la Figura 6.4 se muestra un tablero en utilización que muestra
+métricas obtenidas de diversas fuentes.
+
+\includegraphics[width=6.5in,height=4.06in]{img_12.png}
+
+
+\e{Figura 6.4. Ejemplo de un tablero de visualización de
+  Grafana. La fila superior muestra las métricas del servicio HTTP
+  obtenidas del servidor de frontend. La fila del medio muestra las
+  métricas obtenidas desde la instancia. Los gráficos de la fila
+  inferior se obtienen desde el sistema de monitoreo Zabbix y también
+  del nuevo servicio de métricas.}
+
+\subsection{Agente}
+
+Se configuró en las instancias el software Telegraf, un agente para la
+recolección y envío de métricas provisto por los desarrolladores de
+InfluxDB. Este agente se encarga de recolectar las métricas de alto
+nivel y enviarlas a la base de datos InfluxDB. La configuración se
+realizó editando el código del rol Ansible que contiene la
+configuración básica de todas las instancias de la infraestructura. De
+este modo, el agente puede habilitarse de manera sencilla en todas las
+instancias.
+
+\section{Consola de operaciones}
+
+Para la implementación de una consola de operaciones, se evaluaron las
+herramientas Rundeck\footnote{
+  \href{https://www.rundeck.com/open-source}{https://www.rundeck.com/open-source}
+} y StackStorm\footnote{
+  \href{https://stackstorm.com/}{https://stackstorm.com/} }.
+
+El funcionamiento de Rundeck se organiza en torno a la ``Ejecución'' de
+``Trabajos'' en ``Nodos'', respetando un esquema de permisos y guardando
+registro de las acciones ejecutadas por cada usuario. Los ``Trabajos''
+se pueden parametrizar con variables, lo cual permite ejecutar scripts
+de forma segura y controlada. La interfaz de Rundeck es amigable e
+intuitiva, pero también tiene grandes falencias. Por ejemplo, para la
+definición de un nuevo nodo se debe generar un archivo XML y cargarlo
+mediante la interfaz gráfica. Esta falencia fue determinante para
+decidir que Rundeck no se ajusta a las necesidades de la Organización.
+
+En cuanto a StackStorm, su funcionalidad se orienta a ejecutar
+``Acciones'' como respuesta ante ``Eventos'' de diversos tipos, tales como
+un mensaje en un canal de chat o un disparador/alerta del sistema de
+monitoreo. Si bien permite ejecutar comandos como una acción manual,
+ésta no es su funcionalidad principal.
+
+En las pruebas efectuadas se ha determinado que tanto Rundeck como
+StackStorm son herramientas con mucho potencial para avanzar en el
+camino de la automatización de las operaciones. Sin embargo, su
+integración y utilización en el entorno actual de la Organización
+resultó ser demasiado compleja en ambos casos. Este riesgo estaba
+contemplado en la Propuesta del Proyecto presentada oportunamente.
+
+Ante esta situación, se ha determinado que, por el momento, resulta
+conveniente mantener la forma actual de efectuar las operaciones sobre
+los servicios, dejando como un trabajo a futuro la implementación de
+estas herramientas.
