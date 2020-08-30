@@ -25,7 +25,7 @@ tikzfigs = $(shell ls figures/*/*.tikz.tex | sed 's/.tikz.tex//')
 cc = rubber -m xelatex --unsafe
 
 # compilador para imagenes tikz
-tikzcc = $(cc)
+tikzcc = xelatex
 
 #
 crtf = latex2rtf

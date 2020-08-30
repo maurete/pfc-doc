@@ -1,0 +1,50 @@
+\section{Actualización de los repositorios}
+
+Como parte de las tareas de adecuación de la infraestructura, se
+actualizaron el repositorio de código GitLab y el repositorio de
+artefactos Nexus. Ninguno de los dos servicios contaba con la
+configuración escrita como código Ansible, ya que su implementación
+fue anterior a la adopción de esta herramienta.
+
+\subsection{Repositorio de código GitLab}
+
+Se decidió actualizar el repositorio de código GitLab para corregir
+vulnerabilidades y aprovechar las nuevas características ofrecidas por
+sus desarrolladores. Como parte de estas actualización se implementó
+además el código Ansible necesario para gestionar la infraestructura
+del servicio. Este código permitió la configuración del servicio de
+\e{runners} que es utilizado para la ejecución de los procesos
+automáticos de integración y entrega continuas.
+
+Se actualizó el software desde la versión 9.4 hasta la 13.1. Para
+aplicar las actualizaciones se utilizaron las herramientas provistas
+por el fabricante. El proceso se realizó de manera incremental,
+migrando entre versiones mayores consecutivas hasta alcanzar la
+versión actual. Durante las actualizaciones el servicio estuvo fuera
+de línea.
+
+\subsection{Repositorio de artefactos Nexus}
+
+El repositorio de artefactos Sonatype Nexus funcionaba en su versión
+2, la cual no recibe más soporte por parte del desarrollador. El
+proceso fue más complejo que en el caso de GitLab, ya que la migración
+de datos entre las versiones 2 y 3 no es automática. La secuencia de
+pasos a continuación describen el proceso efectuado.
+
+\begin{itemize}
+\item El primer paso fue actualizar el servicio a la última versión de
+  la serie 2. Para ello se escribió código Ansible, el cual fue
+  probado en un entorno de test. Una vez ajustado el procedimiento, se
+  aplicaron los cambios en el entorno de producción.
+\item El segundo paso fue escribir código Ansible para la
+  configuración de la versión 3. Se aplicó este código de modo que
+  ambas versiones funcionaran en la instancia en forma simultánea.
+\item Se realizó la migración entre versiones siguiendo el proceso
+  explicado la documentación del desarrollador.
+\item Se eliminó la instalación correspondiente a la versión 2 y se
+  ajustó el código Ansible para que utilice la vesión 3.
+\end{itemize}
+Una vez actualizado el repositorio, se descubrió que la nueva versión
+introdujo cambios incompatibles en su interfaz API. Por ello fue
+necesario corregir los scripts de operaciones que utilizan
+funcionalidades de esta interfaz.

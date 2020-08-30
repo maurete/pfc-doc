@@ -1,4 +1,4 @@
-\chapter{3 Análisis de la organización}
+\chapter{Análisis de la organización}
 
 La Dirección de Informatización y Planificación Tecnológica (DIPT) es
 el área de la Universidad Nacional del Litoral (UNL) encargada de
@@ -167,33 +167,71 @@ uno de los entornos de integración, test y producción:
 \item Configurar monitoreo: se agrega el host al servicio Zabbix
   invocando un script específico de línea de comandos.
 \end{enumerate}
-La Tabla 1.1 detalla el análisis del flujo de valor para la
+La \iflatexml{}Tabla~\ref{tbl:servicio-inicial}\else\autoref{tbl:servicio-inicial}\fi
+detalla el análisis del flujo de valor para la
 habilitación de un nuevo servicio. Los tiempos de espera son estimados
 para tareas con prioridad normal. Los tiempos de ejecución son
 estimados a partir de la experiencia de los actores involucrados.
 
-\begin{tabular}{|l|l|l|l|}
-\hline Actor & Tarea & Espera & Ejecución \\ \hline Dev & Solicitar
-servicio en Pulmo & & 15min \\ \hline Ops & Escribir código Ansible &
-1h & 1h-8h \\ \hline \e{- entorno local creado -} & & & \\ \hline
-Ops & Crear entradas en DNS y DHCP & & 10min \\ \hline Ops & Crear
-instancias & & 20min \\ \hline Ops & Crear claves & & 20min \\ \hline
-Ops & Ejecutar playbook Ansible & & 30min \\ \hline Ops & Configurar
-frontend & & 10min \\ \hline Ops & Configurar monitoreo & & 20min
-\\ \hline \e{- entornos de integración y test creados -} & & &
-\\ \hline Dev/Ops & Depuración de la configuración & 30d & 30min-3h
-\\ \hline Dev & Solicitud de pase a producción & 1h & 5min \\ \hline &
-Crear/verificar hosts (DNS, DHCP) & 1h & 10min \\ \hline & Crear
-instancia de producción & & 20min \\ \hline & Crear claves & & 20min
-\\ \hline & Ejecutar playbook Ansible & & 30min \\ \hline & Configurar
-servicio de backup & & 15min \\ \hline & Configurar frontend & & 10min
-\\ \hline & Configurar monitoreo & & 20min \\ \hline \e{- entorno
-  de producción creado -} & & & \\ \hline Total & & 30d 3h & 3h-15h
-\\ \hline Total (excluyendo espera de pase a producción) & & 3h &
-3h-15h \\ \hline
-\end{tabular}
-\e{Tabla 1.1 Análisis del flujo de valor para el proceso de
-  creación de un nuevo servicio.}
+%
+\begin{table}[h]
+  \tableStyle
+  \smaller
+  \iflatexml%
+  \begin{tabular}{llrr}
+  \else%
+  \sisetup{
+      table-format = 2.1(2),
+      table-number-alignment = right,
+      separate-uncertainty=true,
+      %uncertainty-separator = \,\smaller
+  }
+  \begin{tabular}{llrr}
+  \fi%
+  \toprule 
+  Actor & Tarea & Espera & Ejecución \\
+  \midrule
+  Dev & Solicitar servicio en Pulmo & & 15min \\
+  Ops & Escribir código Ansible & 1h & 1h-8h \\
+  \addlinespace
+  \mcol{4}{c}{ \e{entorno local creado} } \\
+  \addlinespace
+  Ops & Crear entradas en DNS y DHCP & & 10min \\
+  Ops & Crear instancias & & 20min \\
+  Ops & Crear claves & & 20min \\
+  Ops & Ejecutar playbook Ansible & & 30min \\
+  Ops & Configurar frontend & & 10min \\
+  Ops & Configurar monitoreo & & 20min \\
+  \addlinespace
+  \mcol{4}{c}{ \e{entornos de integración y test creados} } \\
+  \addlinespace
+  Dev/Ops & Depuración de la configuración & 30d & 30min-3h \\
+  Dev & Solicitud de pase a producción & 1h & 5min \\
+  & Crear/verificar hosts (DNS, DHCP) & 1h & 10min \\
+  & Crear instancia de producción & & 20min \\
+  & Crear claves & & 20min \\
+  & Ejecutar playbook Ansible & & 30min \\
+  & Configurar servicio de backup & & 15min \\
+  & Configurar frontend & & 10min \\
+  & Configurar monitoreo & & 20min \\
+  \addlinespace
+  \mcol{4}{c}{ \e{entorno de producción creado} } \\
+  \addlinespace
+  \midrule
+  Total & & 30d 3h & 3h-15h \\
+  \addlinespace
+  \mcol{2}{l}{Total (excluyendo espera de pase a producción)} & 3h & 3h-15h \\
+  \bottomrule
+  \\
+  \end{tabular}
+  \caption{\captionStyle
+    Análisis del flujo de valor para el proceso de creación de un
+    nuevo servicio.
+  }
+  \label{tbl:servicio-inicial}
+\end{table}
+%
+
 
 \subsection{Entrega de un nuevo requerimiento}
 
@@ -235,25 +273,57 @@ hasta la publicación de la nueva versión del servicio en producción.
 \item Cuando el usuario confirma la nueva funcionalidad, el
   responsable del proyecto actualiza el entorno de producción.
 \end{enumerate}
-En la Tabla 1.2 se describe el análisis del flujo de valor para este
+En la \iflatexml{}Tabla~\ref{tbl:entrega-inicial}\else\autoref{tbl:entrega-inicial}\fi
+se describe el análisis del flujo de valor para este
 proceso. Los tiempos de espera estipulados se refieren a tareas con
 prioridad normal. Los tiempos de ejecución se estimaron según la
 experiencia de los desarrolladores.
 
-\begin{tabular}{|l|l|l|l|}
-\hline Actor & Tarea & Espera & Ejecución \\ \hline Cliente & Ingresa
-requerimiento & & \\ \hline Dev & Reunión del sprint & 0-5d & 30min
-\\ \hline Dev & Crear rama de trabajo & & 5min \\ \hline Dev &
-Codificar solución & 1h-5d & 2h-10h \\ \hline Dev & Cierre de versión
-(testing, publicación) & 5d & 40min \\ \hline Dev & Despliegue en
-integración & & 10min \\ \hline Dev & Confirmación de integraciones &
-2h & 1h \\ \hline Dev & Despliegue en test & & 10min \\ \hline Cliente
-& Test de aceptación & 1h & 20min \\ \hline Dev & Despliegue en
-producción & 1h & 20min \\ \hline Total & & 6d - 16d & 5h - 13h
-\\ \hline
-\end{tabular}
-\e{Tabla 1.2 Análisis del flujo de valor para el proceso de
-  entrega de un nuevo requerimiento.}
+
+
+
+%
+\begin{table}[h]
+  \tableStyle
+  \smaller
+  \iflatexml%
+  \begin{tabular}{llrr}
+  \else%
+  \sisetup{
+      table-format = 2.1(2),
+      table-number-alignment = right,
+      separate-uncertainty=true,
+      %uncertainty-separator = \,\smaller
+  }
+  \begin{tabular}{llrr}
+  \fi%
+  \toprule 
+  Actor & Tarea & Espera & Ejecución \\
+  \midrule
+  Cliente & Ingresa requerimiento & & \\
+  Dev & Reunión del sprint & 0-5d & 30min \\
+  Dev & Crear rama de trabajo & & 5min \\
+  Dev & Codificar solución & 1h-5d & 2h-10h \\
+  Dev & Cierre de versión (testing, publicación) & 5d & 40min \\
+  Dev & Despliegue en integración & & 10min \\
+  Dev & Confirmación de integraciones & 2h & 1h \\
+  Dev & Despliegue en test & & 10min \\
+  Cliente & Test de aceptación & 1h & 20min \\
+  Dev & Despliegue en producción & 1h & 20min \\
+  \addlinespace\midrule
+  Total & & 6d - 16d & 5h - 13h \\
+  \bottomrule
+  \\
+  \end{tabular}
+  \caption{\captionStyle
+    Análisis del flujo de valor para el proceso de entrega de un nuevo
+    requerimiento.
+  }
+  \label{tbl:entrega-inicial}
+\end{table}
+%
+
+
 
 \section{Propuestas de mejora}
 

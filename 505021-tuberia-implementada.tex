@@ -1,0 +1,145 @@
+La tubería implementada es similar a la tubería teórica, aunque con
+menos tareas de testing. Al igual que aquella, un push del código al
+servidor GitLab dispara la ejecución de la tubería. Una tarea fallida
+aborta la ejecución de la tubería completa.
+
+\subsubsection{1 Etapa de construcción del código}
+
+Entorno de ejecución: contenedor Docker del servicio CI/CD.
+
+\begin{enumerate}
+\item \textbf{Verificar que la versión no ha sido publicada}.
+\item \textbf{Compilar la aplicación}.
+\item \textbf{Ejecutar tests unitarios}.
+\item \textbf{Ejecutar tests de integración}.
+\item \textbf{Empaquetar la aplicación}. Se genera el artefacto para
+  el despliegue y se conserva el mismo en una ubicación temporal.
+\end{enumerate}
+\subsubsection{2 Etapa de verificación}
+
+Entorno de ejecución: contenedor Docker del servicio CI/CD, con
+servidor de aplicación integrado y acceso a la base de datos.
+
+\begin{enumerate}
+\item \textbf{Configurar el entorno de testing local}.
+\item \textbf{Desplegar la aplicación}.
+\item \textbf{Tests de integración de sistemas}.
+\end{enumerate}
+\subsubsection{3 Publicación}
+
+En el caso que el disparador de la tubería haya sido un cambio sobre
+la rama principal (\e{master}), se publica el paquete de la
+aplicación al repositorio de artefactos y se genera la etiqueta de
+versión correspondiente en el repositorio Git.
+
+\subsubsection{4 Despliegue en el entorno para tests de integración de sistemas}
+
+Esta acción requiere aprobación manual, típicamente de un
+desarrollador. Permite actualizar la aplicación en el entorno de
+\e{integración} para que otros sistemas puedan validar sus
+integraciones.
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Despliegue de aplicación}.
+\end{enumerate}
+\subsubsection{5 Despliegue en el entorno para tests de aceptación de usuario}
+
+Esta acción requiere aprobación manual. Es idéntica a la de la tubería
+teórica, pero excluye las pruebas de humo.
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Despliegue de aplicación}.
+\end{enumerate}
+\subsubsection{6 Despliegue en el entorno de producción}
+
+También se trata de una acción de aprobación manual. Aplican las
+mismas consideraciones que en la tubería teórica, siendo la única
+diferencia que no se ejecutan pruebas de humo.
+
+\begin{enumerate}
+\item \textbf{Configurar entorno}.
+\item \textbf{Despliegue de aplicación}.
+\end{enumerate}
+\section{Dificultades encontradas en la implementación}
+
+La implementación de las tuberías en los servicios resultó una tarea
+de una complejidad mucho mayor a la prevista en el plan de
+trabajo. Estas dificultades impactaron retrasando el desarrollo del
+Proyecto. A continuación se presenta una revisión de los problemas
+encontrados a la hora de implementar tuberías de integración y entrega
+continuas en los servicios.
+
+\subsection{Generación de imágenes Docker}
+
+Las imágenes de Docker son entornos de ejecución aislados y
+reproducibles, generados a partir de una especificación de
+configuración como código basada en un lenguaje de dominio
+específico. Cuando una imagen de Docker es instanciada para su
+ejecución, se crea un contenedor que incluye el contenido de la imagen
+asociado a recursos específicos tales como la memoria asignada y los
+recursos de red. Las imágenes de Docker pueden construirse en base a
+otras imágenes ya existentes, lo cual ofrece una gran flexibilidad de
+adaptación a los requerimientos de cada aplicación.
+
+Dicho esto, también resulta cierto que los entornos Docker son
+limitados por diseño. Por ejemplo, dentro de un contenedor se permite
+la ejecución de un único proceso, a contramano de lo que sucede en las
+instancias virtualizadas, que ejecutan un sistema operativo completo.
+
+A la hora de configurar los entornos de Docker para la ejecución de
+las tareas de CI/CD, se optó por generar entornos que se adaptaran a
+los requerimientos del proceso de construcción del código y las
+pruebas, en lugar de adaptar los procesos a un entorno limitado como
+Docker. Esta decisión significó realizar un gran esfuerzo en la
+generación de imágenes de Docker personalizadas.
+
+La creación de cada imagen de Docker implicó la creación de un
+repositorio específico para el código de la misma. Estos repositorios
+incorporan a su vez sus propias pipelines de integración y entrega
+continuas, encargadas de generar las imágenes y publicarlas en el
+repositorio público Docker Hub. Las imágenes de Docker creadas fueron
+las siguientes:
+
+\begin{itemize}
+\item diptunl/debian: sistema operativo Debian de base con
+  herramientas y configuraciones estándares requeridas por los
+  servicios de la DIPT. Incluye configuración de locales, hora y
+  fecha, y certificados SSL.
+\item diptunl/java: basada en diptunl/debian, incorpora la máquina
+  virtual OpenJDK configurada con opciones de ejecución adaptadas a
+  los servicios de la DIPT e incorpora los certificados SSL al
+  depósito de claves de Java.
+\item diptunl/gradle: se basa en diptunl/java y contiene la
+  herramienta Gradle.
+\item diptunl/maven: se basa en diptunl/java y contiene la herramienta
+  Maven.
+\item diptunl/wildfly: basada en diptunl/java, diptunl/gradle y
+  diptunl/maven, posee un servidor Wildfly que incluye un driver para
+  conectarse a PostgreSQL y está parametrizado para los servicios Java
+  de la DIPT.
+\item diptunl/postgres: basada en diptunl/debian, posee un servidor
+  PostgreSQL que soporta el esquema de nombres y permisos utilizados
+  en la DIPT.
+\end{itemize}
+Esta arquitectura de imágenes de Docker fue evolucionando conforme se
+avanzó con la implementación de las tuberías de cada servicio.
+
+\subsection{Falta de documentación}
+
+Otro de los grandes problemas encontrados a la hora de la
+implementación de las tuberías fue la falta de documentación de los
+procesos, configuraciones y comandos necesarios para poder compilar
+las aplicaciones y ejecutar los tests. En particular los tests de
+integración de sistemas, los cuales fueron diseñados únicamente para
+soportar el caso de uso de la ejecución local en la PC del
+desarrollador. Estos inconvenientes impactaron en la implementación de
+las tuberías generando retrasos debidos a las situaciones de prueba y
+error, y de ingeniería inversa a partir de la inspección del código
+fuente.
+
+Como un aspecto positivo, debido a estos problemas se incorporaron
+modificaciones al código fuente de la aplicación, incluyendo
+documentación e incorporando soporte de parametrizaciones para que los
+procesos de testing fueran más flexibles.

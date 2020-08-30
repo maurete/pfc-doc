@@ -92,6 +92,11 @@
 \iflatexml
 \else
 \usetikzlibrary{external}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shapes}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations,decorations.text} %  decorations.text just 4 fun
+\usetikzlibrary{fit}
 \tikzexternalize[mode=no graphics] % generar archivos de imagenes con las figs
 \fi
 
@@ -143,11 +148,6 @@
 
 %% Verbatims con fomato lindo
 \usepackage{fancyvrb}
-% interpretar \ como un comando dentro del verbatim
-\iflatexml
-\else
-\fvset{fontsize=\footnotesize,commandchars=\\\{\}}
-\fi
 
 %% \usepackage{glossaries}
 %% \makeglossaries
@@ -162,6 +162,12 @@
 
 %% % tabulars mejorados (no mantenido desde 2011!)
 %% \usepackage{tabu}
+
+% para crear apéndice
+\usepackage[header,titletoc,title]{appendix}
+
+% para insertar pdfs externos dentro del documento(apéndice)
+\usepackage{pdfpages}
 
 % matemáticas -----------------------------------------------------------------
 

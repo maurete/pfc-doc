@@ -1,0 +1,35 @@
+\section{Consola de operaciones}
+
+Para la implementación de una consola de operaciones, se evaluaron las
+herramientas Rundeck\footnote{
+  \href{https://www.rundeck.com/open-source}{https://www.rundeck.com/open-source}
+} y StackStorm\footnote{
+  \href{https://stackstorm.com/}{https://stackstorm.com/} }.
+
+El funcionamiento de Rundeck se organiza en torno a la ``Ejecución'' de
+``Trabajos'' en ``Nodos'', respetando un esquema de permisos y guardando
+registro de las acciones ejecutadas por cada usuario. Los ``Trabajos''
+se pueden parametrizar con variables, lo cual permite ejecutar scripts
+de forma segura y controlada. La interfaz de Rundeck es amigable e
+intuitiva, pero también tiene grandes falencias. Por ejemplo, para la
+definición de un nuevo nodo se debe generar un archivo XML y cargarlo
+mediante la interfaz gráfica. Esta falencia fue determinante para
+decidir que Rundeck no se ajusta a las necesidades de la Organización.
+
+En cuanto a StackStorm, su funcionalidad se orienta a ejecutar
+``Acciones'' como respuesta ante ``Eventos'' de diversos tipos, tales como
+un mensaje en un canal de chat o un disparador/alerta del sistema de
+monitoreo. Si bien permite ejecutar comandos como una acción manual,
+ésta no es su funcionalidad principal.
+
+En las pruebas efectuadas se ha determinado que tanto Rundeck como
+StackStorm son herramientas con mucho potencial para avanzar en el
+camino de la automatización de las operaciones. Sin embargo, su
+integración y utilización en el entorno actual de la Organización
+resultó ser demasiado compleja en ambos casos. Este riesgo estaba
+contemplado en la Propuesta del Proyecto presentada oportunamente.
+
+Ante esta situación, se ha determinado que, por el momento, resulta
+conveniente mantener la forma actual de efectuar las operaciones sobre
+los servicios, dejando como un trabajo a futuro la implementación de
+estas herramientas.

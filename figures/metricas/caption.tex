@@ -1,0 +1,8 @@
+\label{fig:metricas}
+\captionStyle
+Arquitectura del nevo servicio de métricas y otros servicios
+relacionados. En cada servicio se ejecutan tres agentes: Telegraf
+(métricas de alto nivel), Filebeat (registros) y Zabbix (métricas
+básicas). Los agentes envían la información recolectada a InfluxDB,
+Graylog y Zabbix, respectivamente. Grafana permite la visualización de
+los datos provenientes de los tres servicios en forma simultánea.

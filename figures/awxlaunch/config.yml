@@ -1,0 +1,9 @@
+---
+multicolumn: false
+export-width:
+web-width: 500px
+align: center
+float: h!
+export-filename:
+version: 1
+path: figures/awxlaunch/config.yml

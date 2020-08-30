@@ -1,0 +1,48 @@
+\section{Servicio de métricas}
+
+La necesidad de implementar un servicio de métricas surge como
+respuesta a dos necesidades de la organización. La primera necesidad
+es contar con una herramienta que permita visualizar y correlacionar
+métricas de los servicios a partir de múltiples fuentes. Esto permite
+visualizar, por ejemplo, un evento de despliegue en un servicio y la
+cantidad de mensajes de error generados por éste. La otra necesidad se
+relaciona con las limitaciones del servicio de monitoreo Zabbix.
+
+En la Dirección se utiliza el software Zabbix como servicio de
+monitoreo. El mismo ha demostrado ser una herramienta fiable y de buen
+desempeño para monitorear las métricas básicas de los servicios tales
+como la carga, el uso de memoria y la disponibilidad. Cuenta con un
+módulo de alertas que notifica a los equipos responsables ante
+cualquier eventualidad.
+
+Las limitaciones de Zabbix se ponen en evidencia cuando se requiere
+trabajar con métricas de más alto nivel. Si bien el mismo permite
+utilizarlas, su configuración es muy compleja, impactando en la
+mantenibilidad del servicio. Como ejemplo de este tipo de métricas
+podemos citar: número de usuarios conectados a un servicio, cantidad
+de transacciones registradas, códigos de respuesta HTTP de un servicio
+o utilización de la memoria \e{heap} dentro de la máquina virtual
+de Java.
+
+\subsection{Arquitectura}
+
+La solución implementada como servicio de métricas consta de tres
+componentes. El primero es una base de datos de series de tiempo
+(time-series database)\footnote{ Una base de datos de series de tiempo
+  es un tipo de base de datos especializada en el almacenamiento de
+  datos que evolucionan con el tiempo. } encargada de recibir las
+mediciones, almacenarlas, y ofrecer una interfaz programática (API)
+para su consulta. El segundo componente es una interfaz de
+visualización de datos provenientes de múltiples fuentes. El tercer
+componente de esta arquitectura es un \e{agente} que se ejecuta
+en las instancias y se encarga de recopilar y enviar las métricas
+hacia el servidor de base de datos.
+
+Tal como fue implementado, el servicio de métricas se limita a
+funcionar como complemento de los servicios de observabilidad
+existentes, permitiendo generar tableros de visualización con métricas
+de diversos orígenes. La arquitectura resultante tiene ciertas
+funcionalidades duplicadas, pero se deja como trabajo a futuro la
+racionalización de la misma. En la
+\iflatexml{}Figura~\ref{fig:metricas}\else\autoref{fig:metricas}\fi{}
+se presenta un diagrama de la arquitectura del servicio de métricas.

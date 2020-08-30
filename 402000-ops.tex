@@ -1,0 +1,238 @@
+\section{Automatización de operaciones}
+
+En el análisis del flujo de valor del proceso de creación de un nuevo
+servicio se puso en evidencia la necesidad de automatizar ciertas
+operaciones de la infraestructura. Para resolver este problema se
+escribió código Ansible en forma de dos \e{roles}, denominados
+\e{bootstrap} y \e{zabbix-host}. Estos roles, al ser
+incorporados al código que gestiona la configuración de los servicios
+(actuales o nuevos), permiten efectuar las operaciones que antes se
+realizaban en forma manual.
+
+Además de la codificación de los roles, se efectuaron los siguientes
+cambios para dar soporte a la automatización en la infraestructura:
+
+\begin{itemize}
+\item En GitLab, se otorgaron permisos para poder crear proyectos a
+  todos los miembros de la Dirección, y se otorgó en general acceso a
+  todos los repositorios internos.
+\item Se agregó soporte para la ejecución de los scripts de
+  administración en modo no interactivo.
+\item Se crearon usuarios específicos en los distintos servicios para
+  autorizar las interacciones automáticas.
+\item Se habilitaron reglas de firewall para permitir la comunicación
+  automatizada.
+\end{itemize}
+El rol \e{bootstrap} está diseñado para ser invocado al principio
+de la ejecución y se encarga del registro de entradas en los
+servidores DNS y DHCP, de la creación/modificación de la instancia
+virtualizada y asegura la configuración del servicio de backup. Al ser
+ejecutado, el rol realiza internamente las siguientes tareas:
+
+\begin{itemize}
+\item Se conecta al servidor utilizado para la administración de la
+  infraestructura (\e{cerbero}).
+\item En este servidor, ejecuta comandos que verifican la existencia
+  de las entradas DNS y DHCP requeridas para la instancia.
+\item Si las entradas no existen, invoca el comando para crearlas y
+  luego ejecuta otro script que propaga los cambios hacia los
+  servidores DNS Y DHCP.
+\item Se conecta vía API al servidor que administra las instancias
+  virtualizadas (\e{copernico} o \e{flanders}).
+\item Verifica en forma programática que la instancia existe y que sus
+  recursos reflejan lo especificado en el código.
+\item Si es necesario, mediante llamadas a la API crea la instancia o
+  modifica los recursos asignados a la misma.
+\item Se conecta al servidor GitLab para descargar el inventario del
+  servicio de backup.
+\item Si es necesario, agrega la instancia al servicio de backup y
+  dispara una reconfiguración del mismo.
+\end{itemize}
+A diferencia de \e{bootstrap}, el rol \e{zabbix-host} está
+diseñado para ser ejecutado al final del \e{playbook} (el guión
+de configuración aplicado por Ansible), lo cual le permite detectar
+qué servicios han sido instalados en la instancia, y configura el
+servicio de monitoreo con opciones preestablecidas para cada tipo de
+servicio. La interacción con el servicio de monitoreo se realiza
+mediante llamadas a la API del mismo.
+
+Para ilustrar la ganancia en productividad de la implementación de
+estos roles, antes era necesario efectuar las siguientes tareas
+manuales para crear un nuevo servicio:
+
+\begin{itemize}
+\item Conectarse al servidor de administración y actualizar el código
+  SVN.
+\item Ejecutar el script para registrar las entradas DNS y DHCP.
+\item Ejecutar el script para recargar el estado de los servicios DNS
+  y DHCP.
+\item Conectarse al servidor principal del cluster de virtualización.
+\item Ejecutar comandos de creación de la instancia, revisando las
+  opciones correctas según los recursos solicitados para el servicio.
+\item En la PC de trabajo actualizar el código Git donde se administra
+  el servicio de backup.
+\item Agregar entrada en el inventario de backup para la instancia
+  recién creada.
+\item Aplicar la configuración del servicio de backup ejecutando
+  Ansible mediante la línea de comandos.
+\item En el servidor de administración, ejecutar el script para la
+  configuración del monitoreo de la instancia.
+\end{itemize}
+Luego de la implementación de los roles de automatización, todas las
+acciones anteriores se reduce a escribir algunas líneas en el código
+Ansible que gestiona el servicio:
+
+\iflatexml\else
+\fvset{fontsize=\footnotesize,frame=leftline,numbers=left,xleftmargin=1cm}
+\fi
+\begin{Verbatim}
+bootstrap_host_network: sdmz1
+bootstrap_ganeti_cluster: copernico.intranet
+bootstrap_instance_disk_size: 25600
+bootstrap_instance_memory: 8192
+bootstrap_instance_vcpus: 8
+bootstrap_instance_os_type: stretch+default
+bootstrap_instance_pnode: saturno.intranet
+bootstrap_instance_snode: triton.intranet
+
+zabbix_host_macros:
+  URL: https://servicios.unl.edu.ar/mesadeentradas/
+\end{Verbatim}
+
+Este código reemplaza las acciones manuales previas, eliminando
+incluso la necesidad de intervención del equipo de
+infraestructura. Junto con la implementación de la interfaz web para
+Ansible, esta automatización brinda una plataforma de ``autoservicio''
+para el aprovisionamiento de la infraestructura para todos los
+miembros de la DIPT. Con todo esto se evitan errores de las
+operaciones manuales y se eliminan tiempos de espera.
+
+\section{Servidores de frontend}
+
+Los servidores de frontend son los encargados de recibir las
+peticiones HTTP(S) externas y direccionar el tráfico al servicio
+interno correspondiente, siguiendo una serie de reglas. La necesidad
+de cambiar el proceso de configuración se puso en evidencia en el
+análisis del flujo de valor para la creación de un nuevo servicio. El
+mismo resultaba tedioso y fundamentalmente no era escalable, lo cual
+derivó en la búsqueda de una solución alternativa.
+
+Una forma de atacar el problema hubiera sido configurando una tubería
+de CI/CD para publicar automáticamente los cambios en la
+configuración. Esto hubiera permitido automatizar la tarea de
+\e{aplicar} los cambios, aunque no se hubiera resuelto el
+problema de escalabilidad y mantenibilidad del servicio, ya que aún
+resultaría necesario escribir la configuración de los servidores en su
+propio repositorio y en su lenguaje específico.
+
+La solución implementada consistió en un cambio radical en la
+arquitectura, creando un nuevo servicio de frontend capaz de
+configurarse a sí mismo a partir del estado actual de los servicios de
+software ofrecidos en la Dirección. El seguimiento de este
+\e{estado actual}, necesario para la auto-configuración de los
+frontends, se realiza mediante otro servicio denominado Consul.
+
+Con esta implementación se eliminaron los pasos de editar la
+configuración del frontend, conectarse al servidor y efectuar un
+reinicio manual, tareas que requerían de los permisos de un
+administrador de sistemas. Tal como ocurrió con la creación del rol
+\e{bootstrap}, ahora basta con editar algunas líneas en el código
+Ansible que define la configuración del servicio.
+
+Toda la nueva configuración se escribió como código y se aprovisionó
+mediante Ansible.
+
+\subsection{Servicio Consul}
+
+Consul\footnote{ https://www.consul.io/} es un sistema distribuido que
+provee interconexión entre servicios de manera independiente de la
+infraestructura subyacente. Cada nodo ejecuta un \e{agente} que
+publica los servicios ofrecidos por el mismo y se encarga de verificar
+el estado de los servicios.
+
+Los agentes se comunican con los \e{servidores} de Consul, los
+cuales funcionan en un esquema de alta disponibilidad que asegura un
+estado consistente incluso cuando hay fallas en algún servidor. Los
+servidores mantienen un \e{catálogo}, el cual agrega la
+información suministrada por los agentes. La información contenida en
+el catálogo incluye los servicios disponibles, los nodos que ofrecen
+estos servicios y el estado actual de los mismos. Otros componentes de
+la infraestructura (tal es el caso de los servidores de frontend)
+pueden consultar el catálogo mediante una API, lo que les permite
+descubrir los servicios y nodos disponibles.
+
+La implementación de Consul abarcó dos aspectos. Por un lado, se creó
+el \e{servicio Consul}, que incluye la configuración de las
+instancias que contienen los servidores de Consul. Por el otro, fue
+necesario modificar el código Ansible que sirve de base para todos los
+servicios, para que éstos incorporen el \e{agente} de Consul como
+parte de su configuración básica.
+
+La implementación del servicio (los servidores Consul) se llevó a cabo
+siguiendo las recomendaciones de la documentación oficial. Se creó un
+grupo de cinco servidores distribuidos en las diferentes subredes de
+la infraestructura para asegurar mayor disponibilidad del servicio
+ante fallas de conectividad.
+
+\subsection{Servicio de frontend}
+
+Para el nuevo servicio de frontend se utilizó el software
+Traefik\footnote{ https://containo.us/traefik/}, un servidor de proxy
+reverso que tiene la capacidad inspeccionar el estado de los servicios
+en Consul y ajustar su propia configuración en consecuencia. Traefik
+también se encarga de la generación y renovación automática de los
+certificados TLS de Let’s Encrypt, una tarea que antes era gestionada
+en forma semi-automática por el equipo de infraestructura.
+
+Dado que Traefik no ofrece soporte para funcionar como servidor de
+contenido HTTP(S) básico, en las instancias de frontend se instaló
+también un servidor Nginx, que se encarga de servir contenido estático
+tal como las páginas de error.
+
+El código Ansible que configura el servicio de frontend fue diseñado
+de modo que los cambios en la infraestructura tengan el menor impacto
+posible sobre la disponibilidad. Esto se logró mediante la
+configuración de un servicio Traefik secundario, el cual atiende las
+peticiones mientras se migra la configuración del servicio principal.
+
+\subsection{Proceso de migración}
+
+El servicio de frontend consta de tres instancias, cada una de las
+cuales atiende el tráfico en una dirección IP diferente. Esto es así
+debido a las particularidades de la infraestructura utilizada por la
+Dirección. Al tratarse de un servicio crítico, durante la migración se
+conservó en todo momento la posibilidad de revertir los cambios de
+manera inmediata. Esto se conoce como despliegue azul verde
+(\e{blue green deployment}) \cite{bluegreen}.
+
+Antes de comenzar con la migración de los frontends, se configuró el
+servicio Consul y se verificó el correcto funcionamiento del mismo. En
+términos generales, la migración de cada servicio de frontend se
+realizó siguiendo la secuencia de pasos explicada a continuación. En
+todos los casos, el entorno \e{verde} hace referencia al nuevo
+servicio (con Traefik+nginx), y el entorno azul al servicio de
+frontend anterior (nginx con configuración estática). La configuración
+de un frontend en el entorno azul se muestra en la
+\iflatexml{}Figura~\ref{fig:feinicial}\else\autoref{fig:feinicial}\fi.
+
+\begin{enumerate}
+\item Se creó una nueva instancia de frontend (entorno verde), con una
+  regla por defecto para delegar todo el tráfico al frontend anterior
+  (entorno azul).
+\item Se modificaron las reglas de firewall para direccionar el
+  tráfico del puerto 80 (HTTP) al entorno verde. Esto permitió la
+  generación automática de nuevos certificados HTTPS para el entorno
+  verde.
+\item Se validaron los certificados generados desde la estación de
+  trabajo, forzando la conexión a través del entorno verde. Una vez
+  generados los certificados HTTPS, se configuró el firewall para
+  direccionar el tráfico del puerto 443 (HTTPS, por donde se publica
+  la gran mayoría de los servicios) al entorno verde.
+\item Para cada servicio correspondiente al frontend, de a uno por
+  vez, se instaló y configuró el agente Consul. De este modo se logró
+  publicar el servicio en forma directa a través del entorno verde. Se
+  verificó el acceso correcto de cada servicio
+  (\iflatexml{}Figura~\ref{fig:femigracion}\else\autoref{fig:femigracion}\fi).
+\item Una vez migrados todos los servicios, se eliminó el entorno azul
+  (\iflatexml{}Figura~\ref{fig:fefinal}\else\autoref{fig:fefinal}\fi).
+\end{enumerate}
