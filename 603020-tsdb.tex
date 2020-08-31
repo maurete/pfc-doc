@@ -1,14 +1,14 @@
+%
 \subsection{Base de datos de series de tiempo}
-
+%
 Para la implementación de la base de datos de series de tiempo se
 consideraron los ofrecimientos de Prometheus\footnote{
-  \href{https://prometheus.io/}{https://prometheus.io/} } e
-InfluxDB\footnote{
-  \href{https://www.influxdata.com/}{https://www.influxdata.com/}
-}. Si bien ambos ofrecen funcionalidades similares, se optó por la
-implementación de InfluxDB debido a su mejor capacidad para el manejo
-de datos textuales\footnote{
-  \url{https://prometheus.io/docs/introduction/comparison/\#prometheus-vs-influxdb}{https://prometheus.io/docs/introduction/comparison/\#prometheus-vs-influxdb}
+  \url{https://prometheus.io/} } e InfluxDB\footnote{
+  \url{https://www.influxdata.com/} }. Si bien ambos ofrecen
+funcionalidades similares, se optó por la implementación de InfluxDB
+debido a su mejor capacidad para el manejo de datos
+textuales\footnote{
+  \url{https://prometheus.io/docs/introduction/comparison/\#prometheus-vs-influxdb}
 } así como su simplicidad de instalación y configuración.
 
 La implementación se efectuó escribiendo el código Ansible necesario y
@@ -16,19 +16,19 @@ desplegando el servicio en la infraestructura. Al tratarse de un nuevo
 tipo de base de datos, fue necesario codificar un script para efectuar
 el proceso de backup, de acuerdo a la política de resguardo de datos
 de la Dirección.
-
+%
 \subsection{Visualización}
-
+%
 Como servicio de visualización se adoptó el software Grafana\footnote{
-  \href{https://grafana.com/}{https://grafana.com/} }, una herramienta
-orientada a la creación de tableros (dashboards) que permiten
-visualizar datos provenientes de distintas fuentes, entre los que se
-incluyen Zabbix, InfluxDB y Graylog\footnote{ Estrictamente, Grafana
-  no utiliza Graylog como origen de datos, sino Elasticsearch, el
-  motor de indexación y búsqueda utilizado por Graylog como
-  \e{backend}.}. La decisión de utilizar Grafana frente a otras
-alternativas se basó en el hecho que el equipo de infraestructura
-cuenta con experiencia previa en su utilización.
+  \url{https://grafana.com/} }, una herramienta orientada a la
+creación de tableros (dashboards) que permiten visualizar datos
+provenientes de distintas fuentes, entre los que se incluyen Zabbix,
+InfluxDB y Graylog\footnote{ Estrictamente, Grafana no utiliza Graylog
+  como origen de datos, sino Elasticsearch, el motor de indexación y
+  búsqueda utilizado por Graylog como \e{backend}.}. La decisión de
+utilizar Grafana frente a otras alternativas se basó en el hecho que
+el equipo de infraestructura cuenta con experiencia previa en su
+utilización.
 
 El aprovisionamiento del servicio se efectuó utilizando Ansible y
 Docker Compose, guardando el código respectivo en un repositorio de

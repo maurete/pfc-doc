@@ -2,102 +2,106 @@ El disparador de la ejecución de la tubería es un push del código al
 servidor GitLab. Las tareas se ejecutan en forma secuencial. Una falla
 en una tarea aborta la ejecución de la tubería completa, la cual pasa
 a un estado fallido.
-
-\subsubsection{1 Etapa de construcción del código (\e{build})}
-
+%
+\subsubsection{Etapa de construcción del código (\e{build})}
+%
 En esta primera etapa se llevan a cabo las tareas que permiten la
 generación de los archivos compilados y los artefactos de la
 aplicación. Las tareas se ejecutan en forma secuencial dentro de un
 contenedor Docker del servicio de CI/CD.
-
+%
 \begin{enumerate}
-\item \textbf{Verificar que la versión no ha sido publicada}. Una
-  falla en este paso indica al desarrollador que debe incrementar el
-  número de versión para poder ejecutar la tubería.
-\item \textbf{Compilar la aplicación}. Se ejecuta la herramienta
+\item \sbs{Verificar que la versión no ha sido publicada}. Una falla
+  en este paso indica al desarrollador que debe incrementar el número
+  de versión para poder ejecutar la tubería.
+\item \sbs{Compilar la aplicación}. Se ejecuta la herramienta
   encargada de la compilación tal como Maven o Gradle.
-\item \textbf{Ejecutar tests unitarios}. Se ejecuta la suite de tests
+\item \sbs{Ejecutar tests unitarios}. Se ejecuta la suite de tests
   unitarios utilizando la herramienta apropiada. Los tests unitarios
   se ejecutan primero ya que son los más rápidos.
-\item \textbf{Ejecutar tests de integración}. Se ejecutan los tests
-  que validan la funcionalidad integrada de diferentes componentes del
+\item \sbs{Ejecutar tests de integración}. Se ejecutan los tests que
+  validan la funcionalidad integrada de diferentes componentes del
   software. No se debe confundir estos tests con los de integración de
   sistemas.
-\item \textbf{Empaquetar la aplicación}. Se genera el artefacto que
-  puede ser desplegado en el servidor de aplicación. Este artefacto se
+\item \sbs{Empaquetar la aplicación}. Se genera el artefacto que puede
+  ser desplegado en el servidor de aplicación. Este artefacto se
   guarda en una ubicación temporal hasta el fin de la ejecución de la
   tubería.
 \end{enumerate}
-\subsubsection{2 Etapa de verificación}
-
+%
+\subsubsection{Etapa de verificación}
+%
 En esta etapa se efectúan pruebas de validación de la aplicación
 completa en el entorno controlado de contenedor Docker del servicio
 CI/CD que incorpora un servidor de aplicación y brinda acceso a una
 base de datos.
-
+%
 \begin{enumerate}
-\item \textbf{Configurar el entorno de testing local}. Se configuran
+\item \sbs{Configurar el entorno de testing local}. Se configuran
   los archivos y recursos necesarios en el servidor de aplicación para
   poder efectuar el despliegue de la aplicación.
-\item \textbf{Desplegar la aplicación}. Se despliega el paquete de la
+\item \sbs{Desplegar la aplicación}. Se despliega el paquete de la
   aplicación generado en la etapa anterior.
-\item \textbf{Pruebas de humo}. Se ejecutan pruebas de humo para
+\item \sbs{Pruebas de humo}. Se ejecutan pruebas de humo para
   verificar la integridad global de la aplicación.
-\item \textbf{Tests de aceptación automáticos}. Este tipo de tests
+\item \sbs{Tests de aceptación automáticos}. Este tipo de tests
   verifican la integridad de los distintos componentes de la
   aplicación durante la ejecución, incluyendo el acceso a todos los
   recursos locales.
-\item \textbf{Tests de integración de sistemas}. Estos tests acceden a
+\item \sbs{Tests de integración de sistemas}. Estos tests acceden a
   recursos externos, en general servicios web de otros sistemas, y
   verifican la interacción con los mismos.
 \end{enumerate}
-\subsubsection{3 Publicación}
-
+%
+\subsubsection{Publicación}
+%
 En el caso que el disparador de la tubería haya sido un cambio sobre
 la rama principal de desarrollo (\e{master}), se publica el
 paquete de la aplicación al repositorio de artefactos y se genera la
 etiqueta de versión correspondiente en el repositorio de código.
-
-\subsubsection{4 Tests de capacidad}
-
+%
+\subsubsection{Tests de capacidad}
+%
 Se deja como tarea a futuro la especificación y diseño de los tests de
 capacidad/estrés y el entorno de ejecución para los mismos. La
 secuencia de tareas a ejecutar en este entorno es similar a las demás:
-
+%
 \begin{enumerate}
-\item \textbf{Configurar entorno}.
-\item \textbf{Desplegar la aplicación}.
-\item \textbf{Ejecutar pruebas de humo}.
-\item \textbf{Ejecutar tests de capacidad}.
+\item \sbs{Configurar entorno}.
+\item \sbs{Desplegar la aplicación}.
+\item \sbs{Ejecutar pruebas de humo}.
+\item \sbs{Ejecutar tests de capacidad}.
 \end{enumerate}
-\subsubsection{5 Despliegue en el entorno de aceptación de usuario}
-
+%
+\subsubsection{Despliegue en el entorno de aceptación de usuario}
+%
 Ésta es una tarea que requiere aprobación manual, típicamente de algún
 miembro de los equipos de desarrollo o testing. El objetivo es poder
 probar manualmente la aplicación en el entorno antes mencionado.
-
+%
 \begin{enumerate}
-\item \textbf{Configurar entorno}.
-\item \textbf{Despliegue de aplicación}.
-\item \textbf{Pruebas de humo}.
+\item \sbs{Configurar entorno}.
+\item \sbs{Despliegue de aplicación}.
+\item \sbs{Pruebas de humo}.
 \end{enumerate}
-\subsubsection{6 Despliegue en el entorno de producción}
-
+%
+\subsubsection{Despliegue en el entorno de producción}
+%
 Una vez que el software ha pasado por todas las etapas anteriores, se
 considera que está listo para su publicación en el entorno productivo,
 alcanzando al usuario final. Esta tarea requiere aprobación manual,
 típicamente del responsable del proyecto, y sólo está habilitada para
 los cambios efectuados sobre la rama principal de desarrollo
 (\e{master}).
-
+%
 \begin{enumerate}
-\item \textbf{Configurar entorno}.
-\item \textbf{Despliegue de aplicación}.
-\item \textbf{Pruebas de humo}.
+\item \sbs{Configurar entorno}.
+\item \sbs{Despliegue de aplicación}.
+\item \sbs{Pruebas de humo}.
 \end{enumerate}
-
-\subsection{Tubería implementada (real) }
-
+%
+\subsection{Tubería implementada (real)}
+%
 La arquitectura implementada es un compromiso entre la tubería teórica
 y las posibilidades actuales de la Dirección. Permite a los equipos
 organizar su trabajo en torno a la tubería, lo cual permitirá

@@ -31,7 +31,7 @@
   };
 }
 
-\begin{scope}[node distance=1cm and 1.2cm]
+\begin{scope}[node distance=1cm and 1.5cm]
 \pipelinestage{Construcción}{build}{
 }
 {
@@ -171,9 +171,9 @@ scale=0.65
 \draw[decorate,decoration=outlined arrow bis] ($ (test.north east) + (-0.5,0.2) $) to ($ (ua.west) - (0.1,0.1) $);
 \draw[decorate,decoration=outlined arrow bis] ($ (test.south east) + (-0.5,-0.2) $) to ($ (production.west) - (0.1,-0.1) $);
 
-\node[annot] at ($ (ua.west) + (-1,0.1) $) {Acción\\manual};
-\node[annot] at ($ (production.west) + (-1,-0.1) $) {Acción\\manual};
-\node[annot] at ($ (capacity.west) + (-0.5,1) $) {Acción\\manual};
+\node[annot] at ($ (ua.west) + (-1.3,0.1) $) {Acción\\manual};
+\node[annot] at ($ (production.west) + (-1.3,-0.1) $) {Acción\\manual};
+\node[annot] at ($ (capacity.west) + (-0.8,1) $) {Acción\\manual};
 
 \draw[- stealth] (git) to (build) ;
 \draw[- stealth] (test) to (nexus);

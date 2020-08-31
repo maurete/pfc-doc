@@ -1,13 +1,15 @@
+%
+%
 \section{Actualización de los repositorios}
-
+%
 Como parte de las tareas de adecuación de la infraestructura, se
 actualizaron el repositorio de código GitLab y el repositorio de
 artefactos Nexus. Ninguno de los dos servicios contaba con la
 configuración escrita como código Ansible, ya que su implementación
 fue anterior a la adopción de esta herramienta.
-
+%
 \subsection{Repositorio de código GitLab}
-
+%
 Se decidió actualizar el repositorio de código GitLab para corregir
 vulnerabilidades y aprovechar las nuevas características ofrecidas por
 sus desarrolladores. Como parte de estas actualización se implementó
@@ -22,15 +24,15 @@ por el fabricante. El proceso se realizó de manera incremental,
 migrando entre versiones mayores consecutivas hasta alcanzar la
 versión actual. Durante las actualizaciones el servicio estuvo fuera
 de línea.
-
+%
 \subsection{Repositorio de artefactos Nexus}
-
+%
 El repositorio de artefactos Sonatype Nexus funcionaba en su versión
 2, la cual no recibe más soporte por parte del desarrollador. El
 proceso fue más complejo que en el caso de GitLab, ya que la migración
 de datos entre las versiones 2 y 3 no es automática. La secuencia de
 pasos a continuación describen el proceso efectuado.
-
+%
 \begin{itemize}
 \item El primer paso fue actualizar el servicio a la última versión de
   la serie 2. Para ello se escribió código Ansible, el cual fue
@@ -44,6 +46,7 @@ pasos a continuación describen el proceso efectuado.
 \item Se eliminó la instalación correspondiente a la versión 2 y se
   ajustó el código Ansible para que utilice la vesión 3.
 \end{itemize}
+%
 Una vez actualizado el repositorio, se descubrió que la nueva versión
 introdujo cambios incompatibles en su interfaz API. Por ello fue
 necesario corregir los scripts de operaciones que utilizan

@@ -1,5 +1,8 @@
+%
+%
+%
 \chapter{Automatización de la infraestructura}
-
+%
 El primer aspecto trabajado en el proyecto fue la automatización de la
 infraestructura, entendida en general como la implementación de
 servicios que reemplacen las operaciones manuales. Para alcanzar la
@@ -15,9 +18,10 @@ infraestructura. Asimismo, hacia el final del desarrollo del proyecto
 se trabajó la automatización de los servidores de frontend y la
 actualización de los repositorios de código y de artefactos (GitLab y
 Nexus).
-
+%
+%
 \section{Interfaz web para Ansible}
-
+%
 Ya se ha expresado que el equipo de infraestructura utiliza la
 herramienta Ansible para la configuración y el mantenimiento de la
 infraestructura de varios servicios. Las configuraciones de las
@@ -36,8 +40,8 @@ permisos y conservando registro de los cambios aplicados sobre cada
 servicio.
 
 El software elegido como interfaz web para Ansible fue AWX\footnote{
-  https://github.com/ansible/awx}. Se trata de la versión libre del
-producto comercial Ansible Tower, ofrecido por los mismos
+  \url{https://github.com/ansible/awx}}. Se trata de la versión libre
+del producto comercial Ansible Tower, ofrecido por los mismos
 desarrolladores de Ansible. La implementación se realizó a partir del
 código Ansible provisto por los autores de AWX, el cual fue expandido
 para incluir la configuración de las contraseñas y claves SSH
@@ -55,15 +59,15 @@ conectarse a las instancias vía SSH.
 
 En cuanto a la interfaz web de AWX, el lanzamiento de un nuevo trabajo
 resulta suficientemente intuitivo. Por ejemplo, si se desea aplicar un
-cambio en el servicio \e{hermes} en el entorno de
-\e{producción}, el responsable del servicio puede resolver esta
+cambio en el servicio \mono{hermes} en el entorno de
+\mono{produccion}, el responsable del servicio puede resolver esta
 tarea siguiendo la secuencia de pasos:
-
+%
 \begin{enumerate}
 \item Editar la configuración en el repositorio Git del servicio.
 \item Acceder a AWX e ingresar a la sección \e{Plantillas}.
-\item Ubicar la plantilla \e{hermes\_playbook} y presionar el botón de
-  lanzamiento.
+\item Ubicar la plantilla \mono{hermes\_playbook} y presionar el botón
+  de lanzamiento.
 \item Especificar los datos solicitados en el diálogo de lanzamiento
   (\iflatexml{}Figura~\ref{fig:awxlaunch}\else\autoref{fig:awxlaunch}\fi),
   en particular la \e{rama} de Git del código donde se han efectuado

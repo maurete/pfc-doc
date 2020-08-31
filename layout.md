@@ -2,6 +2,7 @@ titlepage.tex
 abstract.tex
 thanks.tex
 toc.tex
+glossary.tex
 100000-introduccion.tex
 200000-fundamentos.tex
 figures/devheartops/devheartops.pdf
@@ -32,5 +33,4 @@ figures/grafana/figure.png
 603040-agente.tex
 604000-consola-ops.tex
 700000-conclusion.tex
-glossary.tex
 appendix.tex

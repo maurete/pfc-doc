@@ -1,17 +1,19 @@
+%
+%
 \section{Automatización de operaciones}
-
+%
 En el análisis del flujo de valor del proceso de creación de un nuevo
 servicio se puso en evidencia la necesidad de automatizar ciertas
 operaciones de la infraestructura. Para resolver este problema se
 escribió código Ansible en forma de dos \e{roles}, denominados
-\e{bootstrap} y \e{zabbix-host}. Estos roles, al ser
+\mono{bootstrap} y \mono{zabbix-host}. Estos roles, al ser
 incorporados al código que gestiona la configuración de los servicios
 (actuales o nuevos), permiten efectuar las operaciones que antes se
 realizaban en forma manual.
 
 Además de la codificación de los roles, se efectuaron los siguientes
 cambios para dar soporte a la automatización en la infraestructura:
-
+%
 \begin{itemize}
 \item En GitLab, se otorgaron permisos para poder crear proyectos a
   todos los miembros de la Dirección, y se otorgó en general acceso a
@@ -23,12 +25,13 @@ cambios para dar soporte a la automatización en la infraestructura:
 \item Se habilitaron reglas de firewall para permitir la comunicación
   automatizada.
 \end{itemize}
-El rol \e{bootstrap} está diseñado para ser invocado al principio
+%
+El rol \mono{bootstrap} está diseñado para ser invocado al principio
 de la ejecución y se encarga del registro de entradas en los
 servidores DNS y DHCP, de la creación/modificación de la instancia
 virtualizada y asegura la configuración del servicio de backup. Al ser
 ejecutado, el rol realiza internamente las siguientes tareas:
-
+%
 \begin{itemize}
 \item Se conecta al servidor utilizado para la administración de la
   infraestructura (\e{cerbero}).
@@ -38,7 +41,7 @@ ejecutado, el rol realiza internamente las siguientes tareas:
   luego ejecuta otro script que propaga los cambios hacia los
   servidores DNS Y DHCP.
 \item Se conecta vía API al servidor que administra las instancias
-  virtualizadas (\e{copernico} o \e{flanders}).
+  virtualizadas (\mono{copernico} o \mono{flanders}).
 \item Verifica en forma programática que la instancia existe y que sus
   recursos reflejan lo especificado en el código.
 \item Si es necesario, mediante llamadas a la API crea la instancia o
@@ -48,7 +51,8 @@ ejecutado, el rol realiza internamente las siguientes tareas:
 \item Si es necesario, agrega la instancia al servicio de backup y
   dispara una reconfiguración del mismo.
 \end{itemize}
-A diferencia de \e{bootstrap}, el rol \e{zabbix-host} está
+%
+A diferencia de \mono{bootstrap}, el rol \mono{zabbix-host} está
 diseñado para ser ejecutado al final del \e{playbook} (el guión
 de configuración aplicado por Ansible), lo cual le permite detectar
 qué servicios han sido instalados en la instancia, y configura el
@@ -59,7 +63,7 @@ mediante llamadas a la API del mismo.
 Para ilustrar la ganancia en productividad de la implementación de
 estos roles, antes era necesario efectuar las siguientes tareas
 manuales para crear un nuevo servicio:
-
+%
 \begin{itemize}
 \item Conectarse al servidor de administración y actualizar el código
   SVN.
@@ -78,10 +82,11 @@ manuales para crear un nuevo servicio:
 \item En el servidor de administración, ejecutar el script para la
   configuración del monitoreo de la instancia.
 \end{itemize}
+%
 Luego de la implementación de los roles de automatización, todas las
 acciones anteriores se reduce a escribir algunas líneas en el código
 Ansible que gestiona el servicio:
-
+%
 \iflatexml\else
 \fvset{fontsize=\footnotesize,frame=leftline,numbers=left,xleftmargin=1cm}
 \fi
@@ -98,7 +103,7 @@ bootstrap_instance_snode: triton.intranet
 zabbix_host_macros:
   URL: https://servicios.unl.edu.ar/mesadeentradas/
 \end{Verbatim}
-
+%
 Este código reemplaza las acciones manuales previas, eliminando
 incluso la necesidad de intervención del equipo de
 infraestructura. Junto con la implementación de la interfaz web para
@@ -106,9 +111,10 @@ Ansible, esta automatización brinda una plataforma de ``autoservicio''
 para el aprovisionamiento de la infraestructura para todos los
 miembros de la DIPT. Con todo esto se evitan errores de las
 operaciones manuales y se eliminan tiempos de espera.
-
+%
+%
 \section{Servidores de frontend}
-
+%
 Los servidores de frontend son los encargados de recibir las
 peticiones HTTP(S) externas y direccionar el tráfico al servicio
 interno correspondiente, siguiendo una serie de reglas. La necesidad
@@ -141,14 +147,14 @@ Ansible que define la configuración del servicio.
 
 Toda la nueva configuración se escribió como código y se aprovisionó
 mediante Ansible.
-
+%
 \subsection{Servicio Consul}
-
-Consul\footnote{ https://www.consul.io/} es un sistema distribuido que
-provee interconexión entre servicios de manera independiente de la
-infraestructura subyacente. Cada nodo ejecuta un \e{agente} que
-publica los servicios ofrecidos por el mismo y se encarga de verificar
-el estado de los servicios.
+%
+Consul\footnote{\url{https://www.consul.io/}} es un sistema
+distribuido que provee interconexión entre servicios de manera
+independiente de la infraestructura subyacente. Cada nodo ejecuta un
+\e{agente} que publica los servicios ofrecidos por el mismo y se
+encarga de verificar el estado de los servicios.
 
 Los agentes se comunican con los \e{servidores} de Consul, los
 cuales funcionan en un esquema de alta disponibilidad que asegura un
@@ -173,16 +179,17 @@ siguiendo las recomendaciones de la documentación oficial. Se creó un
 grupo de cinco servidores distribuidos en las diferentes subredes de
 la infraestructura para asegurar mayor disponibilidad del servicio
 ante fallas de conectividad.
-
+%
 \subsection{Servicio de frontend}
-
+%
 Para el nuevo servicio de frontend se utilizó el software
-Traefik\footnote{ https://containo.us/traefik/}, un servidor de proxy
-reverso que tiene la capacidad inspeccionar el estado de los servicios
-en Consul y ajustar su propia configuración en consecuencia. Traefik
-también se encarga de la generación y renovación automática de los
-certificados TLS de Let’s Encrypt, una tarea que antes era gestionada
-en forma semi-automática por el equipo de infraestructura.
+Traefik\footnote{\url{https://containo.us/traefik/}}, un servidor de
+proxy reverso que tiene la capacidad inspeccionar el estado de los
+servicios en Consul y ajustar su propia configuración en
+consecuencia. Traefik también se encarga de la generación y renovación
+automática de los certificados TLS de Let’s Encrypt, una tarea que
+antes era gestionada en forma semi-automática por el equipo de
+infraestructura.
 
 Dado que Traefik no ofrece soporte para funcionar como servidor de
 contenido HTTP(S) básico, en las instancias de frontend se instaló
@@ -194,9 +201,9 @@ de modo que los cambios en la infraestructura tengan el menor impacto
 posible sobre la disponibilidad. Esto se logró mediante la
 configuración de un servicio Traefik secundario, el cual atiende las
 peticiones mientras se migra la configuración del servicio principal.
-
+%
 \subsection{Proceso de migración}
-
+%
 El servicio de frontend consta de tres instancias, cada una de las
 cuales atiende el tráfico en una dirección IP diferente. Esto es así
 debido a las particularidades de la infraestructura utilizada por la
@@ -214,7 +221,7 @@ servicio (con Traefik+nginx), y el entorno azul al servicio de
 frontend anterior (nginx con configuración estática). La configuración
 de un frontend en el entorno azul se muestra en la
 \iflatexml{}Figura~\ref{fig:feinicial}\else\autoref{fig:feinicial}\fi.
-
+%
 \begin{enumerate}
 \item Se creó una nueva instancia de frontend (entorno verde), con una
   regla por defecto para delegar todo el tráfico al frontend anterior
@@ -236,3 +243,4 @@ de un frontend en el entorno azul se muestra en la
 \item Una vez migrados todos los servicios, se eliminó el entorno azul
   (\iflatexml{}Figura~\ref{fig:fefinal}\else\autoref{fig:fefinal}\fi).
 \end{enumerate}
+%

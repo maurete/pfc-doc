@@ -2,77 +2,83 @@ La tubería implementada es similar a la tubería teórica, aunque con
 menos tareas de testing. Al igual que aquella, un push del código al
 servidor GitLab dispara la ejecución de la tubería. Una tarea fallida
 aborta la ejecución de la tubería completa.
-
-\subsubsection{1 Etapa de construcción del código}
-
+%
+\subsubsection{Etapa de construcción del código}
+%
 Entorno de ejecución: contenedor Docker del servicio CI/CD.
-
+%
 \begin{enumerate}
-\item \textbf{Verificar que la versión no ha sido publicada}.
-\item \textbf{Compilar la aplicación}.
-\item \textbf{Ejecutar tests unitarios}.
-\item \textbf{Ejecutar tests de integración}.
-\item \textbf{Empaquetar la aplicación}. Se genera el artefacto para
+\item \sbs{Verificar que la versión no ha sido publicada}.
+\item \sbs{Compilar la aplicación}.
+\item \sbs{Ejecutar tests unitarios}.
+\item \sbs{Ejecutar tests de integración}.
+\item \sbs{Empaquetar la aplicación}. Se genera el artefacto para
   el despliegue y se conserva el mismo en una ubicación temporal.
 \end{enumerate}
-\subsubsection{2 Etapa de verificación}
-
+%
+\subsubsection{Etapa de verificación}
+%
 Entorno de ejecución: contenedor Docker del servicio CI/CD, con
 servidor de aplicación integrado y acceso a la base de datos.
-
+%
 \begin{enumerate}
-\item \textbf{Configurar el entorno de testing local}.
-\item \textbf{Desplegar la aplicación}.
-\item \textbf{Tests de integración de sistemas}.
+\item \sbs{Configurar el entorno de testing local}.
+\item \sbs{Desplegar la aplicación}.
+\item \sbs{Tests de integración de sistemas}.
 \end{enumerate}
-\subsubsection{3 Publicación}
-
+%
+\subsubsection{Publicación}
+%
 En el caso que el disparador de la tubería haya sido un cambio sobre
 la rama principal (\e{master}), se publica el paquete de la
 aplicación al repositorio de artefactos y se genera la etiqueta de
 versión correspondiente en el repositorio Git.
-
-\subsubsection{4 Despliegue en el entorno para tests de integración de sistemas}
+%
+\subsubsection{Despliegue en el entorno para tests de integración de sistemas}
 
 Esta acción requiere aprobación manual, típicamente de un
 desarrollador. Permite actualizar la aplicación en el entorno de
 \e{integración} para que otros sistemas puedan validar sus
 integraciones.
-
+%
 \begin{enumerate}
-\item \textbf{Configurar entorno}.
-\item \textbf{Despliegue de aplicación}.
+\item \sbs{Configurar entorno}.
+\item \sbs{Despliegue de aplicación}.
 \end{enumerate}
-\subsubsection{5 Despliegue en el entorno para tests de aceptación de usuario}
-
+%
+\subsubsection{Despliegue en el entorno para tests de aceptación de usuario}
+%
 Esta acción requiere aprobación manual. Es idéntica a la de la tubería
 teórica, pero excluye las pruebas de humo.
-
+%
 \begin{enumerate}
-\item \textbf{Configurar entorno}.
-\item \textbf{Despliegue de aplicación}.
+\item \sbs{Configurar entorno}.
+\item \sbs{Despliegue de aplicación}.
 \end{enumerate}
-\subsubsection{6 Despliegue en el entorno de producción}
-
+%
+\subsubsection{Despliegue en el entorno de producción}
+%
 También se trata de una acción de aprobación manual. Aplican las
 mismas consideraciones que en la tubería teórica, siendo la única
 diferencia que no se ejecutan pruebas de humo.
-
+%
 \begin{enumerate}
-\item \textbf{Configurar entorno}.
-\item \textbf{Despliegue de aplicación}.
+\item \sbs{Configurar entorno}.
+\item \sbs{Despliegue de aplicación}.
 \end{enumerate}
+%
+%
 \section{Dificultades encontradas en la implementación}
-
+%
 La implementación de las tuberías en los servicios resultó una tarea
 de una complejidad mucho mayor a la prevista en el plan de
 trabajo. Estas dificultades impactaron retrasando el desarrollo del
 Proyecto. A continuación se presenta una revisión de los problemas
 encontrados a la hora de implementar tuberías de integración y entrega
 continuas en los servicios.
-
+%
 \subsection{Generación de imágenes Docker}
-
+%
 Las imágenes de Docker son entornos de ejecución aislados y
 reproducibles, generados a partir de una especificación de
 configuración como código basada en un lenguaje de dominio
@@ -101,33 +107,34 @@ incorporan a su vez sus propias pipelines de integración y entrega
 continuas, encargadas de generar las imágenes y publicarlas en el
 repositorio público Docker Hub. Las imágenes de Docker creadas fueron
 las siguientes:
-
+%
 \begin{itemize}
-\item diptunl/debian: sistema operativo Debian de base con
+\item \mono{diptunl/debian}: sistema operativo Debian de base con
   herramientas y configuraciones estándares requeridas por los
   servicios de la DIPT. Incluye configuración de locales, hora y
   fecha, y certificados SSL.
-\item diptunl/java: basada en diptunl/debian, incorpora la máquina
+\item \mono{diptunl/java}: basada en diptunl/debian, incorpora la máquina
   virtual OpenJDK configurada con opciones de ejecución adaptadas a
   los servicios de la DIPT e incorpora los certificados SSL al
   depósito de claves de Java.
-\item diptunl/gradle: se basa en diptunl/java y contiene la
+\item \mono{diptunl/gradle}: se basa en diptunl/java y contiene la
   herramienta Gradle.
-\item diptunl/maven: se basa en diptunl/java y contiene la herramienta
+\item \mono{diptunl/maven}: se basa en diptunl/java y contiene la herramienta
   Maven.
-\item diptunl/wildfly: basada en diptunl/java, diptunl/gradle y
+\item \mono{diptunl/wildfly}: basada en diptunl/java, diptunl/gradle y
   diptunl/maven, posee un servidor Wildfly que incluye un driver para
   conectarse a PostgreSQL y está parametrizado para los servicios Java
   de la DIPT.
-\item diptunl/postgres: basada en diptunl/debian, posee un servidor
+\item \mono{diptunl/postgres}: basada en diptunl/debian, posee un servidor
   PostgreSQL que soporta el esquema de nombres y permisos utilizados
   en la DIPT.
 \end{itemize}
+%
 Esta arquitectura de imágenes de Docker fue evolucionando conforme se
 avanzó con la implementación de las tuberías de cada servicio.
-
+%
 \subsection{Falta de documentación}
-
+%
 Otro de los grandes problemas encontrados a la hora de la
 implementación de las tuberías fue la falta de documentación de los
 procesos, configuraciones y comandos necesarios para poder compilar

@@ -1,5 +1,8 @@
+%
+%
+%
 \chapter{Observabilidad y comunicación}
-
+%
 La propuesta DevOps enfatiza la necesidad de acelerar la
 \e{retroalimentación} mediante canales de comunicación eficientes
 para los equipos de trabajo y herramientas adecuadas para la medición
@@ -24,18 +27,18 @@ se configuró una interfaz de visualización de los registros
 Por último, se describe el trabajo efectuado para la implementación de
 un servicio de \e{consola de operaciones}, una tarea que no
 resultó exitosa.
-
+%
+%
 \section{Servicio de chat}
-
+%
 Para la implementación del servicio de chat se consideraron las
 herramientas de código abierto Gitter y Mattermost. Gitter\footnote{
-  \href{https://gitter.im/}{https://gitter.im/}} es es una herramienta
-de chat ofrecida por los desarrolladores de GitLab con un enfoque
-orientado a la creación de comunidades. Mattermost\footnote{
-  \href{https://mattermost.com/}{https://mattermost.com/} }, por su
-parte, se posiciona como una herramienta para la comunicación interna
-de los equipos de trabajo (teams) en entornos empresariales, y es la
-alternativa de software libre al servicio comercial ofrecido por
+  \url{https://gitter.im/}} es es una herramienta de chat ofrecida por
+los desarrolladores de GitLab con un enfoque orientado a la creación
+de comunidades. Mattermost\footnote{ \url{https://mattermost.com/} },
+por su parte, se posiciona como una herramienta para la comunicación
+interna de los equipos de trabajo (teams) en entornos empresariales, y
+es la alternativa de software libre al servicio comercial ofrecido por
 Slack. Ambas herramientas ofrecen funcionalidades similares:
 salas/canales de chat, mensajes directos, notificaciones, bots y
 comandos.
@@ -54,17 +57,18 @@ Se creó un canal de chat denominado ``Actividad'' en el cual se publican
 automáticamente los eventos de lanzamiento de un trabajo de AWX y su
 resultado. También se configuraron notificaciones de eventos de GitLab
 a modo de prueba en algunos servicios.
-
+%
+%
 \section{Servicio de análisis de registros (logs)}
-
+%
 La Dirección cuenta con un servicio interno de recolección y
-almacenamiento de registros (\e{logs}) para todos los
-servicios. Cada instancia cuenta con un agente (\e{filebeat}) que
-recopila y envía los registros a un servidor centralizado denominado
-\e{logserver}. Los desarrolladores y operadores de los servicios
-se conectan al servidor central \e{logserver} vía SSH, y
-visualizan los registros utilizando herramientas de línea de comandos
-pueden visualizar el contenido de los logs. La forma de acceso vía SSH
+almacenamiento de registros (\e{logs}) para todos los servicios. Cada
+instancia cuenta con un agente (\mono{filebeat}) que recopila y envía
+los registros a un servidor centralizado denominado
+\mono{logserver}. Los desarrolladores y operadores de los servicios se
+conectan al servidor central \mono{logserver} vía SSH, y visualizan
+los registros utilizando herramientas de línea de comandos pueden
+visualizar el contenido de los logs. La forma de acceso vía SSH
 presenta una serie de inconvenientes tales como la configuración
 manual de los usuarios y sus permisos y la necesidad de establecer
 múltiples conexiones para visualizar registros en simultáneo.
@@ -81,7 +85,7 @@ búsqueda Elasticsearch.
 
 Luego de una implementación de prueba inicial, se optó por la
 implementación de Graylog a partir de los siguientes criterios:
-
+%
 \begin{itemize}
 \item La interfaz de Graylog
   (\iflatexml{}Figura~\ref{fig:graylog}\else\autoref{fig:graylog}\fi{})
@@ -95,8 +99,8 @@ implementación de Graylog a partir de los siguientes criterios:
   autenticación y autorización de los usuarios, mientras que Kibana
   sólo ofrece autenticación y autorización básicas.
 \end{itemize}
+%
 La configuración del servicio se basó en la guía oficial de
-instalación\footnote{
-  \href{https://docs.graylog.org/en/3.1/pages/installation/docker.html}{https://docs.graylog.org/en/3.1/pages/installation/docker.html}
-} y se guardó como código en un repositorio GitLab. Se utilizó la
+instalación\footnote{\url{https://docs.graylog.org/en/3.1/pages/installation/docker.html}}
+y se guardó como código en un repositorio GitLab. Se utilizó la
 herramienta Ansible para el despliegue del nuevo servicio.

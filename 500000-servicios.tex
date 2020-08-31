@@ -1,5 +1,7 @@
+%
+%
 \chapter{DevOps en los servicios}
-
+%
 Ninguna adopción de DevOps puede llamarse como tal si no pretende
 generar una cultura en común entre los equipos de desarrollo y
 operaciones. En el presente Capítulo se presenta una revisión del
@@ -20,9 +22,10 @@ DevOps. Esta implementación permitió integrar el código fuente y los
 flujos de trabajo de ambos equipos e incorporó automatización de las
 tareas posteriores al desarrollo utilizando una tubería de integración
 y entrega continuas.
-
+%
+%
 \section{Herramientas CI/CD}
-
+%
 Las herramientas de integración y entrega continuas (CI/CD) permiten
 automatizar prácticamente todas las tareas posteriores a la
 publicación del código, tales como la compilación, el testing, el
@@ -31,14 +34,13 @@ empaquetado y la publicación de artefactos.
 Se configuraron los servicios Jenkins y el módulo de CI/CD de GitLab,
 para comparar su funcionamiento y determinar la conveniencia de
 utilización de cada uno. La elección se justificó en el hecho de que
-Jenkins es el servicio más popular
-\cite{cicdcomparison}, mientras que
+Jenkins es el servicio más popular \cite{cicdcomparison}, mientras que
 GitLab es la herramienta adoptada por la Dirección para la gestión del
 código fuente, lo que hace de la configuración de su servicio de CI/CD
 una tarea relativamente sencilla.
-
+%
 \subsection{Jenkins}
-
+%
 Jenkins ofrece un ecosistema muy completo que ofrece una gran cantidad
 de \e{plugins}, lo cual lo convierte en una herramienta muy
 adaptable y flexible, capaz de integrar el trabajo con las
@@ -57,51 +59,52 @@ documentación en general sólo explica cómo efectuar la configuración
 mediante la interfaz gráfica. Incluso, resultó imposible de configurar
 completamente mediante Ansible la funcionalidad de edición gráfica de
 la pipeline.
-
+%
 \subsection{GitLab CI}
-
+%
 El software GitLab es utilizado en la Dirección para gestionar el
 código fuente. El mismo incorpora soporte para la ejecución de tareas
 de integración y entrega continua. Para habilitar esta funcionalidad,
 fue necesario generar una instancia de prueba, sobre la que se instaló
-el software denominado \e{gitlab-runner}. Este software se
-encarga de ejecutar los trabajos de las tuberías de CI/CD, los cuales
-son gestionados desde la interfaz principal de GitLab. La tarea de
-implementación definitiva del servicio \e{gitlab-runner} se
-realizó en una etapa posterior y formó parte de las tareas de
-actualización de GitLab.
-
+el software denominado \e{gitlab-runner}. Este software se encarga de
+ejecutar los trabajos de las tuberías de CI/CD, los cuales son
+gestionados desde la interfaz principal de GitLab. La tarea de
+implementación definitiva del servicio \e{gitlab-runner} se realizó en
+una etapa posterior y formó parte de las tareas de actualización de
+GitLab.
+%
+%
 \section{Pruebas iniciales de CI/CD}
-
+%
 Se seleccionaron dos servicios de baja complejidad y se trabajó en
 conjunto con sus desarrolladores en el modelado de tuberías de CI/CD
 para automatizar las tareas que se realizan una vez concluida la
 escritura del código. Los servicios seleccionados fueron ``Wordpress
 externos'' y ``Portal de firma digital''.
-
+%
 \subsection{Servicio ``Wordpress externos''}
-
+%
 Este servicio consiste en una instalación básica de
-WordPress\footnote{ https://wordpress.org/} con algunas
+WordPress\footnote{\url{https://wordpress.org/}} con algunas
 personalizaciones sobre los plugins y temas. El servicio no cuenta con
 tests unitarios. Una vez registrados los cambios en el código, las
 únicas acciones realizadas son referidas al despliegue, primero en un
-entorno de \e{test} donde se validan los requerimientos, para
-luego pasar al entorno de producción.
+entorno de \e{test} donde se validan los requerimientos, para luego
+pasar al entorno de producción.
 
 Para automatizar las tareas de despliegue, se agregaron al repositorio
 los archivos necesarios que especifican la tubería de CI/CD a
 ejecutar. El archivo correspondiente a Jenkins se denomina
-\e{Jenkinsfile} y el que modela la tubería de GitLab se denomina
-\e{.gitlab-ci.yml}. Ambas tuberías efectúan la siguiente
-secuencia de tareas\footnote{ En el Informe de Avance 1 se explicó que
+\mono{Jenkinsfile} y el que modela la tubería de GitLab se denomina
+\mono{.gitlab-ci.yml}. Ambas tuberías efectúan la siguiente
+secuencia de tareas\footnote{En el Informe de Avance 1 se explicó que
   las tuberías utilizan la herramienta Ansible para efectuar los
   despliegues. Este detalle se omitió a propósito en el presente
   Informe a fin de evitar confusiones: mientras que a lo largo del
   Informe se describe a Ansible como una herramienta de configuración
   como código, en este caso se le dio otro uso experimental para
   efectuar operaciones de despliegue.}:
-
+%
 \begin{enumerate}
 \item Validación de la sintaxis: se verifica la sintaxis del código
   para asegurar su integridad.
@@ -111,13 +114,14 @@ secuencia de tareas\footnote{ En el Informe de Avance 1 se explicó que
   permitida sólo para la rama de desarrollo principal
   (\e{master}).
 \end{enumerate}
+%
 Resulta oportuno aclarar que las tareas manuales de esta tubería
 consisten en un simple click de un botón en las interfaces de
 Jenkins/GitLab. Asimismo, cuando una tarea falla, no se permiten
 ejecutar las acciones posteriores.
-
+%
 \subsection{Servicio ``Portal de firma digital''}
-
+%
 El servicio es una aplicación Java que permite efectuar y validar
 firmas digitales de documentos PDF. Utiliza Gradle como herramienta de
 \e{build}. Las tareas realizadas por el desarrollador una vez
@@ -128,9 +132,9 @@ de \e{integración}, \e{test}, y producción.
 
 Para las pruebas de CI/CD se modeló una tubería simplificada, que
 omite la publicación al repositorio de artefactos. Se agregaron los
-archivos \e{Jenkinsfile} y \e{.gitlab-ci.yml} al repositorio
-de código. La tubería efectúa las siguientes tareas:
-
+archivos \mono{Jenkinsfile} y \mono{.gitlab-ci.yml} al repositorio de
+código. La tubería efectúa las siguientes tareas:
+%
 \begin{enumerate}
 \item Compilación y ejecución de tests (\e{gradle build}).
 \item Generación del artefacto para el despliegue (\e{gradle
@@ -140,8 +144,9 @@ de código. La tubería efectúa las siguientes tareas:
 \item Despliegue en el entorno de producción: tarea manual habilitada
   sólo para la rama de desarrollo principal (\e{maste}r).
 \end{enumerate}
+%
 \subsection{Resultados de las pruebas}
-
+%
 La conclusión principal obtenida de estas pruebas es que,
 independientemente de las herramientas utilizadas, la implementación
 de un esquema de CI/CD en los proyectos viene atada a la forma de
@@ -152,14 +157,14 @@ falencias en el conocimiento de algunos aspectos de Git.
 
 En cuanto a la comparación de las herramientas de CI/CD, se realizaron
 las siguientes observaciones:
-
+%
 \begin{itemize}
-\item \e{Sintaxis}: el archivo \e{.gitlab-ci.yml} de GitLab
-  posee una sintaxis mucho más clara que la del archivo
-  \e{Jenkinsfile} utilizado por Jenkins.
+\item \e{Sintaxis}: el archivo \mono{.gitlab-ci.yml} de GitLab posee
+  una sintaxis mucho más clara que la del archivo \mono{Jenkinsfile}
+  utilizado por Jenkins.
 \item \e{Simplicidad}: la configuración de CI/CD en GitLab es
   automática, sólo se requiere registrar un archivo
-  \e{.gitlab-ci.yml} válido. En el caso de Jenkins, la
+  \mono{.gitlab-ci.yml} válido. En el caso de Jenkins, la
   configuración debe efectuarse de forma explícita, aunque podría
   automatizarse con una implementación adecuada.
 \item \e{Integración}: La herramienta CI/CD de GitLab se integra
@@ -185,40 +190,43 @@ las siguientes observaciones:
     requests}. En el caso de Jenkins resulta necesario cambiar de
   contexto para verificar el estado de CI/CD.
 \end{itemize}
+%
 Teniendo en cuenta todas estas consideraciones, la herramienta elegida
 para las implementaciones de CI/CD fue GitLab.
-
+%
 \section{Análisis de los servicios}
-
+%
 Una vez concluidas las pruebas iniciales de CI/CD se trabajó en la
 implementación de prácticas DevOps sobre tres de los servicios
 principales ofrecidos por la Dirección. A partir de las necesidades
 institucionales, los servicios seleccionados fueron los siguientes:
-
+%
 \begin{itemize}
 \item Ilitía: sistema de gestión de servicios a terceros.
 \item Mercurio: sistema de cobranzas electrónicas.
 \item Hera: sistema de gestión de trámites digitales.
 \end{itemize}
+%
 Como primer paso, se realizaron reuniones con los equipos de
 desarrollo para comprender cómo organizan su trabajo en torno a estos
 servicios. Luego se analizaron el sistema de gestión de proyectos, la
 documentación interna, el repositorio de código fuente y la
 configuración actual de los servidores. Los resultados de este
 análisis se presentan a continuación.
-
+%
 \subsection{Gestión de los servicios}
-
+%
 En términos generales, se encontró que la organización del trabajo
 sobre los servicios estaba en línea con el proceso descrito
 previamente en el análisis del flujo de valor para la entrega de un
-nuevo requerimiento (Tabla 1.2). Con algunas diferencias tales como la
-frecuencia de los sprints, la gestión de las ramas en el código fuente
-o la publicación de artefactos, la metodología de trabajo de los
-equipos de desarrollo resultó similar en los tres casos.
-
+nuevo requerimiento (\iflatexml{}Tabla~\ref{tbl:entrega-inicial}\else%
+\autoref{tbl:entrega-inicial}\fi). Con algunas diferencias tales como
+la frecuencia de los sprints, la gestión de las ramas en el código
+fuente o la publicación de artefactos, la metodología de trabajo de
+los equipos de desarrollo resultó similar en los tres casos.
+%
 \subsection{Gestión del código fuente}
-
+%
 La gestión del código fuente se realizaba utilizando la herramienta
 SVN, siguiendo una la estructura de directorios
 \e{trunk/tags/branches} estándar para este tipo de repositorios.
@@ -230,9 +238,9 @@ solución temporal hasta tanto el equipo de desarrollo contara con
 recursos para migrar al repositorio de artefactos Nexus, tarea que
 nunca se concretó. Esta particularidad debe ser considerada al momento
 de efectuar la migración a Git.
-
+%
 \subsection{Documentación}
-
+%
 Al revisar la documentación de los servicios se encontraron manuales
 de usuario, documentos de requerimientos y descripciones de alto nivel
 sobre las integraciones con sistemas externos. Sin embargo, la
@@ -241,22 +249,22 @@ configuración, compilación, testing, etc.) resultó prácticamente
 inexistente. En el sistema de gestión de proyectos se encontró un
 proyecto denominado ``Desarrollo de software UNL'', con documentación
 genérica para todos los servicios.
-
+%
 \subsection{Gestión de la configuración}
-
+%
 Los tres servicios contaban con configuración escrita como código
 Ansible en el repositorio Git propio del equipo de
 infraestructura. Este aspecto simplificó en cierto modo la
 incorporación de la configuración como código en los nuevos
 repositorios Git para los servicios.
-
+%
 \subsection{Soporte tecnológico}
-
+%
 Dentro de la Dirección, el equipo de infraestructura es el encargado
 de proponer los entornos de software sobre el que funcionan las
 aplicaciones. Por ello, el soporte tecnológico de los tres servicios
 resultó similar:
-
+%
 \begin{itemize}
 \item Sistema operativo Debian GNU/Linux, versión 9
 \item Entorno Java OpenJDK, versión 8
@@ -268,8 +276,10 @@ resultó similar:
 \item Esquemas de monitoreo, backup y servicio de dumps estándar de la
   DIPT
 \end{itemize}
+%
+%
 \section{Integración del código fuente de los equipos de desarrollo y operaciones}
-
+%
 Ya se ha expresado que ninguna transformación DevOps puede llamarse
 como tal si no se propone generar una cultura en común entre los
 equipos de desarrollo y operaciones. En este sentido es que se decidió
@@ -288,9 +298,9 @@ la infraestructura por parte de un desarrollador, y la proposición de
 mejoras en el proceso de build por parte del operador. Todos estos
 aspectos derivan en un incremento de la confianza mutua entre los
 equipos y la generación de una cultura en común.
-
+%
 \subsection{Procedimiento}
-
+%
 Para cada servicio se realizó el procedimiento descrito a
 continuación. En todos los casos, la migración se efectuó de manera
 coordinada con los equipos de desarrollo para no impactar en la
@@ -310,26 +320,27 @@ servicio AWX.
 
 Una vez consolidada y probada la configuración en el repositorio, se
 procedió a importar el código fuente de la aplicación desde el
-repositorio SVN, utilizando la herramienta Git-SVN\footnote{
-  https://git-scm.com/docs/git-svn}. En el caso del servicio Mercurio,
-fue necesario filtrar los artefactos binarios para evitar
-incorporarlos al repositorio Git. Se trabajó asimismo en conjunto con
-el equipo de desarrollo para integrar en su flujo de trabajo el
-repositorio Nexus para la publicación de los artefactos.
-
+repositorio SVN, utilizando la herramienta
+Git-SVN\footnote{\url{https://git-scm.com/docs/git-svn}}. En el caso
+del servicio Mercurio, fue necesario filtrar los artefactos binarios
+para evitar incorporarlos al repositorio Git. Se trabajó asimismo en
+conjunto con el equipo de desarrollo para integrar en su flujo de
+trabajo el repositorio Nexus para la publicación de los artefactos.
+%
 \subsection{Documento de recomendaciones}
-
-Se escribió un documento de recomendaciones que condensa las lecciones
-aprendidas del trabajo realizado sobre los repositorios y las
-inquietudes planteadas por los desarrolladores a la hora de integrar
-los flujos de trabajo de los equipos. El objetivo del documento es
-contribuir a la generación de una cultura en común. Este documento
-incluye consideraciones relacionadas a las tuberías de integración y
-entrega continuas, así como también una guía básica del uso del
-sistema de versionado Git.
-
+%
+Se escribió un documento de recomendaciones (Apéndice~\ref{apx:recs})
+que condensa las lecciones aprendidas del trabajo realizado sobre los
+repositorios y las inquietudes planteadas por los desarrolladores a la
+hora de integrar los flujos de trabajo de los equipos. El objetivo del
+documento es contribuir a la generación de una cultura en común. Este
+documento incluye consideraciones relacionadas a las tuberías de
+integración y entrega continuas, así como también una guía básica del
+uso del sistema de versionado Git.
+%
+%
 \section{Integración y entrega continuas (CI/CD)}
-
+%
 Se implementaron herramientas de integración y entrega continuas
 (CI/CD) en los en los servicios con el propósito de automatizar las
 tareas efectuadas por el desarrollador una vez finalizada la escritura
@@ -340,14 +351,14 @@ al repositorio central de código fuente GitLab.
 
 El diseño tomado como base para la implementación de las tuberías fue
 aquel propuesto por \citeauthor{humblefarley} en
-\cite{humblefarley}. Se adaptó el
-diseño a las particularidades de la Organización, integrando el flujo
-de trabajo de ramas de vida corta especificado en la propuesta de
-mejora para el proceso de entrega de un nuevo requerimiento, tal como
-se explica en el Capítulo 3. El resultado principal de la
-implementación fueron los archivos de definición de la tubería para el
-servicio CI/CD de GitLab. Estos archivos fueron incorporados al
-repositorio de cada servicio en forma de un \e{merge request}.
+\cite{humblefarley}. Se adaptó el diseño a las particularidades de la
+Organización, integrando el flujo de trabajo de ramas de vida corta
+especificado en la propuesta de mejora para el proceso de entrega de
+un nuevo requerimiento, tal como se explica en el Capítulo 3. El
+resultado principal de la implementación fueron los archivos de
+definición de la tubería para el servicio CI/CD de GitLab. Estos
+archivos fueron incorporados al repositorio de cada servicio en forma
+de un \e{merge request}.
 
 La implementación de las tuberías resultó una tarea muy compleja desde
 el punto de vista técnico. Fue necesaria la creación de entornos
@@ -366,7 +377,7 @@ generalizada de la tubería en todos los servicios relacionados.
 El segundo diseño es la implementación concreta efectuada, considerada
 un compromiso entre las posibilidades actuales de la Organización y la
 estructura básica requerida para generar una cultura DevOps adecuada.
-
+%
 \subsection{Tubería objetivo (teórica)}
 %
 Este diseño, muy similar a la propuesta presentada en
