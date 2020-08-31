@@ -48,7 +48,7 @@ rev:
 temp: $(header) $(contents)
 	@ echo '\\include{documentclass}' > $(output)
 	@ echo '\\include{header}' >> $(output)
-	@ echo '\\include{revision}' >> $(output)
+#	@ echo '\\include{revision}' >> $(output)
 	@ echo '\\input{begindocument}' >> $(output)
 	@ egrep -v '^[#%]' $(layout) | perl -ne 'chomp; if (m{^figures/}){ \
 s{/[^/]+$$}{}; print "\\begin{figure}[t]\n\\figureStyle\n\\input{$$_/figure}\

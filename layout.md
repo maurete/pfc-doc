@@ -1,6 +1,5 @@
 titlepage.tex
 abstract.tex
-thanks.tex
 toc.tex
 glossary.tex
 100000-introduccion.tex
