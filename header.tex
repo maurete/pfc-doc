@@ -164,7 +164,7 @@
 %% \usepackage{tabu}
 
 % para crear apéndice
-\usepackage[header,titletoc,title]{appendix}
+% \usepackage[header,titletoc,title]{appendix}
 
 % para insertar pdfs externos dentro del documento(apéndice)
 \usepackage{pdfpages}
@@ -244,8 +244,10 @@
 }
 
 % estilo para pie de graficos
+% fuente de las figuras
+\iflatexml\else\setkomafont{caption}{\relsize{-0.5}}\fi
 \newcommand{\captionStyle}{
-\iflatexml\else\relsize{-0.5}\fi
+%\iflatexml\else\relsize{-0.5}\fi
 }
 
 % estilo para figuras

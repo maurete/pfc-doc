@@ -1,21 +1,20 @@
+%
 \subsection{Tuberías y entrega continua}
-
+%
 Basándose en las técnicas de compilación, testing e integración
 continuas, \citeauthor{humblefarley} extendieron en 2006 estas ideas a
-la \e{entrega continua}
-\cite{humblefarley}. La misma
-planteaba la idea de una \e{tubería de entrega} encargada de
-asegurar que todo el código y la infraestructura estuvieran siempre en
-estado productivo, de modo que pudieran ser desplegados de manera
-automática con seguridad.
-
+la \e{entrega continua} \cite{humblefarley}. La misma planteaba la
+idea de una \e{tubería de entrega} encargada de asegurar que todo el
+código y la infraestructura estuvieran siempre en estado productivo,
+de modo que pudieran ser desplegados de manera automática con
+seguridad.
+%
 \subsection{Mejora continua}
-
-En su libro de \citeyear{toyotakata}
-\cite{toyotakata}, \citeauthor{toyotakata}
-observó que la comunidad \e{lean} ignoraba la enseñanza
-fundamental del sistema de producción de Toyota, a la cual denominó el
-\e{kata de la mejora}\footnote{ \e{Kata} es una palabra
+%
+En su libro de \citeyear{toyotakata} \cite{toyotakata},
+\citeauthor{toyotakata} observó que la comunidad \e{lean} ignoraba la
+enseñanza fundamental del sistema de producción de Toyota, a la cual
+denominó el \e{kata de la mejora}\footnote{ \e{Kata} es una palabra
   japonesa originada en las artes marciales, y se refiere a los
   ejercicios que se practican constantemente en búsqueda de
   perfeccionar los movimientos.}. Cada organización tiene sus propias
@@ -26,9 +25,9 @@ perfección''. Establecer un ciclo constante de definir estados futuros
 de resultados esperados para la semana, y la práctica diaria de
 trabajos de mejora, deben ser la base para alcanzar una mejora a nivel
 de la organización.
-
+%
 \subsection{La actualidad}
-
+%
 Hoy en día sabemos que muchas de las empresas de software más grandes
 han incorporado las ideas de DevOps, alcanzando una velocidad sin
 precedentes en la entrega del software y manteniendo altos estándares
@@ -41,55 +40,53 @@ estos desarrollos, Google desarrolló la disciplina de
 \e{ingeniería de fiabilidad} (SRE), la cual puede entenderse como
 una implementación de DevOps
 \cite{sre}.
-
+%
 \section{Definición de DevOps}
-
+%
 DevOps propone prácticas, principios y una cultura buscando eliminar
-los ``silos'' en las áreas de desarrollo, operaciones, redes y seguridad
-de las TI. Podemos decir que DevOps, el desarrollo ágil y el
+los ``silos'' en las áreas de desarrollo, operaciones, redes y
+seguridad de las TI. Podemos decir que DevOps, el desarrollo ágil y el
 movimiento lean son ejemplos de una comprensión de cómo administrar
 empresas de TI en el mundo moderno. Quizá la definición más concisa es
 aquella elaborada por Gene Kim\footnote{ Gene Kim es uno de los
   promotores más conocidos del movimiento DevOps. Es coautor de The
-  Phoenix Project
-  \cite{phoenix} y del libro
-  The DevOps Handbook
-  \cite{handbook},
-  publicaciones consideradas como de referencia básica en la
-  disciplina.}
-\cite{gruver}:
-
-\e{DevOps es un conjunto de normas culturales y prácticas
+  Phoenix Project \cite{phoenix} y del libro The DevOps Handbook
+  \cite{handbook}, publicaciones consideradas como de referencia
+  básica en la disciplina.} \cite{gruver}:
+%
+\begin{quote}
+  \itshape
+  DevOps es un conjunto de normas culturales y prácticas
   tecnológicas que permiten un flujo rápido del trabajo planificado
   desde el desarrollo, pasando por el testing hasta las operaciones,
   siempre manteniendo una alta fiabilidad, funcionamiento y
   seguridad. DevOps no se define en torno a las acciones tomadas, sino
   a partir de sus resultados: DevOps es un concepto amplio que abarca
   creencias y prácticas tales como la comunicación entre equipos y una
-  cultura en común.}
-
+  cultura en común.
+\end{quote}
+%
 Se identifican una serie de principios rectores que deberían guiar
 cualquier implementación de DevOps en una organización. Por un lado,
-Gene Kim ofrece un marco de ``las 3 vías''
-\cite{3ways} para orientar
+Gene Kim ofrece un marco de ``las 3 vías'' \cite{3ways} para orientar
 las decisiones a la hora de implementar DevOps. Desde otra
 perspectiva, en el libro \e{The Site Reliability Workbook}
-\cite{workbook} se proponen ``5
-principios'' a seguir para una adopción exitosa de DevOps. Finalmente,
-se describen los principios de la ingeniería de fiabilidad de Google,
-una propuesta más práctica que se ha popularizado gracias al libro
-{\eng{\citetitle{sre}}} \cite{sre}.
-
+\cite{workbook} se proponen ``5 principios'' a seguir para una
+adopción exitosa de DevOps. Finalmente, se describen los principios de
+la ingeniería de fiabilidad de Google, una propuesta más práctica que
+se ha popularizado gracias al libro {\eng{\citetitle{sre}}}
+\cite{sre}.
+%
 \subsection{Las tres vías de DevOps}
-
+%
 Las ``tres vías'' describen los valores y filosofías que orientan los
 procesos, procedimientos y prácticas de DevOps. En estas propuestas se
 entiende a la producción del software como un sistema en el que el
 trabajo fluye desde la izquierda, donde ingresan requerimientos, hacia
 la derecha, donde se entrega el producto al cliente.
-
+%
 \subsubsection{Primera vía: Acelerar el flujo de valor }
-
+%
 La primera vía pone énfasis en el rendimiento del sistema (de
 producción del software) desde una perspectiva global. Se debe
 perseguir el objetivo de alcanzar un \e{flujo de valor} continuo,
@@ -103,7 +100,7 @@ hasta la entrega. Se denomina valor a cualquier acción que se traduce
 en un beneficio explícito para el cliente.
 
 Las implicancias de poner en práctica la primera vía incluyen:
-
+%
 \begin{itemize}
 \item Nunca entregar un producto con defectos conocidos a los
   trabajadores que están más adelante en la línea de producción
@@ -116,8 +113,9 @@ Las implicancias de poner en práctica la primera vía incluyen:
 \item Generar una comprensión del sistema (de producción del software)
   desde una perspectiva global.
 \end{itemize}
+%
 \subsubsection{Segunda vía: Acelerar la retroalimentación}
-
+%
 Se trata de maximizar el flujo de información desde los sistemas hacia
 los desarrolladores y responsables del servicios. Esto se logra
 generando una cultura de solución de problemas, utilizando
@@ -128,9 +126,9 @@ sea posible.
 El resultado principal de aplicar la segunda vía es la capacidad de
 comprender y dar respuesta a todos los clientes, sean éstos internos
 (otra área de la organización) o externos (el usuario final).
-
+%
 \subsubsection{Tercera vía: Cultura de aprendizaje y experimentación continuos}
-
+%
 Aplicar el método científico en todos los aspectos del funcionamiento
 de la organización, tratando las ideas como hipótesis a ser validadas
 y promoviendo una cultura sin culpables (\e{blameless}), que
@@ -146,25 +144,24 @@ Las implicancias de esta tercera vía son: asignar tiempo explícito
 para la mejora del trabajo diario, crear incentivos para que los
 equipos asuman riesgos, e introducir fallas a propósito para aumentar
 la resiliencia del software y la infraestructura.
-
+%
 \subsection{Los 5 principios de DevOps}
-
-Los siguientes 5 principios de DevOps
-\cite{workbook} ofrecen una
+%
+Los siguientes 5 principios de DevOps \cite{workbook} ofrecen una
 descripción alternativa a las ideas expresadas en la propuesta de las
 3 vías.
-
+%
 \subsubsection{Eliminar silos}
-
+%
 Cuando un área de la organización funciona de manera aislada de las
 demás, se dice que el conocimiento que ésta maneja queda contenido
 dentro de un ``silo''. La aparición de silos de conocimiento incentiva
 una optimización local, sin perspectiva del objetivo global de la
 organización. En particular, se rechaza la idea de mantener los
 equipos de desarrollo y operaciones aislados entre sí.
-
+%
 \subsubsection{Normalizar los errores}
-
+%
 Los accidentes no son sólo atribuibles a las acciones aisladas de un
 individuo, sino que más bien son el resultado de la falta de
 salvaguardas para cuando las cosas salen mal, algo que es
@@ -179,9 +176,9 @@ otros, lo que no son más que distracciones que no agregan valor a la
 organización. En su lugar , es mucho más eficiente invertir este
 esfuerzo en mejorar los procesos para reducir el impacto y/o para
 acelerar la recuperación cuando se vuelva a cometer el mismo error.
-
+%
 \subsubsection{El cambio debe ser gradual}
-
+%
 La tercer idea clave es que los cambios son mejores cuando son
 pequeños y frecuentes. Esto puede sonar radical en aquellas
 organizaciones donde los cambios se planifican en detalle con mucha
@@ -192,15 +189,15 @@ más o menos lo opuesto a las mejores prácticas.
 
 Si bien es cierto que los cambios son riesgosos, la forma correcta de
 aplicarlos es subdividirlos (siempre que sea posible) en componentes
-más pequeños de menor riesgo. De este modo se genera una
-\e{tubería} con un flujo constante de cambios de bajo
-riesgo. Acoplando esto a una estrategia de tests automáticos para los
-cambios menores y a un proceso confiable para revertir aquellos
-cambios que introducen errores, se da origen a prácticas tales como la
-integración continua y la entrega continua.
-
+más pequeños de menor riesgo. De este modo se genera una \e{tubería}
+con un flujo constante de cambios de bajo riesgo. Acoplando esto a una
+estrategia de tests automáticos para los cambios menores y a un
+proceso confiable para revertir aquellos cambios que introducen
+errores, se da origen a prácticas tales como la integración continua y
+la entrega continua.
+%
 \subsubsection{Las herramientas y la cultura están interrelacionadas}
-
+%
 Las herramientas tecnológicas utilizadas son un componente importante
 de la cultura de la organización. Resulta fundamental poner énfasis en
 que los diferentes equipos de trabajo utilicen las mismas
@@ -208,180 +205,141 @@ herramientas, de modo que haya un buen entendimiento entre los
 diferentes equipos. Por último, se debe tener presente que una buena
 cultura puede sobrellevar falencias de las herramientas, pero no a la
 inversa.
-
+%
 \subsubsection{La medición es fundamental}
-
+%
 La medición resulta fundamental a la hora de romper silos y la
 resolución de incidentes. En cada caso, se trata de entender los
 acontecimientos utilizando mediciones objetivas, verificar que la
 situación mejora tal como se espera, y fundamentar con métricas
 objetivas las conversaciones entre los diferentes roles de la
 organización.
-
+%
 \subsection{La ingeniería de fiabilidad (SRE) de Google}
-
-Una de las formas más difundidas de ``implementar DevOps'' es la
-ingeniería de fiabilidad (\e{site reliability engineering},
-\e{SRE}) propuesta por Google
-\cite{sre}. En
-comparación, DevOps es un concepto más amplio y basado en disciplinas
-previamente establecidas, mientras que SRE se originó en base a los
-aspectos prácticos de gestionar los servicios dentro de Google
-\cite{workbook}.
+%
+Una de las formas más difundidas de implementar DevOps es la
+ingeniería de fiabilidad (\e{site reliability engineering}, \e{SRE})
+propuesta por Google \cite{sre}. En comparación, DevOps es un concepto
+más amplio y basado en disciplinas previamente establecidas, mientras
+que SRE se originó en base a los aspectos prácticos de gestionar los
+servicios dentro de Google \cite{workbook}.
 
 SRE se define a partir de los lineamientos detallados a
 continuación. Como se verá, tanto DevOps como SRE son similares.
-
+%
 \subsubsection{Las operaciones son un problema de software}
-
-The basic tenet of SRE is that doing operations well is a software
-problem. SRE should therefore use software engineering approaches to
-solve that problem. This is across a wide field of view, encompassing
-everything from process and business change to similarly complicated
-but more traditional software problems, such as rewriting a stack to
-eliminate single points of failure in business logic.
-
+%
+La idea básica de SRE es que ``hacer bien las operaciones es un
+problema de software''. Esto implica que para resolver este problema,
+se deberían aplicar los principios de la ingeniería de software. Esta
+idea atraviesa todos los aspectos de la empresa, desde los cambios en
+el negocio y los procesos hasta los problemas de software más
+tradicionales, tales como la reescritura de un componente para
+eliminar puntos de falla únicos dentro de la lógica de negocios.
+%
 \subsubsection{Administrar servicios utilizando niveles de servicio}
+%
+SRE no pretende alcanzar un 100\% de disponibilidad en ningún
+servicio. En su lugar, los equipos del producto (desarrolladores) y de
+SRE seleccionan un objetivo de disponibilidad (SLO) acorde al servicio
+y al número de usuarios, y la administración del servicio se realiza
+de acuerdo a ese objetivo. La determinación de la SLO a aplicar
+requiere una gran colaboración entre todos los equipos. Las SLO tienen
+también implicaciones culturales: al ser una decisión alcanzada entre
+todos los interesados (\eng{stakeholders}), una violación de la SLO
+hace que los equipos deban reunirse para decidir ajustes o cambios,
+sin intención de buscar culpables.
+%
+\subsubsection{Trabajar para minimizar el trabajo manual}
+%
+SRE considera que cualquier trabajo manual es detestable: si una
+máquina puede efectuar una operación, entonces debería hacerlo. Esta
+es una política que no se encuentra en las organizaciones
+tradicionales, en las cuales el ``trabajo'' significa trabajo
+manual. Para SRE, el tiempo invertido en tareas operacionales
+significa tiempo no utilizado para trabajar en proyectos.
 
-SRE does not attempt to give everything 100\% availability. As
-discussed in our first book, Site Reliability Engineering, this is the
-wrong target for a number of reasons. Instead, the product team and
-the SRE team select an appropriate availability target for the service
-and its user base, and the service is managed to that SLO. Deciding on
-such a target requires strong collaboration from the business. SLOs
-have cultural implications as well: as collaborative decisions among
-stakeholders, SLO violations bring teams back to the drawing board,
-blamelessly.
-
-\subsubsection{Trabajar para minimizar el trabajo ``pesado''}
-
-For SRE, any manual, structurally mandated operational task is
-abhorrent. (That doesn’t mean we don’t have any such operations: we
-have plenty of them. We just don’t like them.) We believe that if a
-machine can perform a desired operation, then a machine often
-should. This is a distinction (and a value) not often seen in other
-organizations, where toil is the job, and that’s what you’re paying a
-person to do. For SRE in the Google context, toil is not the job—it
-can’t be. Any time spent on operational tasks means time not spent on
-project work—and project work is how we make our services more
-reliable and scalable.
-
-Performing operational tasks does, however, by ``the wisdom of
-production,'' provide vital input into decisions. This work keeps us
-grounded by providing real-time feedback from a given system. Sources
-of toil need to be identifiable so you can minimize or eliminate
-them. However, if you find yourself in a position of operational
-underload, you may need to push new features and changes more often so
-that engineers remain familiar with the workings of the service you
-support.
-
-\subsubsection{-> La sabiduría de producción}
-
-A note on ``the wisdom of production'': by this phrase, we mean the
-wisdom you get from something running in production—the messy details
-of how it actually behaves, and how software should actually be
-designed, rather than a whiteboarded view of a service isolated from
-the facts on the ground. All of the pages you get, the tickets the
-team gets, and so on, are a direct connection with reality that should
-inform better system design and behavior.
-
-\subsubsection{Automatizar el trabajo de todo el año}
-
-The real work in this area is determining what to automate, under what
-conditions, and how to automate it.
-
-SRE as practiced in Google has a hard limit of how much time a team
-member can spend on toil, as opposed to engineering that produces
-lasting value: 50\%. Many people think of this limit as a cap. In
-fact, it’s much more useful to think of it as a guarantee—an explicit
-statement, and enabling mechanism, for taking an engineering-based
-approach to problems rather than just toiling at them over and over.
-
-There is an unintuitive and interesting interaction between this
-benchmark and how it plays out when we think about automation and
-toil. Over time, an SRE team winds up automating all that it can for a
-service, leaving behind things that can’t be automated (the
-Murphy-Beyer effect). Other things being equal, this comes to dominate
-what an SRE team does unless other actions are taken. In the Google
-environment, you tend to either add more services, up to some limit
-that still supports 50\% engineering time, or you are so successful at
-your automation that you can go and do something else completely
-different instead.
-
+Se deben identificar los lugares de donde provienen los requerimientos
+de trabajo manual, para minimizarlos o eliminarlos por completo. Las
+operaciones, sin embargo, aportan conocimiento vital a las
+decisiones. Proveen una visión real del funcionamiento de los
+sistemas.
+%
+\begin{quote}
+  \sfbf{La sabiduría de producción}\smallskip\newline
+  La ``sabiduría de producción'' refiere al conocimiento concreto del
+  comportamiento de un sistema en producción, orientando las
+  decisiones de diseño más allá de la visión ``de pizarra'', aislada
+  de la realidad. Los tickets, llamados, y otros tipos de solicitudes
+  que reciben los equipos aportan una conexión con la dimensión real
+  del comportamiento y diseño de los sistemas.
+\end{quote}
+%
+\subsubsection{Automatizar el trabajo del año entero}
+%
+El desafío real de la automatización es determinar qué automatizar,
+bajo qué condiciones, y cómo automatizarlo. SRE define una cuota
+máxima de 50\% para la cantidad de trabajo manual, en contraposición
+al trabajo de ingeniería que produce valor duradero. En lugar de
+entenderse como un tope, este límite se considera como una garantía
+que permite a los ingenieros disponer de un tiempo mínimo del 50\%
+para diseñar mejoras duraderas. Con el tiempo, el equipo de SRE
+termina automatizando todo lo que puede respecto a un servicio. Esto
+le permite incorporar nuevos servicios, o incluso dedicarse a tareas
+completamente diferentes.
+%
 \subsubsection{Moverse rápido reduciendo el costo de las fallas}
-
-One of the main benefits of SRE engagement is not necessarily
-increased reliability, although obviously that does happen; it is
-actually improved product development output. Why? Well, a reduced
-mean time to repair (MTTR) for common faults results in increased
-product developer velocity, as engineers don’t have to waste time and
-focus cleaning up after these issues. This follows from the well-known
-fact that the later in the product lifecycle a problem is discovered,
-the more expensive it is to fix. SREs are specifically charged with
-improving undesirably late problem discovery, yielding benefits for
-the company as a whole.
-
+%
+Uno de los principales beneficios de SRE es una mejora en la velocidad
+de la producción del software. Al encargar al equipo de SRE la
+solución de problemas complejos, se logran reducir los tiempos de
+reparación (MTTR) de las fallas comunes, liberando el tiempo de los
+ingenieros desarrolladores.
+%
 \subsubsection{Propiedad compartida con los desarrolladores}
+%
+La distinción rígida entre ``desarrollo de aplicaciones'' y
+``producción'' se considera contraria a los objetivos de
+productividad. Más aún cuando se segregan las responsabilidades y se
+considera la importancia de un rol por encima del otro.
 
-Rigid boundaries between ``application development'' and ``production''
-(sometimes called programmers and operators) are
-counterproductive. This is especially true if the segregation of
-responsibilities and classification of ops as a cost center leads to
-power imbalances or discrepancies in esteem or pay.
-
-SREs tend to be inclined to focus on production problems rather than
-business logic problems, but as their approach brings software
-engineering tools to bear on the problem, they share skill sets with
-product development teams. In general, an SRE has particular expertise
-around the availability, latency, performance, efficiency, change
-management, monitoring, emergency response, and capacity planning of
-the service(s) they are looking after. Those specific (and usually
-well-defined) competencies are the bread-and-butter of what SRE does
-for a product and for the associated product development team. 10
-Ideally, both product development and SRE teams should have a holistic
-view of the stack—the frontend, backend, libraries, storage, kernels,
-and physical machine—and no team should jealously own single
-components. It turns out that you can get a lot more done if you ``blur
-the lines'' 11 and have SREs instrument JavaScript, or product
-developers qualify kernels: knowledge of how to make changes and the
-authority to do so are much more widespread, and incentives to
-jealously guard any particular function are removed.
-
-In Site Reliability Engineering, we did not make it sufficiently clear
-that product development teams in Google own their service by
-default. SRE is neither available nor warranted for the bulk of
-services, although SRE principles still inform how services are
-managed throughout Google. 12 The ownership model when an SRE team
-works with a product development team is ultimately a shared model as
-well.
-
+Si bien el equipo de SRE se inclina más hacia los problemas de
+producción antes que hacia problemas de la lógica del negocio,
+comparten sus habilidades y herramientas de desarrollo de software con
+el área de desarrollo. En general, un ingeniero SRE tiene más
+experiencia en lo referente a la disponibilidad, latencia,
+rendimiento, eficiencia, gestión del cambio, monitoreo, respuesta a
+emergencias, y planificación de recursos de los servicios que tienen a
+cargo. Estas habilidades definen el rol del ingeniero SRE \e{dentro}
+del equipo de desarrollo. La experiencia demuestra que la
+productividad aumenta cuando se permite, por ejemplo, a los
+desarrolladores ajustar configuraciones y a los ingenieros SRE
+trabajar sobre el código de la aplicación.
+%
 \subsubsection{Utilizar las mismas herramientas}
-
-Tooling is an incredibly important determinant of behavior, and it
-would be naive to assume that the efficacy of SRE in the Google
-context has nothing to do with the widely accessible unified codebase,
-the wide array of software and systems tooling, the highly optimized
-and proprietary production stack, and so on. Yet we share this
-absolute assumption with DevOps: teams minding a service 13 should use
-the same tools, regardless of their role in the organization. There is
-no good way to manage a service that has one tool for the SREs and
-another for the product developers, behaving differently (and
-potentially catastrophically so) in different situations. The more
-divergence you have, the less your company benefits from each effort
-to improve each individual tool.
-
+%
+En muchos sentidos, las herramientas utilizadas determinan la forma de
+trabajar de las personas. Todos los equipos a cargo de un servicio (ya
+sea el equipo de desarrollo, de SRE, o cualquier otro) deben utilizar
+las mismas herramientas, sin importar cuál sea su rol dentro de la
+organización. No es posible administrar de forma fiable un servicio
+cuando cada equipo utiliza herramientas con comportamientos diferentes
+(que pueden ser potencialmente catastróficos) en situaciones
+diferentes. Cuanto mayor es la divergencia, menores son los beneficios
+obtenidos al mejorar cada herramienta.
+%
+%
 \section{DevOps en la práctica}
-
+%
 DevOps por definición se limita a proponer principios y una cultura en
 común, sin especificar prácticas ni herramientas tecnológicas
 específicas, ya que su aplicación dependerá de las particularidades y
 necesidades de cada organización. Dicho esto, pueden identificarse
 algunas prácticas generales comúnmente asociadas en una implementación
-de DevOps \cite{awsdevops}, las
-cuales se describen a continuación.
-
+de DevOps \cite{awsdevops}, las cuales se describen a continuación.
+%
 \subsection{Integración y entrega continua}
-
+%
 La integración continua es una práctica mediante la cual los
 desarrolladores publican en forma periódica los cambios del código al
 repositorio central, lo cual dispara la ejecución de pruebas
@@ -392,16 +350,15 @@ tuvo que ejecutarlos manualmente. La entrega continua va un paso más
 allá y, en los casos en que la integración continua haya sido exitosa,
 se encarga de preparar el código y entregar los artefactos resultantes
 a la fase de producción, listos para ser desplegado. En conjunto, este
-esquema se conoce como \e{integración y entrega continuas}
-(CI/CD, Continuous Integration/Continuous Delivery)
-\cite{devopscicd}. Una
-implementación exitosa de la integración y entrega continuas permite
-al desarrollador enfocarse en el proceso creativo de la escritura de
-código y reduce el tiempo requerido para la entrega del software
-\cite{humblefarley}.
-
+esquema se conoce como \e{integración y entrega continuas} (CI/CD,
+\eng{Continuous Integration/Continuous Delivery})
+\cite{devopscicd}. Una implementación exitosa de la integración y
+entrega continuas permite al desarrollador enfocarse en el proceso
+creativo de la escritura de código y reduce el tiempo requerido para
+la entrega del software \cite{humblefarley}.
+%
 \subsection{Infraestructura como código}
-
+%
 La infraestructura como código es una práctica mediante la cual se
 gestiona la infraestructura con prácticas de desarrollo de software,
 como el control de versiones y la integración continua. Los

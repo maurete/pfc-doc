@@ -1,5 +1,6 @@
 titlepage.tex
 abstract.tex
+thanks.tex
 toc.tex
 100000-introduccion.tex
 200000-fundamentos.tex
